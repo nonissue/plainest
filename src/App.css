@@ -35,12 +35,11 @@
 }
 .App-header .url {
   font-weight: 600;
-  /* display:inline; */
   display:inline;
   padding:4px 8px;
   background: #2D3748;
-  letter-spacing: 0.2em;
-  font-size: 0.4em;
+  letter-spacing: 0.15em;
+  font-size: 0.45em;
   text-transform: uppercase;
 }
 

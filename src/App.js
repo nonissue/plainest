@@ -29,17 +29,17 @@ class LambdaDemo extends Component {
   }
 
   render() {
-    const { loading, msg } = this.state
-
-    return (
-      <p>
-        {/* <button onClick={this.handleClick("hello")}>{loading ? "Loading..." : "Call Lambda"}</button> */}
-        {/* <button onClick={this.handleClick("async-dadjoke")}>{loading ? "Loading..." : "Call Async Lambda"}</button> */}
-        {/* <button onClick={this.fetchInstagram("instagram")}>{loading ? "Loading..." : "Get Instagram"}</button> */}
-        <br />
-        <span>{msg}</span>
-      </p>
-    )
+    // const { loading, msg } = this.state
+    return (<div></div>)
+    // return (
+    //   <p>
+    //     <button onClick={this.handleClick("hello")}>{loading ? "Loading..." : "Call Lambda"}</button>
+    //     <button onClick={this.handleClick("async-dadjoke")}>{loading ? "Loading..." : "Call Async Lambda"}</button>
+    //     <button onClick={this.fetchInstagram("instagram")}>{loading ? "Loading..." : "Get Instagram"}</button>
+    //     <br />
+    //     <span>{msg}</span>
+    //   </p>
+    // )
   }
 }
 
@@ -53,7 +53,7 @@ class App extends Component {
             <a href="https://instagram.com/plain.site">plain.site</a>
           </h3>
           <div>
-            <span class="url" >https://plainest.site</span>
+            <span className="url" >https://plainest.site</span>
           </div>
           <LambdaDemo />
         </header>
