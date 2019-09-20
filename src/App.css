@@ -8,14 +8,40 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #1A202C;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(12px + 2vmin);
   color: white;
+}
+.App-header a:link, a:visited {
+  color: #F6E05E;
+  text-decoration: none;
+}
+.App-header h3 {
+  font-weight: 400;
+  letter-spacing: 0em;
+  margin-bottom:0em;
+  font-size: 1.8em;
+}
+.App-header h3::before {
+  content: '@';
+  font-size: 0.8em;
+  color: #A0AEC0;
+  margin-right:0.1em;
+}
+.App-header .url {
+  font-weight: 600;
+  /* display:inline; */
+  display:inline;
+  padding:4px 8px;
+  background: #2D3748;
+  letter-spacing: 0.2em;
+  font-size: 0.4em;
+  text-transform: uppercase;
 }
 
 .App-link {

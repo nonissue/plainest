@@ -18,14 +18,24 @@ class LambdaDemo extends Component {
       .then(json => this.setState({ loading: false, msg: json.msg }))
   }
 
+  fetchInstagram = api => e => {
+    e.preventDefault()
+
+    this.setState({ loading: true })
+    fetch("/.netlify/functions/" + api)
+      .then(response => response.json())
+      .then(json => {console.log(json); return json;})
+      .then(json => this.setState({ loading: false, msg: json[0].link }))
+  }
+
   render() {
     const { loading, msg } = this.state
 
     return (
       <p>
-        <button onClick={this.handleClick("hello")}>{loading ? "Loading..." : "Call Lambda"}</button>
-        <button onClick={this.handleClick("async-dadjoke")}>{loading ? "Loading..." : "Call Async Lambda"}</button>
-        <button onClick={this.handleClick("instagram")}>{loading ? "Loading..." : "Get Instagram"}</button>
+        {/* <button onClick={this.handleClick("hello")}>{loading ? "Loading..." : "Call Lambda"}</button> */}
+        {/* <button onClick={this.handleClick("async-dadjoke")}>{loading ? "Loading..." : "Call Async Lambda"}</button> */}
+        {/* <button onClick={this.fetchInstagram("instagram")}>{loading ? "Loading..." : "Get Instagram"}</button> */}
         <br />
         <span>{msg}</span>
       </p>
@@ -38,10 +48,13 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
+          
+          <h3>
+            <a href="https://instagram.com/plain.site">plain.site</a>
+          </h3>
+          <div>
+            <span class="url" >https://plainest.site</span>
+          </div>
           <LambdaDemo />
         </header>
       </div>
