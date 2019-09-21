@@ -1,1 +1,19 @@
 `ntl dev`
+
+or maybe:
+
+`netlify dev -c "yarn start"`
+
+look at this:
+
+https://github.com/strt/www/blob/6cb0dee92fc39ed71433a92996156e34639b8b49/package.json
+https://github.com/strt/www/blob/6cb0dee92fc39ed71433a92996156e34639b8b49/src/components/InstagramFeed.js
+
+"dev": "npm-run-all --parallel dev:*",
+    "dev:client": "yarn start",
+    "dev:lambda": "netlify-lambda serve lambda/src -c lambda/webpack.config.js",
+
+
+https://github.com/netlify/netlify-lambda#netlify-lambda-serve-legacy-command-proxying-for-local-development
+https://github.com/netlify/create-react-app-lambda/blob/f0e94f1d5a42992a2b894bfeae5b8c039a177dd9/package.json
+
