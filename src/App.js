@@ -18,28 +18,44 @@ class LambdaDemo extends Component {
       .then(json => this.setState({ loading: false, msg: json.msg }))
   }
 
-  fetchInstagram = api => e => {
+  fetchInstagram = () => e => {
     e.preventDefault()
 
     this.setState({ loading: true })
-    fetch("/.netlify/functions/" + api)
+    fetch("/.netlify/functions/instagram")
       .then(response => response.json())
       .then(json => {console.log(json); return json;})
-      .then(json => this.setState({ loading: false, msg: json[0].link }))
+      .then(json => this.setState({ loading: false, msg: json }))
   }
 
   render() {
-    // const { loading, msg } = this.state
-    return (<div></div>)
-    // return (
-    //   <p>
-    //     <button onClick={this.handleClick("hello")}>{loading ? "Loading..." : "Call Lambda"}</button>
-    //     <button onClick={this.handleClick("async-dadjoke")}>{loading ? "Loading..." : "Call Async Lambda"}</button>
-    //     <button onClick={this.fetchInstagram("instagram")}>{loading ? "Loading..." : "Get Instagram"}</button>
-    //     <br />
-    //     <span>{msg}</span>
-    //   </p>
-    // )
+    const { loading, msg } = this.state
+    return (
+      <div>
+      <p>
+        <button onClick={this.fetchInstagram()}>{loading ? "Loading..." : "Get Instagram"}</button>
+        </p>
+        {!!msg && msg.map(post => (
+          <div key={post.id}>
+                {(() => {
+                  if (post.images) {
+                    return (
+                      <img
+                      
+                        src={post.images.standard_resolution.url}
+                        alt={post.caption}
+                      />
+                    )
+                  }
+                  return null
+                }
+              )()}
+              </div>
+              ))}
+
+        {/* <span>{!!msg && msg.link}</span> */}
+        </div>
+    )
   }
 }
 
