@@ -1,61 +1,66 @@
-import React, { Component } from "react"
+import React, { Component } from "react";
 // import logo from "./logo.svg"
-import "./App.css"
+import "./App.css";
 
 class LambdaDemo extends Component {
   constructor(props) {
-    super(props)
-    this.state = { loading: false, msg: null }
+    super(props);
+    this.state = { loading: false, msg: null };
   }
 
   handleClick = api => e => {
-    e.preventDefault()
+    e.preventDefault();
 
-    this.setState({ loading: true })
+    this.setState({ loading: true });
     fetch("/.netlify/functions/" + api)
       .then(response => response.json())
-      .then(json => {console.log(json); return json;})
-      .then(json => this.setState({ loading: false, msg: json.msg }))
-  }
+      .then(json => {
+        console.log(json);
+        return json;
+      })
+      .then(json => this.setState({ loading: false, msg: json.msg }));
+  };
 
   fetchInstagram = () => e => {
-    e.preventDefault()
+    e.preventDefault();
 
-    this.setState({ loading: true })
+    this.setState({ loading: true });
     fetch("/.netlify/functions/instagram")
       .then(response => response.json())
-      .then(json => {console.log(json); return json;})
-      .then(json => this.setState({ loading: false, msg: json }))
-  }
+      .then(json => {
+        console.log(json);
+        return json;
+      })
+      .then(json => this.setState({ loading: false, msg: json }));
+  };
 
   render() {
-    const { loading, msg } = this.state
+    const { loading, msg } = this.state;
     return (
       <div>
-      <p>
-        <button onClick={this.fetchInstagram()}>{loading ? "Loading..." : "Get Instagram"}</button>
+        <p>
+          <button onClick={this.fetchInstagram()}>
+            {loading ? "Loading..." : "Get Instagram"}
+          </button>
         </p>
-        {!!msg && msg.map(post => (
-          <div key={post.id}>
-                {(() => {
-                  if (post.images) {
-                    return (
-                      <img
-                      
-                        src={post.images.standard_resolution.url}
-                        alt={post.caption}
-                      />
-                    )
-                  }
-                  return null
+        {!!msg &&
+          msg.map(post => (
+            <div key={post.id}>
+              {(() => {
+                if (post.images) {
+                  return (
+                    <img
+                      src={post.images.standard_resolution.url}
+                      alt={post.caption}
+                    />
+                  );
                 }
-              )()}
-              </div>
-              ))}
-
-        {/* <span>{!!msg && msg.link}</span> */}
-        </div>
-    )
+                return null;
+              })()}
+            </div>
+          ))}
+      </div>
+    );
   }
 }
 
@@ -65,18 +70,17 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <h3>
-            <a href="https://instagram.com/plain.site">plain<i>.</i>site</a>
-            
+            <a href="https://instagram.com/plain.site">
+              plain<i>.</i>site
+            </a>
           </h3>
           {/* <h3><a href="https://instagram.com/plain.site">plain.site</a></h3> */}
-          <div>
-            {/* <span className="url" >https://plainest.site</span> */}
-          </div>
+          <div>{/* <span className="url" >https://plainest.site</span> */}</div>
           <LambdaDemo />
         </header>
       </div>
-    )
+    );
   }
 }
 
-export default App
+export default App;
