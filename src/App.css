@@ -17,30 +17,53 @@
   font-size: calc(12px + 2vmin);
   color: white;
 }
+
 .App-header a:link, a:visited {
   color: #F6E05E;
   text-decoration: none;
 }
 .App-header h3 {
+  /* font-family: 'Lekton', sans-serif; */
+  font-family: 'Work Sans', sans-serif;
   font-weight: 400;
-  letter-spacing: 0em;
+  /* border:1px solid #fff; */
+  letter-spacing: 0.01em;
   margin-bottom:0em;
-  font-size: 1.8em;
+  /* vertical-align:middle; */
+  font-size: 1em;
+  /* line-height:2em; */
 }
 .App-header h3::before {
   content: '@';
-  font-size: 0.8em;
+  /* font-size: 0.6em; */
+  /* vertical-align:5%; */
+  vertical-align: middle;
+  font-family: 'Lekton', sans-serif;
   color: #A0AEC0;
-  margin-right:0.1em;
+  color: #E2E8F0;
+  font-weight:400;
+  /* padding-top: -0.5em; */
+  margin-right:0.05em;
+}
+.App-header i {
+  color: #E2E8F0;
+  font-style:normal;
+  font-weight:300;
+  font-family: 'Work Sans', sans-serif;
+  /* font-family:sans-serif; */
+  /* letter-spacing:-0.1em; */
+  /* color: #fff; */
 }
 .App-header .url {
-  font-weight: 600;
+  font-weight: 300;
   display:inline;
-  padding:4px 8px;
-  background: #2D3748;
+  padding:3px 6px;
+  /* background: #2D3748; */
   letter-spacing: 0.15em;
   font-size: 0.45em;
-  text-transform: uppercase;
+  border-radius: 0.25em;
+  /* text-transform: uppercase; */
+  font-family: 'Oswald', sans-serif;
 }
 
 .App-link {

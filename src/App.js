@@ -48,12 +48,13 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          
           <h3>
-            <a href="https://instagram.com/plain.site">plain.site</a>
+            <a href="https://instagram.com/plain.site">plain<i>.</i>site</a>
+            
           </h3>
+          {/* <h3><a href="https://instagram.com/plain.site">plain.site</a></h3> */}
           <div>
-            <span className="url" >https://plainest.site</span>
+            {/* <span className="url" >https://plainest.site</span> */}
           </div>
           <LambdaDemo />
         </header>
