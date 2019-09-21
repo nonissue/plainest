@@ -21,6 +21,7 @@ class LambdaDemo extends Component {
       .then(json => this.setState({ loading: false, msg: json.msg }));
   };
 
+  // lol im using axios and fetch?
   fetchInstagram = () => e => {
     e.preventDefault();
 
