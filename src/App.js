@@ -36,9 +36,13 @@ class ImageGrid extends Component {
     return (
       <div>
 
-        {!!loading && <h1>Loading...</h1> }
+        {/* {!!loading && <h1 className="loading">Loading...</h1> } */}
   
-        {/* make this masonry style grid? */}
+        {/* 
+          make this masonry style grid?
+          have image entrance trail?
+          image link to post?
+         */}
         <div className="image-grid">
         {!!posts &&
           posts.map(post => (

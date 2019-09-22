@@ -11,33 +11,41 @@
   font-family: 'Work Sans', sans-serif;
   background-color: #1A202C;
   background-color: #121212;
+  animation: fadein 1s;
+  /* animation-timing-function: steps(5, start); */
   /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
   align-items: left;
   justify-content: center;
-  font-size: calc(12px + 2vmin);
-  color: white;
+  font-size: calc(12px + 1.5vmin);
+  /* color: white; */
 }
 
 .App-header a:link, a:visited {
   color: #F6E05E;
-  color: #fff;
+  color: rgb(233, 233, 233);
   text-decoration: none;
 }
 
 .App-header h1 {
-  font-size: 1.3em;
+  font-size: 1.2em;
+  color: #ebebeb;
   margin-bottom:0;
+  text-transform: uppercase;
+  font-family: 'Oswald', serif;
+  letter-spacing: 0.00em;
+  font-weight: 500;
 }
 
 .App-header h3 {
-  opacity: 0.9;
+  /* opacity: 1; */
   margin-top:0.2em;
   /* margin-top: 5vh;   */
   /* font-family: 'Lekton', sans-serif; */
   font-family: 'Lekton', sans-serif;
   font-weight: 400;
+  color: #d5d9e0;
   /* text-transform: uppercase; */
   /* border:1px solid #fff; */
   /* letter-spacing: 0.04em; */
@@ -45,6 +53,10 @@
   /* vertical-align:middle; */
   font-size: 0.7em;
   /* line-height:2em; */
+}
+
+.App-header h3 > a:link, a:visited {
+  color:#b9bfc7;
 }
 
 .App-header h3::before {
@@ -55,7 +67,8 @@
   /* vertical-align: middle; */
   font-family: 'Lekton', sans-serif;
   color: #A0AEC0;
-  color: #E2E8F0;
+  color: #697077;
+  /* color: #E2E8F0; */
   font-weight:400;
   /* padding-top: -0.5em; */
   margin-right:0.1em;
@@ -92,22 +105,31 @@
   display:flex;
   flex-direction: row;
   flex-wrap:wrap;
-  max-width: 90vw;
+  max-width: 60vw;
   margin: 2vh auto;
   /* width:100%; */
 }
 
 .image-grid > div {
-  width: 31%;
+  width: 60vw;
+  /* min-width: 50vw; */
   padding: 1%;
+}
+
+.loading {
+  animation: fadein 2s;
+  color: #E2E8F0;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 /* stagger appearance? */
 .image-grid > div > img {
   -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
-  animation: fadein 2s;
+  animation: fadein 3s;
   width: 100%;
-  height: 300px;
+  height: 40vw;
   object-fit: cover;
 }
 
