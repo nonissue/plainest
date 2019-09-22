@@ -1,8 +1,6 @@
 const axios = require("axios");
 
 /*
-
-
 We can POST from ios shortcuts and construct a request body
 
 event.body ->
@@ -15,6 +13,7 @@ additional data required:
     spotify url (hit another api? async update object after it's created?)
     data added
 
+NOTE: Use promise.all to wait for the final data then write?
 db document to write:
     name
     artist
@@ -32,19 +31,37 @@ Return:
 
 */
 
-export async function handler(event, context) {
+async function getSpotifyURL(name, artist) {
+  console.log('Function `getSpotifyURL` invoked', name, artist);
   const spotifyEndpoint = "http://spotify-car-play.herokuapp.com/search";
+  const target = `${spotifyEndpoint}/${name}+${artist}/track`;
+  try {
+    const response = await axios.get(target);
+    const uri  = response.data.tracks[0].uri;
+    const spotifyURL = uri.replace("spotify:track:", "https://open.spotify.com/track/");
+  
+    return spotifyURL;
+  } catch(err) {
+    // console.log("Error!", err);
+    return Promise.reject(new Error(400));
+
+    // return err;
+  }
+  
+
+}
+
+export async function handler(event, context) {
+  // const spotifyEndpoint = "http://spotify-car-play.herokuapp.com/search";
   const data = JSON.parse(event.body);
   console.log('Function `add-song` invoked', data)
   const { name, artist } = data;
   try {
-    const target = `${spotifyEndpoint}/${name}+${artist}/track`;
-    const response = await axios.get(target);
-    console.log(response.data.tracks)
 
     // an array is returned and we only want the first item
-    const uri  = response.data.tracks[0].uri;
-    const spotifyURL = uri.replace("spotify:track:", "https://open.spotify.com/track/");
+    // const uri  = response.data.tracks[0].uri;
+    // const spotifyURL = uri.replace("spotify:track:", "https://open.spotify.com/track/");
+    const spotifyURL = await getSpotifyURL(name, artist);
 
     console.log(spotifyURL);
     return {
