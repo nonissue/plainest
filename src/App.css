@@ -8,7 +8,9 @@
 }
 
 .App-header {
+  font-family: 'Work Sans', sans-serif;
   background-color: #1A202C;
+  background-color: #121212;
   /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
@@ -20,39 +22,50 @@
 
 .App-header a:link, a:visited {
   color: #F6E05E;
+  color: #fff;
   text-decoration: none;
 }
 
+.App-header h1 {
+  font-size: 1.3em;
+  margin-bottom:0;
+}
+
 .App-header h3 {
-  margin-top: 10vh;  
+  opacity: 0.9;
+  margin-top:0.2em;
+  /* margin-top: 5vh;   */
   /* font-family: 'Lekton', sans-serif; */
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'Lekton', sans-serif;
   font-weight: 400;
+  /* text-transform: uppercase; */
   /* border:1px solid #fff; */
-  letter-spacing: 0.01em;
+  /* letter-spacing: 0.04em; */
   margin-bottom:0em;
   /* vertical-align:middle; */
-  font-size: 1em;
+  font-size: 0.7em;
   /* line-height:2em; */
 }
 
 .App-header h3::before {
   content: '@';
+  /* font-size: 1em; */
   /* font-size: 0.6em; */
-  /* vertical-align:5%; */
-  vertical-align: middle;
+  /* vertical-align:10%; */
+  /* vertical-align: middle; */
   font-family: 'Lekton', sans-serif;
   color: #A0AEC0;
   color: #E2E8F0;
   font-weight:400;
   /* padding-top: -0.5em; */
-  margin-right:0.05em;
+  margin-right:0.1em;
 }
 
 .App-header i {
   color: #E2E8F0;
+  opacity: 0.7;
   font-style:normal;
-  font-weight:300;
+  /* font-weight:700; */
   font-family: 'Work Sans', sans-serif;
   /* font-family:sans-serif; */
   /* letter-spacing:-0.1em; */
@@ -80,12 +93,13 @@
   flex-direction: row;
   flex-wrap:wrap;
   max-width: 90vw;
-  margin: 10vh auto;
+  margin: 2vh auto;
   /* width:100%; */
 }
 
 .image-grid > div {
-  width: 25%;
+  width: 31%;
+  padding: 1%;
 }
 
 /* stagger appearance? */
@@ -93,6 +107,8 @@
   -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
   animation: fadein 2s;
   width: 100%;
+  height: 300px;
+  object-fit: cover;
 }
 
 @keyframes fadein {

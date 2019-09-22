@@ -67,11 +67,13 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
+          <h1>plain site</h1>
           <h3>
             <a href="https://instagram.com/plain.site">
-              plain<i>.</i>site
+              plain.site
             </a>
           </h3>
+          
           {/* <h3><a href="https://instagram.com/plain.site">plain.site</a></h3> */}
           <div>{/* <span className="url" >https://plainest.site</span> */}</div>
           
