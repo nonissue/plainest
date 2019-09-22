@@ -8,63 +8,46 @@ class LambdaDemo extends Component {
     this.state = { loading: false, msg: null };
   }
 
-  handleClick = api => e => {
-    e.preventDefault();
-
+  componentDidMount() {
     this.setState({ loading: true });
-    fetch("/.netlify/functions/" + api)
+    fetch("/.netlify/functions/instagram")
+      // takes response stream and return a promise with body text as json
       .then(response => response.json())
-      .then(json => {
-        console.log(json);
-        return json;
-      })
-      .then(json => this.setState({ loading: false, msg: json.msg }));
-  };
+      // when our previous promise resolves and we know we have gotten our full stream
+      // then update the state
+      .then(data => this.setState({ loading: false, posts: data }));
+  }
 
   newInstagram = () => e => {
     e.preventDefault();
-    fetch("/.netlify/functions/instagram")
-      .then(response => response.json())
-      .then(json => {
-        console.log(json);
-        return json;
-      })
-      .then(json => this.setState({ loading: false, msg: json }));
-      // .then(json => this.setState({ loading: false, msg: json }));
-  }
-
-  // lol im using axios and fetch?
-  fetchInstagram = () => e => {
-    e.preventDefault();
-
     this.setState({ loading: true });
     fetch("/.netlify/functions/instagram")
+      // takes response stream and return a promise with body text as json
       .then(response => response.json())
-      .then(json => {
-        console.log(json);
-        return json;
-      })
-      .then(json => this.setState({ loading: false, msg: json }));
-  };
+      // when our previous promise resolves and we know we have gotten our full stream
+      // then update the state
+      .then(data => this.setState({ loading: false, posts: data }));
+  }
 
   render() {
-    const { loading, msg } = this.state;
+    const { loading, posts } = this.state;
     return (
       <div>
-        <p>
+        {/* <p>
           <button onClick={this.newInstagram()}>
             {loading ? "Loading..." : "Get Instagram"}
           </button>
-        </p>
+        </p> */}
 
-        {!!msg &&
-          msg.map(post => (
+        {!!loading && <h1>Loading...</h1> }
+
+        {!!posts &&
+          posts.map(post => (
             <div key={post.id}>
-              <p>{post.msg}</p>
+              {/* <p>{post.msg}</p> */}
               {(() => {
                 if (post.images) {
                   return (
-                    
                     <img
                       src={post.images.standard_resolution.url}
                       alt={post.caption}
