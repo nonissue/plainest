@@ -21,6 +21,18 @@ class LambdaDemo extends Component {
       .then(json => this.setState({ loading: false, msg: json.msg }));
   };
 
+  newInstagram = () => e => {
+    e.preventDefault();
+    fetch("/.netlify/functions/instagram")
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        return json;
+      })
+      .then(json => this.setState({ loading: false, msg: json }));
+      // .then(json => this.setState({ loading: false, msg: json }));
+  }
+
   // lol im using axios and fetch?
   fetchInstagram = () => e => {
     e.preventDefault();
@@ -40,16 +52,19 @@ class LambdaDemo extends Component {
     return (
       <div>
         <p>
-          <button onClick={this.fetchInstagram()}>
+          <button onClick={this.newInstagram()}>
             {loading ? "Loading..." : "Get Instagram"}
           </button>
         </p>
+
         {!!msg &&
           msg.map(post => (
             <div key={post.id}>
+              <p>{post.msg}</p>
               {(() => {
                 if (post.images) {
                   return (
+                    
                     <img
                       src={post.images.standard_resolution.url}
                       alt={post.caption}
