@@ -2,7 +2,7 @@ const axios = require('axios')
 
 export async function handler(event, context) {
   const endpoint = 'https://api.instagram.com/v1/users/self/media/recent'
-  const token = '1432025.1677ed0.f959efc0734b4decaf34ce8bde19a865'
+  const token = '20196334360.1677ed0.50589d21a9b743e9831e9aba8556268d'
   const limit = 5
 
   try {

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 // import logo from "./logo.svg"
 import "./App.css";
 
-class LambdaDemo extends Component {
+class ImageGrid extends Component {
   constructor(props) {
     super(props);
     this.state = { loading: false, msg: null };
@@ -15,7 +15,8 @@ class LambdaDemo extends Component {
       .then(response => response.json())
       // when our previous promise resolves and we know we have gotten our full stream
       // then update the state
-      .then(data => this.setState({ loading: false, posts: data }));
+      .then(data => this.setState({ loading: false, posts: data }))
+      .catch(console.log);
   }
 
   newInstagram = () => e => {
@@ -31,20 +32,17 @@ class LambdaDemo extends Component {
 
   render() {
     const { loading, posts } = this.state;
+
     return (
       <div>
-        {/* <p>
-          <button onClick={this.newInstagram()}>
-            {loading ? "Loading..." : "Get Instagram"}
-          </button>
-        </p> */}
 
         {!!loading && <h1>Loading...</h1> }
-
+  
+        {/* make this masonry style grid? */}
+        <div className="image-grid">
         {!!posts &&
           posts.map(post => (
             <div key={post.id}>
-              {/* <p>{post.msg}</p> */}
               {(() => {
                 if (post.images) {
                   return (
@@ -58,6 +56,7 @@ class LambdaDemo extends Component {
               })()}
             </div>
           ))}
+          </div>
       </div>
     );
   }
@@ -75,8 +74,9 @@ class App extends Component {
           </h3>
           {/* <h3><a href="https://instagram.com/plain.site">plain.site</a></h3> */}
           <div>{/* <span className="url" >https://plainest.site</span> */}</div>
-          <LambdaDemo />
+          
         </header>
+        <ImageGrid />
       </div>
     );
   }
