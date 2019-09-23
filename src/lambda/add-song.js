@@ -37,15 +37,32 @@ async function getSpotifyURL(name, artist) {
   const target = `${spotifyEndpoint}/${name}+${artist}/track`;
   try {
     const response = await axios.get(target);
+    // if response.data is empty, should be an error?
+    
+    console.log(response);
     const uri  = response.data.tracks[0].uri;
     const spotifyURL = uri.replace("spotify:track:", "https://open.spotify.com/track/");
   
     return spotifyURL;
-  } catch(err) {
-    // console.log("Error!", err);
-    return Promise.reject(new Error(400));
-
-    // return err;
+  } catch(error) {
+    // return Promise.reject("Not found");
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      // console.log(error.response.data);
+      // console.log(error.response.status);
+      // console.log(error.response.headers);
+      console.error("SpotifyURL not found", error.response.status);
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.log(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error!', error);
+    }
+    
   }
   
 
@@ -62,13 +79,13 @@ export async function handler(event, context) {
     // const uri  = response.data.tracks[0].uri;
     // const spotifyURL = uri.replace("spotify:track:", "https://open.spotify.com/track/");
     const spotifyURL = await getSpotifyURL(name, artist);
-
-    console.log(spotifyURL);
+    // console.log(spotifyURL);
+    
     return {
       statusCode: 200,
       // first, convert the json response to js object
       // then, extract only the data we want from that object
-      body: JSON.stringify({artist, name, spotifyURL})
+      body: JSON.stringify({artist, name, spotifyURL: spotifyURL || null})
     }
     /* http://spotify-car-play.herokuapp.com/search/Couples%20Therapy+Tylo%20$mith/track
     returns: 
@@ -79,7 +96,7 @@ export async function handler(event, context) {
     */
     // curl -X GET "https://api.spotify.com/v1/search?q=upc:00602537817016&type=album" -H "Authorization: Bearer {your access token}"
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     return {
       statusCode: err.statusCode || 500,
       body: JSON.stringify({
