@@ -18,3 +18,4 @@ https://github.com/netlify/netlify-lambda#netlify-lambda-serve-legacy-command-pr
 https://github.com/netlify/create-react-app-lambda/blob/f0e94f1d5a42992a2b894bfeae5b8c039a177dd9/package.json
 https://travishorn.com/netlify-lambda-functions-from-scratch-1186f61c659e
 https://dev.to/abusedmedia/using-netlify-functions-to-fetch-external-files-1a4b
+https://www.reddit.com/r/shortcuts/comments/d2l1o2/highresartwork_get_your_favorite_albums_artwork/
