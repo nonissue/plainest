@@ -28,17 +28,17 @@ function App() {
           </h3>
         </header>
         <Nav />
-        <Switch>
-          <Route exact path="/">
-            {loading ? <Loading /> : <InstaGrid posts={posts} />}
-          </Route>
-          <Route path="/images">
-            <ImageView />
-          </Route>
-        </Switch>
-
         {/* <ImageGrid /> */}
       </div>
+      <Switch>
+        <Route exact path="/">
+          {/* {loading ? <Loading /> : <InstaGrid posts={posts} />} */}
+          <InstaGrid posts={posts} />
+        </Route>
+        <Route path="/images">
+          <ImageView />
+        </Route>
+      </Switch>
     </Router>
   );
 }

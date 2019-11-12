@@ -135,7 +135,7 @@ a:visited {
 .image-grid > div > img {
   -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
   animation: fadein 2s;
-  width: 100%;
+  /* width: 100%; */
   display: block;
   object-fit: cover;
 }
