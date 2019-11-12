@@ -39,13 +39,15 @@ function App() {
         <div>
           <Switch>
             <Route exact path="/">
-              {/* {loading ? <Loading /> : <InstaGrid posts={posts} />} */}
-              <InstaGrid posts={posts} />
+              {loading ? <Loading /> : <InstaGrid posts={posts} />}
+              {/* <InstaGrid posts={posts} /> */}
             </Route>
             <Route path="/images">
               <ImageView />
             </Route>
-            <Route path="/about">{/* <About /> */}</Route>
+            <Route path="/about">
+              <About />
+            </Route>
           </Switch>
         </div>
       </div>
