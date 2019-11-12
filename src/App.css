@@ -10,6 +10,11 @@
   height: 40vmin;
 }
 
+.about {
+  width: 50vw;
+  margin:0px auto;
+}
+
 .App-header {
   background-color: #1a202c;
   background-color: #121212;
@@ -132,10 +137,10 @@ a:visited {
 }
 
 /* stagger appearance? */
-.image-grid > div > img {
+.image-grid img {
   -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
   animation: fadein 2s;
-  /* width: 100%; */
+  width: 100%;
   display: block;
   object-fit: cover;
 }

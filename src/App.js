@@ -4,6 +4,14 @@ import axios from "axios";
 import { Nav, Loading, InstaGrid, ImageView } from "./components";
 import "./App.css";
 
+function About() {
+  return (
+    <div class="about">
+      <p>Plainest.site is cooked up by @christiandy && @nonissue</p>
+    </div>
+  );
+}
+
 // home page
 function App() {
   // let loading = true;
@@ -26,19 +34,21 @@ function App() {
           <h3>
             <a href="https://instagram.com/plain.site">plain.site</a>
           </h3>
+          <Nav />
         </header>
-        <Nav />
-        {/* <ImageGrid /> */}
+        <div>
+          <Switch>
+            <Route exact path="/">
+              {/* {loading ? <Loading /> : <InstaGrid posts={posts} />} */}
+              <InstaGrid posts={posts} />
+            </Route>
+            <Route path="/images">
+              <ImageView />
+            </Route>
+            <Route path="/about">{/* <About /> */}</Route>
+          </Switch>
+        </div>
       </div>
-      <Switch>
-        <Route exact path="/">
-          {/* {loading ? <Loading /> : <InstaGrid posts={posts} />} */}
-          <InstaGrid posts={posts} />
-        </Route>
-        <Route path="/images">
-          <ImageView />
-        </Route>
-      </Switch>
     </Router>
   );
 }

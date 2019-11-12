@@ -8,7 +8,7 @@ export function Nav() {
         <Link to="/">Home</Link>
       </div>
       <div>
-        <Link to="/dashboard">??</Link>
+        <Link to="/about">??</Link>
       </div>
     </div>
   );
