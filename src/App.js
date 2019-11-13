@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import axios from "axios";
 import { Nav, Loading, InstaGrid, ImageView } from "./components";
 import "./App.css";
 
 function About() {
   return (
-    <div class="about">
+    <div className="about">
       <p>Plainest.site is cooked up by @christiandy && @nonissue</p>
     </div>
   );
@@ -14,7 +14,6 @@ function About() {
 
 // home page
 function App() {
-  // let loading = true;
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -30,17 +29,18 @@ function App() {
     <Router>
       <div className="App">
         <header className="App-header">
-          <h1>plain site</h1>
-          <h3>
-            <a href="https://instagram.com/plain.site">plain.site</a>
-          </h3>
+          <Link to="/">
+            <h1>plain site</h1>
+          </Link>
+          <a href="https://instagram.com/plain.site">
+            <h3>plain.site</h3>
+          </a>
           <Nav />
         </header>
         <div>
           <Switch>
             <Route exact path="/">
               {loading ? <Loading /> : <InstaGrid posts={posts} />}
-              {/* <InstaGrid posts={posts} /> */}
             </Route>
             <Route path="/images">
               <ImageView />

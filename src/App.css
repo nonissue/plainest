@@ -20,6 +20,7 @@
   background-color: #121212;
   animation: fadein 1s;
   margin-top: 4vh;
+  margin-bottom: 4vh;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -28,15 +29,15 @@
 }
 
 .App-header a:link,
-a:visited {
-  color: #f6e05e;
-  color: rgb(233, 233, 233);
+.App-header a:visited {
+  /* color: #f6e05e; */
+  /* color: rgb(233, 233, 233); */
+  color: #ff0000;
   text-decoration: none;
 }
 
 .App-header h1 {
   font-size: 1.2em;
-  color: #ebebeb;
   margin: 0;
   text-transform: uppercase;
   font-family: "Oswald", sans-serif;
@@ -53,9 +54,10 @@ a:visited {
   font-size: 0.7em;
 }
 
-.App-header h3 > a:link, a:visited {
-    color: #b9bfc7;
-  }
+/* .App-header ha:link {
+  color: #d5d9e0;
+
+} */
 
 .App-header h3::before {
   content: "@";
@@ -89,27 +91,37 @@ a:visited {
 }
 
 .nav {
-  margin-bottom: 2vh;
+  margin-bottom: 3vh;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 2vh;
-  width: 140px;
+  /* margin-top: 2vh; */
+  /* width: 140px; */
   display: flex;
   flex-direction: row;
+  position:absolute;
+  top: 5.75vh;
+  right:4vh;
 }
 
-.nav a {
+.nav a, .nav a:link, .nav a:visited {
   padding: 0;
   display: block;
   margin: 0;
-  padding: 3px 5px;
+  line-height:2em;
+  /* padding-top: 0.1em; */
+  /* padding: 5px 3px 0px 3px; */
+  /* padding: 0.25em; */
+  /* text-align:center; */
+  /* vertical-align: center; */
   margin-right: 10px;
-  text-align: center;
+  /* text-align: center; */
   border: 1px solid #666;
-  width: 50px;
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
   color: #fff;
-  font-weight: normal;
-  font-size:0.6em;
+  font-weight: 400;
+  font-size:0.5em;
   text-decoration: none;
 }
 
