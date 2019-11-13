@@ -94,8 +94,6 @@
   margin-bottom: 3vh;
   margin-left: auto;
   margin-right: auto;
-  /* margin-top: 2vh; */
-  /* width: 140px; */
   display: flex;
   flex-direction: row;
   position:absolute;
@@ -108,13 +106,7 @@
   display: block;
   margin: 0;
   line-height:2em;
-  /* padding-top: 0.1em; */
-  /* padding: 5px 3px 0px 3px; */
-  /* padding: 0.25em; */
-  /* text-align:center; */
-  /* vertical-align: center; */
   margin-right: 10px;
-  /* text-align: center; */
   border: 1px solid #666;
   border-radius: 50%;
   width: 2em;
