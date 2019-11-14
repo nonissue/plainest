@@ -5,7 +5,7 @@ const getId = require("./utils/getId");
 const q = faunadb.query;
 const client = new faunadb.Client({
   // Move somewhere secure
-  secret: "fnADdIp0jNACCevamC0-xHQmlmdc2B7qSw8bsgAp"
+  secret: "fnADdJQsv_ACCk1D6Izxwmf6TcbbjhLmbAGRdcGC"
 });
 
 exports.handler = (event, context) => {

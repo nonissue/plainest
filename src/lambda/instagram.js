@@ -12,7 +12,7 @@ export async function handler(event, context) {
       `${endpoint}?access_token=${token}&count=${limit}`
     );
     const { data: posts } = response.data;
-    // console.log(posts);
+    console.log(posts);
     return {
       statusCode: 200,
       // first, convert the json response to js object
