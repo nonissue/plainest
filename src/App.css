@@ -32,7 +32,7 @@
 .App-header a:visited {
   /* color: #f6e05e; */
   /* color: rgb(233, 233, 233); */
-  color: #ff0000;
+  color: #fff;
   text-decoration: none;
 }
 
@@ -40,31 +40,28 @@
   font-size: 1.2em;
   margin: 0;
   text-transform: uppercase;
-  font-family: "Oswald", sans-serif;
+  font-family: "Oswald", serif, sans-serif;
   letter-spacing: 0em;
-  font-weight: 500;
+  font-weight: 700;
+  /* letter-spacing: 1px; */
 }
 
 .App-header h3 {
   margin-top: 0.2em;
   font-family: "Lekton", sans-serif;
-  font-weight: 400;
+  font-weight: 600;
   color: #d5d9e0;
   margin-bottom: 0em;
   font-size: 0.7em;
 }
-
-/* .App-header ha:link {
-  color: #d5d9e0;
-
-} */
 
 .App-header h3::before {
   content: "@";
   font-family: "Lekton", sans-serif;
   color: #a0aec0;
   color: #697077;
-  font-weight: 400;
+  color: #838b94;
+  font-weight: 600;
   margin-right: 0.1em;
 }
 
@@ -97,7 +94,7 @@
   display: flex;
   flex-direction: row;
   position:absolute;
-  top: 5.75vh;
+  top: 5vh;
   right:4vh;
 }
 
@@ -107,13 +104,13 @@
   margin: 0;
   line-height:2em;
   margin-right: 10px;
-  border: 1px solid #666;
-  border-radius: 50%;
+  /* border: 1px solid #666; */
+  border-radius: 1.5em;
   width: 2em;
   height: 2em;
   color: #fff;
-  font-weight: 400;
-  font-size:0.5em;
+  font-weight: 600;
+  font-size:0.75em;
   text-decoration: none;
 }
 
@@ -143,8 +140,9 @@
 
 /* stagger appearance? */
 .image-grid img {
-  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
-  animation: fadein 2s;
+   /* Safari, Chrome and Opera > 12.1 */
+  /* -webkit-animation: fadein 2s; */
+  /* animation: fadein 2s; */
   width: 100%;
   display: block;
   object-fit: cover;
@@ -159,7 +157,37 @@
 }
 
 .image-view {
-  width: 100vw;
+  /* width: 100vw; */
+  overflow:hidden;
+}
+
+.back {
+  position:absolute;
+  top: 5.75vh;
+  left:4vh;
+  color: #fff;
+}
+
+.back a:link, .back a:visited {
+  padding: 0;
+  display: block;
+  margin: 0;
+  line-height:2em;
+  margin-right: 10px;
+  /* border: 1px solid #666; */
+  border-radius: 1.5em;
+  width: 2em;
+  height: 2em;
+  color: #fff;
+  font-weight: 600;
+  font-size:0.75em;
+  text-decoration: none;
+}
+
+.back a:hover {
+  border:1px solid #fff;
+  background: #fff;
+  color: #333;
 }
 
 @keyframes fadein {
