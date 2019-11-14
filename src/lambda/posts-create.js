@@ -5,7 +5,6 @@ const faunadb = require("faunadb");
 /* configure faunaDB Client with our secret */
 const q = faunadb.query;
 const client = new faunadb.Client({
-  // Move somewhere secure
   secret: "fnADdJQsv_ACCk1D6Izxwmf6TcbbjhLmbAGRdcGC"
 });
 
