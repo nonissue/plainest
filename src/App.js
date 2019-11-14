@@ -4,6 +4,8 @@ import axios from "axios";
 import { Nav, Loading, InstaGrid, ImageView } from "./components";
 import "./App.css";
 
+import api from "./utils/api";
+
 function About() {
   return (
     <div className="about">
@@ -23,6 +25,23 @@ function App() {
       setLoading(false);
     };
     fetchData();
+
+    // api.create(posts[0]).then((response) => {
+    //   console.log(response)
+    //   // remove temporaryValue from state and persist API response
+    //   // const persistedState = removeOptimisticTodo(todos).concat(response)
+    //   // Set persisted value to state
+    //   // this.setState({
+    //   //   todos: persistedState
+    //   // })
+    // }).catch((e) => {
+    //   console.log('An API error occurred', e)
+    //   // const revertedState = removeOptimisticTodo(todos)
+    //   // Reset to original state
+    //   // this.setState({
+    //   //   todos: revertedState
+    //   // })
+    // });
   }, []);
 
   return (
