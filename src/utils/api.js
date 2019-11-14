@@ -1,3 +1,5 @@
+const fetch = require("node-fetch").default;
+
 const create = data => {
   return fetch("/.netlify/functions/posts-create", {
     body: JSON.stringify(data),
