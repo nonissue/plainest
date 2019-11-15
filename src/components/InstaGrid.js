@@ -5,28 +5,23 @@ import { GridItem } from "./GridItem";
 const list = {
   visible: {
     opacity: 1,
-    x: 0,
     transition: {
-      staggerChildren: 0.1
+      staggerChildren: 0.05,
+      delayChildren: 0.3
     }
   },
   enter: {
-    opacity: 1,
-    x: 0,
-    y: 0
+    opacity: 1
   },
   hidden: {
-    // scale: 0.5,
-    x: 0,
     opacity: 0,
-    zIndex: 0
+    staggerChildren: 0.2
   },
   exit: {
     opacity: 0,
-    x: -500,
-    zIndex: 0,
     transition: {
-      duration: 0.5
+      duration: 0.5,
+      staggerChildren: 0.2
     }
   }
 };
@@ -37,7 +32,7 @@ export function InstaGrid({ posts }) {
   return (
     <motion.div
       variants={list}
-      initial="hidden"
+      initial={false}
       animate="visible"
       enter="visible"
       exit="exit"

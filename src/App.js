@@ -46,11 +46,11 @@ function App() {
 
   return (
     <div className="App">
-      {location.pathname == "/" ? (
+      {location.pathname === "/" ? (
         ""
       ) : (
         <div className="back">
-          <Link to="/">←</Link>
+          <Link to="/">{"<"}</Link>
         </div>
       )}
       <header className="App-header">
@@ -63,12 +63,11 @@ function App() {
         <Nav />
       </header>
       <div>
-        {/* <button onClick={changePosts}>Test</button> */}
+        {/* <AnimatePresence exitBeforeEnter intial={false}> */}
         <AnimatePresence exitBeforeEnter>
           <Switch location={location} key={location.pathname}>
             <Route exact path="/">
               {loading ? <Loading /> : <InstaGrid posts={posts} />}
-              {/* <InstaGrid posts={posts} /> */}
             </Route>
             <Route path="/images">
               <ImageView />
@@ -76,7 +75,6 @@ function App() {
             <Route exact path="/about">
               <About />
             </Route>
-            {/* <Route path="/home" component={InstaGrid} /> */}
           </Switch>
         </AnimatePresence>
       </div>

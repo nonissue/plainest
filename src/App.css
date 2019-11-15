@@ -99,13 +99,12 @@
   margin: 0;
   line-height:2em;
   margin-right: 10px;
-  /* border: 1px solid #666; */
   border-radius: 1.5em;
   width: 2em;
   height: 2em;
   color: #fff;
   font-weight: 600;
-  font-size:0.75em;
+  font-size:0.75rem;
   text-decoration: none;
 }
 
@@ -152,6 +151,11 @@
   letter-spacing: 0.1em;
 }
 
+.frame {
+  overflow:hidden;
+  /* border:10px solid #ff0000; */
+}
+
 .image-view {
   /* width: 100vw; */
   /* position: absolute; */
@@ -167,7 +171,7 @@
 
 .back {
   position:absolute;
-  top: 5.75vh;
+  top: 5vh;
   left:4vh;
   color: #fff;
 }
@@ -178,13 +182,13 @@
   margin: 0;
   line-height:2em;
   margin-right: 10px;
-  /* border: 1px solid #666; */
   border-radius: 1.5em;
+
   width: 2em;
   height: 2em;
   color: #fff;
   font-weight: 600;
-  font-size:0.75em;
+  font-size:0.75rem;
   text-decoration: none;
 }
 
