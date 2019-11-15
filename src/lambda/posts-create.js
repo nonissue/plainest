@@ -17,6 +17,8 @@ exports.handler = async (event, context) => {
     data: data
   };
 
+  // console.log("")
+
   /* construct the fauna query */
   return client
     .query(q.Create(q.Ref("classes/posts"), postItem))

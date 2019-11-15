@@ -1,7 +1,7 @@
 import { axios } from "axios";
 
 async function create(data) {
-  axios.post(`/.netlify/functions/posts-create`, data).then(response => {
+  return axios.post(`/.netlify/functions/posts-create`, data).then(response => {
     return response.json();
   });
 }

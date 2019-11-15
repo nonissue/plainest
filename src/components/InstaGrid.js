@@ -1,20 +1,37 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
 import { GridItem } from "./GridItem";
 
 const list = {
   visible: {
     opacity: 1,
+    x: 0,
     transition: {
-      when: "beforeChildren",
-      staggerChildren: 0.1
+      staggerChildren: 0.1,
+      delayChildren: 0
     }
   },
+  enter: {
+    opacity: 1,
+    x: 0,
+    y: 0
+  },
   hidden: {
+    // scale: 0.5,
+    x: -1000,
     opacity: 0,
+    zIndex: 0
+    // transition: {
+    //   when: "beforeChildren"
+    // }
+  },
+  exit: {
+    opacity: 0,
+    x: -500,
+    zIndex: 0,
     transition: {
-      when: "afterChildren"
+      // when: "afterChildren",
+      duration: 0.5
     }
   }
 };
@@ -23,11 +40,12 @@ const list = {
 
 export function InstaGrid({ posts }) {
   return (
-    // <AnimatePresence>
     <motion.div
       variants={list}
       initial="hidden"
       animate="visible"
+      enter="visible"
+      exit="exit"
       className="image-grid"
     >
       {/* {console.log("posts", posts)} */}

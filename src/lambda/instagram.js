@@ -1,4 +1,5 @@
 const axios = require("axios");
+import { api } from "../utils/api";
 // cache results, poll for changes?
 
 export async function handler(event, context) {
