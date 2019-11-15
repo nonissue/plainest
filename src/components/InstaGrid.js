@@ -9,6 +9,7 @@ const list = {
     transition: {
       staggerChildren: 0.1,
       delayChildren: 0
+      // duration: 0.1
     }
   },
   enter: {
@@ -18,7 +19,7 @@ const list = {
   },
   hidden: {
     // scale: 0.5,
-    x: -1000,
+    x: 0,
     opacity: 0,
     zIndex: 0
     // transition: {
@@ -27,7 +28,7 @@ const list = {
   },
   exit: {
     opacity: 0,
-    x: -500,
+    x: -1000,
     zIndex: 0,
     transition: {
       // when: "afterChildren",
