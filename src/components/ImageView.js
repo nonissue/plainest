@@ -10,37 +10,28 @@ const transition = {
 const variants = {
   enter: shown => ({
     x: shown ? -500 : 500,
-    scale: 1,
     opacity: 0,
-    y: 0,
     zIndex: 10,
     transition: { duration: 0.5 }
   }),
   hidden: {
-    x: 1000,
+    x: 400,
     opacity: 0
   },
   center: {
     zIndex: 0,
     x: 0,
-    y: 0,
     opacity: 1,
     transition: {
-      duration: 0.5
-      // staggerChildren: 5,
-      // delayChildren: 5
+      duration: 0.3
     }
   },
   exit: shown => ({
     zIndex: 1,
     x: shown < 0 ? -500 : 500,
     opacity: 0,
-    y: 0,
-    // scale: 0.8,
     transition: {
       duration: 0.5
-      // staggerChildren: 1,
-      // delayChildren: 1
     }
   })
 };
@@ -50,35 +41,24 @@ function useQuery() {
 }
 
 export function ImageView({ src }) {
-  const [shown, setShown] = useState(false);
+  // const [shown, setShown] = useState(false);
 
-  useEffect(() => {
-    setShown(true);
-  }, []);
+  // useEffect(() => {
+  //   setShown(true);
+  // }, []);
 
   let query = useQuery();
 
   return (
     <div className="image-view">
-      <div className="back">
-        <Link to="/">←</Link>
-      </div>
       <motion.div
         positionTransition
         variants={variants}
         initial="hidden"
         animate="center"
-        // class="image-view"
-        // enter="visible"
         exit="exit"
-        // transition={{ duration: 1, delayChildren: 1 }}
       >
-        <img
-          src={query.get("src")}
-          // key={query.get("src")}
-          className="image-view"
-          alt="instagram"
-        />
+        <img src={query.get("src")} className="image-view" alt="instagram" />
       </motion.div>
     </div>
   );
