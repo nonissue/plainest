@@ -1,0 +1,35 @@
+https://fauna.com/blog/tutorial-how-to-create-and-query-a-ledger-with-faunadb
+
+CreateIndex({
+  name: "posts-fechDate-sorted-reverse",
+  source: Collection("posts"),
+  values: [
+    { field: ["data", "fetchDate"], reverse: true },
+    { field: ["ref"] }
+  ]
+})
+
+Map(
+  Paginate(Match(Index("all_posts"))),
+  Lambda(
+    "X",
+    Select(["data", "fetchDate"], Get(Var("X")))
+  )
+)
+
+Map(
+  Paginate(Match(Index("all_posts")), { size: 1 }),
+  Lambda("X", Get(Var("X")))
+)
+
+Map(
+  Paginate(Match(Index("posts_fetchdate")), { size: 1 }),
+  Lambda("X", Get(Var("X")))
+)
+
+
+# Gets oldest posts
+Paginate(Match(Index("posts_fetchdate")), {size: 1}) 
+
+# Gets latest posts
+Paginate(Match(Index("posts_fetchdate_latest")), {size: 1})

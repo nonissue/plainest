@@ -28,4 +28,5 @@ yarn-error.log*
 .netlify
 
 # Built lambda folder
-# lambda
+# /lambda
+
