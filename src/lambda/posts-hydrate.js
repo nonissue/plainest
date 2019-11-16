@@ -28,7 +28,8 @@ exports.handler = async (event, context) => {
   console.log("Function `posts-create` invoked");
 
   try {
-    res = await axios(`http://localhost:9000/instagram`);
+    // res = await axios(`http://localhost:9000/instagram`);
+    res = await axios(`/.netlify/functions/instagram`);
   } catch (err) {
     return {
       statusCode: 400,

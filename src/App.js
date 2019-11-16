@@ -63,7 +63,6 @@ function App() {
         <Nav />
       </header>
       <div>
-        {/* <AnimatePresence exitBeforeEnter intial={false}> */}
         <AnimatePresence exitBeforeEnter>
           <Switch location={location} key={location.pathname}>
             <Route exact path="/">
