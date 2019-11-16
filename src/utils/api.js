@@ -6,6 +6,12 @@ async function create(data) {
   });
 }
 
+async function hydrate() {
+  return axios.get(`/.netlify/functions/instagram`).then(response => {
+    return response.json();
+  });
+}
+
 const readAll = () => {
   return axios.get("/.netlify/functions/posts-read-all").then(response => {
     return response.json();
@@ -25,6 +31,7 @@ const deletePost = postId => {
 export default {
   create: create,
   readAll: readAll,
+  hydrate: hydrate,
   // update: update,
   delete: deletePost
   // batchDelete: batchDeleteTodo
