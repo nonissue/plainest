@@ -23,12 +23,16 @@ const client = new faunadb.Client({
 
 /* export our lambda function as named "handler" export */
 exports.handler = async (event, context) => {
+  // resolve the discprenacy between dev function calls and prod?
+  const apiEndpoint = true
+    ? // process.env.NODE_ENV === "development"
+      "http://localhost:9000/instagram"
+    : "/.netlify/functions/instagram";
   let res;
-
-  console.log("Function `posts-create` invoked");
+  console.log("Function `posts-hydrate` invoked @ " + process.env.NODE_ENV);
 
   try {
-    res = await axios(`http://localhost:9000/instagram`);
+    res = await axios(`${apiEndpoint}`);
   } catch (err) {
     return {
       statusCode: 400,

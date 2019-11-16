@@ -7,6 +7,8 @@ export async function handler(event, context) {
   const token = "20196334360.1677ed0.50589d21a9b743e9831e9aba8556268d";
   const limit = 10;
 
+  console.log(process.env.NODE_ENV);
+
   try {
     // perform our axios data request
     const response = await axios.get(

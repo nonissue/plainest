@@ -6,22 +6,22 @@ const list = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.05,
-      delayChildren: 0.3
+      // staggerChildren: 0.5,
+      delayChildren: 0.1
     }
   },
   enter: {
     opacity: 1
   },
   hidden: {
-    opacity: 0,
+    // opacity: 0,
     staggerChildren: 0.2
   },
   exit: {
     opacity: 0,
     transition: {
-      duration: 0.5,
-      staggerChildren: 0.2
+      duration: 1,
+      staggerChildren: 0
     }
   }
 };
@@ -32,7 +32,7 @@ export function InstaGrid({ posts }) {
   return (
     <motion.div
       variants={list}
-      initial={false}
+      initial="hidden"
       animate="visible"
       enter="visible"
       exit="exit"

@@ -37,12 +37,12 @@ function useQuery() {
 }
 
 export function ImageView() {
-  // const [shown, setShown] = useState(false);
+  const [shown, setShown] = useState(false);
   const [img, setImg] = useState(null);
   let query = useQuery();
 
   useEffect(() => {
-    // setShown(true);
+    setShown(true);
     setImg(query.get("src"));
   }, [query]);
 
@@ -63,7 +63,6 @@ export function ImageView() {
         ) : (
           "No image found"
         )}
-        {/* {console.log(src)} */}
       </motion.div>
     </div>
   );
