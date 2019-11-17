@@ -6,3 +6,10 @@
 * [ ] have loading component fade in and fade out, and be shown for a minimum amount of time?
 * [ ] analytics
 * [ ] don't fade in home page when returning from ImageView
+* [ ] Move CSS to styled-components so it's inline
+
+# Bugs
+
+* [ ] triggering a second animate event before first one is finished results in frozen ui.
+* [ ] Figure out how framer motion actually works
+* [ ] better implementation of router
