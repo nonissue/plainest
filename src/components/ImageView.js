@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] };
@@ -11,8 +11,7 @@ const variants = {
     // y: shown ? -400 : 400
   }),
   hidden: shown => ({
-    opacity: 0,
-    x: shown ? -10 : 10
+    opacity: 0
     // y: shown ? -10 : 10
   }),
   center: {
@@ -36,36 +35,47 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-export function ImageView() {
-  const [shown, setShown] = useState(false);
-  const [img, setImg] = useState(null);
-  let query = useQuery();
+function PostItem({ post }) {
+  return (
+    <>
+      {console.log(post)}
+      <a href={post.url}>
+        <img src={post.images.standard_resolution.url} alt={post.caption} />
+      </a>
+      <p>{post.caption}</p>
+    </>
+  );
+}
+
+export function ImageView({ posts }) {
+  // const [shown, setShown] = useState(false);
+  // const [img, setImg] = useState(null);
+  const [post, setPost] = useState(null);
+
+  // let query = useQuery();
+  // let postID = query.get("id");
+  let { id } = useParams();
+  const postID = id;
+  console.log("postID" + postID);
 
   useEffect(() => {
-    setShown(true);
-    setImg(query.get("src"));
-  }, [query]);
+    setPost(posts.find(post => post.id === postID));
+  }, [posts, postID]);
 
-  let src = query.get("src");
+  // let src = query.get("src");
 
   return (
-    <div className="image-view">
-      <motion.div
-        variants={variants}
-        initial="enter"
-        animate="center"
-        enter="enter"
-        exit="exit"
-        transition={{ duration: 0.5 }}
-      >
-        {src ? (
-          <img src={query.get("src")} className="image-view" alt="instagram" />
-        ) : (
-          "No image found"
-        )}
-        {/* {console.log(src)} */}
-      </motion.div>
-    </div>
+    <motion.div
+      variants={variants}
+      initial="enter"
+      animate="center"
+      enter="enter"
+      exit="exit"
+      transition={{ duration: 1 }}
+      className="post-item"
+    >
+      {post ? <PostItem post={post} /> : <div>...</div>}
+    </motion.div>
   );
 }
 

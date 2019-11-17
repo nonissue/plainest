@@ -37,9 +37,15 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios("/.netlify/functions/instagram");
-      setPosts(res.data);
+      const res2 = await axios("/.netlify/functions/posts-read-all");
+      const fetchedPosts = res2.data[0].data.posts;
+      console.log(fetchedPosts);
+      // const res = await axios("/.netlify/functions/instagram");
+      setPosts(fetchedPosts);
       setLoading(false);
+
+      // const res2 = await axios("/.netlify/functions/posts-read-all");
+      // console.log(res2.data[0]);
     };
     fetchData();
   }, []);
@@ -64,13 +70,13 @@ function App() {
       </header>
       <div>
         {/* <AnimatePresence exitBeforeEnter intial={false}> */}
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence>
           <Switch location={location} key={location.pathname}>
             <Route exact path="/">
               {loading ? <Loading /> : <InstaGrid posts={posts} />}
             </Route>
-            <Route path="/images">
-              <ImageView />
+            <Route path="/images/:id">
+              <ImageView posts={posts} />
             </Route>
             <Route exact path="/about">
               <About />

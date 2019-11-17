@@ -18,15 +18,13 @@ const item = {
     transition: {
       when: "beforeChildren",
       staggerChildren: 0.1,
-      delayChildren: 0.1,
       ...transition
     }
   },
   hidden: {
     opacity: 0,
     transition: {
-      when: "beforeChildren",
-      staggerChildren: 0.5
+      when: "beforeChildren"
     }
   },
   exit: {
@@ -35,7 +33,7 @@ const item = {
     transition: {
       when: "afterChildren",
       staggerChildren: 0.4,
-      duration: 2.5,
+      duration: 1,
       ...transition
     }
   },
@@ -46,13 +44,13 @@ const item = {
 // https://www.leighhalliday.com/use-effect-hook
 export function GridItem({ post }) {
   return (
-    <motion.div
-      className="frame"
-      variants={frameVariants}
-      whileHover="hover"
-      transition={transition}
-    >
-      <AnimatePresence>
+    <Link to={"/images/" + post.id}>
+      <motion.div
+        className="frame"
+        variants={frameVariants}
+        whileHover="hover"
+        transition={transition}
+      >
         <motion.div
           key={post.id * 3}
           initial="hidden"
@@ -65,19 +63,17 @@ export function GridItem({ post }) {
           {(() => {
             if (post.images) {
               return (
-                <Link to={"/images?src=" + post.images.standard_resolution.url}>
-                  <motion.img
-                    key={post.images.standard_resolution.url}
-                    src={post.images.standard_resolution.url}
-                  />
-                </Link>
+                <motion.img
+                  key={post.id}
+                  src={post.images.standard_resolution.url}
+                />
               );
             }
             return null;
           })()}
         </motion.div>
-      </AnimatePresence>
-    </motion.div>
+      </motion.div>
+    </Link>
   );
 }
 
