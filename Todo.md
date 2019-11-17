@@ -9,10 +9,11 @@
 * [ ] analytics
 * [ ] don't fade in home page when returning from ImageView
 * [ ] Move CSS to styled-components so it's inline
+* [ ] add hover effect to images
 
 # Bugs
 
 * [x] triggering a second animate event before first one is finished results in frozen ui.
     * Seems to be fixed since reverting to staggered grid loading?
 * [ ] Figure out how framer motion actually works
-* [ ] better implementation of router
+* [x] better implementation of router
