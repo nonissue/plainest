@@ -7,10 +7,26 @@ import "./App.css";
 
 const variants = {
   enter: {
-    opacity: 1
+    opacity: 1,
+    x: 0,
+    transition: {
+      delay: 0.1
+    }
   },
   exit: {
     opacity: 0
+    // x: -1000
+  }
+};
+
+const variants2 = {
+  enter: {
+    opacity: 1,
+    x: 0
+  },
+  exit: {
+    opacity: 0
+    // x: 1000
   }
 };
 
@@ -37,9 +53,15 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios("/.netlify/functions/instagram");
-      setPosts(res.data);
+      const res2 = await axios("/.netlify/functions/posts-read-all");
+      const fetchedPosts = res2.data[0].data.posts;
+      console.log(fetchedPosts);
+      // const res = await axios("/.netlify/functions/instagram");
+      setPosts(fetchedPosts);
       setLoading(false);
+
+      // const res2 = await axios("/.netlify/functions/posts-read-all");
+      // console.log(res2.data[0]);
     };
     fetchData();
   }, []);
@@ -64,13 +86,29 @@ function App() {
       </header>
       <div>
         {/* <AnimatePresence exitBeforeEnter intial={false}> */}
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence exitBeforeEnter initial={false}>
           <Switch location={location} key={location.pathname}>
             <Route exact path="/">
-              {loading ? <Loading /> : <InstaGrid posts={posts} />}
+              <motion.div
+                initial={false}
+                animate="enter"
+                enter="enter"
+                exit="exit"
+                variants={variants}
+              >
+                {loading ? <Loading /> : <InstaGrid posts={posts} />}
+              </motion.div>
             </Route>
-            <Route path="/images">
-              <ImageView />
+            <Route path="/images/:id">
+              <motion.div
+                initial={false}
+                animate="enter"
+                enter="enter"
+                exit="exit"
+                variants={variants2}
+              >
+                <ImageView posts={posts} />
+              </motion.div>
             </Route>
             <Route exact path="/about">
               <About />
