@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] };
@@ -8,13 +8,13 @@ const variants = {
   enter: {
     opacity: 0
   },
-  hidden: shown => ({
+  hidden: {
     opacity: 0
-  }),
+  },
   center: {
     opacity: 1,
     transition: {
-      delay: 0.1,
+      delay: 0.5,
       ...transition
     }
   },

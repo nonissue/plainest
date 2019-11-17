@@ -104,11 +104,41 @@
   height: 2em;
   color: #fff;
   font-weight: 600;
-  font-size:0.75rem;
+  font-size:1rem;
   text-decoration: none;
 }
 
 .nav a:hover {
+  border:1px solid #fff;
+  background: #fff;
+  color: #333;
+}
+
+
+.back {
+  position:absolute;
+  top: 5vh;
+  left:4vh;
+  color: #fff;
+}
+
+.back a:link, .back a:visited {
+  padding: 0;
+  display: block;
+  margin: 0;
+  line-height:2em;
+  margin-right: 10px;
+  border-radius: 1.5em;
+
+  width: 2em;
+  height: 2em;
+  color: #fff;
+  font-weight: 600;
+  font-size:1rem;
+  text-decoration: none;
+}
+
+.back a:hover {
   border:1px solid #fff;
   background: #fff;
   color: #333;
@@ -135,9 +165,6 @@
 
 /* stagger appearance? */
 .image-grid img {
-   /* Safari, Chrome and Opera > 12.1 */
-  /* -webkit-animation: fadein 2s; */
-  /* animation: fadein 2s; */
   width: 100%;
   display: block;
   object-fit: cover;
@@ -169,34 +196,6 @@
   overflow:hidden;
 }
 
-.back {
-  position:absolute;
-  top: 5vh;
-  left:4vh;
-  color: #fff;
-}
-
-.back a:link, .back a:visited {
-  padding: 0;
-  display: block;
-  margin: 0;
-  line-height:2em;
-  margin-right: 10px;
-  border-radius: 1.5em;
-
-  width: 2em;
-  height: 2em;
-  color: #fff;
-  font-weight: 600;
-  font-size:0.75rem;
-  text-decoration: none;
-}
-
-.back a:hover {
-  border:1px solid #fff;
-  background: #fff;
-  color: #333;
-}
 
 @keyframes fadein {
   from {

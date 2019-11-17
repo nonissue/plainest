@@ -1,11 +1,12 @@
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 const imageVariants = {
   hover: { scale: 1.05 }
 };
 
+// eslint-disable-next-line no-unused-vars
 const frameVariants = {
   hover: { scale: 0.95 }
 };
@@ -20,7 +21,6 @@ export function GridItem2({ post }) {
       initial="hidden"
       animate="visible"
       whileHover="hover"
-      // transition={transition}
     >
       <Link to={"/images/" + post.id}>
         <motion.div
@@ -32,7 +32,6 @@ export function GridItem2({ post }) {
             if (post.images) {
               return (
                 <img
-                  // key={post.id}
                   alt={post.caption}
                   src={post.images.standard_resolution.url}
                 />
@@ -49,11 +48,7 @@ export function GridItem2({ post }) {
 export function GridItem3({ post }) {
   return (
     <Link to={"/images/" + post.id}>
-      <img
-        // key={post.id}
-        alt={post.caption}
-        src={post.images.standard_resolution.url}
-      />
+      <img alt={post.caption} src={post.images.standard_resolution.url} />
     </Link>
   );
 }

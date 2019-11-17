@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { GridItem } from "./GridItem";
 
 const list = {
@@ -32,7 +32,6 @@ const list = {
 
 // cancel request if component unmounts?
 // https://www.leighhalliday.com/use-effect-hook
-
 export function InstaGrid({ posts }) {
   return (
     <motion.div
@@ -42,7 +41,7 @@ export function InstaGrid({ posts }) {
       exit="exit"
       className="image-grid"
     >
-      {!!posts && posts.map(post => <GridItem post={post} />)}
+      {!!posts && posts.map(post => <GridItem post={post} key={post.id} />)}
     </motion.div>
   );
 }

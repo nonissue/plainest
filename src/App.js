@@ -9,20 +9,18 @@ import "./App.css";
 const variants = {
   enter: {
     opacity: 1,
-    x: 0,
     transition: {
-      delay: 0.1
+      delay: 1
     }
   },
   exit: {
-    opacity: 0
+    opacity: 1
   }
 };
 
 const variants2 = {
   enter: {
-    opacity: 1,
-    x: 0
+    opacity: 1
   },
   exit: {
     opacity: 0
@@ -40,11 +38,18 @@ function App() {
       const res2 = await axios("/.netlify/functions/posts-read-all");
       const fetchedPosts = res2.data[0].data.posts;
       console.log(fetchedPosts);
-      // const res = await axios("/.netlify/functions/instagram");
       setPosts(fetchedPosts);
-      setLoading(false);
     };
+
     fetchData();
+
+    // Fake timeout to ensure loading shows
+    // Could be bad though as if the contents isnt actually loaded in time
+    // it will be displayed
+    // TODO possible solution? https://humble.dev/creating-a-nice-loading-button-with-react-hooks
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   }, []);
 
   return (
