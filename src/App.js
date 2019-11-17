@@ -7,10 +7,12 @@ import "./App.css";
 
 const variants = {
   enter: {
-    opacity: 1
+    opacity: 1,
+    x: 0
   },
   exit: {
-    opacity: 0
+    opacity: 0,
+    x: 1000
   }
 };
 
@@ -70,19 +72,19 @@ function App() {
       </header>
       <div>
         {/* <AnimatePresence exitBeforeEnter intial={false}> */}
-        <AnimatePresence>
-          <Switch location={location} key={location.pathname}>
-            <Route exact path="/">
-              {loading ? <Loading /> : <InstaGrid posts={posts} />}
-            </Route>
-            <Route path="/images/:id">
-              <ImageView posts={posts} />
-            </Route>
-            <Route exact path="/about">
-              <About />
-            </Route>
-          </Switch>
-        </AnimatePresence>
+        {/* <AnimatePresence exitBeforeEnter> */}
+        <Switch location={location} key={location.pathname}>
+          <Route exact path="/">
+            {loading ? <Loading /> : <InstaGrid posts={posts} />}
+          </Route>
+          <Route path="/images/:id">
+            <ImageView posts={posts} />
+          </Route>
+          <Route exact path="/about">
+            <About />
+          </Route>
+        </Switch>
+        {/* </AnimatePresence> */}
       </div>
     </div>
   );

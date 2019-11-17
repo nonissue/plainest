@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 
-const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] };
+const transition = { duration: 1, ease: [0.43, 0.13, 0.23, 0.96] };
 
 const variants = {
   enter: shown => ({
@@ -11,22 +11,28 @@ const variants = {
     // y: shown ? -400 : 400
   }),
   hidden: shown => ({
-    opacity: 0
+    opacity: 0,
+    x: 50
     // y: shown ? -10 : 10
   }),
   center: {
     opacity: 1,
     x: 0,
-    y: 0
+    transition: {
+      // duration: 2,
+      duration: 0.2
+      // ...transition
+    }
   },
   exit: {
-    scale: 0.7,
+    // scale: 0.7,
     opacity: 0,
+    x: 50,
     transition: {
       // when: "afterChildren",
       // staggerChildren: 0.4,
-      duration: 1,
-      ...transition
+      duration: 0.3
+      // ...transition
     }
   }
 };
@@ -67,14 +73,13 @@ export function ImageView({ posts }) {
   return (
     <motion.div
       variants={variants}
-      initial="enter"
+      initial="hidden"
       animate="center"
-      enter="enter"
       exit="exit"
       transition={{ duration: 1 }}
       className="post-item"
     >
-      {post ? <PostItem post={post} /> : <div>...</div>}
+      {post ? <PostItem post={post} /> : ""}
     </motion.div>
   );
 }
