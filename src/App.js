@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Switch, Route, Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
+import { About } from "./pages";
 import { Nav, Loading, InstaGrid, ImageView } from "./components";
 import "./App.css";
 
@@ -15,7 +16,6 @@ const variants = {
   },
   exit: {
     opacity: 0
-    // x: -1000
   }
 };
 
@@ -26,24 +26,8 @@ const variants2 = {
   },
   exit: {
     opacity: 0
-    // x: 1000
   }
 };
-
-function About() {
-  return (
-    <motion.div
-      className="about"
-      initial="exit"
-      animate="enter"
-      enter="enter"
-      exit="exit"
-      variants={variants}
-    >
-      <p>Plainest.site is cooked up by @christiandy && @nonissue</p>
-    </motion.div>
-  );
-}
 
 // home page
 function App() {
@@ -59,9 +43,6 @@ function App() {
       // const res = await axios("/.netlify/functions/instagram");
       setPosts(fetchedPosts);
       setLoading(false);
-
-      // const res2 = await axios("/.netlify/functions/posts-read-all");
-      // console.log(res2.data[0]);
     };
     fetchData();
   }, []);
@@ -85,7 +66,6 @@ function App() {
         <Nav />
       </header>
       <div>
-        {/* <AnimatePresence exitBeforeEnter intial={false}> */}
         <AnimatePresence exitBeforeEnter initial={false}>
           <Switch location={location} key={location.pathname}>
             <Route exact path="/">

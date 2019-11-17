@@ -5,28 +5,21 @@ import { motion } from "framer-motion";
 const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] };
 
 const variants = {
-  enter: shown => ({
+  enter: {
     opacity: 0
-    // x: shown ? -400 : 400,
-    // y: shown ? -400 : 400
-  }),
+  },
   hidden: shown => ({
     opacity: 0
-    // x: 500
-    // y: shown ? -10 : 10
   }),
   center: {
     opacity: 1,
-    x: 0,
     transition: {
       delay: 0.1,
-      // duration: 0.2,
       ...transition
     }
   },
   exit: {
     opacity: 0,
-    // x: 50,
     transition: {
       duration: 0.3
     }
