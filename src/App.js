@@ -8,6 +8,20 @@ import "./App.css";
 const variants = {
   enter: {
     opacity: 1,
+    x: 0,
+    transition: {
+      delay: 0.1
+    }
+  },
+  exit: {
+    opacity: 0,
+    x: -1000
+  }
+};
+
+const variants2 = {
+  enter: {
+    opacity: 1,
     x: 0
   },
   exit: {
@@ -72,19 +86,35 @@ function App() {
       </header>
       <div>
         {/* <AnimatePresence exitBeforeEnter intial={false}> */}
-        {/* <AnimatePresence exitBeforeEnter> */}
-        <Switch location={location} key={location.pathname}>
-          <Route exact path="/">
-            {loading ? <Loading /> : <InstaGrid posts={posts} />}
-          </Route>
-          <Route path="/images/:id">
-            <ImageView posts={posts} />
-          </Route>
-          <Route exact path="/about">
-            <About />
-          </Route>
-        </Switch>
-        {/* </AnimatePresence> */}
+        <AnimatePresence exitBeforeEnter initial={false}>
+          <Switch location={location} key={location.pathname}>
+            <Route exact path="/">
+              <motion.div
+                initial={false}
+                animate="enter"
+                enter="enter"
+                exit="exit"
+                variants={variants}
+              >
+                {loading ? <Loading /> : <InstaGrid posts={posts} />}
+              </motion.div>
+            </Route>
+            <Route path="/images/:id">
+              <motion.div
+                initial={false}
+                animate="enter"
+                enter="enter"
+                exit="exit"
+                variants={variants2}
+              >
+                <ImageView posts={posts} />
+              </motion.div>
+            </Route>
+            <Route exact path="/about">
+              <About />
+            </Route>
+          </Switch>
+        </AnimatePresence>
       </div>
     </div>
   );

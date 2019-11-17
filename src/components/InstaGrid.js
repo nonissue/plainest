@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { GridItem } from "./GridItem";
 
 const list = {
@@ -7,7 +7,7 @@ const list = {
     opacity: 1,
     x: 0,
     transition: {
-      staggerChildren: 0.2,
+      staggerChildren: 0.15,
       delayChildren: 0
     }
   },
@@ -16,8 +16,6 @@ const list = {
     x: 0
   },
   hidden: {
-    // scale: 0.5,
-    // x: -100,
     opacity: 0,
     zIndex: 0
   },
@@ -40,11 +38,11 @@ export function InstaGrid({ posts }) {
       variants={list}
       initial="hidden"
       animate="visible"
+      exit="exit"
       className="image-grid"
     >
       {!!posts && posts.map(post => <GridItem post={post} />)}
     </motion.div>
-    // </AnimatePresence>
   );
 }
 
