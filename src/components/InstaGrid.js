@@ -7,8 +7,9 @@ const list = {
     opacity: 1,
     x: 0,
     transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0
+      staggerChildren: 0.05,
+      delayChildren: 0,
+      duration: 1
     }
   },
   enter: {

@@ -14,8 +14,8 @@ const variants = {
     }
   },
   exit: {
-    opacity: 0,
-    x: -1000
+    opacity: 0
+    // x: -1000
   }
 };
 
@@ -25,8 +25,8 @@ const variants2 = {
     x: 0
   },
   exit: {
-    opacity: 0,
-    x: 1000
+    opacity: 0
+    // x: 1000
   }
 };
 

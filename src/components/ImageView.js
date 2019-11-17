@@ -37,9 +37,10 @@ function PostItem({ post }) {
   return (
     <>
       {console.log(post)}
-      <a href={post.url}>
+      <a href={post.link}>
         <img src={post.images.standard_resolution.url} alt={post.caption} />
       </a>
+
       <p>{post.caption}</p>
     </>
   );
