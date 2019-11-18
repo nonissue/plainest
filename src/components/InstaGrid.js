@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { GridItem } from "./GridItem";
 
 const list = {
@@ -18,16 +18,18 @@ const list = {
   },
   hidden: {
     opacity: 0,
-    zIndex: 0,
-    x: -500
+    // zIndex: 0,
+    x: 0
   },
   exit: {
     opacity: 1,
-    x: -500,
+    scale: 0.5,
+    x: 0,
     zIndex: 0,
     transition: {
       duration: 0.5,
-      staggerChildren: 0.5
+      staggerChildren: 0.5,
+      when: "afterChildren"
     }
   }
 };
@@ -37,7 +39,6 @@ const list = {
 export function InstaGrid({ posts }) {
   return (
     // <AnimatePresence exitBeforeEnter>
-
     <motion.div
       variants={list}
       key="list"
@@ -46,10 +47,12 @@ export function InstaGrid({ posts }) {
       exit="exit"
       className="image-grid"
     >
-      {!!posts &&
-        posts.map(post => (
-          <GridItem post={post} key={post.id} variants={list} exit="exit" />
-        ))}
+      <AnimatePresence exitBeforeEnter initial={false}>
+        {!!posts &&
+          posts.map(post => (
+            <GridItem post={post} key={post.id} variants={list} />
+          ))}
+      </AnimatePresence>
     </motion.div>
   );
 }

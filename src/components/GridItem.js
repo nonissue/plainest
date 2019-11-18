@@ -12,9 +12,11 @@ const frameVariants = {
 };
 
 const item = {
+  enter: {
+    opacity: 0
+  },
   visible: {
-    opacity: 1,
-    x: 0
+    opacity: 1
   },
   hidden: {
     opacity: 0,
@@ -24,13 +26,12 @@ const item = {
     }
   },
   exit: {
-    scale: 0.8,
-    opacity: 0,
     transition: {
       when: "afterChildren",
-      staggerChildren: 0.4,
-      duration: 2.5
-    }
+      duration: 3
+    },
+    opacity: 0,
+    scale: 0.5
   }
 };
 
@@ -39,27 +40,19 @@ const item = {
 
 export function GridItem({ post }) {
   return (
-    <AnimatePresence>
-      <motion.div
-        key={post.id + 3}
-        initial="hidden"
-        enter="visible"
-        exit="exit"
-        variants={item}
-      >
-        {post.images ? (
-          <Link to={"/images/" + post.id}>
-            <img
-              alt={post.caption}
-              key={post.id + "image"}
-              src={post.images.standard_resolution.url}
-            />
-          </Link>
-        ) : (
-          ""
-        )}
-      </motion.div>
-    </AnimatePresence>
+    <motion.div initial="hidden" enter="enter" exit="hidden" variants={item}>
+      {post.images ? (
+        <Link to={"/images/" + post.id}>
+          <img
+            alt={post.caption}
+            key={post.id + "image"}
+            src={post.images.standard_resolution.url}
+          />
+        </Link>
+      ) : (
+        ""
+      )}
+    </motion.div>
   );
 }
 

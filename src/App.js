@@ -10,20 +10,24 @@ const variants = {
   enter: {
     opacity: 1,
     transition: {
-      delay: 0
+      delay: 1
+      // duration: 0.5
     }
   },
   exit: {
-    opacity: 1
+    opacity: 0,
+    transition: { duration: 0.4, staggerChildren: 0.2 }
   }
 };
 
 const variants2 = {
   enter: {
     opacity: 1
+    // transition: { duration: 0.5 }
   },
   exit: {
-    opacity: 0
+    opacity: 0,
+    transition: { duration: 0.5 }
   }
 };
 
@@ -64,7 +68,7 @@ function App() {
         <Nav />
       </header>
       <div>
-        <AnimatePresence exitBeforeEnter initial={false}>
+        <AnimatePresence exitBeforeEnter>
           <Switch location={location} key={location.pathname}>
             <Route exact path="/">
               <motion.div
