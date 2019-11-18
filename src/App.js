@@ -10,7 +10,7 @@ const variants = {
   enter: {
     opacity: 1,
     transition: {
-      delay: 1
+      delay: 0
     }
   },
   exit: {
@@ -54,13 +54,6 @@ function App() {
 
   return (
     <div className="App">
-      {location.pathname === "/" ? (
-        ""
-      ) : (
-        <div className="back">
-          <Link to="/">{"<"}</Link>
-        </div>
-      )}
       <header className="App-header">
         <Link to="/">
           <h1>plain site</h1>

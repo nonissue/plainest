@@ -82,16 +82,7 @@
   animation: fadein 2s;
 }
 
-.nav {
-  margin-bottom: 3vh;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  flex-direction: row;
-  position:absolute;
-  top: 5vh;
-  right:4vh;
-}
+
 
 .nav a, .nav a:link, .nav a:visited {
   padding: 0;
@@ -114,7 +105,18 @@
   color: #333;
 }
 
+.nav-left {
+  position:absolute;
+  top: 5vh;
+  left:4vh;
+}
 
+.nav-right {
+  position:absolute;
+  top: 5vh;
+  right:4vh;
+}
+/* 
 .back {
   position:absolute;
   top: 5vh;
@@ -129,7 +131,6 @@
   line-height:2em;
   margin-right: 10px;
   border-radius: 1.5em;
-
   width: 2em;
   height: 2em;
   color: #fff;
@@ -142,7 +143,7 @@
   border:1px solid #fff;
   background: #fff;
   color: #333;
-}
+} */
 
 .App-link {
   color: #61dafb;

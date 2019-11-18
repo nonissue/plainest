@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { GridItem } from "./GridItem";
 
 const list = {
@@ -7,7 +7,7 @@ const list = {
     opacity: 1,
     x: 0,
     transition: {
-      staggerChildren: 0.05,
+      staggerChildren: 0.1,
       delayChildren: 0,
       duration: 1
     }
@@ -18,14 +18,16 @@ const list = {
   },
   hidden: {
     opacity: 0,
-    zIndex: 0
+    zIndex: 0,
+    x: -500
   },
   exit: {
-    opacity: 0,
+    opacity: 1,
     x: -500,
     zIndex: 0,
     transition: {
-      duration: 0.5
+      duration: 0.5,
+      staggerChildren: 0.5
     }
   }
 };
@@ -34,14 +36,20 @@ const list = {
 // https://www.leighhalliday.com/use-effect-hook
 export function InstaGrid({ posts }) {
   return (
+    // <AnimatePresence exitBeforeEnter>
+
     <motion.div
       variants={list}
+      key="list"
       initial="hidden"
       animate="visible"
       exit="exit"
       className="image-grid"
     >
-      {!!posts && posts.map(post => <GridItem post={post} key={post.id} />)}
+      {!!posts &&
+        posts.map(post => (
+          <GridItem post={post} key={post.id} variants={list} exit="exit" />
+        ))}
     </motion.div>
   );
 }
