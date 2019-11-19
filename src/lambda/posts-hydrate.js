@@ -11,12 +11,11 @@ const client = new faunadb.Client({
 
 /* export our lambda function as named "handler" export */
 exports.handler = async (event, context) => {
-  // resolve the discprenacy between dev function calls and prod?
-  // now it just times out?
+  // kind of a hacky way to get things to work in dev and when deployed
+  // should probably just use env var somehow?
   const apiEndpoint =
     event.headers.host === "localhost:9000"
-      ? // true
-        "http://localhost:9000/instagram"
+      ? "http://localhost:9000/instagram"
       : "http://plainest.site/.netlify/functions/instagram";
 
   console.log(apiEndpoint);
@@ -41,7 +40,6 @@ exports.handler = async (event, context) => {
   return client
     .query(q.Create(q.Ref("classes/posts"), newPosts))
     .then(response => {
-      // console.log("success", response);
       /* Success! return the response with statusCode 200 */
       return {
         statusCode: 200,

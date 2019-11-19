@@ -78,11 +78,9 @@
 }
 
 .loading {
-  -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
-  animation: fadein 2s;
+  /* -webkit-animation: fadein 2s; 
+  animation: fadein 2s; */
 }
-
-
 
 .nav a, .nav a:link, .nav a:visited {
   padding: 0;
@@ -116,34 +114,6 @@
   top: 5vh;
   right:4vh;
 }
-/* 
-.back {
-  position:absolute;
-  top: 5vh;
-  left:4vh;
-  color: #fff;
-}
-
-.back a:link, .back a:visited {
-  padding: 0;
-  display: block;
-  margin: 0;
-  line-height:2em;
-  margin-right: 10px;
-  border-radius: 1.5em;
-  width: 2em;
-  height: 2em;
-  color: #fff;
-  font-weight: 600;
-  font-size:1rem;
-  text-decoration: none;
-}
-
-.back a:hover {
-  border:1px solid #fff;
-  background: #fff;
-  color: #333;
-} */
 
 .App-link {
   color: #61dafb;
@@ -151,7 +121,7 @@
 
 .image-grid {
   column-count: 4;
-  column-gap: 0;
+  column-gap:1em;
   column-width: 300px;
   margin: 2vh auto;
   margin-top:0;
@@ -162,11 +132,15 @@
 
 .image-grid > div {
   width: 100%;
+  overflow:hidden;
+  padding-top:1em;
+  /* margin-bottom:1em; */
 }
 
 /* stagger appearance? */
 .image-grid img {
   width: 100%;
+  overflow: hidden;
   display: block;
   object-fit: cover;
 }
