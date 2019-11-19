@@ -26,7 +26,7 @@ exports.handler = async (event, context) => {
   // resolve the discprenacy between dev function calls and prod?
   const apiEndpoint = process.env.NETLIFY_DEV
     ? "http://localhost:9000/instagram"
-    : "/.netlify/functions/instagram";
+    : "http:plainest.site/.netlify/functions/instagram";
   let res;
 
   try {
