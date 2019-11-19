@@ -1,7 +1,9 @@
 * [x] cache instagram api fetch results
 * [x] fetch cached results from fauna
 * [ ] intermittenly fetch updated posts info
-* [ ] add post hover back
+* [x] add post hover back
+* [ ] add links to instagram profiles on about page
+* [ ] better back buttons / proper menu
 * [ ] store keys in env that is accessible locally/remotely but not in git repo
 * [x] fix posts-hydrate
 * [ ] get instagram full resolution src for ImageView
@@ -12,7 +14,7 @@
 * [ ] analytics
 * [ ] don't fade in home page when returning from ImageView
 * [ ] Move CSS to styled-components so it's inline
-* [ ] add hover effect to images
+* [x] add hover effect to images
 
 # Bugs
 

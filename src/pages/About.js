@@ -25,7 +25,26 @@ export function About() {
       exit="exit"
       variants={variants}
     >
-      <p>Plainest.site is cooked up by @christiandy && @nonissue</p>
+      <p>
+        <i>About</i>
+        <br />
+        "A kuest for klout™️"
+        <br />
+        Cooked up sporadically by{" "}
+        <a
+          href="https://www.instagram.com/christiandy/"
+          alt="christiandy instagram"
+        >
+          @christiandy
+        </a>{" "}
+        &&{" "}
+        <a
+          href="https://www.instagram.com/christiandy/"
+          alt="nonissue instagram"
+        >
+          @nonissue
+        </a>
+      </p>
     </motion.div>
   );
 }

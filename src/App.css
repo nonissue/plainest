@@ -8,6 +8,27 @@
 .about {
   width: 50vw;
   margin:0px auto;
+  max-width: 400px;
+  font-family: "Work Sans", sans-serif;
+  line-height: 1.5em;
+  font-family: 'Lekton', monospace;
+}
+
+.about i {
+  font-style:normal;
+  font-family: "Lekton", monospace;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.about a:link, .about a:visited {
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.about a:hover {
+  color: #ff0000;
 }
 
 .App-header {
@@ -121,7 +142,7 @@
 
 .image-grid {
   column-count: 4;
-  column-gap:1em;
+  column-gap:0em;
   column-width: 300px;
   margin: 2vh auto;
   margin-top:0;
@@ -133,7 +154,7 @@
 .image-grid > div {
   width: 100%;
   overflow:hidden;
-  padding-top:1em;
+  padding-top:0em;
   /* margin-bottom:1em; */
 }
 
