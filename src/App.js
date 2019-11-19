@@ -38,6 +38,7 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
+    // Should check last fetch, and if it is stale, run posts-hydrate
     const fetchData = async () => {
       const res2 = await axios("/.netlify/functions/posts-read-latest");
       const fetchedPosts = res2.data.data.posts;
@@ -58,6 +59,7 @@ function App() {
 
   return (
     <div className="App">
+      {"Live? " + process.env.live}
       <header className="App-header">
         <Link to="/">
           <h1>plain site</h1>

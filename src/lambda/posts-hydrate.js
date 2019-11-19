@@ -40,6 +40,8 @@ exports.handler = async (event, context) => {
     };
   }
 
+  // lol fauna has a ts variable
+  // why did i do this
   const timestamp = Date.now();
   const newPosts = { data: { fetchDate: timestamp, posts: res.data } };
   console.log(res.data);

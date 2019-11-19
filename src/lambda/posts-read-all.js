@@ -17,7 +17,6 @@ exports.handler = (event, context) => {
         const postRefs = response.data;
         console.log("Post refs", postRefs);
         console.log(`${postRefs.length} posts found`);
-        console.log("postsRefs: " + postRefs);
         // create new query out of post refs. http://bit.ly/2LG3MLg
         const getAllPostDataQuery = postRefs.map(ref => {
           return q.Get(ref);
