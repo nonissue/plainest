@@ -1,19 +1,7 @@
 import axios from "axios";
-import api from "../utils/api";
-import isLocalHost from "../utils/isLocalHost";
 /* code from functions/todos-create.js */
 /* Import faunaDB sdk */
 const faunadb = require("faunadb");
-
-const convertArrayToObject = (array, key) => {
-  const initialValue = {};
-  return array.reduce((obj, item) => {
-    return {
-      ...obj,
-      [item[key]]: item
-    };
-  }, initialValue);
-};
 
 /* configure faunaDB Client with our secret */
 const q = faunadb.query;
@@ -24,9 +12,11 @@ const client = new faunadb.Client({
 /* export our lambda function as named "handler" export */
 exports.handler = async (event, context) => {
   // resolve the discprenacy between dev function calls and prod?
-  const apiEndpoint = process.env.NETLIFY_DEV
+  const apiEndpointTest = process.env.NETLIFY_DEV
     ? "http://localhost:9000/instagram"
     : "http://plainest.site/.netlify/functions/posts-hydrate";
+
+  const apiEndpoint = "http://localhost:9000/instagram";
   let res;
 
   try {
