@@ -11,18 +11,15 @@ const client = new faunadb.Client({
 
 /* export our lambda function as named "handler" export */
 exports.handler = async (event, context) => {
-  console.log(event.headers.host);
-  console.log(event);
   // resolve the discprenacy between dev function calls and prod?
   // now it just times out?
   const apiEndpoint =
-    // event.headers.host === "localhost:9000"
-    true
-      ? "http://localhost:9000/instagram"
-      : "http://plainest.site/.netlify/functions/posts-hydrate";
+    event.headers.host === "localhost:9000"
+      ? // true
+        "http://localhost:9000/instagram"
+      : "http://plainest.site/.netlify/functions/instagram";
 
   console.log(apiEndpoint);
-  // const apiEndpoint = "http://localhost:9000/instagram";
   let res;
 
   try {
