@@ -39,8 +39,8 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res2 = await axios("/.netlify/functions/posts-read-all");
-      const fetchedPosts = res2.data[0].data.posts;
+      const res2 = await axios("/.netlify/functions/posts-read-latest");
+      const fetchedPosts = res2.data.data.posts;
       console.log(fetchedPosts);
       setPosts(fetchedPosts);
     };
