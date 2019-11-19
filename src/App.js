@@ -59,7 +59,7 @@ function App() {
 
   return (
     <div className="App">
-      {"Live? " + process.env.live}
+      {console.log("Live? " + process.env.live)}
       <header className="App-header">
         <Link to="/">
           <h1>plain site</h1>
