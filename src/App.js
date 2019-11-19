@@ -59,7 +59,7 @@ function App() {
 
   return (
     <div className="App">
-      {console.log("Live? " + process.env.live)}
+      {console.log("Live? " + process.env.NETLIFY_DEV)}
       <header className="App-header">
         <Link to="/">
           <h1>plain site</h1>

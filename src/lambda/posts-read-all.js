@@ -8,7 +8,10 @@ const client = new faunadb.Client({
 });
 
 exports.handler = (event, context) => {
-  console.log("Function `posts-read-all` invoked");
+  console.log("Function `posts-read-all` invoked!");
+  // console.log("islocalhost? " + isLocalHost());
+  console.log(process.env.NETLIFY_DEV);
+
   return (
     client
       // .query(q.Paginate(q.Match(q.Ref("indexes/all_posts"))))

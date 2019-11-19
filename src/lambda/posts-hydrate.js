@@ -24,10 +24,10 @@ const client = new faunadb.Client({
 /* export our lambda function as named "handler" export */
 exports.handler = async (event, context) => {
   // resolve the discprenacy between dev function calls and prod?
-  const apiEndpoint = true
-    ? // process.env.NODE_ENV === "development"
-      "http://localhost:9000/instagram"
-    : "/.netlify/functions/instagram";
+  console.log("islocalhost? " + isLocalHost());
+  const apiEndpoint = process.env.NETLIFY_DEV
+    ? "/.netlify/functions/instagram"
+    : "http://localhost:9000/instagram";
   let res;
   console.log("Function `posts-hydrate` invoked @ " + process.env.NODE_ENV);
 
