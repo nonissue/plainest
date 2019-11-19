@@ -11,7 +11,8 @@ exports.handler = (event, context) => {
   console.log("Function `posts-read-all` invoked!");
   // console.log("islocalhost? " + isLocalHost());
   console.log(process.env.NETLIFY_DEV);
-
+  console.log(context);
+  console.log(event);
   return (
     client
       // .query(q.Paginate(q.Match(q.Ref("indexes/all_posts"))))
