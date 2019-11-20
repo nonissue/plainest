@@ -10,21 +10,26 @@ const NavWrapper = styled.div`
     padding: 0;
     display: block;
     margin: 0;
+    /* box-shadow: 0 1px 2px 0 rgba(255, 255, 255, 0.1), 0 1px 2px 0 rgba(255, 255, 255, 0.06); */
+    /* background: #fff; */
     line-height: 2em;
     margin-right: 10px;
-    border-radius: 1.5em;
+    border-radius: 2em;
     width: 2em;
     height: 2em;
+    padding: 2px;
     color: #fff;
     font-weight: 600;
     font-size: 1rem;
     text-decoration: none;
+    border: 1px solid hsla(0, 0%, 100%, 0.4);
   }
 
   a:hover {
     border: 1px solid #fff;
+    color: hsla(228.8, 18%, 12%, 0.5);
     background: #fff;
-    color: #333;
+    /* color: #fff; */
   }
 
   .nav-left {
@@ -57,7 +62,7 @@ export function Nav() {
               exit={{ opacity: 0.5, scale: 2, transition: { duration: 5 } }}
               className="nav-left"
             >
-              <Link to="/">{'<'}</Link>
+              <Link to="/">{'⇦'}</Link>
             </motion.div>
           </AnimatePresence>
         )}

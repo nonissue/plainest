@@ -39,10 +39,11 @@ const InstaGridWrapper = styled.div`
 const list = {
   visible: {
     opacity: 1,
+    scale: 1,
     transition: {
-      staggerChildren: 0.1,
-      duration: 0.5,
-      delay: 0.1,
+      staggerChildren: 0.05,
+      duration: 0.1,
+      delay: 0.0,
     },
   },
   enter: {
@@ -50,14 +51,15 @@ const list = {
   },
   hidden: {
     opacity: 0,
+    scale: 1,
   },
   exit: {
     opacity: 0,
-    scale: 0.5,
+    scale: 0,
     zIndex: 0,
     transition: {
-      duration: 0.5,
-      staggerChildren: 1,
+      duration: 1,
+      staggerChildren: 0,
       when: 'beforeChildren',
     },
   },

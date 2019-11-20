@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import styled from 'styled-components';
 import { Switch, Route, Link, useLocation } from 'react-router-dom';
 
 import axios from 'axios';
@@ -7,6 +7,72 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { About, InstaGrid } from './pages';
 import { Nav, Loading, ImageView } from './components';
 import './App.css';
+
+const AppWrapper = styled.div`
+  text-align: center;
+  color: #fff;
+  font-family: 'Work Sans', sans-serif;
+
+  header {
+    /* background-color: #1a202c; */
+    /* background-color: #121212; */
+    animation: fadein 0.3s;
+    margin-top: 4vh;
+    margin-bottom: 4vh;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    font-size: calc(12px + 1.5vmin);
+  }
+
+  header a:link,
+  header a:visited {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  h1 {
+    font-size: 1.4em;
+    margin: 0;
+    text-transform: uppercase;
+    font-family: 'Oswald', serif, sans-serif;
+    letter-spacing: 0em;
+    font-weight: 700;
+  }
+  h3 {
+    margin-top: 0.2em;
+    font-family: 'Lekton', sans-serif;
+    font-weight: 400;
+    color: #d5d9e0;
+    margin-bottom: 0em;
+    font-size: 0.9em;
+  }
+  h3::before {
+    content: '@';
+    font-family: 'Lekton', sans-serif;
+    color: #a0aec0;
+    color: #697077;
+    color: #838b94;
+    font-weight: 600;
+    margin-right: 0.1em;
+  }
+  i {
+    color: #e2e8f0;
+    opacity: 0.7;
+    font-style: normal;
+    font-family: 'Work Sans', sans-serif;
+  }
+  .url {
+    font-weight: 300;
+    display: inline;
+    padding: 3px 6px;
+    letter-spacing: 0.15em;
+    font-size: 0.45em;
+    border-radius: 0.25em;
+    font-family: 'Oswald', sans-serif;
+  }
+`;
 
 const variants = {
   enter: {
@@ -16,7 +82,8 @@ const variants = {
     },
   },
   exit: {
-    opacity: 1,
+    opacity: 0.2,
+    scale: 1,
     transition: { duration: 0.4, staggerChildren: 0.2 },
   },
 };
@@ -52,7 +119,7 @@ function App() {
       setTimeout(() => {
         setLoading(false);
         setLoaded(true);
-      }, 1000),
+      }, 2000),
     );
 
     // Fake timeout to ensure loading shows
@@ -62,16 +129,16 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <AppWrapper>
+      <header>
         <Link to="/">
           <h1>plain site</h1>
         </Link>
         <a href="https://instagram.com/plain.site">
           <h3>plain.site</h3>
         </a>
-        <Nav />
       </header>
+      <Nav />
       <div>
         <AnimatePresence exitBeforeEnter>
           <Switch location={location} key={location.pathname}>
@@ -103,7 +170,7 @@ function App() {
           </Switch>
         </AnimatePresence>
       </div>
-    </div>
+    </AppWrapper>
   );
 }
 
