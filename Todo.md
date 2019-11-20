@@ -3,8 +3,10 @@
 * [ ] intermittenly fetch updated posts info
 * [x] fix items exiting (ARE exiting / fading, but not staggering)
 * [ ] wireframe loading posts?
+* [ ] redux
+* [ ] typescript
 * [x] add post hover back
-* [ ] add links to instagram profiles on about page
+* [x] add links to instagram profiles on about page
 * [ ] better back buttons / proper menu
 * [ ] store keys in env that is accessible locally/remotely but not in git repo
 * [x] fix posts-hydrate
