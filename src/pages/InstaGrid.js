@@ -1,6 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { GridItem } from "./GridItem";
+import { GridItem } from "../components/GridItem";
 
 const list = {
   visible: {
@@ -8,7 +8,6 @@ const list = {
     x: 0,
     transition: {
       staggerChildren: 0.1,
-      delayChildren: 0,
       duration: 1
     }
   },
@@ -18,7 +17,6 @@ const list = {
   },
   hidden: {
     opacity: 0,
-    // zIndex: 0,
     x: 0
   },
   exit: {
@@ -38,7 +36,6 @@ const list = {
 // https://www.leighhalliday.com/use-effect-hook
 export function InstaGrid({ posts }) {
   return (
-    // <AnimatePresence exitBeforeEnter>
     <motion.div
       variants={list}
       key="list"

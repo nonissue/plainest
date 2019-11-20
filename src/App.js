@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Switch, Route, Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
-import { About } from "./pages";
-import { Nav, Loading, InstaGrid, ImageView } from "./components";
+import { About, InstaGrid } from "./pages";
+import { Nav, Loading, ImageView } from "./components";
 import "./App.css";
 
 const variants = {
@@ -23,7 +23,6 @@ const variants = {
 const variants2 = {
   enter: {
     opacity: 1
-    // transition: { duration: 0.5 }
   },
   exit: {
     opacity: 0,
