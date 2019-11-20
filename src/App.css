@@ -4,7 +4,7 @@
   color: #fff;
   font-family: "Work Sans", sans-serif;
 }
-
+/* 
 .about {
   width: 50vw;
   margin:0px auto;
@@ -29,7 +29,7 @@
 
 .about a:hover {
   color: #ff0000;
-}
+} */
 
 .App-header {
   background-color: #1a202c;
@@ -178,19 +178,9 @@
 
 .frame {
   overflow:hidden;
-  /* border:10px solid #ff0000; */
 }
 
 .image-view {
-  /* width: 100vw; */
-  /* position: absolute; */
-  /* bottom:0; */
-  /* top: 10vh; */
-  /* left: 10vw; */
-  /* top: 10vh; */
-  /* x: 0; */
-  /* top:100px; */
-  /* left: 10px; */
   overflow:hidden;
 }
 

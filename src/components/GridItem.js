@@ -7,7 +7,6 @@ const imageVariants = {
   hover: { scale: 1.1, overflow: 'hidden' },
 };
 
-// eslint-disable-next-line no-unused-vars
 const frameVariants = {
   hover: { scale: 1, margin: 0 },
 };

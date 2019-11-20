@@ -1,5 +1,33 @@
 import React from 'react';
+import styled from 'styled-components';
 import { motion } from 'framer-motion';
+
+const AboutWrapper = styled.div`
+  width: 50vw;
+  margin: 0px auto;
+  max-width: 400px;
+  font-family: 'Work Sans', sans-serif;
+  line-height: 1.5em;
+  font-family: 'Lekton', monospace;
+
+  i {
+    font-style: normal;
+    font-family: 'Lekton', monospace;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  a:link,
+  a:visited {
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #ff0000;
+  }
+`;
 
 const variants = {
   enter: {
@@ -17,29 +45,31 @@ const variants = {
 
 export function About() {
   return (
-    <motion.div
-      className="about"
-      initial="exit"
-      animate="enter"
-      enter="enter"
-      exit="exit"
-      variants={variants}
-    >
-      <p>
-        <i>About</i>
-        <br />
-        "A kuest for klout™️"
-        <br />
-        Cooked up sporadically by{' '}
-        <a href="https://www.instagram.com/christiandy/" alt="christiandy instagram">
-          @christiandy
-        </a>{' '}
-        &&{' '}
-        <a href="https://www.instagram.com/christiandy/" alt="nonissue instagram">
-          @nonissue
-        </a>
-      </p>
-    </motion.div>
+    <AboutWrapper>
+      <motion.div
+        className="about"
+        initial="exit"
+        animate="enter"
+        enter="enter"
+        exit="exit"
+        variants={variants}
+      >
+        <p>
+          <i>About</i>
+          <br />
+          "A kuest for klout™️"
+          <br />
+          Cooked up sporadically by{' '}
+          <a href="https://www.instagram.com/christiandy/" alt="christiandy instagram">
+            @christiandy
+          </a>{' '}
+          &&{' '}
+          <a href="https://www.instagram.com/christiandy/" alt="nonissue instagram">
+            @nonissue
+          </a>
+        </p>
+      </motion.div>
+    </AboutWrapper>
   );
 }
 
