@@ -14,7 +14,7 @@ const variants = {
   center: {
     opacity: 1,
     transition: {
-      delay: 0.5,
+      // delay: 0.2,
       ...transition
     }
   },
@@ -29,7 +29,6 @@ const variants = {
 function PostItem({ post }) {
   return (
     <>
-      {console.log(post)}
       <a href={post.link}>
         <img src={post.images.standard_resolution.url} alt={post.caption} />
       </a>
@@ -44,6 +43,8 @@ export function ImageView({ posts }) {
   const [post, setPost] = useState(null);
   const postID = id;
 
+  const postTest = posts.find(post => post.id === postID);
+
   useEffect(() => {
     setPost(posts.find(post => post.id === postID));
   }, [posts, postID]);
@@ -57,7 +58,7 @@ export function ImageView({ posts }) {
       transition={{ duration: 1 }}
       className="post-item"
     >
-      {post ? <PostItem post={post} /> : ""}
+      {post ? <PostItem post={postTest} /> : ""}
     </motion.div>
   );
 }
