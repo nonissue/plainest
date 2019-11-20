@@ -10,8 +10,7 @@ const variants = {
   enter: {
     opacity: 1,
     transition: {
-      delay: 1
-      // duration: 0.5
+      delay: 0
     }
   },
   exit: {
@@ -32,33 +31,36 @@ const variants2 = {
 
 // home page
 function App() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loaded, setLoaded] = useState(true);
   const location = useLocation();
 
+  // cancel request if component unmounts?
+  // https://www.leighhalliday.com/use-effect-hook
   useEffect(() => {
     // Should check last fetch, and if it is stale, run posts-hydrate
     const fetchData = async () => {
       const res = await axios("/.netlify/functions/posts-read-latest");
       const fetchedPosts = res.data.data.posts;
-      console.log(fetchedPosts);
       setPosts(fetchedPosts);
     };
 
-    fetchData();
+    fetchData().then(
+      setTimeout(() => {
+        setLoading(false);
+        setLoaded(true);
+      }, 1000)
+    );
 
     // Fake timeout to ensure loading shows
     // Could be bad though as if the contents isnt actually loaded in time
     // it will be displayed
     // TODO possible solution? https://humble.dev/creating-a-nice-loading-button-with-react-hooks
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
   }, []);
 
   return (
     <div className="App">
-      {console.log("Live? " + process.env.NETLIFY_DEV)}
       <header className="App-header">
         <Link to="/">
           <h1>plain site</h1>
@@ -79,7 +81,11 @@ function App() {
                 exit="exit"
                 variants={variants}
               >
-                {loading ? <Loading /> : <InstaGrid posts={posts} />}
+                {loading ? (
+                  <Loading />
+                ) : (
+                  <InstaGrid posts={posts} loaded={loaded} />
+                )}
               </motion.div>
             </Route>
             <Route path="/images/:id">
@@ -90,7 +96,8 @@ function App() {
                 exit="exit"
                 variants={variants2}
               >
-                <ImageView posts={posts} />
+                {loading ? <Loading /> : <ImageView posts={posts} />}
+                {/* <ImageView posts={posts} /> */}
               </motion.div>
             </Route>
             <Route exact path="/about">

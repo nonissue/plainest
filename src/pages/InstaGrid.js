@@ -3,44 +3,45 @@ import { motion, AnimatePresence } from "framer-motion";
 import { GridItem } from "../components/GridItem";
 
 const list = {
-  visible: {
+  visible: loaded => ({
     opacity: 1,
-    x: 0,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: loaded ? 0.5 : 0.5,
+      duration: 1
+    }
+  }),
+  alreadyLoaded: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0,
       duration: 1
     }
   },
   enter: {
-    opacity: 1,
-    x: 0
+    opacity: 1
   },
   hidden: {
-    opacity: 0,
-    x: 0
+    opacity: 0
   },
   exit: {
     opacity: 1,
     scale: 0.5,
-    x: 0,
     zIndex: 0,
     transition: {
       duration: 0.5,
-      staggerChildren: 0.5,
-      when: "afterChildren"
+      staggerChildren: 1,
+      when: "beforeChildren"
     }
   }
 };
 
-// cancel request if component unmounts?
-// https://www.leighhalliday.com/use-effect-hook
-export function InstaGrid({ posts }) {
+export function InstaGrid({ posts }, loaded) {
   return (
     <motion.div
       variants={list}
       key="list"
       initial="hidden"
-      animate="visible"
+      animate={loaded ? "visible" : "visible"}
       exit="exit"
       className="image-grid"
     >

@@ -1,6 +1,7 @@
 // components/index.js
-import { Nav } from "./Nav";
-import { Loading } from "./Loading";
 import { ImageView } from "./ImageView";
+import { Loading } from "./Loading";
+import { Nav } from "./Nav";
+import { PostItem } from "./PostItem";
 
-export { Nav, Loading, ImageView };
+export { Nav, Loading, ImageView, PostItem };

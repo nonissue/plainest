@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
+
+import { PostItem } from "./PostItem";
 
 const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] };
 
@@ -14,7 +16,6 @@ const variants = {
   center: {
     opacity: 1,
     transition: {
-      // delay: 0.2,
       ...transition
     }
   },
@@ -26,28 +27,10 @@ const variants = {
   }
 };
 
-function PostItem({ post }) {
-  return (
-    <>
-      <a href={post.link}>
-        <img src={post.images.standard_resolution.url} alt={post.caption} />
-      </a>
-
-      <p>{post.caption}</p>
-    </>
-  );
-}
-
 export function ImageView({ posts }) {
   let { id } = useParams();
-  const [post, setPost] = useState(null);
-  const postID = id;
 
-  const postTest = posts.find(post => post.id === postID);
-
-  useEffect(() => {
-    setPost(posts.find(post => post.id === postID));
-  }, [posts, postID]);
+  const post = posts.find(post => post.id === id);
 
   return (
     <motion.div
@@ -58,7 +41,7 @@ export function ImageView({ posts }) {
       transition={{ duration: 1 }}
       className="post-item"
     >
-      {post ? <PostItem post={postTest} /> : ""}
+      {post ? <PostItem post={post} /> : "Loading"}
     </motion.div>
   );
 }

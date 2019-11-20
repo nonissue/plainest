@@ -99,6 +99,10 @@
 }
 
 .loading {
+  /* margin-top: 50%; */
+  font-family: "Lekton", "Courier", monospace;
+  font-style: italic;
+  animation: fadein 1s infinite;
   /* -webkit-animation: fadein 2s; 
   animation: fadein 2s; */
 }
@@ -146,8 +150,6 @@
   column-width: 300px;
   margin: 2vh auto;
   margin-top:0;
-  /* position:absolute; */
-  /* margin-top: 4vh; */
   padding-bottom: 4vh;
 }
 
@@ -155,7 +157,7 @@
   width: 100%;
   overflow:hidden;
   padding-top:0em;
-  /* margin-bottom:1em; */
+
 }
 
 /* stagger appearance? */
@@ -167,7 +169,7 @@
 }
 
 .loading {
-  animation: fadein 2s;
+  /* animation: fadein 2s; */
   color: #e2e8f0;
   font-weight: 400;
   text-transform: uppercase;
@@ -194,11 +196,14 @@
 
 
 @keyframes fadein {
-  from {
+  0% {
     opacity: 0;
   }
-  to {
+  50% {
     opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 

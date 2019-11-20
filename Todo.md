@@ -1,6 +1,8 @@
 * [x] cache instagram api fetch results
 * [x] fetch cached results from fauna
 * [ ] intermittenly fetch updated posts info
+* [x] fix items exiting (ARE exiting / fading, but not staggering)
+* [ ] wireframe loading posts?
 * [x] add post hover back
 * [ ] add links to instagram profiles on about page
 * [ ] better back buttons / proper menu
