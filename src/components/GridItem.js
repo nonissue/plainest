@@ -38,7 +38,6 @@ const item = {
 
 // cancel request if component unmounts?
 // https://www.leighhalliday.com/use-effect-hook
-
 export function GridItem({ post }) {
   return (
     <motion.div
@@ -66,10 +65,6 @@ export function GridItem({ post }) {
     </motion.div>
   );
 }
-
-// GridItem.propTypes = {
-//   post: PropTypes.object.isRequired,
-// };
 
 GridItem.propTypes = {
   post: PropTypes.shape({
