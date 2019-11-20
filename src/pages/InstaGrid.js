@@ -6,7 +6,7 @@ const list = {
   visible: loaded => ({
     opacity: 1,
     transition: {
-      staggerChildren: loaded ? 0.5 : 0.5,
+      staggerChildren: loaded ? 0.1 : 0.1,
       duration: 1
     }
   }),
