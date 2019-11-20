@@ -1,32 +1,34 @@
-import React, { useState, useEffect } from "react";
-import { Switch, Route, Link, useLocation } from "react-router-dom";
-import axios from "axios";
-import { AnimatePresence, motion } from "framer-motion";
-import { About, InstaGrid } from "./pages";
-import { Nav, Loading, ImageView } from "./components";
-import "./App.css";
+import React, { useState, useEffect } from 'react';
+
+import { Switch, Route, Link, useLocation } from 'react-router-dom';
+
+import axios from 'axios';
+import { AnimatePresence, motion } from 'framer-motion';
+import { About, InstaGrid } from './pages';
+import { Nav, Loading, ImageView } from './components';
+import './App.css';
 
 const variants = {
   enter: {
     opacity: 1,
     transition: {
-      delay: 0
-    }
+      delay: 0,
+    },
   },
   exit: {
-    opacity: 0,
-    transition: { duration: 0.4, staggerChildren: 0.2 }
-  }
+    opacity: 1,
+    transition: { duration: 0.4, staggerChildren: 0.2 },
+  },
 };
 
 const variants2 = {
   enter: {
-    opacity: 1
+    opacity: 1,
   },
   exit: {
     opacity: 0,
-    transition: { duration: 0.5 }
-  }
+    transition: { duration: 0.5 },
+  },
 };
 
 // home page
@@ -41,7 +43,7 @@ function App() {
   useEffect(() => {
     // Should check last fetch, and if it is stale, run posts-hydrate
     const fetchData = async () => {
-      const res = await axios("/.netlify/functions/posts-read-latest");
+      const res = await axios('/.netlify/functions/posts-read-latest');
       const fetchedPosts = res.data.data.posts;
       setPosts(fetchedPosts);
     };
@@ -50,7 +52,7 @@ function App() {
       setTimeout(() => {
         setLoading(false);
         setLoaded(true);
-      }, 1000)
+      }, 1000),
     );
 
     // Fake timeout to ensure loading shows
@@ -81,11 +83,7 @@ function App() {
                 exit="exit"
                 variants={variants}
               >
-                {loading ? (
-                  <Loading />
-                ) : (
-                  <InstaGrid posts={posts} loaded={loaded} />
-                )}
+                {loading ? <Loading /> : <InstaGrid posts={posts} loaded={loaded} />}
               </motion.div>
             </Route>
             <Route path="/images/:id">
@@ -97,7 +95,6 @@ function App() {
                 variants={variants2}
               >
                 {loading ? <Loading /> : <ImageView posts={posts} />}
-                {/* <ImageView posts={posts} /> */}
               </motion.div>
             </Route>
             <Route exact path="/about">

@@ -1,18 +1,18 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React from 'react';
+import { motion } from 'framer-motion';
 
 const variants = {
   enter: {
     opacity: 1,
     x: 0,
     transition: {
-      delay: 0.1
-    }
+      delay: 0.1,
+      duration: 0.2,
+    },
   },
   exit: {
-    opacity: 0
-    // x: -1000
-  }
+    opacity: 0,
+  },
 };
 
 export function About() {
@@ -30,21 +30,17 @@ export function About() {
         <br />
         "A kuest for klout™️"
         <br />
-        Cooked up sporadically by{" "}
-        <a
-          href="https://www.instagram.com/christiandy/"
-          alt="christiandy instagram"
-        >
+        Cooked up sporadically by{' '}
+        <a href="https://www.instagram.com/christiandy/" alt="christiandy instagram">
           @christiandy
-        </a>{" "}
-        &&{" "}
-        <a
-          href="https://www.instagram.com/christiandy/"
-          alt="nonissue instagram"
-        >
+        </a>{' '}
+        &&{' '}
+        <a href="https://www.instagram.com/christiandy/" alt="nonissue instagram">
           @nonissue
         </a>
       </p>
     </motion.div>
   );
 }
+
+export default About;
