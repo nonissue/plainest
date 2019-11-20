@@ -1,7 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GridItem } from '../components/GridItem';
+
+const InstaGridWrapper = styled.div`
+  .image-grid {
+    column-count: 4;
+    column-gap: 0em;
+    column-width: 300px;
+    margin: 2vh auto;
+    margin-top: 0;
+    padding-bottom: 4vh;
+  }
+
+  .image-grid > div {
+    width: 100%;
+    overflow: hidden;
+    padding-top: 0em;
+  }
+
+  .image-grid img {
+    width: 100%;
+    overflow: hidden;
+    display: block;
+    object-fit: cover;
+  }
+
+  .frame {
+    overflow: hidden;
+  }
+
+  .image-view {
+    overflow: hidden;
+  }
+`;
 
 const list = {
   visible: {
@@ -19,7 +52,7 @@ const list = {
     opacity: 0,
   },
   exit: {
-    opacity: 1,
+    opacity: 0,
     scale: 0.5,
     zIndex: 0,
     transition: {
@@ -32,18 +65,20 @@ const list = {
 
 export function InstaGrid({ posts, loaded }) {
   return (
-    <motion.div
-      variants={list}
-      key="list"
-      initial="hidden"
-      animate={loaded ? 'visible' : 'enter'}
-      exit="exit"
-      className="image-grid"
-    >
-      <AnimatePresence exitBeforeEnter initial={false}>
-        {!!posts && posts.map(post => <GridItem post={post} key={post.id} variants={list} />)}
-      </AnimatePresence>
-    </motion.div>
+    <InstaGridWrapper>
+      <motion.div
+        variants={list}
+        key="list"
+        initial="hidden"
+        animate={loaded ? 'visible' : 'enter'}
+        exit="exit"
+        className="image-grid"
+      >
+        <AnimatePresence exitBeforeEnter initial={false}>
+          {!!posts && posts.map(post => <GridItem post={post} key={post.id} variants={list} />)}
+        </AnimatePresence>
+      </motion.div>
+    </InstaGridWrapper>
   );
 }
 
