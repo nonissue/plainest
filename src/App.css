@@ -4,32 +4,6 @@
   color: #fff;
   font-family: "Work Sans", sans-serif;
 }
-/* 
-.about {
-  width: 50vw;
-  margin:0px auto;
-  max-width: 400px;
-  font-family: "Work Sans", sans-serif;
-  line-height: 1.5em;
-  font-family: 'Lekton', monospace;
-}
-
-.about i {
-  font-style:normal;
-  font-family: "Lekton", monospace;
-  text-transform: uppercase;
-  font-weight: 600;
-}
-
-.about a:link, .about a:visited {
-  color: #fff;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.about a:hover {
-  color: #ff0000;
-} */
 
 .App-header {
   background-color: #1a202c;
@@ -46,8 +20,6 @@
 
 .App-header a:link,
 .App-header a:visited {
-  /* color: #f6e05e; */
-  /* color: rgb(233, 233, 233); */
   color: #fff;
   text-decoration: none;
 }
@@ -98,110 +70,7 @@
   font-family: "Oswald", sans-serif;
 }
 
-.loading {
-  /* margin-top: 50%; */
-  font-family: "Lekton", "Courier", monospace;
-  font-style: italic;
-  animation: fadein 1s infinite;
-  /* -webkit-animation: fadein 2s; 
-  animation: fadein 2s; */
-}
-
-.nav a, .nav a:link, .nav a:visited {
-  padding: 0;
-  display: block;
-  margin: 0;
-  line-height:2em;
-  margin-right: 10px;
-  border-radius: 1.5em;
-  width: 2em;
-  height: 2em;
-  color: #fff;
-  font-weight: 600;
-  font-size:1rem;
-  text-decoration: none;
-}
-
-.nav a:hover {
-  border:1px solid #fff;
-  background: #fff;
-  color: #333;
-}
-
-.nav-left {
-  position:absolute;
-  top: 5vh;
-  left:4vh;
-}
-
-.nav-right {
-  position:absolute;
-  top: 5vh;
-  right:4vh;
-}
-
 .App-link {
   color: #61dafb;
 }
 
-.image-grid {
-  column-count: 4;
-  column-gap:0em;
-  column-width: 300px;
-  margin: 2vh auto;
-  margin-top:0;
-  padding-bottom: 4vh;
-}
-
-.image-grid > div {
-  width: 100%;
-  overflow:hidden;
-  padding-top:0em;
-
-}
-
-/* stagger appearance? */
-.image-grid img {
-  width: 100%;
-  overflow: hidden;
-  display: block;
-  object-fit: cover;
-}
-
-.loading {
-  /* animation: fadein 2s; */
-  color: #e2e8f0;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.frame {
-  overflow:hidden;
-}
-
-.image-view {
-  overflow:hidden;
-}
-
-
-@keyframes fadein {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
