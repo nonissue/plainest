@@ -29,7 +29,7 @@ const variants = {
 };
 
 export function ImageView({ posts }) {
-  let { id } = useParams();
+  const { id } = useParams();
   const post = posts.find(p => p.id === id);
 
   return (

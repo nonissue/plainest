@@ -47,7 +47,7 @@ export function GridItem({ post }) {
       style={{ overflow: 'hidden' }}
     >
       {post.images ? (
-        <motion.div whileHover="hover" style={{ overflow: 'hidden' }} variants={frameVariants}>
+        <motion.div whileHover="hover" variants={frameVariants}>
           <Link to={`/images/${post.id}`}>
             <motion.img
               whileHover="hover"
