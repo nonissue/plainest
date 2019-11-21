@@ -58,7 +58,7 @@ const list = {
     scale: 0,
     zIndex: 0,
     transition: {
-      duration: 1,
+      duration: 0.5,
       staggerChildren: 0,
       when: 'beforeChildren',
     },
@@ -66,6 +66,7 @@ const list = {
 };
 
 export function InstaGrid({ posts, loaded }) {
+  console.log(posts);
   return (
     <InstaGridWrapper>
       <motion.div

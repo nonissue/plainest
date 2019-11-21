@@ -2,13 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const GridItemWrapper = styled.div`
+  overflow: hidden;
+`;
+
+const transition = {
+  type: 'inertia',
+  duration: 1,
+};
 
 const imageVariants = {
-  hover: { scale: 1.1, overflow: 'hidden' },
+  hover: { scale: 1.2 },
+  transition,
 };
 
 const frameVariants = {
-  hover: { scale: 1, margin: 0 },
+  hover: { scale: 1 },
+  transition,
 };
 
 const item = {
@@ -39,29 +51,27 @@ const item = {
 // https://www.leighhalliday.com/use-effect-hook
 export function GridItem({ post }) {
   return (
-    <motion.div
-      initial="hidden"
-      enter="enter"
-      exit="hidden"
-      variants={item}
-      style={{ overflow: 'hidden' }}
-    >
-      {post.images ? (
-        <motion.div whileHover="hover" variants={frameVariants}>
-          <Link to={`/images/${post.id}`}>
-            <motion.img
-              whileHover="hover"
-              variants={imageVariants}
-              alt={post.caption}
-              key={post.id}
-              src={post.images.standard_resolution.url}
-            />
-          </Link>
-        </motion.div>
-      ) : (
-        ''
-      )}
-    </motion.div>
+    <GridItemWrapper>
+      <motion.div initial="hidden" enter="enter" exit="hidden" variants={item}>
+        {post.images ? (
+          <motion.div whileHover="hover" variants={frameVariants}>
+            <Link to={`/images/${post.id}`}>
+              <motion.img
+                whileHover="hover"
+                variants={imageVariants}
+                alt={post.caption}
+                key={post.id}
+                src={post.src}
+                // transition={{ transition }}
+                transition={{ type: 'tween', stiffness: 20 }}
+              />
+            </Link>
+          </motion.div>
+        ) : (
+          ''
+        )}
+      </motion.div>
+    </GridItemWrapper>
   );
 }
 
@@ -71,6 +81,7 @@ GridItem.propTypes = {
     caption: PropTypes.string.isRequired,
     link: PropTypes.string.isRequired,
     images: PropTypes.object.isRequired,
+    src: PropTypes.string.isRequired,
   }).isRequired,
 };
 

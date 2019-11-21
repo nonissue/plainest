@@ -25,13 +25,11 @@ const AppWrapper = styled.div`
     justify-content: center;
     font-size: calc(12px + 1.5vmin);
   }
-
   header a:link,
   header a:visited {
     color: #fff;
     text-decoration: none;
   }
-
   h1 {
     font-size: 1.4em;
     margin: 0;
@@ -47,6 +45,7 @@ const AppWrapper = styled.div`
     color: #d5d9e0;
     margin-bottom: 0em;
     font-size: 0.9em;
+    /* display: inline; */
   }
   h3::before {
     content: '@';
@@ -71,6 +70,14 @@ const AppWrapper = styled.div`
     font-size: 0.45em;
     border-radius: 0.25em;
     font-family: 'Oswald', sans-serif;
+  }
+  .footer {
+    position: fixed;
+    bottom: 1em;
+    left: 1em;
+    font-size: 0.7em;
+    font-family: 'Lekton', monospace;
+    text-transform: uppercase;
   }
 `;
 
@@ -131,12 +138,13 @@ function App() {
   return (
     <AppWrapper>
       <header>
-        <Link to="/">
-          <h1>plain site</h1>
-        </Link>
-        <a href="https://instagram.com/plain.site">
-          <h3>plain.site</h3>
-        </a>
+        <h1>
+          <Link to="/">plain site</Link>
+        </h1>
+
+        <h3>
+          <a href="https://instagram.com/plain.site">plain.site</a>
+        </h3>
       </header>
       <Nav />
       <div>
@@ -170,6 +178,7 @@ function App() {
           </Switch>
         </AnimatePresence>
       </div>
+      <div className="footer">Copyright 2019 © plainsite</div>
     </AppWrapper>
   );
 }

@@ -11,7 +11,6 @@ const NavWrapper = styled.div`
     display: block;
     margin: 0;
     /* box-shadow: 0 1px 2px 0 rgba(255, 255, 255, 0.1), 0 1px 2px 0 rgba(255, 255, 255, 0.06); */
-    /* background: #fff; */
     line-height: 2em;
     margin-right: 10px;
     border-radius: 2em;
@@ -22,13 +21,14 @@ const NavWrapper = styled.div`
     font-weight: 600;
     font-size: 1rem;
     text-decoration: none;
+    transition: background-color 0.3s ease, color 0.2s linear;
     border: 1px solid hsla(0, 0%, 100%, 0.4);
   }
 
   a:hover {
     border: 1px solid #fff;
-    color: hsla(228.8, 18%, 12%, 0.5);
-    background: #fff;
+    color: hsla(228.8, 18%, 12%, 0.9);
+    background-color: #fff;
     /* color: #fff; */
   }
 
@@ -42,6 +42,15 @@ const NavWrapper = styled.div`
     position: absolute;
     top: 5vh;
     right: 4vh;
+  }
+
+  @keyframes fadein {
+    0% {
+      background: #333;
+    }
+    100% {
+      opacity: #fff;
+    }
   }
 `;
 

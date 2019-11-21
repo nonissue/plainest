@@ -1,26 +1,22 @@
-const faunadb = require("faunadb");
+const faunadb = require('faunadb');
 
 /* configure faunaDB Client with our secret */
 const q = faunadb.query;
 const client = new faunadb.Client({
   // Move somewhere secure
-  secret: "fnADdJQsv_ACCk1D6Izxwmf6TcbbjhLmbAGRdcGC"
+  secret: 'fnADdJQsv_ACCk1D6Izxwmf6TcbbjhLmbAGRdcGC',
 });
 
 exports.handler = (event, context) => {
-  console.log("Function `posts-read-all` invoked!");
-  // console.log("islocalhost? " + isLocalHost());
-  console.log(process.env.NETLIFY_DEV);
-  console.log(context);
-  console.log(event);
+  console.log('Function `posts-read-all` invoked!');
   return (
     client
       // .query(q.Paginate(q.Match(q.Ref("indexes/all_posts"))))
-      .query(q.Paginate(q.Match(q.Index("all_posts"))))
+      .query(q.Paginate(q.Match(q.Index('all_posts'))))
       .then(response => {
         const postRefs = response.data;
-        console.log("Post refs", postRefs);
-        console.log(`${postRefs.length} posts found`);
+        console.log('Post refs', postRefs);
+        console.log(`${postRefs.length} post collections found`);
         // create new query out of post refs. http://bit.ly/2LG3MLg
         const getAllPostDataQuery = postRefs.map(ref => {
           return q.Get(ref);
@@ -29,15 +25,15 @@ exports.handler = (event, context) => {
         return client.query(getAllPostDataQuery).then(ret => {
           return {
             statusCode: 200,
-            body: JSON.stringify(ret)
+            body: JSON.stringify(ret),
           };
         });
       })
       .catch(error => {
-        console.log("error", error);
+        console.log('error', error);
         return {
           statusCode: 400,
-          body: JSON.stringify(error)
+          body: JSON.stringify(error),
         };
       })
   );
