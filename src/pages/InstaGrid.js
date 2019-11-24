@@ -39,11 +39,11 @@ const InstaGridWrapper = styled.div`
 const list = {
   visible: {
     opacity: 1,
-    scale: 1,
+    x: 0,
     transition: {
-      staggerChildren: 0.05,
-      duration: 0.1,
-      delay: 0.0,
+      staggerChildren: 0.1,
+      delayChildren: 0,
+      duration: 1,
     },
   },
   enter: {
@@ -73,7 +73,7 @@ export function InstaGrid({ posts, loaded }) {
         variants={list}
         key="list"
         initial="hidden"
-        animate={loaded ? 'visible' : 'enter'}
+        animate="visible"
         exit="exit"
         className="image-grid"
       >

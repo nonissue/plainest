@@ -81,17 +81,16 @@ const AppWrapper = styled.div`
   }
 `;
 
+// this is ignored completely?
+
 const variants = {
   enter: {
     opacity: 1,
-    transition: {
-      delay: 0,
-    },
   },
   exit: {
-    opacity: 0.2,
-    scale: 1,
-    transition: { duration: 0.4, staggerChildren: 0.2 },
+    opacity: 0,
+    // scale: 1,
+    transition: { duration: 0.4, staggerChildren: 0.6, delayChildren: 0.1 },
   },
 };
 
@@ -101,7 +100,7 @@ const variants2 = {
   },
   exit: {
     opacity: 0,
-    transition: { duration: 0.5 },
+    transition: { duration: 0 },
   },
 };
 
@@ -109,25 +108,32 @@ const variants2 = {
 function App() {
   const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(true);
+  // probably can be removed
   const [loaded, setLoaded] = useState(true);
   const location = useLocation();
 
   // cancel request if component unmounts?
   // https://www.leighhalliday.com/use-effect-hook
   useEffect(() => {
+    // setLoading(true);
     // Should check last fetch, and if it is stale, run posts-hydrate
     const fetchData = async () => {
+      setLoading(true);
       const res = await axios('/.netlify/functions/posts-read-latest');
       const fetchedPosts = res.data.data.posts;
       setPosts(fetchedPosts);
     };
 
-    fetchData().then(
-      setTimeout(() => {
-        setLoading(false);
-        setLoaded(true);
-      }, 2000),
-    );
+    fetchData();
+    setLoading(false);
+    // fetchData().then(
+    //   setTimeout(() => {
+    //     setLoading(false);
+    //     // setLoaded(true);
+    //   }, 0),
+    // );
+
+    console.log('App effect called');
 
     // Fake timeout to ensure loading shows
     // Could be bad though as if the contents isnt actually loaded in time
@@ -158,7 +164,8 @@ function App() {
                 exit="exit"
                 variants={variants}
               >
-                {loading ? <Loading /> : <InstaGrid posts={posts} loaded={loaded} />}
+                {!posts ? <Loading /> : <InstaGrid posts={posts} />}
+                {/* <InstaGrid posts={posts} loaded={loaded} /> */}
               </motion.div>
             </Route>
             <Route path="/images/:id">
