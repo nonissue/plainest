@@ -55,28 +55,28 @@ const item = {
 // https://www.leighhalliday.com/use-effect-hook
 export function GridItem({ post }) {
   return (
-    // <GridItemWrapper>
-    <motion.div initial="hidden" enter="enter" exit="hidden" variants={item}>
-      {post.images ? (
-        <motion.div whileHover="hover" variants={frameVariants} key={post.id}>
-          <Link to={`/images/${post.id}`}>
-            <motion.img
-              whileHover="hover"
-              variants={imageVariants}
-              alt={post.caption}
-              key={post.id}
-              src={post.src}
-              // transition={{ transition }}
-              // transition={{ type: 'tween', stiffness: 20 }}
-            />
-          </Link>
-        </motion.div>
-      ) : (
-        // <Loading />
-        ''
-      )}
-    </motion.div>
-    // </GridItemWrapper>
+    <GridItemWrapper>
+      <motion.div initial="hidden" enter="enter" exit="hidden" variants={item}>
+        {post.images ? (
+          <motion.div whileHover="hover" variants={frameVariants} key={post.id}>
+            <Link to={`/images/${post.id}`}>
+              <motion.img
+                whileHover="hover"
+                variants={imageVariants}
+                alt={post.caption}
+                key={post.id}
+                src={post.src}
+                // transition={{ transition }}
+                transition={{ type: 'tween', stiffness: 20 }}
+              />
+            </Link>
+          </motion.div>
+        ) : (
+          // <Loading />
+          ''
+        )}
+      </motion.div>
+    </GridItemWrapper>
   );
 }
 
