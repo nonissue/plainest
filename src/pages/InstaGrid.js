@@ -65,7 +65,7 @@ const list = {
   },
 };
 
-export function InstaGrid({ posts, loaded }) {
+export function InstaGrid({ posts }) {
   console.log(posts);
   return (
     <InstaGridWrapper>
@@ -78,6 +78,10 @@ export function InstaGrid({ posts, loaded }) {
         className="image-grid"
       >
         <AnimatePresence exitBeforeEnter initial={false}>
+          {/* Remove header, put logo here */}
+          {/* <div>
+            <h1>Plainsite logo here</h1>
+          </div> */}
           {!!posts && posts.map(post => <GridItem post={post} key={post.id} variants={list} />)}
         </AnimatePresence>
       </motion.div>
@@ -94,7 +98,7 @@ InstaGrid.propTypes = {
       images: PropTypes.object.isRequired,
     }),
   ).isRequired,
-  loaded: PropTypes.bool.isRequired,
+  // loaded: PropTypes.bool.isRequired,
 };
 
 export default InstaGrid;

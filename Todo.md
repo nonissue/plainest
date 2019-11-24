@@ -3,6 +3,7 @@ OH man, when using variants, the children components have to have methods with t
 
 - [x] cache instagram api fetch results
 - [x] fetch cached results from fauna
+- [ ] make nav fixed for scrolling?
 - [ ] testing
 - [ ] change logo to fixed position square floating above images?
 - [ ] intermittenly fetch updated posts info

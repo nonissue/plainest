@@ -39,9 +39,10 @@ const NavWrapper = styled.div`
   }
 
   .nav-right {
-    position: absolute;
+    position: fixed;
     top: 5vh;
     right: 4vh;
+    z-index: 1000;
   }
 
   @keyframes fadein {
