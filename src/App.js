@@ -90,7 +90,7 @@ const variants = {
   exit: {
     opacity: 0,
     // scale: 1,
-    transition: { duration: 0.4, staggerChildren: 0.6, delayChildren: 0.1 },
+    transition: { duration: 0.2 },
   },
 };
 
