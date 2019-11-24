@@ -10,41 +10,57 @@ import './App.css';
 
 const AppWrapper = styled.div`
   text-align: center;
-  color: #fff;
+  color: #121212;
   font-family: 'Work Sans', sans-serif;
 
   header {
     /* background-color: #1a202c; */
     /* background-color: #121212; */
+    /* width: 15vw; */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    position: fixed;
+    padding: 5px 20px 15px 20px;
+    left: 40vw;
+    top: 1vw;
+    z-index: 50;
+    border-radius: 0.1em;
+    background: hsla(0, 0%, 100%, 0.9);
     animation: fadein 0.3s;
-    margin-top: 4vh;
-    margin-bottom: 4vh;
+    /* margin-top: 4vh; */
+    /* margin-bottom: 4vh; */
     display: flex;
     flex-direction: column;
     align-items: left;
     justify-content: center;
     font-size: calc(12px + 1.5vmin);
   }
+  a:link,
+  a:visiited {
+    color: #121212;
+  }
+
   header a:link,
   header a:visited {
-    color: #fff;
+    color: #121212;
     text-decoration: none;
   }
+
   h1 {
-    font-size: 1.4em;
+    font-size: 1em;
     margin: 0;
     text-transform: uppercase;
     font-family: 'Oswald', serif, sans-serif;
     letter-spacing: 0em;
-    font-weight: 700;
+    font-weight: 790;
+    color: #121212;
   }
   h3 {
-    margin-top: 0.2em;
+    margin-top: 0em;
     font-family: 'Lekton', sans-serif;
-    font-weight: 400;
-    color: #d5d9e0;
+    font-weight: 300;
+    color: #121212;
     margin-bottom: 0em;
-    font-size: 0.9em;
+    font-size: 0.6em;
     /* display: inline; */
   }
   h3::before {

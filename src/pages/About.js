@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 const AboutWrapper = styled.div`
+  color: #fff;
   width: 50vw;
   margin: 0px auto;
   max-width: 400px;

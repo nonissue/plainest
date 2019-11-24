@@ -12,12 +12,15 @@ const NavWrapper = styled.div`
     margin: 0;
     /* box-shadow: 0 1px 2px 0 rgba(255, 255, 255, 0.1), 0 1px 2px 0 rgba(255, 255, 255, 0.06); */
     line-height: 2em;
+    /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     margin-right: 10px;
     border-radius: 2em;
     width: 2em;
     height: 2em;
     padding: 2px;
-    color: #fff;
+    background: #fff;
+    color: #333;
     font-weight: 600;
     font-size: 1rem;
     text-decoration: none;
@@ -27,21 +30,21 @@ const NavWrapper = styled.div`
 
   a:hover {
     border: 1px solid #fff;
-    color: hsla(228.8, 18%, 12%, 0.9);
-    background-color: #fff;
+    color: #fff;
+    background-color: #121212;
     /* color: #fff; */
   }
 
   .nav-left {
-    position: absolute;
-    top: 5vh;
-    left: 4vh;
+    position: fixed;
+    top: 11vh;
+    left: 6vh;
   }
 
   .nav-right {
     position: fixed;
-    top: 5vh;
-    right: 4vh;
+    top: 4.5vh;
+    right: 2vh;
     z-index: 1000;
   }
 
