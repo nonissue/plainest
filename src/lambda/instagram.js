@@ -20,16 +20,29 @@ export async function handler(event, context) {
       // first, convert the json response to js object
       // then, extract only the data we want from that object
       body: JSON.stringify(
-        posts.map(i => ({
-          id: i.id,
-          link: i.link,
-          images: i.images,
-          width: i.images.standard_resolution.width,
-          height: i.images.standard_resolution.height,
-          src: i.images.standard_resolution.url,
-          videos: i.videos,
-          caption: i.caption.text,
-        })),
+        posts.map(i =>
+          !i.videos
+            ? {
+                id: i.id,
+                link: i.link,
+                images: i.images,
+                width: i.images.standard_resolution.width,
+                height: i.images.standard_resolution.height,
+                src: i.images.standard_resolution.url,
+                videos: i.videos,
+                caption: i.caption.text,
+              }
+            : {
+                id: i.id,
+                link: i.link,
+                images: i.images,
+                width: i.images.low_resolution.width,
+                height: i.images.low_resolution.height,
+                src: i.images.low_resolution.url,
+                videos: i.videos,
+                caption: i.caption.text,
+              },
+        ),
       ),
     };
   } catch (err) {
