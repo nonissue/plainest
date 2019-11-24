@@ -43,7 +43,7 @@ const list = {
     transition: {
       staggerChildren: 0.1,
       delayChildren: 0,
-      duration: 1,
+      // duration: 0.5,
     },
   },
   enter: {
@@ -73,7 +73,7 @@ export function InstaGrid({ posts, loaded }) {
         variants={list}
         key="list"
         initial="hidden"
-        animate="visible"
+        animate="visible" // this has to be here?
         exit="exit"
         className="image-grid"
       >

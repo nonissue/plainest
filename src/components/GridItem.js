@@ -24,19 +24,14 @@ const frameVariants = {
   transition,
 };
 
-const item2 = {
+const item = {
   enter: {
-    opacity: 0.5,
-    transition: {
-      when: 'beforeChildren',
-      staggerChildren: 1,
-      duration: 4,
-    },
+    opacity: 1,
   },
   visible: {
     opacity: 1,
     transition: {
-      duration: 2,
+      duration: 1,
     },
   },
   hidden: {
@@ -56,28 +51,6 @@ const item2 = {
   },
 };
 
-const item = {
-  visible: {
-    opacity: 1,
-    x: 0,
-  },
-  hidden: {
-    opacity: 0,
-    transition: {
-      when: 'beforeChildren',
-      staggerChildren: 0.5,
-    },
-  },
-  exit: {
-    scale: 0.8,
-    opacity: 0,
-    transition: {
-      when: 'afterChildren',
-      staggerChildren: 0.4,
-      duration: 2.5,
-    },
-  },
-};
 // cancel request if component unmounts?
 // https://www.leighhalliday.com/use-effect-hook
 export function GridItem({ post }) {

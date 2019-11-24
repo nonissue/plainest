@@ -124,14 +124,14 @@ function App() {
       setPosts(fetchedPosts);
     };
 
-    fetchData();
-    setLoading(false);
-    // fetchData().then(
-    //   setTimeout(() => {
-    //     setLoading(false);
-    //     // setLoaded(true);
-    //   }, 0),
-    // );
+    // fetchData();
+    // setLoading(false);
+    fetchData().then(
+      setTimeout(() => {
+        setLoading(false);
+        // setLoaded(true);
+      }, 2000),
+    );
 
     console.log('App effect called');
 
@@ -164,8 +164,9 @@ function App() {
                 exit="exit"
                 variants={variants}
               >
-                {!posts ? <Loading /> : <InstaGrid posts={posts} />}
-                {/* <InstaGrid posts={posts} loaded={loaded} /> */}
+                {/* if InstaGrid is rendered before posts are available, children dont get staggered */}
+                {/* {!posts ? <Loading /> : <InstaGrid posts={posts} />} */}
+                {loading ? <Loading /> : <InstaGrid posts={posts} />}
               </motion.div>
             </Route>
             <Route path="/images/:id">

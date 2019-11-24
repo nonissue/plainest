@@ -1,3 +1,6 @@
+OH man, when using variants, the children components have to have methods with the same name as the parent dur
+(IE. visible, hidden)
+
 - [x] cache instagram api fetch results
 - [x] fetch cached results from fauna
 - [ ] testing
