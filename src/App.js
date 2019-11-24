@@ -5,7 +5,7 @@ import { Switch, Route, Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { AnimatePresence, motion } from 'framer-motion';
 import { About, InstaGrid } from './pages';
-import { Nav, Loading, ImageView } from './components';
+import { Nav, Loading, ImageView, AppHeader } from './components';
 import './App.css';
 
 const AppWrapper = styled.div`
@@ -13,27 +13,24 @@ const AppWrapper = styled.div`
   color: #121212;
   font-family: 'Work Sans', sans-serif;
 
-  header {
-    /* background-color: #1a202c; */
-    /* background-color: #121212; */
-    /* width: 15vw; */
+  /* header {
+
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     position: fixed;
-    padding: 5px 20px 15px 20px;
-    left: 40vw;
-    top: 1vw;
+    padding: 0px 8px 5px 5px;
+    left: 2vh;
+    top: 4.5vh;
     z-index: 50;
-    border-radius: 0.1em;
-    background: hsla(0, 0%, 100%, 0.9);
+    background: hsla(0, 0%, 100%, 1);
     animation: fadein 0.3s;
-    /* margin-top: 4vh; */
-    /* margin-bottom: 4vh; */
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: left;
     justify-content: center;
     font-size: calc(12px + 1.5vmin);
-  }
+    text-align: left;
+  } */
+/* 
   a:link,
   a:visiited {
     color: #121212;
@@ -49,11 +46,13 @@ const AppWrapper = styled.div`
     font-size: 1em;
     margin: 0;
     text-transform: uppercase;
-    font-family: 'Oswald', serif, sans-serif;
-    letter-spacing: 0em;
-    font-weight: 790;
+    font-family: 'Work Sans', serif, sans-serif;
+    letter-spacing: -0.05em;
+    font-weight: 700;
     color: #121212;
+    color: #fff;
   }
+
   h3 {
     margin-top: 0em;
     font-family: 'Lekton', sans-serif;
@@ -61,8 +60,10 @@ const AppWrapper = styled.div`
     color: #121212;
     margin-bottom: 0em;
     font-size: 0.6em;
+    margin-left: 0.1em;
     /* display: inline; */
   }
+
   h3::before {
     content: '@';
     font-family: 'Lekton', sans-serif;
@@ -72,12 +73,14 @@ const AppWrapper = styled.div`
     font-weight: 600;
     margin-right: 0.1em;
   }
+
   i {
     color: #e2e8f0;
     opacity: 0.7;
     font-style: normal;
     font-family: 'Work Sans', sans-serif;
-  }
+  } */
+
   .url {
     font-weight: 300;
     display: inline;
@@ -87,6 +90,7 @@ const AppWrapper = styled.div`
     border-radius: 0.25em;
     font-family: 'Oswald', sans-serif;
   }
+
   .footer {
     position: fixed;
     bottom: 1em;
@@ -159,7 +163,8 @@ function App() {
 
   return (
     <AppWrapper>
-      <header>
+      <AppHeader />
+      {/* <header>
         <h1>
           <Link to="/">plain site</Link>
         </h1>
@@ -168,7 +173,7 @@ function App() {
           <a href="https://instagram.com/plain.site">plain.site</a>
         </h3>
       </header>
-      <Nav />
+      <Nav /> */}
       <div>
         <AnimatePresence exitBeforeEnter>
           <Switch location={location} key={location.pathname}>

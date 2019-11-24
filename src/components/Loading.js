@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Oval } from 'svg-loaders-react';
 import BounceLoader from 'react-spinners/BounceLoader';
 
 const LoadingWrapper = styled.div`

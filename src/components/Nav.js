@@ -4,6 +4,12 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const NavWrapper = styled.div`
+  padding: 5px 8px 5px 5px;
+  .nav {
+    display: flex;
+    flex-direction: row;
+    /* width: 10vw; */
+  }
   a,
   a:link,
   a:visited {
@@ -13,8 +19,8 @@ const NavWrapper = styled.div`
     /* box-shadow: 0 1px 2px 0 rgba(255, 255, 255, 0.1), 0 1px 2px 0 rgba(255, 255, 255, 0.06); */
     line-height: 2em;
     /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); */
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    margin-right: 10px;
+    /* box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); */
+    /* margin-right: 10px; */
     border-radius: 2em;
     width: 2em;
     height: 2em;
@@ -25,7 +31,7 @@ const NavWrapper = styled.div`
     font-size: 1rem;
     text-decoration: none;
     transition: background-color 0.3s ease, color 0.2s linear;
-    border: 1px solid hsla(0, 0%, 100%, 0.4);
+    border: 1px solid hsla(0, 0%, 10%, 0.4);
   }
 
   a:hover {
@@ -36,16 +42,19 @@ const NavWrapper = styled.div`
   }
 
   .nav-left {
-    position: fixed;
-    top: 11vh;
-    left: 6vh;
+    /* position: fixed; */
+    /* top: 11vh;
+    left: 6vh; */
+    text-align: center;
+    margin-right: 0.1em;
   }
 
   .nav-right {
-    position: fixed;
-    top: 4.5vh;
-    right: 2vh;
+    /* position: fixed; */
+    /* top: 4.5vh;
+    right: 2vh; */
     z-index: 1000;
+    text-align: center;
   }
 
   @keyframes fadein {
