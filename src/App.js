@@ -1,68 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Switch, Route, Link, useLocation } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 
 import axios from 'axios';
 import { AnimatePresence, motion } from 'framer-motion';
 import { About, InstaGrid } from './pages';
-import { Nav, Loading, ImageView, AppHeader } from './components';
+import { Loading, ImageView, AppHeader } from './components';
 import './App.css';
 
 const AppWrapper = styled.div`
   text-align: center;
   color: #121212;
   font-family: 'Work Sans', sans-serif;
-
-  /* header {
-
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    position: fixed;
-    padding: 0px 8px 5px 5px;
-    left: 2vh;
-    top: 4.5vh;
-    z-index: 50;
-    background: hsla(0, 0%, 100%, 1);
-    animation: fadein 0.3s;
-    display: flex;
-    flex-direction: row;
-    align-items: left;
-    justify-content: center;
-    font-size: calc(12px + 1.5vmin);
-    text-align: left;
-  } */
-/* 
-  a:link,
-  a:visiited {
-    color: #121212;
-  }
-
-  header a:link,
-  header a:visited {
-    color: #121212;
-    text-decoration: none;
-  }
-
-  h1 {
-    font-size: 1em;
-    margin: 0;
-    text-transform: uppercase;
-    font-family: 'Work Sans', serif, sans-serif;
-    letter-spacing: -0.05em;
-    font-weight: 700;
-    color: #121212;
-    color: #fff;
-  }
-
-  h3 {
-    margin-top: 0em;
-    font-family: 'Lekton', sans-serif;
-    font-weight: 300;
-    color: #121212;
-    margin-bottom: 0em;
-    font-size: 0.6em;
-    margin-left: 0.1em;
-    /* display: inline; */
-  }
 
   h3::before {
     content: '@';
@@ -79,7 +28,7 @@ const AppWrapper = styled.div`
     opacity: 0.7;
     font-style: normal;
     font-family: 'Work Sans', sans-serif;
-  } */
+  }
 
   .url {
     font-weight: 300;
@@ -120,16 +69,15 @@ const variants2 = {
   },
   exit: {
     opacity: 0,
-    transition: { duration: 0 },
+    transition: { duration: 0.3 },
   },
 };
 
 // home page
 function App() {
   const [posts, setPosts] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(true);
-  // probably can be removed
-  const [loaded, setLoaded] = useState(true);
   const location = useLocation();
 
   // cancel request if component unmounts?
@@ -144,16 +92,16 @@ function App() {
       setPosts(fetchedPosts);
     };
 
-    // fetchData();
-    // setLoading(false);
-    fetchData().then(
-      setTimeout(() => {
-        setLoading(false);
-        // setLoaded(true);
-      }, 2000),
-    );
+    fetchData();
+    setLoading(false);
+    // fetchData().then(
+    //   setTimeout(() => {
+    //     setLoading(false);
+    //     // setLoaded(true);
+    //   }, 0),
+    // );
 
-    console.log('App effect called');
+    // console.log('App effect called');
 
     // Fake timeout to ensure loading shows
     // Could be bad though as if the contents isnt actually loaded in time
@@ -187,7 +135,7 @@ function App() {
               >
                 {/* if InstaGrid is rendered before posts are available, children dont get staggered */}
                 {/* {!posts ? <Loading /> : <InstaGrid posts={posts} />} */}
-                {loading ? <Loading /> : <InstaGrid posts={posts} />}
+                {!posts ? <Loading /> : <InstaGrid posts={posts} />}
               </motion.div>
             </Route>
             <Route path="/images/:id">
@@ -198,7 +146,7 @@ function App() {
                 exit="exit"
                 variants={variants2}
               >
-                {loading ? <Loading /> : <ImageView posts={posts} />}
+                {!posts ? <Loading /> : <ImageView posts={posts} />}
               </motion.div>
             </Route>
             <Route exact path="/about">

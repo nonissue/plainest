@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Switch, Route, Link, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Nav } from './Nav';
 
+// TODO: Loading indicator on header lower border?
 const HeaderWrapper = styled.header`
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  position: fixed;
+  position: sticky;
+  top: 0;
   /* padding: 0px 8px 5px 5px; */
   /* left: 2vh; */
   /* top: 4.5vh; */
@@ -15,6 +16,8 @@ const HeaderWrapper = styled.header`
   animation: fadein 0.3s;
   font-size: calc(12px + 1.5vmin);
   border: 1px solid #ccc;
+  border-left: 0;
+  border-right: 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -42,7 +45,7 @@ const HeaderWrapper = styled.header`
     margin: 0;
     text-transform: uppercase;
     font-family: 'Work Sans', serif, sans-serif;
-    letter-spacing: -0.05em;
+    /* letter-spacing: -0.05em; */
     font-weight: 700;
     color: #121212;
     color: #fff;

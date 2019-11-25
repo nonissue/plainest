@@ -1,10 +1,11 @@
 import React from 'react';
+// import axios from 'axios';
 import { MemoryRouter } from 'react-router-dom';
 import { InstaGrid } from './pages/InstaGrid';
 import { AppHeader, Nav } from './components';
 import './index.css';
-import axios from 'axios';
-import api from './utils/api.js';
+
+// import api from './utils/api.js';
 
 export default { title: 'Homepage' };
 

@@ -3,24 +3,26 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 const AboutWrapper = styled.div`
-  color: #fff;
+  color: #121212;
   width: 50vw;
   margin: 0px auto;
+  padding-top: 10vw;
   max-width: 400px;
   font-family: 'Work Sans', sans-serif;
   line-height: 1.5em;
   font-family: 'Lekton', monospace;
 
-  i {
+  b {
     font-style: normal;
     font-family: 'Lekton', monospace;
     text-transform: uppercase;
     font-weight: 600;
+    color: #121212;
   }
 
   a:link,
   a:visited {
-    color: #fff;
+    color: #121212;
     font-weight: 700;
     text-decoration: none;
   }
@@ -56,9 +58,9 @@ export function About() {
         variants={variants}
       >
         <p>
-          <i>About</i>
+          <b>About</b>
           <br />
-          "A kuest for klout™️"
+          &quot;A kuest for klout™️&quot;
           <br />
           Cooked up sporadically by{' '}
           <a href="https://www.instagram.com/christiandy/" alt="christiandy instagram">

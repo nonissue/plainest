@@ -4,11 +4,12 @@ import styled from 'styled-components';
 
 const PostItemWrapper = styled.div`
   font-family: 'Work Sans', 'Arial', sans-serif;
+  margin-top: 2em;
   p {
     max-width: 400px;
     margin: 1em auto;
+    font-weight: 600;
     line-height: 1.5em;
-    color: #fff;
   }
 `;
 
@@ -16,9 +17,14 @@ export function PostItem({ post }) {
   return (
     <PostItemWrapper>
       <a href={post.link}>
-        {post ? <img src={post.images.standard_resolution.url} alt={post.caption} /> : ''}
+        <img
+          src={post.images.standard_resolution.url}
+          alt={post.caption}
+          width={post.width}
+          height={post.height}
+        />
+        {/* {post ? <img src={post.images.standard_resolution.url} alt={post.caption} /> : ''} */}
       </a>
-
       <p>{post.caption}</p>
     </PostItemWrapper>
   );
@@ -30,6 +36,8 @@ PostItem.propTypes = {
     caption: PropTypes.string.isRequired,
     link: PropTypes.string.isRequired,
     images: PropTypes.object.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
   }).isRequired,
 };
 

@@ -17,31 +17,36 @@ const variants = {
   center: {
     opacity: 1,
     transition: {
+      delay: 0.2,
       ...transition,
     },
   },
   exit: {
     opacity: 0,
     transition: {
-      duration: 0.3,
+      duration: 1,
     },
   },
 };
 
 export function ImageView({ posts }) {
   const { id } = useParams();
+  // this is probably bad?
   const post = posts.find(p => p.id === id);
+  // const post = posts ? posts.find(p => p.id === id) : null;
 
   return (
     <motion.div
       variants={variants}
       initial="hidden"
       animate="center"
-      // exit="exit"
-      transition={{ duration: 0 }}
+      exit="exit"
+      // transition={{ duration: 2 }}
       className="post-item"
     >
-      {post ? <PostItem post={post} /> : 'Loading'}
+      {/* <PostItem post={post} /> */}
+      {/* dont think below is necessary as app.js already shows loading */}
+      {post ? <PostItem post={post} /> : ''}
     </motion.div>
   );
 }

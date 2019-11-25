@@ -25,6 +25,9 @@ exports.handler = (event, context) => {
       return client.query(getLatestPost).then(ret => {
         return {
           statusCode: 200,
+          headers: {
+            'Content-Type': 'text/json',
+          },
           body: JSON.stringify(ret),
         };
       });

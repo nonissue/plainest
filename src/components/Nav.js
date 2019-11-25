@@ -59,7 +59,7 @@ const NavWrapper = styled.div`
 
   @keyframes fadein {
     0% {
-      background: #333;
+      background: #fff;
     }
     100% {
       opacity: #fff;
@@ -84,7 +84,7 @@ export function Nav() {
               exit={{ opacity: 0.5, scale: 2, transition: { duration: 5 } }}
               className="nav-left"
             >
-              <Link to="/">{'⇦'}</Link>
+              <Link to="/">⇦</Link>
             </motion.div>
           </AnimatePresence>
         )}
