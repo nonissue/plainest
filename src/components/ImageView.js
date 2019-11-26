@@ -10,7 +10,8 @@ import { PostItem } from './PostItem';
 // TODO: fix button centering (use visibility?)
 // TODO: or just copy how instagram do it...
 // Modal + space-between
-const ImageViewWrapper = styled(motion.div)`
+// TODO: change this to modal
+const StyledImageView = styled(motion.div)`
   display: flex;
   justify-content: center;
   @media (min-width: 768px) {
@@ -27,7 +28,7 @@ const ImageViewWrapper = styled(motion.div)`
     /* margin: 2em; */
     font-size: 1.5em;
     width: 2em;
-    /* border: 1px solid #ccc; */
+    border: 1px solid #ccc;
     color: #fff;
     a,
     a:link,
@@ -78,7 +79,7 @@ export function ImageView({ posts }) {
   }
 
   return (
-    <ImageViewWrapper
+    <StyledImageView
       variants={variants}
       initial="hidden"
       animate="center"
@@ -86,7 +87,11 @@ export function ImageView({ posts }) {
       // transition={{ duration: 2 }}
       className="post-item"
     >
-      <div className="control">{prev && <Link to={`/images/${prev.id}`}>←</Link>}</div>
+      {prev && (
+        <div className="control">
+          <Link to={`/images/${prev.id}`}>←</Link>}
+        </div>
+      )}
       {/* <PostItem post={post} /> */}
       {/* dont think below is necessary as app.js already shows loading */}
       {post && <PostItem post={post} />}
@@ -94,7 +99,7 @@ export function ImageView({ posts }) {
       <div className={`control ${!next && 'hidden'}`}>
         {next && <Link to={`/images/${next.id}`}>→</Link>}
       </div>
-    </ImageViewWrapper>
+    </StyledImageView>
   );
 }
 
