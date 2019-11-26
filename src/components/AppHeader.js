@@ -8,7 +8,9 @@ import { Logo } from './Logo';
 // TODO: Loading indicator on header lower border?
 // OR top of page?
 // TODO: make nav just absolute positioned?
-// TODO: fix nav shift on imageview
+// TODO: [done] fix nav shift on imageview
+// TODO: media queries for nav button sizes
+// TODO: I dunno about the centered nav
 const HeaderWrapper = styled.header`
   /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); */
   position: sticky;
@@ -36,7 +38,7 @@ const HeaderWrapper = styled.header`
     text-transform: uppercase;
     font-size: 0.75em;
     font-family: 'Lekton', monospace, sans-serif;
-    width: 200px;
+    width: 15vw;
     /* text-align: center; */
 
     a,
@@ -69,7 +71,7 @@ export function AppHeader() {
           <Link to="/">BACK</Link>
         </motion.div>
       ) : (
-        <div className="control hidden"></div>
+        <div className="control hidden">back</div>
       )}
       <Logo />
       {!(location.pathname === '/about') ? (

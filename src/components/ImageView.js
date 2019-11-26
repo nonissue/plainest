@@ -7,17 +7,22 @@ import styled from 'styled-components';
 import { PostItem } from './PostItem';
 
 // TODO: media queries for display controls
+// TODO: fix button centering (use visibility?)
 const ImageViewWrapper = styled(motion.div)`
   display: flex;
   justify-content: center;
   @media (min-width: 768px) {
     margin-top: 3em;
   }
-
+  .hidden {
+    visibility: hidden !important;
+  }
   .control {
     display: flex;
     align-items: center;
-    margin: 2em;
+    justify-content: center;
+    text-align: center;
+    /* margin: 2em; */
     font-size: 1.5em;
     width: 2em;
     /* border: 1px solid #ccc; */
@@ -27,8 +32,6 @@ const ImageViewWrapper = styled(motion.div)`
     a:visited {
       text-decoration: none;
     }
-  }
-  .next {
   }
 `;
 
@@ -81,12 +84,14 @@ export function ImageView({ posts }) {
       // transition={{ duration: 2 }}
       className="post-item"
     >
-      <div className="control">{prev && <Link to={`/images/${prev.id}`}>←</Link>}←</div>
-
+      <div className="control">{prev && <Link to={`/images/${prev.id}`}>←</Link>}</div>
       {/* <PostItem post={post} /> */}
       {/* dont think below is necessary as app.js already shows loading */}
       {post && <PostItem post={post} />}
-      <div className="control">{next && <Link to={`/images/${next.id}`}>→</Link>}→</div>
+      {/* <div className={`control ${!next && 'hidden'}`}> */}
+      <div className={`control ${!next && 'hidden'}`}>
+        {next && <Link to={`/images/${next.id}`}>→</Link>}
+      </div>
     </ImageViewWrapper>
   );
 }
