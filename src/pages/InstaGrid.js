@@ -7,8 +7,8 @@ import { GridItem } from '../components/GridItem';
 // change below into css grid, rather than using css columns
 const InstaGridWrapper = styled.div`
   .image-grid {
-    max-width: 640px;
-    column-count: 1;
+    /* max-width: 640px; */
+    column-count: 4;
     column-gap: 0em;
     column-width: 300px;
     margin: 2vh auto;

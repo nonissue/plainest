@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const LogoWrapper = styled.div`
-  padding: 0px 8px 5px 5px;
+  padding: 1.5vh 8px 2vh 1vh;
   display: flex;
   flex-direction: column;
-  align-items: left;
-  justify-content: center;
+  align-items: center;
+  /* justify-content: center; */
   text-align: left;
 
   a,

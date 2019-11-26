@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Logo } from './Logo';
 
+// TODO: Readd nav
 const NavWrapper = styled.div`
   padding: 5px 8px 5px 5px;
   display: flex;
