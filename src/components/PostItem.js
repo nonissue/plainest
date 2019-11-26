@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const PostItemWrapper = styled.div`
   font-family: 'Work Sans', 'Arial', sans-serif;
-  margin-top: 2em;
+
   p {
     max-width: 400px;
     margin: 1em auto;

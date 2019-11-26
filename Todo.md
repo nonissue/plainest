@@ -2,6 +2,8 @@ OH man, when using variants, the children components have to have methods with t
 (IE. visible, hidden)
 
 - [x] cache instagram api fetch results
+- [ ] button size on mobile
+- [ ] no top padding on image post on mobile
 - [x] fetch cached results from fauna
 - [ ] move back button
 - [ ] add next/previous buttons to imageview

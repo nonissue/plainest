@@ -1,16 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { Nav } from './Nav';
+import { Logo } from './Logo';
 
 // TODO: Loading indicator on header lower border?
 const HeaderWrapper = styled.header`
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   position: sticky;
   top: 0;
-  /* padding: 0px 8px 5px 5px; */
-  /* left: 2vh; */
-  /* top: 4.5vh; */
   z-index: 50;
   background: hsla(0, 0%, 100%, 1);
   animation: fadein 0.3s;
@@ -22,7 +19,6 @@ const HeaderWrapper = styled.header`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  /* width: 100%; */
 
   .logo {
     padding: 0px 8px 5px 5px;
@@ -73,20 +69,6 @@ const HeaderWrapper = styled.header`
     margin-right: 0.1em;
   }
 `;
-
-function Logo() {
-  return (
-    <div className="logo">
-      <h1>
-        <Link to="/">plain site</Link>
-      </h1>
-
-      <h3>
-        <a href="https://instagram.com/plain.site">plain.site</a>
-      </h3>
-    </div>
-  );
-}
 
 export function AppHeader() {
   return (

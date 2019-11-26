@@ -1,15 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { Logo } from './Logo';
 
 const NavWrapper = styled.div`
   padding: 5px 8px 5px 5px;
-  .nav {
-    display: flex;
-    flex-direction: row;
-    /* width: 10vw; */
-  }
+  display: flex;
+  flex-direction: row;
+
   a,
   a:link,
   a:visited {
@@ -38,28 +37,21 @@ const NavWrapper = styled.div`
     border: 1px solid #fff;
     color: #fff;
     background-color: #121212;
-    /* color: #fff; */
   }
 
   .nav-left {
-    /* position: fixed; */
-    /* top: 11vh;
-    left: 6vh; */
     text-align: center;
     margin-right: 0.1em;
   }
 
   .nav-right {
-    /* position: fixed; */
-    /* top: 4.5vh;
-    right: 2vh; */
     z-index: 1000;
     text-align: center;
   }
 
   @keyframes fadein {
     0% {
-      background: #fff;
+      background: #333;
     }
     100% {
       opacity: #fff;
@@ -72,27 +64,21 @@ export function Nav() {
 
   return (
     <NavWrapper>
-      <div className="nav">
-        {location.pathname === '/' ? (
-          ''
-        ) : (
-          <AnimatePresence>
-            <motion.div
-              key="back"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { delay: 0.5, duration: 1 } }}
-              exit={{ opacity: 0.5, scale: 2, transition: { duration: 5 } }}
-              className="nav-left"
-            >
-              <Link to="/">⇦</Link>
-            </motion.div>
-          </AnimatePresence>
-        )}
-        <div className="nav-right">
-          <Link to="/about" alt="about page">
-            ?
-          </Link>
-        </div>
+      {!(location.pathname === '/') && (
+        <motion.div
+          key="back"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { delay: 0.5, duration: 1 } }}
+          exit={{ opacity: 0.5, scale: 2, transition: { duration: 5 } }}
+          className="nav-left"
+        >
+          <Link to="/">⇦</Link>
+        </motion.div>
+      )}
+      <div className="nav-right">
+        <Link to="/about" alt="about page">
+          ?
+        </Link>
       </div>
     </NavWrapper>
   );
