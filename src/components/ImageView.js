@@ -8,6 +8,8 @@ import { PostItem } from './PostItem';
 
 // TODO: media queries for display controls
 // TODO: fix button centering (use visibility?)
+// TODO: or just copy how instagram do it...
+// Modal + space-between
 const ImageViewWrapper = styled(motion.div)`
   display: flex;
   justify-content: center;
