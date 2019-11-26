@@ -4,9 +4,11 @@ import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GridItem } from '../components/GridItem';
 
+// change below into css grid, rather than using css columns
 const InstaGridWrapper = styled.div`
   .image-grid {
-    column-count: 4;
+    max-width: 640px;
+    column-count: 1;
     column-gap: 0em;
     column-width: 300px;
     margin: 2vh auto;
@@ -17,22 +19,13 @@ const InstaGridWrapper = styled.div`
   .image-grid > div {
     width: 100%;
     overflow: hidden;
-    padding-top: 0em;
   }
 
   .image-grid img {
     width: 100%;
     overflow: hidden;
     display: block;
-    object-fit: cover;
-  }
-
-  .frame {
-    overflow: hidden;
-  }
-
-  .image-view {
-    overflow: hidden;
+    /* object-fit: cover; */
   }
 `;
 

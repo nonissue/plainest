@@ -5,6 +5,13 @@ import styled from 'styled-components';
 const PostItemWrapper = styled.div`
   font-family: 'Work Sans', 'Arial', sans-serif;
 
+  img {
+    /* height: 80vh; */
+    width: auto;
+    max-width: 100vw;
+    height: auto;
+    max-height: 70vh;
+  }
   p {
     max-width: 400px;
     margin: 1em auto;

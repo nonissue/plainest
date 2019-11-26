@@ -57,7 +57,7 @@ export function GridItem({ post }) {
   return (
     <GridItemWrapper>
       <motion.div initial="hidden" enter="enter" exit="hidden" variants={item}>
-        {post.images ? (
+        {post.images && (
           <motion.div whileHover="hover" variants={frameVariants} key={post.id}>
             <Link to={`/images/${post.id}`}>
               <motion.img
@@ -71,9 +71,6 @@ export function GridItem({ post }) {
               />
             </Link>
           </motion.div>
-        ) : (
-          // <Loading />
-          ''
         )}
       </motion.div>
     </GridItemWrapper>
