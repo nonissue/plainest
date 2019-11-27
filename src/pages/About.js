@@ -7,7 +7,7 @@ const AboutWrapper = styled.div`
   width: 50vw;
   margin: 0px auto;
   padding-top: 10vw;
-  max-width: 400px;
+  max-width: 500px;
   font-family: 'Work Sans', sans-serif;
   line-height: 1.5em;
   font-family: 'Lekton', monospace;
@@ -59,10 +59,7 @@ export function About() {
       >
         <p>
           <b>About</b>
-          <br />
-          &quot;A kuest for klout™️&quot;
-          <br />
-          Cooked up sporadically by{' '}
+          <br /> &quot;A kuest for klout™️&quot; Cooked up sporadically by{' '}
           <a href="https://www.instagram.com/christiandy/" alt="christiandy instagram">
             @christiandy
           </a>{' '}
