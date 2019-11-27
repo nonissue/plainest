@@ -4,5 +4,6 @@ import { Loading } from './Loading';
 import { Nav } from './Nav';
 import { PostItem } from './PostItem';
 import { AppHeader } from './AppHeader';
+import { Grid } from './Grid';
 
-export { Nav, Loading, ImageView, PostItem, AppHeader };
+export { Nav, Loading, ImageView, PostItem, AppHeader, Grid };

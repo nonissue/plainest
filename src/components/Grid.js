@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GridItem } from '../components/GridItem';
+import { GridItem } from './GridItem';
 
 // change below into css grid, rather than using css columns
-const InstaGridWrapper = styled.div`
+const StyledGrid = styled.div`
   .image-grid {
     /* max-width: 640px; */
     column-count: 4;
@@ -58,10 +58,9 @@ const list = {
   },
 };
 
-export function InstaGrid({ posts }) {
-  console.log(posts);
+export function Grid({ posts }) {
   return (
-    <InstaGridWrapper>
+    <StyledGrid>
       <motion.div
         variants={list}
         key="list"
@@ -78,11 +77,11 @@ export function InstaGrid({ posts }) {
           {!!posts && posts.map(post => <GridItem post={post} key={post.id} variants={list} />)}
         </AnimatePresence>
       </motion.div>
-    </InstaGridWrapper>
+    </StyledGrid>
   );
 }
 
-InstaGrid.propTypes = {
+Grid.propTypes = {
   posts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -94,4 +93,4 @@ InstaGrid.propTypes = {
   // loaded: PropTypes.bool.isRequired,
 };
 
-export default InstaGrid;
+export default Grid;

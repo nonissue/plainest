@@ -11,12 +11,12 @@ import { Logo } from './Logo';
 // TODO: [done] fix nav shift on imageview
 // TODO: media queries for nav button sizes
 // TODO: I dunno about the centered nav
-const HeaderWrapper = styled.header`
-  /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); */
+const StyledHeader = styled.header`
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   position: sticky;
   top: 0;
   z-index: 50;
-  /* background: hsla(0, 0%, 100%, 0.9); */
+  background: hsla(0, 0%, 100%, 0.95);
   animation: fadein 0.3s;
   font-size: calc(12px + 1.5vmin);
   border: 0px solid #ccc;
@@ -24,8 +24,8 @@ const HeaderWrapper = styled.header`
   border-right: 0;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  /* justify-content: space-between; */
+  /* justify-content: center; */
+  justify-content: space-between;
   width: 100%;
 
   div {
@@ -38,7 +38,7 @@ const HeaderWrapper = styled.header`
     text-transform: uppercase;
     font-size: 0.75em;
     font-family: 'Lekton', monospace, sans-serif;
-    width: 15vw;
+    width: 20vw;
     /* text-align: center; */
 
     a,
@@ -49,17 +49,14 @@ const HeaderWrapper = styled.header`
     }
   }
   .hidden {
-    /* text-transform: uppercase; */
-    /* font-size: 0.75em; */
     visibility: hidden;
-    /* opacity: 0; */
   }
 `;
 
 export function AppHeader() {
   const location = useLocation();
   return (
-    <HeaderWrapper>
+    <StyledHeader>
       {!(location.pathname === '/') ? (
         <motion.div
           key="back"
@@ -82,7 +79,7 @@ export function AppHeader() {
         <div className="control hidden">about</div>
       )}
       {/* <Nav /> */}
-    </HeaderWrapper>
+    </StyledHeader>
   );
 }
 

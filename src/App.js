@@ -4,8 +4,8 @@ import { Switch, Route, useLocation } from 'react-router-dom';
 
 import axios from 'axios';
 import { AnimatePresence, motion } from 'framer-motion';
-import { About, InstaGrid } from './pages';
-import { Loading, ImageView, AppHeader } from './components';
+import { About } from './pages';
+import { Loading, ImageView, AppHeader, Grid } from './components';
 import './App.css';
 
 const AppWrapper = styled.div`
@@ -133,9 +133,9 @@ function App() {
                 exit="exit"
                 variants={variants}
               >
-                {/* if InstaGrid is rendered before posts are available, children dont get staggered */}
-                {/* {!posts ? <Loading /> : <InstaGrid posts={posts} />} */}
-                {!posts ? <Loading /> : <InstaGrid posts={posts} />}
+                {/* if Grid is rendered before posts are available, children dont get staggered */}
+                {/* {!posts ? <Loading /> : <Grid posts={posts} />} */}
+                {!posts ? <Loading /> : <Grid posts={posts} />}
               </motion.div>
             </Route>
             <Route path="/images/:id">
@@ -155,7 +155,7 @@ function App() {
           </Switch>
         </AnimatePresence>
       </div>
-      <div className="footer">Copyright 2019 © plainsite</div>
+      {/* <div className="footer">Copyright 2019 © plainsite</div> */}
     </AppWrapper>
   );
 }

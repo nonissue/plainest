@@ -2,27 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const StyledPostItem = styled.div`
+const StyledPostModal = styled.div`
   font-family: 'Work Sans', 'Arial', sans-serif;
-  width: 100%;
-  img {
-    /* height: 80vh; */
-    width: auto;
-    max-width: 100vw;
-    height: auto;
-    max-height: 70vh;
-  }
-  p {
-    max-width: 400px;
-    margin: 1em auto;
-    font-weight: 600;
-    line-height: 1.5em;
-  }
 `;
 
-export function PostItem({ post }) {
+function Modal({ handleClose, show, children }) {
+  const showHideClassname = show ? 'modal display-block' : 'modal display-none';
+
   return (
-    <StyledPostItem>
+    <div className={showHideClassname}>
+      <section className="modal-main">
+        {children}
+        <button type="button" onClick={handleClose}>
+          close
+        </button>
+      </section>
+    </div>
+  );
+}
+
+export function PostModal({ post }) {
+  return (
+    <StyledPostModal>
       <a href={post.link}>
         <img
           src={post.images.standard_resolution.url}
@@ -33,11 +34,11 @@ export function PostItem({ post }) {
         {/* {post ? <img src={post.images.standard_resolution.url} alt={post.caption} /> : ''} */}
       </a>
       <p>{post.caption}</p>
-    </StyledPostItem>
+    </StyledPostModal>
   );
 }
 
-PostItem.propTypes = {
+PostModal.propTypes = {
   post: PropTypes.shape({
     id: PropTypes.string.isRequired,
     caption: PropTypes.string.isRequired,
@@ -48,4 +49,10 @@ PostItem.propTypes = {
   }).isRequired,
 };
 
-export default PostItem;
+Modal.propTypes = {
+  handleClose: PropTypes.func.isRequired,
+  show: PropTypes.bool.isRequired,
+  children: PropTypes.element.isRequired,
+};
+
+export default PostModal;

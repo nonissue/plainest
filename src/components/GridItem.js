@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-// import { Loading } from '.';
 
 const GridItemWrapper = styled.div`
   overflow: hidden;

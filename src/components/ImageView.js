@@ -13,6 +13,7 @@ import { PostItem } from './PostItem';
 // TODO: change this to modal
 const StyledImageView = styled(motion.div)`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   @media (min-width: 768px) {
     margin-top: 3em;
@@ -20,19 +21,36 @@ const StyledImageView = styled(motion.div)`
   .hidden {
     visibility: hidden !important;
   }
+  .controls {
+    display: flex;
+    width: 100%;
+    /* width: 640px; */
+    flex-direction: row;
+    justify-content: space-between;
+    position: fixed;
+    padding-bottom: 1em;
+    bottom: 0;
+
+    /* 
+    media query, large screens:
+    
+    */
+  }
   .control {
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    /* margin: 2em; */
+    margin-left: 1em;
+    margin-right: 1em;
     font-size: 1.5em;
-    width: 2em;
-    border: 1px solid #ccc;
+    width: 1em;
+    /* border: 1px solid #ccc; */
     color: #fff;
     a,
     a:link,
     a:visited {
+      color: #ccc;
       text-decoration: none;
     }
   }
@@ -50,13 +68,15 @@ const variants = {
   center: {
     opacity: 1,
     transition: {
-      delay: 0.2,
       ...transition,
+      delay: 0.2,
+      duration: 1,
     },
   },
   exit: {
     opacity: 0,
     transition: {
+      ...transition,
       duration: 1,
     },
   },
@@ -84,21 +104,24 @@ export function ImageView({ posts }) {
       initial="hidden"
       animate="center"
       exit="exit"
-      // transition={{ duration: 2 }}
       className="post-item"
     >
-      {prev && (
-        <div className="control">
-          <Link to={`/images/${prev.id}`}>←</Link>}
-        </div>
-      )}
-      {/* <PostItem post={post} /> */}
-      {/* dont think below is necessary as app.js already shows loading */}
-      {post && <PostItem post={post} />}
-      {/* <div className={`control ${!next && 'hidden'}`}> */}
-      <div className={`control ${!next && 'hidden'}`}>
-        {next && <Link to={`/images/${next.id}`}>→</Link>}
+      <div className="controls">
+        {prev ? (
+          <div className="control">
+            <Link to={`/images/${prev.id}`}>←</Link>
+          </div>
+        ) : (
+          <div className="control hidden">←</div>
+        )}
+        {next && (
+          // <div className={`control ${!next && 'hidden'}`}>
+          <div className="control">
+            <Link to={`/images/${next.id}`}>→</Link>
+          </div>
+        )}
       </div>
+      {post && <PostItem post={post} />}
     </StyledImageView>
   );
 }

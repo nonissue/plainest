@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Logo } from './Logo';
 
 // TODO: Readd nav
 const NavWrapper = styled.div`
