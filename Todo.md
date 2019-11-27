@@ -29,6 +29,13 @@ OH man, when using variants, the children components have to have methods with t
 - [ ] don't fade in home page when returning from ImageView
 - [ ] Move CSS to styled-components so it's inline
 - [x] add hover effect to images
+- [ ] TODO: Loading indicator on header lower border?
+- [ ] OR top of page?
+- [ ] TODO: make nav just absolute positioned?
+- [x] TODO: [done] fix nav shift on imageview
+- [ ] TODO: media queries for nav button sizes
+- [x] TODO: I dunno about the centered nav
+- [ ] TODO: Scroll position
 
 # Bugs
 

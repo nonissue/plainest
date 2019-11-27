@@ -65,7 +65,6 @@ export function GridItem({ post }) {
                 alt={post.caption}
                 key={post.id}
                 src={post.src}
-                // transition={{ transition }}
                 transition={{ type: 'tween', stiffness: 20 }}
               />
             </Link>

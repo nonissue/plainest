@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Rollback } from '@ant-design/icons';
 
 // TODO: Readd nav
 // TODO: Use Icons
@@ -48,15 +49,6 @@ const NavWrapper = styled.div`
   .nav-right {
     z-index: 1000;
     text-align: center;
-  }
-
-  @keyframes fadein {
-    0% {
-      background: #333;
-    }
-    100% {
-      opacity: #fff;
-    }
   }
 `;
 

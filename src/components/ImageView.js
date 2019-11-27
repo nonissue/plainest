@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+import { LeftCircle, RightCircle } from '@ant-design/icons';
 
 import { PostItem } from './PostItem';
 
@@ -45,13 +46,20 @@ const StyledImageView = styled(motion.div)`
     margin-right: 1em;
     font-size: 1.5em;
     width: 1em;
-    /* border: 1px solid #ccc; */
     color: #fff;
     a,
     a:link,
     a:visited {
-      color: #ccc;
+      color: #555;
+      opacity: 0.5;
       text-decoration: none;
+      transition: opacity 0.5s ease-out;
+    }
+
+    a:hover {
+      opacity: 1;
+      color: #333;
+      /* background: #eee; */
     }
   }
 `;
@@ -109,15 +117,21 @@ export function ImageView({ posts }) {
       <div className="controls">
         {prev ? (
           <div className="control">
-            <Link to={`/images/${prev.id}`}>←</Link>
+            <Link to={`/images/${prev.id}`}>
+              <LeftCircle />
+            </Link>
           </div>
         ) : (
-          <div className="control hidden">←</div>
+          <div className="control hidden">
+            <LeftCircle />
+          </div>
         )}
         {next && (
           // <div className={`control ${!next && 'hidden'}`}>
           <div className="control">
-            <Link to={`/images/${next.id}`}>→</Link>
+            <Link to={`/images/${next.id}`}>
+              <RightCircle />
+            </Link>
           </div>
         )}
       </div>
