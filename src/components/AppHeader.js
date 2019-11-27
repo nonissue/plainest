@@ -10,9 +10,9 @@ const StyledHeader = styled.header`
   position: sticky;
   top: 0;
   z-index: 50;
-  background: hsla(0, 0%, 100%, 0.92);
+  background: hsla(0, 0%, 100%, 0.94);
   -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(20px);
   animation: fadein 0.3s;
   font-size: calc(12px + 1.5vmin);
   border: 0px solid #ccc;
