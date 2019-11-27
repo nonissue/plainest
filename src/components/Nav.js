@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 // TODO: Readd nav
+// TODO: Use Icons
 const NavWrapper = styled.div`
   padding: 5px 8px 5px 5px;
   display: flex;
