@@ -3,9 +3,17 @@ import styled from 'styled-components';
 import BounceLoader from 'react-spinners/BounceLoader';
 
 const LoadingWrapper = styled.div`
-  display: block;
+  /* display: block; */
+
+  /* height: 100px;
+    width: 100px; */
+  position: absolute;
+  left: 50%;
+  margin-left: -15px;
+  top: 50%;
+  margin-top: -15px;
   /* width: 10vw; */
-  margin: 0 auto;
+  /* margin: 0 auto; */
   width: 30px;
   /* padding: 0.2em 0em 0em 0em; */
   /* background: white; */
