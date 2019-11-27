@@ -20,7 +20,6 @@ const StyledHeader = styled.header`
   border-right: 0;
   display: flex;
   flex-direction: row;
-  /* justify-content: center; */
   justify-content: space-between;
   width: 100%;
 

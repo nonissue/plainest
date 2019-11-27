@@ -21,9 +21,11 @@ const LogoWrapper = styled.div`
     font-size: 1em;
     margin: 0;
     text-transform: uppercase;
-    font-family: 'Work Sans', serif, sans-serif;
-    /* letter-spacing: -0.05em; */
-    font-weight: 700;
+    /* font-family: 'Oswald', serif, sans-serif; */
+    /* font-family: 'Open Sans Condensed', sans-serif; */
+    font-family: 'Nunito', sans-serif;
+    letter-spacing: 0.02em;
+    font-weight: 300;
     color: #121212;
     color: #fff;
   }
