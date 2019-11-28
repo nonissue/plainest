@@ -30,7 +30,6 @@ export function PostItem({ post }) {
           width={post.width}
           height={post.height}
         />
-        {/* {post ? <img src={post.images.standard_resolution.url} alt={post.caption} /> : ''} */}
       </a>
       <p>{post.caption}</p>
     </StyledPostItem>

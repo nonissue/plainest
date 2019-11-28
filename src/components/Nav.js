@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { Rollback } from '@ant-design/icons';
 
 // TODO: Readd nav
-// TODO: Use Icons
 const NavWrapper = styled.div`
   padding: 5px 8px 5px 5px;
   display: flex;
@@ -17,11 +16,7 @@ const NavWrapper = styled.div`
     padding: 0;
     display: block;
     margin: 0;
-    /* box-shadow: 0 1px 2px 0 rgba(255, 255, 255, 0.1), 0 1px 2px 0 rgba(255, 255, 255, 0.06); */
     line-height: 2em;
-    /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); */
-    /* box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); */
-    /* margin-right: 10px; */
     border-radius: 2em;
     width: 2em;
     height: 2em;

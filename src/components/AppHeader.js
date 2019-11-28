@@ -23,15 +23,10 @@ const StyledHeader = styled.header`
   justify-content: space-between;
   width: 100%;
 
-  div {
-    /* border: 1px solid #ccc; */
-  }
   .control {
     text-transform: uppercase;
     font-size: 0.8em;
     font-family: 'Lekton', monospace, sans-serif;
-    /* width: 20vw; */
-    /* text-align: center; */
     display: flex;
     align-items: center;
     justify-content: center;

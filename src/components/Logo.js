@@ -7,7 +7,6 @@ const LogoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
   text-align: left;
 
   a,
@@ -21,10 +20,7 @@ const LogoWrapper = styled.div`
     font-size: 1em;
     margin: 0;
     text-transform: uppercase;
-    /* font-family: 'Oswald', serif, sans-serif; */
-    /* font-family: 'Open Sans Condensed', sans-serif; */
     font-family: 'Nunito', sans-serif;
-    /* letter-spacing: 0.02em; */
     font-weight: 200;
     color: #121212;
     color: #fff;
@@ -39,7 +35,6 @@ const LogoWrapper = styled.div`
     font-size: 0.6em;
     margin-left: 0.1em;
     text-decoration: underline;
-    /* display: inline; */
   }
 
   h3::before {

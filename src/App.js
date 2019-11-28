@@ -83,7 +83,6 @@ function App() {
   // cancel request if component unmounts?
   // https://www.leighhalliday.com/use-effect-hook
   useEffect(() => {
-    // setLoading(true);
     // Should check last fetch, and if it is stale, run posts-hydrate
     const fetchData = async () => {
       setLoading(true);
@@ -94,34 +93,11 @@ function App() {
 
     fetchData();
     setLoading(false);
-    // fetchData().then(
-    //   setTimeout(() => {
-    //     setLoading(false);
-    //     // setLoaded(true);
-    //   }, 0),
-    // );
-
-    // console.log('App effect called');
-
-    // Fake timeout to ensure loading shows
-    // Could be bad though as if the contents isnt actually loaded in time
-    // it will be displayed
-    // TODO possible solution? https://humble.dev/creating-a-nice-loading-button-with-react-hooks
   }, []);
 
   return (
     <AppWrapper>
       <AppHeader />
-      {/* <header>
-        <h1>
-          <Link to="/">plain site</Link>
-        </h1>
-
-        <h3>
-          <a href="https://instagram.com/plain.site">plain.site</a>
-        </h3>
-      </header>
-      <Nav /> */}
       <div>
         <AnimatePresence exitBeforeEnter>
           <Switch location={location} key={location.pathname}>
@@ -134,7 +110,6 @@ function App() {
                 variants={variants}
               >
                 {/* if Grid is rendered before posts are available, children dont get staggered */}
-                {/* {!posts ? <Loading /> : <Grid posts={posts} />} */}
                 {!posts ? <Loading /> : <Grid posts={posts} />}
               </motion.div>
             </Route>

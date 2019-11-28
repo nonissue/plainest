@@ -127,7 +127,6 @@ export function ImageView({ posts }) {
           </div>
         )}
         {next && (
-          // <div className={`control ${!next && 'hidden'}`}>
           <div className="control">
             <Link to={`/images/${next.id}`}>
               <RightCircle />
