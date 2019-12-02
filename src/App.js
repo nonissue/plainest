@@ -5,7 +5,7 @@ import { Switch, Route, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { AnimatePresence, motion } from 'framer-motion';
 import { About } from './pages';
-import { Loading, ImageView, AppHeader, Grid } from './components';
+import { Loading, PostView, AppHeader, Grid } from './components';
 import './App.css';
 
 const AppWrapper = styled.div`
@@ -121,7 +121,7 @@ function App() {
                 exit="exit"
                 variants={variants2}
               >
-                {!posts ? <Loading /> : <ImageView posts={posts} />}
+                {!posts ? <Loading /> : <PostView posts={posts} />}
               </motion.div>
             </Route>
             <Route exact path="/about">

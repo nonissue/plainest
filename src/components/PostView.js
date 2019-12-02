@@ -12,7 +12,7 @@ import { PostItem } from './PostItem';
 // TODO: or just copy how instagram do it...
 // Modal + space-between
 // TODO: change this to modal
-const StyledImageView = styled(motion.div)`
+const StyledPostView = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -37,6 +37,7 @@ const StyledImageView = styled(motion.div)`
     
     */
   }
+
   .control {
     display: flex;
     align-items: center;
@@ -47,11 +48,14 @@ const StyledImageView = styled(motion.div)`
     font-size: 1.5em;
     width: 1em;
     color: #fff;
+
     a,
     a:link,
-    a:visited {
+    a:visited,
+    a:active {
       color: #555;
       opacity: 0.5;
+
       text-decoration: none;
       transition: opacity 0.5s ease-out;
     }
@@ -90,7 +94,7 @@ const variants = {
   },
 };
 
-export function ImageView({ posts }) {
+export function PostView({ posts }) {
   const { id } = useParams();
   const post = posts.find(p => p.id === id);
   const postIndex = posts.findIndex(p => p.id === id);
@@ -107,7 +111,7 @@ export function ImageView({ posts }) {
   }
 
   return (
-    <StyledImageView
+    <StyledPostView
       variants={variants}
       initial="hidden"
       animate="center"
@@ -126,6 +130,9 @@ export function ImageView({ posts }) {
             <LeftCircle />
           </div>
         )}
+        <div className="control">
+          <Link to="/">back</Link>
+        </div>
         {next && (
           <div className="control">
             <Link to={`/images/${next.id}`}>
@@ -135,11 +142,11 @@ export function ImageView({ posts }) {
         )}
       </div>
       {post && <PostItem post={post} />}
-    </StyledImageView>
+    </StyledPostView>
   );
 }
 
-ImageView.propTypes = {
+PostView.propTypes = {
   posts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -150,4 +157,4 @@ ImageView.propTypes = {
   ).isRequired,
 };
 
-export default ImageView;
+export default PostView;

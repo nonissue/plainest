@@ -24,12 +24,7 @@ export function PostItem({ post }) {
   return (
     <StyledPostItem>
       <a href={post.link}>
-        <img
-          src={post.images.standard_resolution.url}
-          alt={post.caption}
-          width={post.width}
-          height={post.height}
-        />
+        <img src={post.src} alt={post.caption} width={post.width} height={post.height} />
       </a>
       <p>{post.caption}</p>
     </StyledPostItem>
@@ -44,6 +39,7 @@ PostItem.propTypes = {
     images: PropTypes.object.isRequired,
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
+    src: PropTypes.string.isRequired,
   }).isRequired,
 };
 

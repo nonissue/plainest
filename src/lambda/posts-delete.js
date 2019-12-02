@@ -1,5 +1,5 @@
-const faunadb = require("faunadb");
-// const getId = require("./utils/getId");
+const faunadb = require('faunadb');
+const getId = require('./utils/getId');
 function getId(urlPath) {
   return urlPath.match(/([^\/]*)\/*$/)[0];
 }
@@ -8,5 +8,5 @@ function getId(urlPath) {
 const q = faunadb.query;
 const client = new faunadb.Client({
   // Move somewhere secure
-  secret: "fnADdJQsv_ACCk1D6Izxwmf6TcbbjhLmbAGRdcGC"
+  secret: 'fnADdJQsv_ACCk1D6Izxwmf6TcbbjhLmbAGRdcGC',
 });
