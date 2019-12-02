@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { LeftCircle, RightCircle } from '@ant-design/icons';
+import { LeftCircle, RightCircle, Home } from '@ant-design/icons';
 
 import { PostItem } from './PostItem';
 
@@ -68,8 +68,10 @@ const StyledPostView = styled(motion.div)`
   }
 `;
 
+// Transitions for animations
 const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] };
 
+// Animations
 const variants = {
   enter: {
     opacity: 0,
@@ -131,7 +133,9 @@ export function PostView({ posts }) {
           </div>
         )}
         <div className="control">
-          <Link to="/">back</Link>
+          <Link to="/">
+            <Home />
+          </Link>
         </div>
         {next && (
           <div className="control">
