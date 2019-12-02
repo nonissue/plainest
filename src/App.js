@@ -13,7 +13,7 @@ const AppWrapper = styled.div`
   color: #121212;
   font-family: 'Work Sans', sans-serif;
 
-  h3::before {
+  /* h3::before {
     content: '@';
     font-family: 'Lekton', sans-serif;
     color: #a0aec0;
@@ -21,7 +21,7 @@ const AppWrapper = styled.div`
     color: #838b94;
     font-weight: 600;
     margin-right: 0.1em;
-  }
+  } */
 
   i {
     color: #e2e8f0;

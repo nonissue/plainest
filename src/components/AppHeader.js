@@ -10,7 +10,7 @@ const StyledHeader = styled.header`
   position: sticky;
   top: 0;
   z-index: 50;
-  background: hsla(0, 0%, 100%, 0.94);
+  background: hsla(0, 0%, 100%, 0.9);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(20px);
   animation: fadein 0.3s;

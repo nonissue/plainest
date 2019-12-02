@@ -52,10 +52,10 @@ const StyledPostView = styled(motion.div)`
     a,
     a:link,
     a:visited,
-    a:active {
+    a:active,
+    a:focus {
       color: #555;
       opacity: 0.5;
-
       text-decoration: none;
       transition: opacity 0.5s ease-out;
     }
