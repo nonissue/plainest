@@ -99,7 +99,6 @@ function App() {
   const location = useLocation();
   console.log(location);
   let background = location.state && location.state.background;
-  console.log(location);
 
   // const [itemURL, setItemURL] = useState(null);
 
@@ -183,10 +182,8 @@ function App() {
               <Error error={{ status: '404', msg: 'Page not found!' }} />
             </Route> */}
           </Switch>
-          {background && (
-            <Route path="/images/:id">
-              <PostModal posts={posts} />
-            </Route>
+          {location.state && location.background && location.background !== location && (
+            <Route path="/images/:id">{!posts ? <Loading /> : <PostModal posts={posts} />}</Route>
           )}
         </AnimatePresence>
       </div>
