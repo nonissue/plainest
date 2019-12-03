@@ -85,7 +85,7 @@ const variants = {
     opacity: 1,
     transition: {
       ...transition,
-      delay: 0.2,
+      delay: 0.1,
       duration: 1,
     },
   },

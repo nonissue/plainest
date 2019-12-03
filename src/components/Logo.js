@@ -21,7 +21,7 @@ const LogoWrapper = styled.div`
     margin: 0;
     text-transform: uppercase;
     font-family: 'Nunito', sans-serif;
-    font-family: 'Bebas Neue', cursive;
+    font-family: 'Bebas Neue', 'Helvetica', sans-serif;
     font-weight: 400;
     color: #121212;
     color: #fff;

@@ -13,7 +13,7 @@ const StyledPostItem = styled.div`
     max-height: 70vh;
   }
   p {
-    max-width: 400px;
+    max-width: 320px;
     margin: 1em auto;
     font-weight: 600;
     line-height: 1.5em;

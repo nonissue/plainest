@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Rollback } from '@ant-design/icons';
 
 // TODO: Readd nav
 const NavWrapper = styled.div`
@@ -71,4 +70,5 @@ export function Nav() {
     </NavWrapper>
   );
 }
+
 export default Nav;
