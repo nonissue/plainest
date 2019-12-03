@@ -12,6 +12,7 @@
   - https://reacttraining.com/react-router/web/example/modal-gallery
   - https://codesandbox.io/s/react-router-modal-gallery-se6ry
   - https://codedaily.io/tutorials/77/Create-a-Modal-Route-with-React-Router
+  - https://codepen.io/aesthetickz/pen/pYywpJ
 
 ## Todos
 

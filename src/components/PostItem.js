@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { LeftCircle, RightCircle, Home } from '@ant-design/icons';
 
 const StyledPostItem = styled.div`
   font-family: 'Work Sans', 'Arial', sans-serif;
@@ -23,10 +25,14 @@ const StyledPostItem = styled.div`
 export function PostItem({ post }) {
   return (
     <StyledPostItem>
-      <a href={post.link}>
-        <img src={post.src} alt={post.caption} width={post.width} height={post.height} />
-      </a>
-      <p>{post.caption}</p>
+      {post && (
+        <>
+          <a href={post.link}>
+            <img src={post.src} alt={post.caption} width={post.width} height={post.height} />
+          </a>
+          <p>{post.caption}</p>
+        </>
+      )}
     </StyledPostItem>
   );
 }

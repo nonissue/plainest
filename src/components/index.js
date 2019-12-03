@@ -6,6 +6,7 @@ import { Loading } from './Loading';
 import { Nav } from './Nav';
 import { PostItem } from './PostItem';
 import { PostModal } from './PostModal';
+import { ModalItem } from './ModalItem';
 import { PostView } from './PostView';
 
-export { Nav, Loading, PostView, PostItem, PostModal, AppHeader, Grid, Error };
+export { Nav, Loading, PostView, PostItem, PostModal, AppHeader, Grid, Error, ModalItem };

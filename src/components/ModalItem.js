@@ -1,72 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useParams, Link, Redirect } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { LeftCircle, RightCircle, Home } from '@ant-design/icons';
-
 import { PostItem } from './PostItem';
 
-// TODO: media queries for display controls
-// TODO: fix button centering (use visibility?)
-// TODO: or just copy how instagram do it...
-// Modal + space-between
-// TODO: change this to modal
-const StyledPostView = styled(motion.div)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  @media (min-width: 768px) {
-    margin-top: 3em;
+const StyledModalItem = styled.div`
+  font-family: 'Work Sans', 'Arial', sans-serif;
+  width: 100%;
+  img {
+    /* height: 80vh; */
+    width: auto;
+    max-width: 100vw;
+    height: auto;
+    max-height: 70vh;
   }
-  .hidden {
-    visibility: hidden !important;
-  }
-  .controls {
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-    position: fixed;
-    padding-bottom: 1em;
-    bottom: 0;
-    /* 
-    media query, large screens:
-    
-    */
-  }
-
-  .control {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-left: 1em;
-    margin-right: 1em;
-    font-size: 1.5em;
-    width: 1em;
-    color: #fff;
-
-    a,
-    a:link,
-    a:visited,
-    a:active,
-    a:focus {
-      color: #555;
-      opacity: 0.5;
-      text-decoration: none;
-      transition: opacity 0.5s ease-out;
-    }
-
-    a:hover {
-      /* opacity: 1; */
-      /* color: #333; */
-      /* background: #eee; */
-
-      opacity: 1;
-      color: #333;
-      /* background: #eee; */
-    }
+  p {
+    max-width: 320px;
+    margin: 1em auto;
+    font-weight: 600;
+    line-height: 1.5em;
   }
 `;
 
@@ -97,8 +50,22 @@ const variants = {
     },
   },
 };
+// export function PostItem({ post }) {
+//   return (
+//     <StyledPostItem>
+//       {post && (
+//         <>
+//           <a href={post.link}>
+//             <img src={post.src} alt={post.caption} width={post.width} height={post.height} />
+//           </a>
+//           <p>{post.caption}</p>
+//         </>
+//       )}
+//     </StyledPostItem>
+//   );
+// }
 
-export function PostView({ posts }) {
+export function ModalItem({ posts }) {
   const { id } = useParams();
   const post = posts.find(p => p.id === id);
   const postIndex = posts.findIndex(p => p.id === id);
@@ -115,7 +82,7 @@ export function PostView({ posts }) {
   }
 
   return (
-    <StyledPostView
+    <StyledModalItem
       variants={variants}
       initial="hidden"
       animate="center"
@@ -148,11 +115,11 @@ export function PostView({ posts }) {
         )}
       </div>
       {post && <PostItem post={post} />}
-    </StyledPostView>
+    </StyledModalItem>
   );
 }
 
-PostView.propTypes = {
+ModalItem.propTypes = {
   posts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -163,4 +130,4 @@ PostView.propTypes = {
   ).isRequired,
 };
 
-export default PostView;
+export default PostItem;

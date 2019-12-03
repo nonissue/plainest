@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { ToggleModal } from './PostModal';
+// import { ToggleModal } from './PostModal';
 import { useHistory, Link, useLocation } from 'react-router-dom';
 
 const GridItemWrapper = styled.div`
@@ -45,7 +45,7 @@ const transition = {
 };
 
 const imageVariants = {
-  hover: { scale: 1 },
+  hover: { scale: 1.2 },
   transition,
 };
 
@@ -62,7 +62,7 @@ const item = {
     opacity: 1,
     zIndex: 0,
     transition: {
-      duration: 0.1,
+      duration: 0.5,
     },
   },
   hidden: {
@@ -86,55 +86,32 @@ const item = {
 export function GridItem({ post }) {
   let location = useLocation();
 
-  console.log('griditem location');
-  console.log(location);
+  // console.log('griditem location');
+  // console.log(location);
 
   return (
     <GridItemWrapper>
       <motion.div initial="hidden" enter="enter" exit="hidden" variants={item}>
         {post.images && (
           <motion.div whileHover="hover" variants={frameVariants} key={post.id}>
-            {/* onClick={() => toggleModal(true)} */}
-            {/* <Link to={`/images/${post.id}`}> */}
-            {/* <buttTogglon type="button" onClick={show}> */}
-            <ToggleModal
-              toggle={show => (
-                <Link
-                  to={{
-                    pathname: `/images/${post.id}`,
-                    state: { background: location },
-                  }}
-                  onClick={show}
-                  // onKeyDown={show}
-                >
-                  <img
-                    alt={post.caption}
-                    key={post.id}
-                    src={post.src}
-                    width={post.width}
-                    style={{ zIndex: 0 }}
-                  />
-                  Show
-                </Link>
-              )}
-              content={hide => (
-                <button type="button" className="post-modal" onClick={hide} onKeyDown={hide}>
-                  Hide
-                  <img
-                    // whileHover="hover"
-                    // variants={imageVariants}
-                    alt={post.caption}
-                    key={post.id}
-                    src={post.src}
-                    // transition={{ type: 'tween', stiffness: 0 }}
-                    width={post.width}
-                  />
-                  <p>{post.caption}</p>
-                  {/* <button onClick={hide}>Close</button> */}
-                </button>
-              )}
-            />
-            {/* </Link> */}
+            <Link
+              // to={`/images/${post.id}`}
+              to={{
+                pathname: `/images/${post.id}`,
+                // This is the trick! This link sets
+                // the `background` in location state.
+                state: { background: location },
+              }}
+            >
+              <motion.img
+                whileHover="hover"
+                variants={imageVariants}
+                alt={post.caption}
+                key={post.id}
+                src={post.src}
+                transition={{ type: 'tween', stiffness: 20 }}
+              />
+            </Link>
           </motion.div>
         )}
       </motion.div>

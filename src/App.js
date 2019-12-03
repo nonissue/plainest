@@ -5,7 +5,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 import { About } from './pages';
-import { Loading, PostView, AppHeader, Grid, Error, PostModal } from './components';
+import { Loading, PostView, AppHeader, Grid, Error, PostModal, ModalItem } from './components';
 import './App.css';
 
 const AppWrapper = styled.div`
@@ -97,7 +97,6 @@ function App() {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState({ status: null, msg: null });
   const location = useLocation();
-  console.log(location);
   let background = location.state && location.state.background;
 
   // const [itemURL, setItemURL] = useState(null);
@@ -134,10 +133,7 @@ function App() {
         if we do, all route children components have to be wrapped in motion.div */}
         <AnimatePresence exitBeforeEnter>
           <Switch location={background || location} key={location.pathname}>
-            {/* <Route path="/">
-              <Redirect to="/grid" />
-            </Route> */}
-            <Route path="/">
+            <Route exact path="/">
               <motion.div
                 initial={false}
                 animate="enter"
@@ -160,31 +156,29 @@ function App() {
                 {!posts ? <Loading /> : <PostView posts={posts} />}
               </motion.div>
             </Route>
-            {/* <Route path="/modal/:id">
-              <motion.div
-                initial={false}
-                animate="enter"
-                enter="enter"
-                exit="exit"
-                variants={modalTransition}
-              >
-                {!posts ? <Loading /> : <PostModal posts={posts} show />}
-              </motion.div>
-            </Route> */}
             <Route exact path="/about">
               <About />
             </Route>
             <Route path="/error/:id">
-              {/* specifc error called from other pages */}
               <Error error={error} />
             </Route>
-            {/* <Route path="*">
+            <Route path="*">
               <Error error={{ status: '404', msg: 'Page not found!' }} />
-            </Route> */}
+            </Route>
           </Switch>
-          {location.state && location.background && location.background !== location && (
-            <Route path="/images/:id">{!posts ? <Loading /> : <PostModal posts={posts} />}</Route>
+          {/* {location.state && location.background && location.background !== location && ( */}
+          {background && (
+            <Route path="/images/:id">
+              {!posts ? (
+                <Loading />
+              ) : (
+                <PostModal>
+                  <ModalItem posts={posts} />
+                </PostModal>
+              )}
+            </Route>
           )}
+          {/* )} */}
         </AnimatePresence>
       </div>
       {/* <div className="footer">Copyright 2019 © plainsite</div> */}

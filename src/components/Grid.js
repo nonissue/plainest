@@ -35,15 +35,15 @@ const list = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0,
+      staggerChildren: 0.1,
       delayChildren: 0,
     },
   },
   enter: {
-    opacity: 1,
+    opacity: 0,
   },
   hidden: {
-    opacity: 0.5,
+    opacity: 0,
     zIndex: 0,
   },
   exit: {
