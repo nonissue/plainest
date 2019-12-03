@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Modal, ToggleModal } from './PostModal';
+import { ToggleModal } from './PostModal';
 
 const GridItemWrapper = styled.div`
   overflow: hidden;
@@ -59,6 +58,7 @@ const item = {
   },
   visible: {
     opacity: 1,
+    zIndex: 0,
     transition: {
       duration: 0.5,
     },
@@ -93,17 +93,15 @@ export function GridItem({ post }) {
             {/* <buttTogglon type="button" onClick={show}> */}
             <ToggleModal
               toggle={show => (
-                // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-                // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-                <img
-                  alt={post.caption}
-                  key={post.id}
-                  src={post.src}
-                  width={post.width}
-                  onClick={show}
-                  onKeyDown={show}
-                  style={{ zIndex: 0 }}
-                />
+                <div role="button" onClick={show} onKeyDown={show}>
+                  <img
+                    alt={post.caption}
+                    key={post.id}
+                    src={post.src}
+                    width={post.width}
+                    style={{ zIndex: 0 }}
+                  />
+                </div>
               )}
               content={hide => (
                 <button type="button" className="post-modal" onClick={hide} onKeyDown={hide}>
