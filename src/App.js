@@ -40,8 +40,8 @@ const AppWrapper = styled.div`
     font-size: 0.7em;
     font-family: 'Lekton', monospace;
     text-transform: uppercase;
-    animation: fadein 2s;
-    animation-delay: 1s;
+    animation: fadein 1s;
+    animation-delay: 0.5s;
     animation-fill-mode: forwards;
   }
 

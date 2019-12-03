@@ -65,7 +65,9 @@ export function GridItem({ post }) {
                 alt={post.caption}
                 key={post.id}
                 src={post.src}
-                transition={{ type: 'tween', stiffness: 20 }}
+                transition={{ type: 'tween', stiffness: 0 }}
+                width={post.width}
+                // height={post.height}
               />
             </Link>
           </motion.div>
@@ -81,6 +83,8 @@ GridItem.propTypes = {
     caption: PropTypes.string.isRequired,
     link: PropTypes.string.isRequired,
     images: PropTypes.object.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
     src: PropTypes.string.isRequired,
   }).isRequired,
 };
