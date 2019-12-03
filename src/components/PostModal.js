@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useParams, useHistory, Link, Redirect } from 'react-router-dom';
+import { useParams, Link, Redirect } from 'react-router-dom';
 import { LeftCircle, RightCircle, Home } from '@ant-design/icons';
 
 import { PostItem } from './PostItem';
@@ -37,10 +37,17 @@ function Modal({ handleClose, show, children }) {
 
 export function PostModal({ posts }) {
   const { id } = useParams();
+  const [shown, setShown] = useState(false);
+
+  // console.log(show);
+  // console.log(shown);
   // const { history } = useHistory();
-  let history = useHistory();
   const post = posts.find(p => p.id === id);
   const postIndex = posts.findIndex(p => p.id === id);
+
+  const toggleModal = () => {
+    setShown(!shown);
+  };
 
   let next = null;
   let prev = null;
@@ -53,10 +60,13 @@ export function PostModal({ posts }) {
     prev = posts[postIndex - 1];
   }
 
-  return (
-    <StyledPostModal role="button" className="modal-wrapper" onClick={() => history.goBack()}>
+  useEffect(() => {
+    setShown(!shown);
+  }, []);
+
+  return shown ? (
+    <StyledPostModal role="button" className="modal-wrapper" onClick={() => toggleModal()}>
       {post ? (
-        // <div onClick={e => e.stopPropagation()}>
         <div>
           <div className="controls">
             {prev ? (
@@ -86,9 +96,13 @@ export function PostModal({ posts }) {
           <PostItem post={post} />
         </div>
       ) : (
-        <Redirect to="/error/404" />
+        // <Redirect to="/error/404" />
+        ''
       )}
     </StyledPostModal>
+  ) : (
+    ''
+    // <Redirect to="/error/404" />
   );
 }
 

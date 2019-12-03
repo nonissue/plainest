@@ -58,6 +58,7 @@ export function GridItem({ post }) {
       <motion.div initial="hidden" enter="enter" exit="hidden" variants={item}>
         {post.images && (
           <motion.div whileHover="hover" variants={frameVariants} key={post.id}>
+            {/* onClick={() => toggleModal(true)} */}
             <Link to={`/images/${post.id}`}>
               <motion.img
                 whileHover="hover"

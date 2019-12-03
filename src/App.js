@@ -162,7 +162,7 @@ function App() {
                 exit="exit"
                 variants={modalTransition}
               >
-                {!posts ? <Loading /> : <PostModal posts={posts} />}
+                {!posts ? <Loading /> : <PostModal posts={posts} show />}
               </motion.div>
             </Route>
             <Route exact path="/about">

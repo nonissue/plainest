@@ -2,8 +2,11 @@
 
 ## Notes
 
-OH man, when using variants, the children components have to have methods with the same name as the parent dur
-(IE. visible, hidden)
+- OH man, when using variants, the children components have to have methods with the same name as the parent dur (IE. visible, hidden)
+- Modal stuff:
+  - https://blog.logrocket.com/building-a-modal-module-for-react-with-react-router/
+    - Note: uses router rather than react portal?
+  - https://alligator.io/react/modal-component/
 
 ## Todos
 
