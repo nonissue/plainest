@@ -1,27 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { Switch, Route, useLocation, Link } from 'react-router-dom';
-
-import axios from 'axios';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Switch, Route, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import styled from 'styled-components';
+
 import { About } from './pages';
-import { Loading, PostView, AppHeader, Grid } from './components';
+import { Loading, PostView, AppHeader, Grid, Error } from './components';
 import './App.css';
 
 const AppWrapper = styled.div`
   text-align: center;
   color: #121212;
-  font-family: 'Work Sans', sans-serif;
-
-  /* h3::before {
-    content: '@';
-    font-family: 'Lekton', sans-serif;
-    color: #a0aec0;
-    color: #697077;
-    color: #838b94;
-    font-weight: 600;
-    margin-right: 0.1em;
-  } */
+  font-family: 'Work Sans', 'Helvetica', 'Arial', sans-serif;
 
   i {
     color: #e2e8f0;
@@ -37,13 +27,12 @@ const AppWrapper = styled.div`
     letter-spacing: 0.15em;
     font-size: 0.45em;
     border-radius: 0.25em;
-    font-family: 'Oswald', sans-serif;
+    /* font-family: 'Oswald', sans-serif; */
   }
 
   .footer {
-    /* position: fixed; */
-    opacity: 0.7;
-    z-index: -50;
+    /* z-index: -50; */
+    opacity: 0;
     display: flex;
     justify-content: center;
     bottom: 1em;
@@ -51,6 +40,18 @@ const AppWrapper = styled.div`
     font-size: 0.7em;
     font-family: 'Lekton', monospace;
     text-transform: uppercase;
+    animation: fadein 2s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 `;
 
@@ -79,17 +80,6 @@ const postTransition = {
   },
 };
 
-// so if a route isn't wrapped
-function Error({ error }) {
-  return (
-    <motion.div initial={false} animate="enter" enter="enter" exit="exit" variants={gridTransition}>
-      <h2>Error: {error.status}</h2>
-      <p>{error.msg}</p>
-      <Link to="/">Home!</Link>
-    </motion.div>
-  );
-}
-
 // home page
 function App() {
   const [posts, setPosts] = useState(null);
@@ -113,6 +103,9 @@ function App() {
       setLoaded(true);
       // setError({ status: '200', msg: 'loaded successfully' });
     } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log('Error occurred: ');
+      // eslint-disable-next-line no-console
       console.log(err);
       setError({ status: err.status, msg: err.message });
       // setLoaded(false);
@@ -155,11 +148,12 @@ function App() {
             <Route exact path="/about">
               <About />
             </Route>
-            <Route exact path="/error">
+            <Route path="/error/:id">
+              {/* specifc error called from other pages */}
               <Error error={error} />
             </Route>
             <Route path="*">
-              <Error error={{ status: 404, msg: 'Page not found!' }} />
+              <Error error={{ status: '404', msg: 'Page not found!' }} />
             </Route>
           </Switch>
         </AnimatePresence>
