@@ -7,7 +7,6 @@ const LogoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
   text-align: left;
 
   a,
@@ -18,12 +17,12 @@ const LogoWrapper = styled.div`
   }
 
   h1 {
-    font-size: 1em;
+    font-size: 1.2em;
     margin: 0;
     text-transform: uppercase;
-    font-family: 'Work Sans', serif, sans-serif;
-    /* letter-spacing: -0.05em; */
-    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    font-family: 'Bebas Neue', cursive;
+    font-weight: 400;
     color: #121212;
     color: #fff;
   }
@@ -36,16 +35,18 @@ const LogoWrapper = styled.div`
     margin-bottom: 0em;
     font-size: 0.6em;
     margin-left: 0.1em;
-    text-decoration: underline;
-    /* display: inline; */
+    border-bottom: 0.5px solid #ccc;
+    /* text-decoration: underline; */
   }
 
   h3::before {
     content: '@';
     font-family: 'Lekton', sans-serif;
-    color: #a0aec0;
-    color: #697077;
+    /* color: #a0aec0;
+    color: #697077; */
+    border-bottom: 1px solid #fff;
     color: #838b94;
+    text-decoration: none;
     font-weight: 600;
     margin-right: 0.1em;
   }

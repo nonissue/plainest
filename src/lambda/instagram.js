@@ -1,11 +1,11 @@
 /* eslint-disable import/prefer-default-export */
 const axios = require('axios');
-// cache results, poll for changes?
+// TODO: cache results, poll for changes?
 
 // eslint-disable-next-line no-unused-vars
 export async function handler(event, context) {
   const endpoint = 'https://api.instagram.com/v1/users/self/media/recent';
-  const token = '20196334360.1677ed0.50589d21a9b743e9831e9aba8556268d';
+  const token = process.env.INSTAGRAM_ACCESS_TOKEN;
   const limit = 15;
 
   try {

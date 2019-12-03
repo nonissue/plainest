@@ -7,7 +7,6 @@ import { GridItem } from './GridItem';
 // change below into css grid, rather than using css columns
 const StyledGrid = styled.div`
   .image-grid {
-    /* max-width: 640px; */
     column-count: 4;
     column-gap: 0em;
     column-width: 300px;

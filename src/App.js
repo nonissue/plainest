@@ -5,7 +5,7 @@ import { Switch, Route, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { AnimatePresence, motion } from 'framer-motion';
 import { About } from './pages';
-import { Loading, ImageView, AppHeader, Grid } from './components';
+import { Loading, PostView, AppHeader, Grid } from './components';
 import './App.css';
 
 const AppWrapper = styled.div`
@@ -13,7 +13,7 @@ const AppWrapper = styled.div`
   color: #121212;
   font-family: 'Work Sans', sans-serif;
 
-  h3::before {
+  /* h3::before {
     content: '@';
     font-family: 'Lekton', sans-serif;
     color: #a0aec0;
@@ -21,7 +21,7 @@ const AppWrapper = styled.div`
     color: #838b94;
     font-weight: 600;
     margin-right: 0.1em;
-  }
+  } */
 
   i {
     color: #e2e8f0;
@@ -75,6 +75,8 @@ const variants2 = {
 
 // home page
 function App() {
+  console.log(process.env);
+  console.log(process.env.LOCAL_TEST_KEY);
   const [posts, setPosts] = useState(null);
   // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(true);
@@ -83,7 +85,6 @@ function App() {
   // cancel request if component unmounts?
   // https://www.leighhalliday.com/use-effect-hook
   useEffect(() => {
-    // setLoading(true);
     // Should check last fetch, and if it is stale, run posts-hydrate
     const fetchData = async () => {
       setLoading(true);
@@ -94,34 +95,11 @@ function App() {
 
     fetchData();
     setLoading(false);
-    // fetchData().then(
-    //   setTimeout(() => {
-    //     setLoading(false);
-    //     // setLoaded(true);
-    //   }, 0),
-    // );
-
-    // console.log('App effect called');
-
-    // Fake timeout to ensure loading shows
-    // Could be bad though as if the contents isnt actually loaded in time
-    // it will be displayed
-    // TODO possible solution? https://humble.dev/creating-a-nice-loading-button-with-react-hooks
   }, []);
 
   return (
     <AppWrapper>
       <AppHeader />
-      {/* <header>
-        <h1>
-          <Link to="/">plain site</Link>
-        </h1>
-
-        <h3>
-          <a href="https://instagram.com/plain.site">plain.site</a>
-        </h3>
-      </header>
-      <Nav /> */}
       <div>
         <AnimatePresence exitBeforeEnter>
           <Switch location={location} key={location.pathname}>
@@ -134,7 +112,6 @@ function App() {
                 variants={variants}
               >
                 {/* if Grid is rendered before posts are available, children dont get staggered */}
-                {/* {!posts ? <Loading /> : <Grid posts={posts} />} */}
                 {!posts ? <Loading /> : <Grid posts={posts} />}
               </motion.div>
             </Route>
@@ -146,7 +123,7 @@ function App() {
                 exit="exit"
                 variants={variants2}
               >
-                {!posts ? <Loading /> : <ImageView posts={posts} />}
+                {!posts ? <Loading /> : <PostView posts={posts} />}
               </motion.div>
             </Route>
             <Route exact path="/about">

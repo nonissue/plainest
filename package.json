@@ -3,7 +3,7 @@
   "version": "0.5.0",
   "private": true,
   "dependencies": {
-    "@reduxjs/toolkit": "^1.0.4",
+    "@ant-design/icons": "^4.0.0-alpha.10",
     "axios": "^0.19.0",
     "encoding": "^0.1.12",
     "faunadb": "^2.9.4",
@@ -14,14 +14,13 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.1.2",
     "react-spinners": "^0.6.1",
-    "redux": "^4.0.4",
     "styled-components": "^4.4.1",
     "svg-loaders-react": "^2.1.0",
     "trim-right": "^1.0.1"
   },
   "scripts": {
     "start": "run-p start:**",
-    "start:env": "export $(cat .env | xargs)",
+    "env-start:env": "export $(cat .env | xargs)",
     "start:app": "react-scripts start",
     "start:lambda": "netlify-lambda serve src/lambda",
     "storybook": "start-storybook",

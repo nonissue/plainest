@@ -4,9 +4,8 @@ const faunadb = require('faunadb');
 const q = faunadb.query;
 const client = new faunadb.Client({
   // Move somewhere secure
-  secret: 'fnADdJQsv_ACCk1D6Izxwmf6TcbbjhLmbAGRdcGC',
+  secret: process.env.FAUNA_DB_KEY,
 });
-
 // Ugly as hell way of doing this, but no worse than reversing the order?
 // could also just shift or pop or something?
 

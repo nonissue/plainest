@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+import { LeftCircle, RightCircle, Home } from '@ant-design/icons';
 
 import { PostItem } from './PostItem';
 
@@ -11,7 +12,7 @@ import { PostItem } from './PostItem';
 // TODO: or just copy how instagram do it...
 // Modal + space-between
 // TODO: change this to modal
-const StyledImageView = styled(motion.div)`
+const StyledPostView = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -34,6 +35,7 @@ const StyledImageView = styled(motion.div)`
     
     */
   }
+
   .control {
     display: flex;
     align-items: center;
@@ -43,20 +45,15 @@ const StyledImageView = styled(motion.div)`
     margin-right: 1em;
     font-size: 1.5em;
     width: 1em;
-    /* border: 1px solid #ccc; */
     color: #fff;
+
     a,
     a:link,
-<<<<<<< Updated upstream:src/components/ImageView.js
-    a:visited {
-      color: #ccc;
-      text-decoration: none;
-=======
     a:visited,
     a:active,
     a:focus {
       color: #555;
-      /* opacity: 1; */
+      opacity: 0.5;
       text-decoration: none;
       transition: opacity 0.5s ease-out;
     }
@@ -65,13 +62,18 @@ const StyledImageView = styled(motion.div)`
       /* opacity: 1; */
       /* color: #333; */
       /* background: #eee; */
->>>>>>> Stashed changes:src/components/PostView.js
+
+      opacity: 1;
+      color: #333;
+      /* background: #eee; */
     }
   }
 `;
 
+// Transitions for animations
 const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] };
 
+// Animations
 const variants = {
   enter: {
     opacity: 0,
@@ -96,7 +98,7 @@ const variants = {
   },
 };
 
-export function ImageView({ posts }) {
+export function PostView({ posts }) {
   const { id } = useParams();
   const post = posts.find(p => p.id === id);
   const postIndex = posts.findIndex(p => p.id === id);
@@ -113,7 +115,7 @@ export function ImageView({ posts }) {
   }
 
   return (
-    <StyledImageView
+    <StyledPostView
       variants={variants}
       initial="hidden"
       animate="center"
@@ -123,24 +125,34 @@ export function ImageView({ posts }) {
       <div className="controls">
         {prev ? (
           <div className="control">
-            <Link to={`/images/${prev.id}`}>←</Link>
+            <Link to={`/images/${prev.id}`}>
+              <LeftCircle />
+            </Link>
           </div>
         ) : (
-          <div className="control hidden">←</div>
+          <div className="control hidden">
+            <LeftCircle />
+          </div>
         )}
+        <div className="control">
+          <Link to="/">
+            <Home />
+          </Link>
+        </div>
         {next && (
-          // <div className={`control ${!next && 'hidden'}`}>
           <div className="control">
-            <Link to={`/images/${next.id}`}>→</Link>
+            <Link to={`/images/${next.id}`}>
+              <RightCircle />
+            </Link>
           </div>
         )}
       </div>
       {post && <PostItem post={post} />}
-    </StyledImageView>
+    </StyledPostView>
   );
 }
 
-ImageView.propTypes = {
+PostView.propTypes = {
   posts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -151,4 +163,4 @@ ImageView.propTypes = {
   ).isRequired,
 };
 
-export default ImageView;
+export default PostView;

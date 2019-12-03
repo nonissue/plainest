@@ -1,12 +1,12 @@
-import axios from "axios";
+import axios from 'axios';
 /* code from functions/todos-create.js */
 /* Import faunaDB sdk */
-const faunadb = require("faunadb");
+const faunadb = require('faunadb');
 
 /* configure faunaDB Client with our secret */
 const q = faunadb.query;
 const client = new faunadb.Client({
-  secret: "fnADdJQsv_ACCk1D6Izxwmf6TcbbjhLmbAGRdcGC"
+  secret: process.env.FAUNA_DB_KEY,
 });
 
 /* export our lambda function as named "handler" export */
@@ -14,9 +14,9 @@ exports.handler = async (event, context) => {
   // kind of a hacky way to get things to work in dev and when deployed
   // should probably just use env var somehow?
   const apiEndpoint =
-    event.headers.host === "localhost:9000"
-      ? "http://localhost:9000/instagram"
-      : "http://plainest.site/.netlify/functions/instagram";
+    event.headers.host === 'localhost:9000'
+      ? 'http://localhost:9000/instagram'
+      : 'http://plainest.site/.netlify/functions/instagram';
 
   console.log(apiEndpoint);
   let res;
@@ -26,7 +26,7 @@ exports.handler = async (event, context) => {
   } catch (err) {
     return {
       statusCode: 400,
-      body: JSON.stringify(err)
+      body: JSON.stringify(err),
     };
   }
 
@@ -38,20 +38,20 @@ exports.handler = async (event, context) => {
 
   /* construct the fauna query */
   return client
-    .query(q.Create(q.Ref("classes/posts"), newPosts))
+    .query(q.Create(q.Ref('classes/posts'), newPosts))
     .then(response => {
       /* Success! return the response with statusCode 200 */
       return {
         statusCode: 200,
-        body: JSON.stringify(response)
+        body: JSON.stringify(response),
       };
     })
     .catch(error => {
-      console.log("error", error);
+      console.log('error', error);
       /* Error! return the error with statusCode 400 */
       return {
         statusCode: 400,
-        body: JSON.stringify(error)
+        body: JSON.stringify(error),
       };
     });
 };

@@ -9,7 +9,7 @@ function getId(urlPath) {
 const q = faunadb.query;
 const client = new faunadb.Client({
   // Move somewhere secure
-  secret: 'fnADdJQsv_ACCk1D6Izxwmf6TcbbjhLmbAGRdcGC',
+  secret: process.env.FAUNA_DB_KEY,
 });
 
 exports.handler = (event, context) => {
