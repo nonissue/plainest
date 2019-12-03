@@ -19,6 +19,7 @@
 ### General
 
 - [x] cache instagram api fetch results
+- [ ] move grid to actual css grid
 - [ ] on modal click, soft redirect?
 - [o] button size on mobile
 - [ ] Scroll position

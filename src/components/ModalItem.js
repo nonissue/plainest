@@ -121,7 +121,16 @@ export function ModalItem({ posts }) {
         </div>
         {next && (
           <div className="control">
-            <Link to={`/images/${next.id}`}>
+            {/* <Link to={`/images/${next.id}`}> */}
+            <Link
+              // to={`/images/${post.id}`}
+              to={{
+                pathname: `/images/${next.id}`,
+                // This is the trick! This link sets
+                // the `background` in location state.
+                state: { background: location },
+              }}
+            >
               <RightCircle />
             </Link>
           </div>

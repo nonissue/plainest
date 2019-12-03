@@ -171,6 +171,7 @@ function App() {
           {/* )} */}
         </AnimatePresence>
       </div>
+      {console.log(background)}
       {background && (
         <Route path="/images/:id">
           {!posts ? (
