@@ -1,4 +1,4 @@
-const faunadb = require("faunadb");
+const faunadb = require('faunadb');
 // const getId = require("./utils/getId");
 
 function getId(urlPath) {
@@ -9,26 +9,26 @@ function getId(urlPath) {
 const q = faunadb.query;
 const client = new faunadb.Client({
   // Move somewhere secure
-  secret: "fnADdJQsv_ACCk1D6Izxwmf6TcbbjhLmbAGRdcGC"
+  secret: process.env.FAUNA_DB_KEY,
 });
 
 exports.handler = (event, context) => {
   const id = getId(event.path);
   console.log(`Function 'posts-last-fetch' invoked. Read id: ${id}`);
   return client
-    .query(q.Paginate(q.Match(q.Index("posts_fetchdate_latest")), { size: 1 }))
+    .query(q.Paginate(q.Match(q.Index('posts_fetchdate_latest')), { size: 1 }))
     .then(response => {
-      console.log("success", response);
+      console.log('success', response);
       return {
         statusCode: 200,
-        body: JSON.stringify(response.data)
+        body: JSON.stringify(response.data),
       };
     })
     .catch(error => {
-      console.log("error", error);
+      console.log('error', error);
       return {
         statusCode: 400,
-        body: JSON.stringify(error)
+        body: JSON.stringify(error),
       };
     });
 };

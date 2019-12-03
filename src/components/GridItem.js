@@ -1,84 +1,88 @@
-import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] };
+const GridItemWrapper = styled.div`
+  overflow: hidden;
+`;
+
+const transition = {
+  type: 'inertia',
+  duration: 1,
+};
 
 const imageVariants = {
-  hover: { scale: 1.1 }
+  hover: { scale: 1.2 },
+  transition,
 };
 
 const frameVariants = {
-  hover: { scale: 0.9 }
+  hover: { scale: 1 },
+  transition,
 };
 
 const item = {
+  enter: {
+    opacity: 0,
+  },
   visible: {
     opacity: 1,
     transition: {
-      when: "beforeChildren",
-      staggerChildren: 0.1,
-      delayChildren: 0.1,
-      ...transition
-    }
+      duration: 1.5,
+    },
   },
   hidden: {
     opacity: 0,
     transition: {
-      when: "beforeChildren",
-      staggerChildren: 0.5
-    }
+      when: 'beforeChildren',
+      staggerChildren: 0.5,
+    },
   },
   exit: {
-    scale: 0.8,
-    opacity: 0,
     transition: {
-      when: "afterChildren",
-      staggerChildren: 0.4,
-      duration: 2.5,
-      ...transition
-    }
+      // when: 'afterChildren',
+      duration: 1,
+    },
+    opacity: 0,
+    scale: 0.5,
   },
-  ...imageVariants
 };
 
 // cancel request if component unmounts?
 // https://www.leighhalliday.com/use-effect-hook
 export function GridItem({ post }) {
   return (
-    <motion.div
-      className="frame"
-      variants={frameVariants}
-      whileHover="hover"
-      transition={transition}
-    >
-      <AnimatePresence>
-        <motion.div
-          key={post.id * 3}
-          initial="hidden"
-          enter="visible"
-          exit="exit"
-          whileHover="hover"
-          variants={item}
-          transition={transition}
-        >
-          {(() => {
-            if (post.images) {
-              return (
-                <Link to={"/images?src=" + post.images.standard_resolution.url}>
-                  <motion.img
-                    key={post.images.standard_resolution.url}
-                    src={post.images.standard_resolution.url}
-                  />
-                </Link>
-              );
-            }
-            return null;
-          })()}
-        </motion.div>
-      </AnimatePresence>
-    </motion.div>
+    <GridItemWrapper>
+      <motion.div initial="hidden" enter="enter" exit="hidden" variants={item}>
+        {post.images && (
+          <motion.div whileHover="hover" variants={frameVariants} key={post.id}>
+            <Link to={`/images/${post.id}`}>
+              <motion.img
+                whileHover="hover"
+                variants={imageVariants}
+                alt={post.caption}
+                key={post.id}
+                src={post.src}
+                transition={{ type: 'tween', stiffness: 20 }}
+              />
+            </Link>
+          </motion.div>
+        )}
+      </motion.div>
+    </GridItemWrapper>
   );
 }
+
+GridItem.propTypes = {
+  post: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    caption: PropTypes.string.isRequired,
+    link: PropTypes.string.isRequired,
+    images: PropTypes.object.isRequired,
+    src: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 export default GridItem;

@@ -3,20 +3,27 @@
   "version": "0.5.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.0.0-alpha.10",
     "axios": "^0.19.0",
     "encoding": "^0.1.12",
     "faunadb": "^2.9.4",
     "framer-motion": "^1.6.15",
+    "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.1.2",
+    "react-spinners": "^0.6.1",
+    "styled-components": "^4.4.1",
+    "svg-loaders-react": "^2.1.0",
     "trim-right": "^1.0.1"
   },
   "scripts": {
     "start": "run-p start:**",
+    "env-start:env": "export $(cat .env | xargs)",
     "start:app": "react-scripts start",
     "start:lambda": "netlify-lambda serve src/lambda",
+    "storybook": "start-storybook",
     "build": "run-p build:**",
     "build:app": "react-scripts build",
     "build:lambda": "netlify-lambda build src/lambda",
@@ -34,8 +41,14 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@storybook/react": "^5.2.6",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
     "http-proxy-middleware": "^0.20.0",
     "netlify-lambda": "^1.4.5",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.19.1"
   }
 }
