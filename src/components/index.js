@@ -5,6 +5,7 @@ import { Grid } from './Grid';
 import { Loading } from './Loading';
 import { Nav } from './Nav';
 import { PostItem } from './PostItem';
+import { PostModal } from './PostModal';
 import { PostView } from './PostView';
 
-export { Nav, Loading, PostView, PostItem, AppHeader, Grid, Error };
+export { Nav, Loading, PostView, PostItem, PostModal, AppHeader, Grid, Error };

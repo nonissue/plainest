@@ -5,7 +5,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 import { About } from './pages';
-import { Loading, PostView, AppHeader, Grid, Error } from './components';
+import { Loading, PostView, AppHeader, Grid, Error, PostModal } from './components';
 import './App.css';
 
 const AppWrapper = styled.div`
@@ -80,6 +80,17 @@ const postTransition = {
   },
 };
 
+const modalTransition = {
+  enter: {
+    opacity: 1,
+    transition: { duration: 0 },
+  },
+  exit: {
+    opacity: 1,
+    transition: { duration: 0 },
+  },
+};
+
 // home page
 function App() {
   const [posts, setPosts] = useState(null);
@@ -101,17 +112,15 @@ function App() {
     try {
       fetchData();
       setLoaded(true);
-      // setError({ status: '200', msg: 'loaded successfully' });
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log('Error occurred: ');
       // eslint-disable-next-line no-console
       console.log(err);
       setError({ status: err.status, msg: err.message });
-      // setLoaded(false);
     }
 
-    setLoaded(false);
+    // setLoaded(false);
   }, []);
 
   return (
@@ -145,6 +154,17 @@ function App() {
                 {!posts ? <Loading /> : <PostView posts={posts} />}
               </motion.div>
             </Route>
+            <Route path="/modal/:id">
+              <motion.div
+                initial={false}
+                animate="enter"
+                enter="enter"
+                exit="exit"
+                variants={modalTransition}
+              >
+                {!posts ? <Loading /> : <PostModal posts={posts} />}
+              </motion.div>
+            </Route>
             <Route exact path="/about">
               <About />
             </Route>
@@ -158,7 +178,7 @@ function App() {
           </Switch>
         </AnimatePresence>
       </div>
-      <div className="footer">Copyright 2019 © plainsite</div>
+      {/* <div className="footer">Copyright 2019 © plainsite</div> */}
     </AppWrapper>
   );
 }

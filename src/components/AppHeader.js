@@ -73,7 +73,13 @@ export function AppHeader() {
           <Left />
         </div>
       )}
+
       <Logo />
+      <div className="control">
+        <Link to={{ pathname: 'modal/2180363784932216293_20196334360', state: { modal: true } }}>
+          Modal Test
+        </Link>
+      </div>
       {!(location.pathname === '/about') ? (
         <div className="control">
           <Link to="/about">

@@ -1,11 +1,18 @@
-### Notes
+# Plainest Todo List
+
+## Notes
 
 OH man, when using variants, the children components have to have methods with the same name as the parent dur
 (IE. visible, hidden)
 
+## Todos
+
+### General
+
 - [x] cache instagram api fetch results
-- [ ] button size on mobile
-- [ ] try/catch/error handling
+- [o] button size on mobile
+- [ ] Scroll position
+- [i] try/catch/error handling
 - [x] fix rendering (images on grid start moving around as they appear)
 - [x] fix loading indicator placement
 - [x] no top padding on image post on mobile
@@ -18,8 +25,6 @@ OH man, when using variants, the children components have to have methods with t
 - [ ] intermittenly fetch updated posts info
 - [x] fix items exiting (ARE exiting / fading, but not staggering)
 - [ ] wireframe loading posts?
-- [ ] redux
-- [ ] typescript
 - [x] add post hover back
 - [x] add links to instagram profiles on about page
 - [ ] better back buttons / proper menu
@@ -36,15 +41,22 @@ OH man, when using variants, the children components have to have methods with t
 - [x] add hover effect to images
 - [ ] TODO: Loading indicator on header lower border?
 - [ ] OR top of page?
-- [-] TODO: make nav just absolute positioned?
-- [x] TODO: [done] fix nav shift on imageview
-- [ ] TODO: media queries for nav button sizes
-- [x] TODO: I dunno about the centered nav
-- [ ] TODO: Scroll position
+- [-] make nav just absolute positioned?
+- [x] fix nav shift on imageview
+- [x] I dunno about the centered nav
+- [o] redux
+- [o] typescript
 
-# Bugs
+### Bugs
 
 - [x] triggering a second animate event before first one is finished results in frozen ui.
   - Seems to be fixed since reverting to staggered grid loading?
 - [ ] Figure out how framer motion actually works
 - [x] better implementation of router
+
+## Legend
+
+`- [x]` === done
+`- [-]` === ignored
+`- [o]` === deferred
+`- [i]` === in progress
