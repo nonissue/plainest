@@ -24,13 +24,11 @@ const StyledImageView = styled(motion.div)`
   .controls {
     display: flex;
     width: 100%;
-    /* width: 640px; */
     flex-direction: row;
     justify-content: space-between;
     position: fixed;
     padding-bottom: 1em;
     bottom: 0;
-
     /* 
     media query, large screens:
     
@@ -49,9 +47,25 @@ const StyledImageView = styled(motion.div)`
     color: #fff;
     a,
     a:link,
+<<<<<<< Updated upstream:src/components/ImageView.js
     a:visited {
       color: #ccc;
       text-decoration: none;
+=======
+    a:visited,
+    a:active,
+    a:focus {
+      color: #555;
+      /* opacity: 1; */
+      text-decoration: none;
+      transition: opacity 0.5s ease-out;
+    }
+
+    a:hover {
+      /* opacity: 1; */
+      /* color: #333; */
+      /* background: #eee; */
+>>>>>>> Stashed changes:src/components/PostView.js
     }
   }
 `;
