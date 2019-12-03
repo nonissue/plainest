@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Redirect } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { LeftCircle, RightCircle, Home } from '@ant-design/icons';
@@ -85,7 +85,7 @@ const variants = {
     opacity: 1,
     transition: {
       ...transition,
-      delay: 0.1,
+      delay: 0,
       duration: 1,
     },
   },
@@ -122,32 +122,38 @@ export function PostView({ posts }) {
       exit="exit"
       className="post-item"
     >
-      <div className="controls">
-        {prev ? (
-          <div className="control">
-            <Link to={`/images/${prev.id}`}>
-              <LeftCircle />
-            </Link>
+      {post ? (
+        <>
+          <div className="controls">
+            {prev ? (
+              <div className="control">
+                <Link to={`/images/${prev.id}`}>
+                  <LeftCircle />
+                </Link>
+              </div>
+            ) : (
+              <div className="control hidden">
+                <LeftCircle />
+              </div>
+            )}
+            <div className="control">
+              <Link to="/">
+                <Home />
+              </Link>
+            </div>
+            {next && (
+              <div className="control">
+                <Link to={`/images/${next.id}`}>
+                  <RightCircle />
+                </Link>
+              </div>
+            )}
           </div>
-        ) : (
-          <div className="control hidden">
-            <LeftCircle />
-          </div>
-        )}
-        <div className="control">
-          <Link to="/">
-            <Home />
-          </Link>
-        </div>
-        {next && (
-          <div className="control">
-            <Link to={`/images/${next.id}`}>
-              <RightCircle />
-            </Link>
-          </div>
-        )}
-      </div>
-      {post && <PostItem post={post} />}
+          <PostItem post={post} />
+        </>
+      ) : (
+        <Redirect to="/error/404" />
+      )}
     </StyledPostView>
   );
 }

@@ -20,7 +20,7 @@ const LogoWrapper = styled.div`
     font-size: 1.2em;
     margin: 0;
     text-transform: uppercase;
-    font-family: 'Nunito', sans-serif;
+    /* font-family: 'Nunito', sans-serif; */
     font-family: 'Bebas Neue', 'Helvetica', sans-serif;
     font-weight: 400;
     color: #121212;
