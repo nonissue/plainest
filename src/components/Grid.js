@@ -64,7 +64,7 @@ export function Grid({ posts }) {
         key="list"
         initial="hidden"
         animate="visible" // this has to be here?
-        exit="exit"
+        exit={false}
         className="image-grid"
       >
         {/* this animate presence doesn't do anything? */}

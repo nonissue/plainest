@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { LeftCircle, RightCircle, Home } from '@ant-design/icons';
 import { PostItem } from './PostItem';
@@ -69,6 +69,8 @@ const variants = {
 // }
 
 export function ModalItem({ posts }) {
+  let { history } = useHistory();
+  let { location } = useLocation();
   const { id } = useParams();
   const post = posts.find(p => p.id === id);
   const postIndex = posts.findIndex(p => p.id === id);
@@ -95,7 +97,15 @@ export function ModalItem({ posts }) {
       <div className="controls">
         {prev ? (
           <div className="control">
-            <Link to={`/images/${prev.id}`}>
+            <Link
+              // to={`/images/${post.id}`}
+              to={{
+                pathname: `/images/${prev.id}`,
+                // This is the trick! This link sets
+                // the `background` in location state.
+                state: { background: location },
+              }}
+            >
               <LeftCircle />
             </Link>
           </div>

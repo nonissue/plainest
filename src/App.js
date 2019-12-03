@@ -131,7 +131,7 @@ function App() {
       <div>
         {/* if we don't use exitBeforeEnter, post -> grid gridTransition sucks
         if we do, all route children components have to be wrapped in motion.div */}
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence>
           <Switch location={background || location} key={location.pathname}>
             <Route exact path="/">
               <motion.div
