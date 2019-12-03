@@ -1,3 +1,5 @@
+### Notes
+
 OH man, when using variants, the children components have to have methods with the same name as the parent dur
 (IE. visible, hidden)
 
@@ -6,13 +8,13 @@ OH man, when using variants, the children components have to have methods with t
 - [ ] try/catch/error handling
 - [x] fix rendering (images on grid start moving around as they appear)
 - [x] fix loading indicator placement
-- [ ] no top padding on image post on mobile
+- [x] no top padding on image post on mobile
 - [x] fetch cached results from fauna
-- [ ] move back button
-- [ ] add next/previous buttons to imageview
-- [ ] make nav fixed for scrolling?
+- [x] move back button
+- [x] add next/previous buttons to imageview
+- [x] make nav fixed for scrolling?
 - [ ] testing
-- [ ] change logo to fixed position square floating above images?
+- [-] change logo to fixed position square floating above images?
 - [ ] intermittenly fetch updated posts info
 - [x] fix items exiting (ARE exiting / fading, but not staggering)
 - [ ] wireframe loading posts?
@@ -24,17 +26,17 @@ OH man, when using variants, the children components have to have methods with t
 - [ ] store keys in env that is accessible locally/remotely but not in git repo
 - [x] fix posts-hydrate
 - [ ] get instagram full resolution src for ImageView
-- [ ] have ImageView fit to current viewport width
+- [x] have ImageView fit to current viewport width
 - [ ] implement https://codepen.io/marco_fugaro/pen/mddbOYw on imageview or instagrid or both
 - [x] stagger image appearance on load
 - [x] have loading component fade in and fade out, and be shown for a minimum amount of time?
 - [ ] analytics
 - [ ] don't fade in home page when returning from ImageView
-- [ ] Move CSS to styled-components so it's inline
+- [x] Move CSS to styled-components so it's inline
 - [x] add hover effect to images
 - [ ] TODO: Loading indicator on header lower border?
 - [ ] OR top of page?
-- [ ] TODO: make nav just absolute positioned?
+- [-] TODO: make nav just absolute positioned?
 - [x] TODO: [done] fix nav shift on imageview
 - [ ] TODO: media queries for nav button sizes
 - [x] TODO: I dunno about the centered nav
