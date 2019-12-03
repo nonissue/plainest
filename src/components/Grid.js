@@ -28,6 +28,8 @@ const StyledGrid = styled.div`
   }
 `;
 
+// Controls individual items as they load on grid
+// Exit currently doesn't work
 const list = {
   visible: {
     opacity: 1,
@@ -35,7 +37,6 @@ const list = {
     transition: {
       staggerChildren: 0.1,
       delayChildren: 0,
-      // duration: 0.5,
     },
   },
   enter: {
@@ -68,11 +69,8 @@ export function Grid({ posts }) {
         exit="exit"
         className="image-grid"
       >
+        {/* this animate presence doesn't do anything? */}
         <AnimatePresence exitBeforeEnter initial={false}>
-          {/* Remove header, put logo here */}
-          {/* <div>
-            <h1>Plainsite logo here</h1>
-          </div> */}
           {!!posts && posts.map(post => <GridItem post={post} key={post.id} variants={list} />)}
         </AnimatePresence>
       </motion.div>

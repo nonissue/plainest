@@ -25,13 +25,11 @@ const StyledPostView = styled(motion.div)`
   .controls {
     display: flex;
     width: 100%;
-    /* width: 640px; */
     flex-direction: row;
     justify-content: space-between;
     position: fixed;
     padding-bottom: 1em;
     bottom: 0;
-
     /* 
     media query, large screens:
     
@@ -61,6 +59,10 @@ const StyledPostView = styled(motion.div)`
     }
 
     a:hover {
+      /* opacity: 1; */
+      /* color: #333; */
+      /* background: #eee; */
+
       opacity: 1;
       color: #333;
       /* background: #eee; */
@@ -83,7 +85,7 @@ const variants = {
     opacity: 1,
     transition: {
       ...transition,
-      delay: 0.2,
+      delay: 0.1,
       duration: 1,
     },
   },
