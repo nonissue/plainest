@@ -4,7 +4,7 @@ OH man, when using variants, the children components have to have methods with t
 - [x] cache instagram api fetch results
 - [ ] button size on mobile
 - [ ] try/catch/error handling
-- [ ] fix rendering (images on grid start moving around as they appear)
+- [x] fix rendering (images on grid start moving around as they appear)
 - [x] fix loading indicator placement
 - [ ] no top padding on image post on mobile
 - [x] fetch cached results from fauna
