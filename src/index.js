@@ -5,8 +5,6 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-console.log('Local test key: ' + process.env.LOCAL_TEST_KEY);
-
 ReactDOM.render(
   <BrowserRouter>
     <App />
