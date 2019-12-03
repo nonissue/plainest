@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Switch, Route, useLocation } from 'react-router-dom';
+import { Switch, Route, useLocation, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -97,7 +97,9 @@ function App() {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState({ status: null, msg: null });
   const location = useLocation();
+  console.log(location);
   let background = location.state && location.state.background;
+  console.log(location);
 
   // const [itemURL, setItemURL] = useState(null);
 
@@ -133,7 +135,10 @@ function App() {
         if we do, all route children components have to be wrapped in motion.div */}
         <AnimatePresence exitBeforeEnter>
           <Switch location={background || location} key={location.pathname}>
-            <Route exact path="/">
+            {/* <Route path="/">
+              <Redirect to="/grid" />
+            </Route> */}
+            <Route path="/">
               <motion.div
                 initial={false}
                 animate="enter"
@@ -174,16 +179,16 @@ function App() {
               {/* specifc error called from other pages */}
               <Error error={error} />
             </Route>
-            <Route path="*">
+            {/* <Route path="*">
               <Error error={{ status: '404', msg: 'Page not found!' }} />
-            </Route>
+            </Route> */}
           </Switch>
+          {background && (
+            <Route path="/images/:id">
+              <PostModal posts={posts} />
+            </Route>
+          )}
         </AnimatePresence>
-        {location.background && (
-          <Route path="/images/:id">
-            <PostModal posts={posts} />
-          </Route>
-        )}
       </div>
       {/* <div className="footer">Copyright 2019 © plainsite</div> */}
     </AppWrapper>

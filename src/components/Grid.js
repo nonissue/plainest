@@ -24,7 +24,7 @@ const StyledGrid = styled.div`
     width: 100%;
     overflow: hidden;
     display: block;
-    z-index: 1;
+    /* z-index: 1; */
     /* object-fit: cover; */
   }
 `;
@@ -35,7 +35,7 @@ const list = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
+      staggerChildren: 0,
       delayChildren: 0,
     },
   },
@@ -48,12 +48,10 @@ const list = {
   },
   exit: {
     opacity: 0,
-    scale: 0,
+    // scale: 0,
     zIndex: 0,
     transition: {
-      duration: 0.5,
-      staggerChildren: 0,
-      when: 'beforeChildren',
+      duration: 0,
     },
   },
 };

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { ToggleModal } from './PostModal';
-import { useHistory, useLocation, Link } from 'react-router-dom';
+import { useHistory, Link, useLocation } from 'react-router-dom';
 
 const GridItemWrapper = styled.div`
   overflow: hidden;
@@ -62,23 +62,22 @@ const item = {
     opacity: 1,
     zIndex: 0,
     transition: {
-      duration: 0.5,
+      duration: 0.1,
     },
   },
   hidden: {
     opacity: 0,
-    // transition: {
-    //   when: 'beforeChildren',
-    //   staggerChildren: 0.5,
-    // },
+    transition: {
+      when: 'beforeChildren',
+      staggerChildren: 0.5,
+    },
   },
   exit: {
     transition: {
       // when: 'afterChildren',
-      duration: 1,
+      duration: 0,
     },
     opacity: 0,
-    scale: 0.5,
   },
 };
 
@@ -86,6 +85,10 @@ const item = {
 // https://www.leighhalliday.com/use-effect-hook
 export function GridItem({ post }) {
   let location = useLocation();
+
+  console.log('griditem location');
+  console.log(location);
+
   return (
     <GridItemWrapper>
       <motion.div initial="hidden" enter="enter" exit="hidden" variants={item}>
@@ -102,7 +105,7 @@ export function GridItem({ post }) {
                     state: { background: location },
                   }}
                   onClick={show}
-                  onKeyDown={show}
+                  // onKeyDown={show}
                 >
                   <img
                     alt={post.caption}
@@ -111,22 +114,22 @@ export function GridItem({ post }) {
                     width={post.width}
                     style={{ zIndex: 0 }}
                   />
+                  Show
                 </Link>
               )}
               content={hide => (
                 <button type="button" className="post-modal" onClick={hide} onKeyDown={hide}>
-                  <div>
-                    <img
-                      // whileHover="hover"
-                      // variants={imageVariants}
-                      alt={post.caption}
-                      key={post.id}
-                      src={post.src}
-                      // transition={{ type: 'tween', stiffness: 0 }}
-                      width={post.width}
-                    />
-                    <p>{post.caption}</p>
-                  </div>
+                  Hide
+                  <img
+                    // whileHover="hover"
+                    // variants={imageVariants}
+                    alt={post.caption}
+                    key={post.id}
+                    src={post.src}
+                    // transition={{ type: 'tween', stiffness: 0 }}
+                    width={post.width}
+                  />
+                  <p>{post.caption}</p>
                   {/* <button onClick={hide}>Close</button> */}
                 </button>
               )}
