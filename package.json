@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start": "run-p start:**",
-    "start:env": "export $(cat .env | xargs)",
+    "env-start:env": "export $(cat .env | xargs)",
     "start:app": "react-scripts start",
     "start:lambda": "netlify-lambda serve src/lambda",
     "storybook": "start-storybook",

@@ -75,6 +75,8 @@ const variants2 = {
 
 // home page
 function App() {
+  console.log(process.env);
+  console.log(process.env.LOCAL_TEST_KEY);
   const [posts, setPosts] = useState(null);
   // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(true);
