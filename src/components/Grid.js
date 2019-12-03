@@ -43,7 +43,7 @@ const list = {
     opacity: 1,
   },
   hidden: {
-    opacity: 1,
+    opacity: 0.5,
     zIndex: 0,
   },
   exit: {

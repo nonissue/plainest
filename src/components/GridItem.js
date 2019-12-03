@@ -17,11 +17,21 @@ const GridItemWrapper = styled.div`
     opacity: 1;
     width: 100%;
     /* max-width: vh; */
-    z-index: 9999 !important;
+    z-index: 9999;
     height: 100vh;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     background: hsla(0, 0%, 80%, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: auto;
+      max-width: 100vw;
+      height: auto;
+      max-height: 70vh;
+    }
   }
   img {
     z-index: 1000;
@@ -50,7 +60,7 @@ const item = {
   visible: {
     opacity: 1,
     transition: {
-      duration: 0.1,
+      duration: 0.5,
     },
   },
   hidden: {
@@ -91,23 +101,26 @@ export function GridItem({ post }) {
                   src={post.src}
                   width={post.width}
                   onClick={show}
+                  onKeyDown={show}
                   style={{ zIndex: 0 }}
                 />
               )}
               content={hide => (
-                <div className="post-modal">
-                  <img
-                    // whileHover="hover"
-                    // variants={imageVariants}
-                    alt={post.caption}
-                    key={post.id}
-                    src={post.src}
-                    // transition={{ type: 'tween', stiffness: 0 }}
-                    width={post.width}
-                    onClick={hide}
-                  />
+                <button type="button" className="post-modal" onClick={hide} onKeyDown={hide}>
+                  <div>
+                    <img
+                      // whileHover="hover"
+                      // variants={imageVariants}
+                      alt={post.caption}
+                      key={post.id}
+                      src={post.src}
+                      // transition={{ type: 'tween', stiffness: 0 }}
+                      width={post.width}
+                    />
+                    <p>{post.caption}</p>
+                  </div>
                   {/* <button onClick={hide}>Close</button> */}
-                </div>
+                </button>
               )}
             />
             {/* </Link> */}

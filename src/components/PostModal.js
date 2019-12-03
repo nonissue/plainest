@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -21,31 +21,22 @@ const StyledPostModal = styled.div`
   background: hsla(0, 0%, 80%, 0.5);
 `;
 
-const StyledNormalImg = styled.div`
-  z-index: -5;
-`;
-
 export function ToggleModal({ toggle, content }) {
   const [isShown, setIsShown] = React.useState(false);
   const hide = () => setIsShown(false);
   const show = () => setIsShown(true);
 
   return (
-    // <StyledPostModal>
-    <StyledNormalImg>
+    <>
       {toggle(show)}
       {isShown && content(hide)}
-    </StyledNormalImg>
-    // </StyledPostModal>
+    </>
   );
 }
 
 export function PostModal({ posts }) {
   const { id } = useParams();
 
-  // console.log(show);
-  // console.log(shown);
-  // const { history } = useHistory();
   const post = posts.find(p => p.id === id);
   const postIndex = posts.findIndex(p => p.id === id);
 
@@ -59,10 +50,6 @@ export function PostModal({ posts }) {
   if (posts[postIndex - 1] !== null) {
     prev = posts[postIndex - 1];
   }
-
-  // useEffect(() => {
-  //   setShown(!shown);
-  // }, []);
 
   return (
     <StyledPostModal role="button" className="modal-wrapper">
@@ -104,10 +91,7 @@ export function PostModal({ posts }) {
 }
 
 const Modal = ({ children }) =>
-  ReactDOM.createPortal(
-    <StyledPostModal>{children}</StyledPostModal>,
-    document.getElementById('modal-root'),
-  );
+  ReactDOM.createPortal(<div>{children}</div>, document.getElementById('modal-root'));
 
 PostModal.propTypes = {
   posts: PropTypes.arrayOf(
@@ -124,6 +108,11 @@ Modal.propTypes = {
   handleClose: PropTypes.func.isRequired,
   show: PropTypes.bool.isRequired,
   children: PropTypes.element.isRequired,
+};
+
+ToggleModal.propTypes = {
+  toggle: PropTypes.func.isRequired,
+  content: PropTypes.element.isRequired,
 };
 
 // ReactDOM.render(<PostModal />, container);
