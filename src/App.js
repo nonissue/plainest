@@ -63,9 +63,8 @@ const gridTransition = {
   },
   exit: {
     opacity: 0,
-    y: 0,
     // scale: 0.5,
-    transition: { duration: 0.2 },
+    transition: { duration: 0 },
   },
 };
 

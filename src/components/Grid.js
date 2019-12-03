@@ -24,6 +24,7 @@ const StyledGrid = styled.div`
     width: 100%;
     overflow: hidden;
     display: block;
+    z-index: 1;
     /* object-fit: cover; */
   }
 `;
@@ -33,7 +34,6 @@ const StyledGrid = styled.div`
 const list = {
   visible: {
     opacity: 1,
-    x: 0,
     transition: {
       staggerChildren: 0.1,
       delayChildren: 0,
@@ -43,8 +43,8 @@ const list = {
     opacity: 1,
   },
   hidden: {
-    opacity: 0,
-    scale: 1,
+    opacity: 1,
+    zIndex: 0,
   },
   exit: {
     opacity: 0,

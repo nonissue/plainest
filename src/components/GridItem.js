@@ -17,11 +17,14 @@ const GridItemWrapper = styled.div`
     opacity: 1;
     width: 100%;
     /* max-width: vh; */
-    z-index: 1000;
-    height: 95vh;
+    z-index: 9999 !important;
+    height: 100vh;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     background: hsla(0, 0%, 80%, 0.9);
+  }
+  img {
+    z-index: 1000;
   }
 `;
 
@@ -47,15 +50,15 @@ const item = {
   visible: {
     opacity: 1,
     transition: {
-      duration: 1.5,
+      duration: 0.1,
     },
   },
   hidden: {
     opacity: 0,
-    transition: {
-      when: 'beforeChildren',
-      staggerChildren: 0.5,
-    },
+    // transition: {
+    //   when: 'beforeChildren',
+    //   staggerChildren: 0.5,
+    // },
   },
   exit: {
     transition: {
@@ -80,27 +83,26 @@ export function GridItem({ post }) {
             {/* <buttTogglon type="button" onClick={show}> */}
             <ToggleModal
               toggle={show => (
-                <motion.img
-                  whileHover="hover"
-                  variants={imageVariants}
+                // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+                // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+                <img
                   alt={post.caption}
                   key={post.id}
                   src={post.src}
-                  transition={{ type: 'tween', stiffness: 0 }}
                   width={post.width}
                   onClick={show}
-                  // height={post.height}
+                  style={{ zIndex: 0 }}
                 />
               )}
               content={hide => (
                 <div className="post-modal">
-                  <motion.img
-                    whileHover="hover"
-                    variants={imageVariants}
+                  <img
+                    // whileHover="hover"
+                    // variants={imageVariants}
                     alt={post.caption}
                     key={post.id}
                     src={post.src}
-                    transition={{ type: 'tween', stiffness: 0 }}
+                    // transition={{ type: 'tween', stiffness: 0 }}
                     width={post.width}
                     onClick={hide}
                   />

@@ -13,11 +13,16 @@ const StyledPostModal = styled.div`
   left: 0;
   top: 0;
   opacity: 0.5;
+  z-index: 9999;
   width: 100%;
   height: 100vh;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   background: hsla(0, 0%, 80%, 0.5);
+`;
+
+const StyledNormalImg = styled.div`
+  z-index: -5;
 `;
 
 export function ToggleModal({ toggle, content }) {
@@ -26,10 +31,12 @@ export function ToggleModal({ toggle, content }) {
   const show = () => setIsShown(true);
 
   return (
-    <>
+    // <StyledPostModal>
+    <StyledNormalImg>
       {toggle(show)}
       {isShown && content(hide)}
-    </>
+    </StyledNormalImg>
+    // </StyledPostModal>
   );
 }
 
