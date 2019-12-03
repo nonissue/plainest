@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useParams, Link, Redirect } from 'react-router-dom';
@@ -8,9 +9,10 @@ import { PostItem } from './PostItem';
 
 const StyledPostModal = styled.div`
   font-family: 'Work Sans', 'Arial', sans-serif;
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0;
+  opacity: 0.5;
   width: 100%;
   height: 100vh;
   overflow-y: scroll;
@@ -18,36 +20,27 @@ const StyledPostModal = styled.div`
   background: hsla(0, 0%, 80%, 0.5);
 `;
 
-// function ModalItem() {}
-
-function Modal({ handleClose, show, children }) {
-  const showHideClassname = show ? 'modal display-block' : 'modal display-none';
+export function ToggleModal({ toggle, content }) {
+  const [isShown, setIsShown] = React.useState(false);
+  const hide = () => setIsShown(false);
+  const show = () => setIsShown(true);
 
   return (
-    <div className={showHideClassname}>
-      <section className="modal-main">
-        {children}
-        <button type="button" onClick={handleClose}>
-          close
-        </button>
-      </section>
-    </div>
+    <>
+      {toggle(show)}
+      {isShown && content(hide)}
+    </>
   );
 }
 
 export function PostModal({ posts }) {
   const { id } = useParams();
-  const [shown, setShown] = useState(false);
 
   // console.log(show);
   // console.log(shown);
   // const { history } = useHistory();
   const post = posts.find(p => p.id === id);
   const postIndex = posts.findIndex(p => p.id === id);
-
-  const toggleModal = () => {
-    setShown(!shown);
-  };
 
   let next = null;
   let prev = null;
@@ -60,12 +53,12 @@ export function PostModal({ posts }) {
     prev = posts[postIndex - 1];
   }
 
-  useEffect(() => {
-    setShown(!shown);
-  }, []);
+  // useEffect(() => {
+  //   setShown(!shown);
+  // }, []);
 
-  return shown ? (
-    <StyledPostModal role="button" className="modal-wrapper" onClick={() => toggleModal()}>
+  return (
+    <StyledPostModal role="button" className="modal-wrapper">
       {post ? (
         <div>
           <div className="controls">
@@ -100,11 +93,14 @@ export function PostModal({ posts }) {
         ''
       )}
     </StyledPostModal>
-  ) : (
-    ''
-    // <Redirect to="/error/404" />
   );
 }
+
+const Modal = ({ children }) =>
+  ReactDOM.createPortal(
+    <StyledPostModal>{children}</StyledPostModal>,
+    document.getElementById('modal-root'),
+  );
 
 PostModal.propTypes = {
   posts: PropTypes.arrayOf(
@@ -122,5 +118,7 @@ Modal.propTypes = {
   show: PropTypes.bool.isRequired,
   children: PropTypes.element.isRequired,
 };
+
+// ReactDOM.render(<PostModal />, container);
 
 export default PostModal;

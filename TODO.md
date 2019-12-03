@@ -7,6 +7,7 @@
   - https://blog.logrocket.com/building-a-modal-module-for-react-with-react-router/
     - Note: uses router rather than react portal?
   - https://alligator.io/react/modal-component/
+  - https://wecodetheweb.com/2019/03/02/easy-modals-with-react-hooks/
 
 ## Todos
 

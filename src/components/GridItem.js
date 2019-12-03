@@ -3,9 +3,26 @@ import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Modal, ToggleModal } from './PostModal';
 
 const GridItemWrapper = styled.div`
   overflow: hidden;
+  z-index: 1;
+
+  .post-modal {
+    font-family: 'Work Sans', 'Arial', sans-serif;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 1;
+    width: 100%;
+    /* max-width: vh; */
+    z-index: 1000;
+    height: 95vh;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    background: hsla(0, 0%, 80%, 0.9);
+  }
 `;
 
 const transition = {
@@ -14,7 +31,7 @@ const transition = {
 };
 
 const imageVariants = {
-  hover: { scale: 1.2 },
+  hover: { scale: 1 },
   transition,
 };
 
@@ -59,18 +76,39 @@ export function GridItem({ post }) {
         {post.images && (
           <motion.div whileHover="hover" variants={frameVariants} key={post.id}>
             {/* onClick={() => toggleModal(true)} */}
-            <Link to={`/images/${post.id}`}>
-              <motion.img
-                whileHover="hover"
-                variants={imageVariants}
-                alt={post.caption}
-                key={post.id}
-                src={post.src}
-                transition={{ type: 'tween', stiffness: 0 }}
-                width={post.width}
-                // height={post.height}
-              />
-            </Link>
+            {/* <Link to={`/images/${post.id}`}> */}
+            {/* <buttTogglon type="button" onClick={show}> */}
+            <ToggleModal
+              toggle={show => (
+                <motion.img
+                  whileHover="hover"
+                  variants={imageVariants}
+                  alt={post.caption}
+                  key={post.id}
+                  src={post.src}
+                  transition={{ type: 'tween', stiffness: 0 }}
+                  width={post.width}
+                  onClick={show}
+                  // height={post.height}
+                />
+              )}
+              content={hide => (
+                <div className="post-modal">
+                  <motion.img
+                    whileHover="hover"
+                    variants={imageVariants}
+                    alt={post.caption}
+                    key={post.id}
+                    src={post.src}
+                    transition={{ type: 'tween', stiffness: 0 }}
+                    width={post.width}
+                    onClick={hide}
+                  />
+                  {/* <button onClick={hide}>Close</button> */}
+                </div>
+              )}
+            />
+            {/* </Link> */}
           </motion.div>
         )}
       </motion.div>
