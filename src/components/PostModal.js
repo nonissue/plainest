@@ -12,13 +12,17 @@ const StyledPostModal = styled.div`
   position: absolute;
   left: 0;
   top: 0;
-  opacity: 0.9;
+  opacity: 1;
   z-index: 9999;
   width: 100%;
   height: 100vh;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  background: hsla(0, 0%, 80%, 1);
+  background: hsla(0, 0%, 80%, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export function PostModal1({ posts }) {
@@ -78,10 +82,7 @@ export function PostModal1({ posts }) {
 
 export const PostModal = ({ children }) =>
   ReactDOM.createPortal(
-    <StyledPostModal>
-      <h1>Hi!</h1>
-      {children}
-    </StyledPostModal>,
+    <StyledPostModal>{children}</StyledPostModal>,
     document.getElementById('modal-root'),
   );
 

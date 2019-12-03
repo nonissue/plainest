@@ -7,7 +7,10 @@ import { PostItem } from './PostItem';
 
 const StyledModalItem = styled.div`
   font-family: 'Work Sans', 'Arial', sans-serif;
-  width: 100%;
+  /* width: 100%; */
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center; */
   img {
     /* height: 80vh; */
     width: auto;
