@@ -4,16 +4,20 @@
 
 - OH man, when using variants, the children components have to have methods with the same name as the parent dur (IE. visible, hidden)
 - Modal stuff:
+
   - https://blog.logrocket.com/building-a-modal-module-for-react-with-react-router/
     - Note: uses router rather than react portal?
   - https://alligator.io/react/modal-component/
   - https://wecodetheweb.com/2019/03/02/easy-modals-with-react-hooks/
+  - https://reacttraining.com/react-router/web/example/modal-gallery
+  - https://codesandbox.io/s/react-router-modal-gallery-se6ry
 
 ## Todos
 
 ### General
 
 - [x] cache instagram api fetch results
+- [ ] on modal click, soft redirect?
 - [o] button size on mobile
 - [ ] Scroll position
 - [i] try/catch/error handling

@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/interactive-supports-focus */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { ToggleModal } from './PostModal';
+import { useHistory, useLocation, Link } from 'react-router-dom';
 
 const GridItemWrapper = styled.div`
   overflow: hidden;
@@ -83,6 +85,7 @@ const item = {
 // cancel request if component unmounts?
 // https://www.leighhalliday.com/use-effect-hook
 export function GridItem({ post }) {
+  let location = useLocation();
   return (
     <GridItemWrapper>
       <motion.div initial="hidden" enter="enter" exit="hidden" variants={item}>
@@ -93,7 +96,14 @@ export function GridItem({ post }) {
             {/* <buttTogglon type="button" onClick={show}> */}
             <ToggleModal
               toggle={show => (
-                <div role="button" onClick={show} onKeyDown={show}>
+                <Link
+                  to={{
+                    pathname: `/images/${post.id}`,
+                    state: { background: location },
+                  }}
+                  onClick={show}
+                  onKeyDown={show}
+                >
                   <img
                     alt={post.caption}
                     key={post.id}
@@ -101,7 +111,7 @@ export function GridItem({ post }) {
                     width={post.width}
                     style={{ zIndex: 0 }}
                   />
-                </div>
+                </Link>
               )}
               content={hide => (
                 <button type="button" className="post-modal" onClick={hide} onKeyDown={hide}>

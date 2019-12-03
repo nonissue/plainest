@@ -97,6 +97,9 @@ function App() {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState({ status: null, msg: null });
   const location = useLocation();
+  let background = location.state && location.state.background;
+
+  // const [itemURL, setItemURL] = useState(null);
 
   // cancel request if component unmounts?
   // https://www.leighhalliday.com/use-effect-hook
@@ -129,7 +132,7 @@ function App() {
         {/* if we don't use exitBeforeEnter, post -> grid gridTransition sucks
         if we do, all route children components have to be wrapped in motion.div */}
         <AnimatePresence exitBeforeEnter>
-          <Switch location={location} key={location.pathname}>
+          <Switch location={background || location} key={location.pathname}>
             <Route exact path="/">
               <motion.div
                 initial={false}
@@ -153,7 +156,7 @@ function App() {
                 {!posts ? <Loading /> : <PostView posts={posts} />}
               </motion.div>
             </Route>
-            <Route path="/modal/:id">
+            {/* <Route path="/modal/:id">
               <motion.div
                 initial={false}
                 animate="enter"
@@ -163,7 +166,7 @@ function App() {
               >
                 {!posts ? <Loading /> : <PostModal posts={posts} show />}
               </motion.div>
-            </Route>
+            </Route> */}
             <Route exact path="/about">
               <About />
             </Route>
@@ -176,6 +179,11 @@ function App() {
             </Route>
           </Switch>
         </AnimatePresence>
+        {location.background && (
+          <Route path="/images/:id">
+            <PostModal posts={posts} />
+          </Route>
+        )}
       </div>
       {/* <div className="footer">Copyright 2019 © plainsite</div> */}
     </AppWrapper>

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useParams, Link, Redirect } from 'react-router-dom';
+import { useParams, Link, useHistory } from 'react-router-dom';
 import { LeftCircle, RightCircle, Home } from '@ant-design/icons';
 
 import { PostItem } from './PostItem';
@@ -23,8 +23,12 @@ const StyledPostModal = styled.div`
 
 export function ToggleModal({ toggle, content }) {
   const [isShown, setIsShown] = React.useState(false);
+  // let history = useHistory();
   const hide = () => setIsShown(false);
-  const show = () => setIsShown(true);
+  const show = () => {
+    setIsShown(true);
+    // history.push('/home');
+  };
 
   return (
     <>
@@ -53,7 +57,7 @@ export function PostModal({ posts }) {
 
   return (
     <StyledPostModal role="button" className="modal-wrapper">
-      {post ? (
+      {post && (
         <div>
           <div className="controls">
             {prev ? (
@@ -82,9 +86,6 @@ export function PostModal({ posts }) {
           </div>
           <PostItem post={post} />
         </div>
-      ) : (
-        // <Redirect to="/error/404" />
-        ''
       )}
     </StyledPostModal>
   );
