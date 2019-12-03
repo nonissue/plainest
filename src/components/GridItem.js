@@ -45,7 +45,7 @@ const transition = {
 };
 
 const imageVariants = {
-  hover: { scale: 1.2 },
+  hover: { scale: 1 },
   transition,
 };
 
@@ -66,10 +66,10 @@ const item = {
     },
   },
   hidden: {
-    opacity: 0,
+    opacity: 1,
     transition: {
       when: 'beforeChildren',
-      staggerChildren: 0.5,
+      staggerChildren: 0,
     },
   },
   exit: {

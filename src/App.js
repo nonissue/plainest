@@ -62,7 +62,7 @@ const gridTransition = {
     // scale: 1,
   },
   exit: {
-    opacity: 0,
+    opacity: 1,
     // scale: 0.5,
     transition: { duration: 0 },
   },
@@ -74,7 +74,7 @@ const postTransition = {
     transition: { duration: 0.5 },
   },
   exit: {
-    opacity: 0,
+    opacity: 1,
     transition: { duration: 0.5 },
   },
 };
@@ -167,20 +167,21 @@ function App() {
             </Route>
           </Switch>
           {/* {location.state && location.background && location.background !== location && ( */}
-          {background && (
-            <Route path="/images/:id">
-              {!posts ? (
-                <Loading />
-              ) : (
-                <PostModal>
-                  <ModalItem posts={posts} />
-                </PostModal>
-              )}
-            </Route>
-          )}
+
           {/* )} */}
         </AnimatePresence>
       </div>
+      {background && (
+        <Route path="/images/:id">
+          {!posts ? (
+            <Loading />
+          ) : (
+            <PostModal>
+              <ModalItem posts={posts} />
+            </PostModal>
+          )}
+        </Route>
+      )}
       {/* <div className="footer">Copyright 2019 © plainsite</div> */}
     </AppWrapper>
   );

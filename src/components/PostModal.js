@@ -18,15 +18,64 @@ const StyledPostModal = styled.div`
   height: 100vh;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  background: hsla(0, 0%, 80%, 0.5);
+  background: hsla(0, 0%, 80%, 0.9);
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
+
+  .controls {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    position: absolute;
+    padding-bottom: 1em;
+    bottom: 0;
+    left: 0;
+    /* 
+    media query, large screens:
+    
+    */
+  }
+
+  .control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-left: 1em;
+    margin-right: 1em;
+    font-size: 1.5em;
+    width: 1em;
+    color: #fff;
+
+    a,
+    a:link,
+    a:visited,
+    a:active,
+    a:focus {
+      color: #555;
+      opacity: 0.5;
+      text-decoration: none;
+      transition: opacity 0.5s ease-out;
+    }
+
+    a:hover {
+      /* opacity: 1; */
+      /* color: #333; */
+      /* background: #eee; */
+
+      opacity: 1;
+      color: #333;
+      /* background: #eee; */
+    }
+  }
 `;
 
 export function PostModal1({ posts }) {
   const { id } = useParams();
+  let { location } = useLocation();
 
   console.log('PostModal rendering');
 
@@ -51,7 +100,15 @@ export function PostModal1({ posts }) {
           <div className="controls">
             {prev ? (
               <div className="control">
-                <Link to={`/images/${prev.id}`}>
+                <Link
+                  // to={`/images/${post.id}`}
+                  to={{
+                    pathname: `/images/${prev.id}`,
+                    // This is the trick! This link sets
+                    // the `background` in location state.
+                    state: { background: location },
+                  }}
+                >
                   <LeftCircle />
                 </Link>
               </div>
@@ -73,7 +130,8 @@ export function PostModal1({ posts }) {
               </div>
             )}
           </div>
-          <img src="post.src" />
+          <h1>Post</h1>
+          {post && <PostItem post={post} />}
         </div>
       )}
     </StyledPostModal>
