@@ -165,22 +165,29 @@ function App() {
                 {!posts ? <Loading /> : <PostView posts={posts} />}
               </motion.div>
             </Route>
-            <motion.div
-              key="singlePostView"
-              initial="exit"
-              animate="enter"
-              enter="enter"
-              exit="exit"
-              variants={postTransition}
-            >
-              <Route
-                path="/posts/:id"
-                render={posts && (props => <SinglePostView posts={posts} {...props} />)}
-              />
-            </motion.div>
-            <Route exact path="/about">
+            <Route path="/about">
               <About />
             </Route>
+
+            <Route
+              path="/posts/:id"
+              render={
+                posts &&
+                (props => (
+                  <motion.div
+                    key="singlePostView"
+                    initial="exit"
+                    animate="enter"
+                    enter="enter"
+                    exit="exit"
+                    variants={postTransition}
+                  >
+                    <SinglePostView posts={posts} {...props} />
+                  </motion.div>
+                ))
+              }
+            />
+
             <Route path="/error/:id">
               <Error error={error} />
             </Route>
