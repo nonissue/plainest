@@ -31,6 +31,13 @@ const StyledHeader = styled.header`
     -webkit-appearance: none;
     -moz-appearance: none;
     font-size: 1em;
+    padding: 0;
+    transition: color 0.3s ease-out;
+  }
+
+  button:hover {
+    cursor: pointer;
+    color: #ff0000;
   }
 
   .control {
@@ -71,8 +78,8 @@ export function Header() {
         <motion.div
           key="back"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { delay: 0.5, duration: 1 } }}
-          exit={{ opacity: 1, scale: 1, transition: { duration: 5 } }}
+          animate={{ opacity: 1, transition: { delay: 0.1, duration: 0.5 } }}
+          exit={{ opacity: 1, scale: 1, transition: { duration: 1 } }}
           className="control"
         >
           <button onClick={() => history.goBack()} type="button">
@@ -81,7 +88,9 @@ export function Header() {
         </motion.div>
       ) : (
         <div className="control hidden">
-          <Left />
+          <button type="button">
+            <Left />
+          </button>
         </div>
       )}
 

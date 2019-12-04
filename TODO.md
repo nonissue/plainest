@@ -19,8 +19,11 @@
 ### General
 
 - [x] cache instagram api fetch results
-- [ ] move grid to actual css grid
+- [x] move grid to actual css grid
+- [ ] get insta tags and link em
+- [x] Logo moves on viewing postview
 - [ ] on modal click, soft redirect?
+  - can use window.pushHistory or something
 - [o] button size on mobile
 - [ ] Scroll position
 - [i] try/catch/error handling

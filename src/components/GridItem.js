@@ -25,7 +25,7 @@ const transition = {
 };
 
 const imageVariants = {
-  hover: { scale: 1.2 },
+  hover: { scale: 1.1 },
   transition,
 };
 
