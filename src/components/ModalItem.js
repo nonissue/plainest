@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useParams, Link, useHistory, useLocation } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { LeftCircle, RightCircle, Home } from '@ant-design/icons';
 import { PostItem } from './PostItem';
@@ -69,8 +69,8 @@ const variants = {
 // }
 
 export function ModalItem({ posts }) {
-  let { history } = useHistory();
-  let { location } = useLocation();
+  // let { history } = useHistory();
+  // let { location } = useLocation();
   const { id } = useParams();
   const post = posts.find(p => p.id === id);
   const postIndex = posts.findIndex(p => p.id === id);

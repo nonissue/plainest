@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useParams, Link } from 'react-router-dom';
+// import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { LeftCircle, RightCircle, Home } from '@ant-design/icons';
+// import { LeftCircle, RightCircle, Home } from '@ant-design/icons';
 
 const StyledPostItem = styled.div`
   font-family: 'Work Sans', 'Arial', sans-serif;

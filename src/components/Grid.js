@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -35,7 +35,7 @@ const list = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
+      staggerChildren: 0.3,
       delayChildren: 0,
     },
   },
@@ -56,7 +56,18 @@ const list = {
   },
 };
 
-export function Grid({ posts }) {
+export function Grid({ posts, setLoaded, loaded }) {
+  useEffect(() => {
+    // Should check last fetch, and if it is stale, run posts-hydrate
+    const timer = setTimeout(() => {
+      setLoaded(true);
+    }, 2000);
+    return () => clearTimeout(timer);
+
+    // setLoaded(false);
+  }, [setLoaded]);
+  // const [loaded, setLoaded] = useState(false);
+
   return (
     <StyledGrid>
       <motion.div
@@ -68,7 +79,7 @@ export function Grid({ posts }) {
         className="image-grid"
       >
         {/* this animate presence doesn't do anything? */}
-        <AnimatePresence initial={false}>
+        <AnimatePresence initial={loaded ? false : true}>
           {!!posts && posts.map(post => <GridItem post={post} key={post.id} variants={list} />)}
         </AnimatePresence>
       </motion.div>

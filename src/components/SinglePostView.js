@@ -100,9 +100,6 @@ const variants = {
 };
 
 export function SinglePostView({ posts, match, history }) {
-  console.log(match);
-  console.log(history);
-
   return (
     <StyledSinglePostView
       variants={variants}

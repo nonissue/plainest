@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 // import { ToggleModal } from './PostModal';
-import { useHistory, Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const GridItemWrapper = styled.div`
   overflow: hidden;
@@ -69,7 +69,7 @@ const item = {
     opacity: 0,
     transition: {
       when: 'beforeChildren',
-      staggerChildren: 0,
+      staggerChildren: 0.2,
     },
   },
   exit: {
@@ -84,26 +84,12 @@ const item = {
 // cancel request if component unmounts?
 // https://www.leighhalliday.com/use-effect-hook
 export function GridItem({ post }) {
-  let location = useLocation();
-
-  // console.log('griditem location');
-  // console.log(location);
-
   return (
     <GridItemWrapper>
       <motion.div initial="hidden" enter="enter" exit="hidden" variants={item}>
         {post.images && (
           <motion.div whileHover="hover" variants={frameVariants} key={post.id}>
-            <Link
-              to={`/posts/${post.id}`}
-
-              // to={{
-              //   pathname: `/posts/${post.id}`,
-              //   // This is the trick! This link sets
-              //   // the `background` in location state.
-              //   state: { background: location },
-              // }}
-            >
+            <Link to={`/posts/${post.id}`}>
               <motion.img
                 whileHover="hover"
                 variants={imageVariants}

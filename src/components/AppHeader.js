@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import { Left, Question } from '@ant-design/icons';
 import { Logo } from './Logo';
 
@@ -54,6 +54,7 @@ const StyledHeader = styled.header`
 
 export function AppHeader() {
   const location = useLocation();
+  const history = useHistory();
   return (
     <StyledHeader>
       {!(location.pathname === '/') ? (
@@ -64,9 +65,9 @@ export function AppHeader() {
           exit={{ opacity: 1, scale: 1, transition: { duration: 5 } }}
           className="control"
         >
-          <Link to="/">
+          <button onClick={() => history.go(-1)} type="button">
             <Left />
-          </Link>
+          </button>
         </motion.div>
       ) : (
         <div className="control hidden">

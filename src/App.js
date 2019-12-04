@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -10,9 +10,9 @@ import {
   Error,
   Grid,
   Loading,
-  ModalItem,
+  // ModalItem,
   // PostItem,
-  PostModal,
+  // PostModal,
   PostView,
   SinglePostView,
 } from './components';
@@ -72,9 +72,9 @@ const gridTransition = {
     // scale: 1,
   },
   exit: {
-    opacity: 1,
+    opacity: 0,
     // scale: 0.5,
-    transition: { duration: 0 },
+    transition: { duration: 1 },
   },
 };
 
@@ -89,10 +89,12 @@ const postTransition = {
   },
 };
 
+// eslint-disable-next-line no-unused-vars
 function getPostByID(posts, id) {
   return posts.find(p => p.id === id);
 }
 
+// eslint-disable-next-line no-unused-vars
 function getPostIndex(posts, id) {
   return posts.findIndex(p => p.id === id);
 }
@@ -103,15 +105,6 @@ function App() {
   // eslint-disable-next-line no-unused-vars
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState({ status: null, msg: null });
-  let location = useLocation();
-  let history = useHistory();
-  let background = location.state && location.state.background;
-  // console.log('App load background: ');
-  // console.log(background);
-  // console.log(location);
-
-  // const [itemURL, setItemURL] = useState(null);
-
   // cancel request if component unmounts?
   // https://www.leighhalliday.com/use-effect-hook
   useEffect(() => {
@@ -124,7 +117,7 @@ function App() {
 
     try {
       fetchData();
-      setLoaded(true);
+      // setLoaded(true);
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log('Error occurred: ');
@@ -143,7 +136,7 @@ function App() {
         {/* if we don't use exitBeforeEnter, post -> grid gridTransition sucks
         if we do, all route children components have to be wrapped in motion.div */}
         <AnimatePresence exitBeforeEnter initial={false}>
-          <Switch location={background || location} key={location.pathname}>
+          <Switch>
             <Route exact path="/">
               <motion.div
                 initial={false}
@@ -153,7 +146,11 @@ function App() {
                 variants={gridTransition}
               >
                 {/* if Grid is rendered before posts are available, children dont get staggered */}
-                {!posts ? <Loading /> : <Grid posts={posts} />}
+                {!posts ? (
+                  <Loading />
+                ) : (
+                  <Grid posts={posts} setLoaded={setLoaded} loaded={loaded} />
+                )}
               </motion.div>
             </Route>
             <Route path="/images/:id">
@@ -169,16 +166,23 @@ function App() {
             </Route>
             <Route
               path="/posts/:id"
-              render={posts && (props => <SinglePostView posts={posts} {...props} />)}
+              render={
+                posts &&
+                (props => (
+                  <motion.div
+                    // initial
+                    animate="enter"
+                    enter="enter"
+                    exit="exit"
+                    variants={postTransition}
+                  >
+                    <SinglePostView posts={posts} {...props} />
+                  </motion.div>
+                ))
+              }
             >
               {/* <SinglePostView match={match} history={history} /> */}
-              {/* <motion.div
-                // initial
-                animate="enter"
-                enter="enter"
-                exit="exit"
-                variants={postTransition}
-              ></motion.div> */}
+              {/*  */}
             </Route>
             <Route exact path="/about">
               <About />
@@ -190,12 +194,9 @@ function App() {
               <Error error={{ status: '404', msg: 'Page not found!' }} />
             </Route>
           </Switch>
-          {/* {location.state && location.background && location.background !== location && ( */}
-
-          {/* )} */}
         </AnimatePresence>
       </div>
-      {background && (
+      {/* {background && (
         <Route path="/images/:id">
           {!posts ? (
             <Loading />
@@ -206,7 +207,7 @@ function App() {
             </PostModal>
           )}
         </Route>
-      )}
+      )} */}
       {/* <div className="footer">Copyright 2019 © plainsite</div> */}
     </AppWrapper>
   );

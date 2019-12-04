@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
 
 const StyledPostModal = styled.div`
   font-family: 'Work Sans', 'Arial', sans-serif;
@@ -77,7 +75,8 @@ export const PostModal = props => {
 
   return ReactDOM.createPortal(
     <StyledPostModal>
-      <div
+      <button
+        type="button"
         onClick={back}
         style={{
           position: 'absolute',
@@ -90,7 +89,7 @@ export const PostModal = props => {
         }}
       >
         Back
-      </div>
+      </button>
       {props.children}
     </StyledPostModal>,
     document.getElementById('modal-root'),
