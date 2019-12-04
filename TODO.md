@@ -47,7 +47,7 @@
 - [x] stagger image appearance on load
 - [x] have loading component fade in and fade out, and be shown for a minimum amount of time?
 - [ ] analytics
-- [ ] don't fade in home page when returning from ImageView
+- [x] don't fade in home page when returning from ImageView
 - [x] Move CSS to styled-components so it's inline
 - [x] add hover effect to images
 - [ ] TODO: Loading indicator on header lower border?

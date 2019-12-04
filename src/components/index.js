@@ -1,5 +1,5 @@
 // components/index.js
-import { AppHeader } from './AppHeader';
+import { Header } from './Header';
 import { Error } from './Error';
 import { Grid } from './Grid';
 import { Loading } from './Loading';
@@ -11,7 +11,7 @@ import { PostView } from './PostView';
 import { SinglePostView } from './SinglePostView';
 
 export {
-  AppHeader,
+  Header,
   Error,
   Grid,
   Loading,

@@ -62,7 +62,7 @@ const StyledHeader = styled.header`
   }
 `;
 
-export function AppHeader() {
+export function Header() {
   const location = useLocation();
   const history = useHistory();
   return (
@@ -101,4 +101,4 @@ export function AppHeader() {
   );
 }
 
-export default AppHeader;
+export default Header;

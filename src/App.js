@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { About } from './pages';
 import {
-  AppHeader,
+  Header,
   Error,
   Grid,
   Loading,
@@ -131,7 +131,7 @@ function App() {
 
   return (
     <AppWrapper>
-      <AppHeader />
+      <Header />
       <div>
         {/* if we don't use exitBeforeEnter, post -> grid gridTransition sucks
         if we do, all route children components have to be wrapped in motion.div */}
