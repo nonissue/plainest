@@ -23,6 +23,16 @@ const StyledHeader = styled.header`
   justify-content: space-between;
   width: 100%;
 
+  button {
+    border: none;
+    text-align: center;
+    background: transparent;
+    transition: background 250ms ease-in-out, transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-size: 1em;
+  }
+
   .control {
     text-transform: uppercase;
     font-size: 0.8em;
@@ -65,7 +75,7 @@ export function AppHeader() {
           exit={{ opacity: 1, scale: 1, transition: { duration: 5 } }}
           className="control"
         >
-          <button onClick={() => history.go(-1)} type="button">
+          <button onClick={() => history.goBack()} type="button">
             <Left />
           </button>
         </motion.div>

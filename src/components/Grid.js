@@ -35,7 +35,7 @@ const list = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.3,
+      staggerChildren: 0.1,
       delayChildren: 0,
     },
   },
@@ -61,7 +61,7 @@ export function Grid({ posts, setLoaded, loaded }) {
     // Should check last fetch, and if it is stale, run posts-hydrate
     const timer = setTimeout(() => {
       setLoaded(true);
-    }, 2000);
+    }, 0);
     return () => clearTimeout(timer);
 
     // setLoaded(false);
