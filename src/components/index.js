@@ -8,5 +8,17 @@ import { PostItem } from './PostItem';
 import { PostModal } from './PostModal';
 import { ModalItem } from './ModalItem';
 import { PostView } from './PostView';
+import { SinglePostView } from './SinglePostView';
 
-export { Nav, Loading, PostView, PostItem, PostModal, AppHeader, Grid, Error, ModalItem };
+export {
+  AppHeader,
+  Error,
+  Grid,
+  Loading,
+  ModalItem,
+  Nav,
+  PostItem,
+  PostModal,
+  PostView,
+  SinglePostView,
+};

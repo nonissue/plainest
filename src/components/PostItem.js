@@ -22,10 +22,12 @@ const StyledPostItem = styled.div`
   }
 `;
 
-export function PostItem({ post }) {
+export function PostItem({ post, isSelected }) {
+  const selected = isSelected || false;
+
   return (
     <StyledPostItem>
-      {post && (
+      {post && selected && (
         <>
           <a href={post.link}>
             <img src={post.src} alt={post.caption} width={post.width} height={post.height} />
@@ -47,6 +49,11 @@ PostItem.propTypes = {
     height: PropTypes.number.isRequired,
     src: PropTypes.string.isRequired,
   }).isRequired,
+  isSelected: PropTypes.bool,
+};
+
+PostItem.defaultProps = {
+  isSelected: false,
 };
 
 export default PostItem;

@@ -66,7 +66,7 @@ const item = {
     },
   },
   hidden: {
-    opacity: 1,
+    opacity: 0,
     transition: {
       when: 'beforeChildren',
       staggerChildren: 0,
@@ -95,13 +95,14 @@ export function GridItem({ post }) {
         {post.images && (
           <motion.div whileHover="hover" variants={frameVariants} key={post.id}>
             <Link
-              // to={`/images/${post.id}`}
-              to={{
-                pathname: `/images/${post.id}`,
-                // This is the trick! This link sets
-                // the `background` in location state.
-                state: { background: location },
-              }}
+              to={`/posts/${post.id}`}
+
+              // to={{
+              //   pathname: `/posts/${post.id}`,
+              //   // This is the trick! This link sets
+              //   // the `background` in location state.
+              //   state: { background: location },
+              // }}
             >
               <motion.img
                 whileHover="hover"

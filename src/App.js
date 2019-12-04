@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Switch, Route, useLocation, Redirect } from 'react-router-dom';
+import { Switch, Route, useLocation, useHistory, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
 import { About } from './pages';
-import { Loading, PostView, AppHeader, Grid, Error, PostModal, ModalItem } from './components';
+import {
+  AppHeader,
+  Error,
+  Grid,
+  Loading,
+  ModalItem,
+  PostItem,
+  PostModal,
+  PostView,
+  SinglePostView,
+} from './components';
 import './App.css';
 
 const AppWrapper = styled.div`
@@ -90,14 +100,26 @@ const modalTransition = {
   },
 };
 
+function getPostByID(posts, id) {
+  return posts.find(p => p.id === id);
+}
+
+function getPostIndex(posts, id) {
+  return posts.findIndex(p => p.id === id);
+}
+
 // home page
 function App() {
   const [posts, setPosts] = useState(null);
   // eslint-disable-next-line no-unused-vars
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState({ status: null, msg: null });
-  const location = useLocation();
+  let location = useLocation();
+  let history = useHistory();
   let background = location.state && location.state.background;
+  // console.log('App load background: ');
+  // console.log(background);
+  // console.log(location);
 
   // const [itemURL, setItemURL] = useState(null);
 
@@ -131,7 +153,7 @@ function App() {
       <div>
         {/* if we don't use exitBeforeEnter, post -> grid gridTransition sucks
         if we do, all route children components have to be wrapped in motion.div */}
-        <AnimatePresence>
+        <AnimatePresence exitBeforeEnter initial={false}>
           <Switch location={background || location} key={location.pathname}>
             <Route exact path="/">
               <motion.div
@@ -147,7 +169,7 @@ function App() {
             </Route>
             <Route path="/images/:id">
               <motion.div
-                initial={false}
+                // initial
                 animate="enter"
                 enter="enter"
                 exit="exit"
@@ -155,6 +177,19 @@ function App() {
               >
                 {!posts ? <Loading /> : <PostView posts={posts} />}
               </motion.div>
+            </Route>
+            <Route
+              path="/posts/:id"
+              render={posts && (props => <SinglePostView posts={posts} {...props} />)}
+            >
+              {/* <SinglePostView match={match} history={history} /> */}
+              {/* <motion.div
+                // initial
+                animate="enter"
+                enter="enter"
+                exit="exit"
+                variants={postTransition}
+              ></motion.div> */}
             </Route>
             <Route exact path="/about">
               <About />
@@ -171,13 +206,13 @@ function App() {
           {/* )} */}
         </AnimatePresence>
       </div>
-      {console.log(background)}
       {background && (
         <Route path="/images/:id">
           {!posts ? (
             <Loading />
           ) : (
-            <PostModal>
+            // pass in specific post?
+            <PostModal location={location} history={history}>
               <ModalItem posts={posts} />
             </PostModal>
           )}

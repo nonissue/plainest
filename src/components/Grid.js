@@ -35,19 +35,19 @@ const list = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0,
+      staggerChildren: 0.15,
       delayChildren: 0,
     },
   },
   enter: {
-    opacity: 1,
+    opacity: 0,
   },
   hidden: {
-    opacity: 1,
+    opacity: 0,
     zIndex: 0,
   },
   exit: {
-    opacity: 1,
+    opacity: 0,
     // scale: 0,
     zIndex: 0,
     transition: {
@@ -62,13 +62,13 @@ export function Grid({ posts }) {
       <motion.div
         variants={list}
         key="list"
-        initial="hidden"
+        initial={false}
         animate="visible" // this has to be here?
-        exit={false}
+        exit="exit"
         className="image-grid"
       >
         {/* this animate presence doesn't do anything? */}
-        <AnimatePresence exitBeforeEnter initial={false}>
+        <AnimatePresence initial={false}>
           {!!posts && posts.map(post => <GridItem post={post} key={post.id} variants={list} />)}
         </AnimatePresence>
       </motion.div>
@@ -85,7 +85,6 @@ Grid.propTypes = {
       images: PropTypes.object.isRequired,
     }),
   ).isRequired,
-  // loaded: PropTypes.bool.isRequired,
 };
 
 export default Grid;

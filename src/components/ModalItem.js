@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useParams, Link, useHistory, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
@@ -103,7 +103,7 @@ export function ModalItem({ posts }) {
                 pathname: `/images/${prev.id}`,
                 // This is the trick! This link sets
                 // the `background` in location state.
-                state: { background: location },
+                // state: { background: location },
               }}
             >
               <LeftCircle />
@@ -128,7 +128,7 @@ export function ModalItem({ posts }) {
                 pathname: `/images/${next.id}`,
                 // This is the trick! This link sets
                 // the `background` in location state.
-                state: { background: location },
+                // state: { background: location },
               }}
             >
               <RightCircle />

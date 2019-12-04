@@ -12,7 +12,7 @@ import { PostItem } from './PostItem';
 // TODO: or just copy how instagram do it...
 // Modal + space-between
 // TODO: change this to modal
-const StyledPostView = styled(motion.div)`
+const StyledSinglePostView = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -98,61 +98,28 @@ const variants = {
   },
 };
 
-export function PostView({ posts, match, history }) {
-  const { id } = useParams();
-  const post = posts.find(p => p.id === id);
-  const postIndex = posts.findIndex(p => p.id === id);
-
-  let next = null;
-  let prev = null;
-
-  if (posts[postIndex + 1] !== null) {
-    next = posts[postIndex + 1];
-  }
-
-  if (posts[postIndex - 1] !== null) {
-    prev = posts[postIndex - 1];
-  }
-
+export function SinglePostView({ posts, match, history }) {
   return (
-    <StyledPostView
+    <StyledSinglePostView
       variants={variants}
       initial="hidden"
       animate="center"
       exit="exit"
       className="post-item"
     >
-      <div className="controls">
-        {prev ? (
-          <div className="control">
-            <Link to={`/images/${prev.id}`}>
-              <LeftCircle />
-            </Link>
-          </div>
-        ) : (
-          <div className="control hidden">
-            <LeftCircle />
-          </div>
-        )}
-        <div className="control">
-          <Link to="/">
-            <Home />
-          </Link>
-        </div>
-        {next && (
-          <div className="control">
-            <Link to={`/images/${next.id}`}>
-              <RightCircle />
-            </Link>
-          </div>
-        )}
-      </div>
-      {post && <PostItem post={post} />}
-    </StyledPostView>
+      {posts.map(post => (
+        <PostItem
+          key={post.id}
+          isSelected={match.params.id === post.id}
+          history={history}
+          post={post}
+        />
+      ))}
+    </StyledSinglePostView>
   );
 }
 
-PostView.propTypes = {
+SinglePostView.propTypes = {
   posts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -163,4 +130,4 @@ PostView.propTypes = {
   ).isRequired,
 };
 
-export default PostView;
+export default SinglePostView;

@@ -2,10 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useParams, Link, useHistory, useLocation } from 'react-router-dom';
-import { LeftCircle, RightCircle, Home } from '@ant-design/icons';
-
-import { PostItem } from './PostItem';
+import { Link, useHistory } from 'react-router-dom';
 
 const StyledPostModal = styled.div`
   font-family: 'Work Sans', 'Arial', sans-serif;
@@ -20,7 +17,6 @@ const StyledPostModal = styled.div`
   -webkit-overflow-scrolling: touch;
   background: hsla(0, 0%, 80%, 0.9);
   display: flex;
-  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
 
@@ -62,87 +58,44 @@ const StyledPostModal = styled.div`
     }
 
     a:hover {
-      /* opacity: 1; */
-      /* color: #333; */
-      /* background: #eee; */
-
       opacity: 1;
       color: #333;
-      /* background: #eee; */
     }
   }
 `;
 
-export function PostModal1({ posts }) {
-  const { id } = useParams();
-  let { location } = useLocation();
+// best thing to do is to flip it back to the old style of router-ignorant modal,
+// and use the window.history hack?
+export const PostModal = props => {
+  window.history.pushState('', '', `${props.location.pathname}`);
 
-  console.log('PostModal rendering');
+  const back = e => {
+    e.stopPropagation();
+    // I think we have to go back twice as we have rendered the route twice
+    props.history.go(-2);
+  };
 
-  const post = posts.find(p => p.id === id);
-  const postIndex = posts.findIndex(p => p.id === id);
-
-  let next = null;
-  let prev = null;
-
-  if (posts[postIndex + 1] !== null) {
-    next = posts[postIndex + 1];
-  }
-
-  if (posts[postIndex - 1] !== null) {
-    prev = posts[postIndex - 1];
-  }
-
-  return (
-    <StyledPostModal role="button" className="modal-wrapper">
-      {post && (
-        <div>
-          <div className="controls">
-            {prev ? (
-              <div className="control">
-                <Link
-                  // to={`/images/${post.id}`}
-                  to={{
-                    pathname: `/images/${prev.id}`,
-                    // This is the trick! This link sets
-                    // the `background` in location state.
-                    state: { background: location },
-                  }}
-                >
-                  <LeftCircle />
-                </Link>
-              </div>
-            ) : (
-              <div className="control hidden">
-                <LeftCircle />
-              </div>
-            )}
-            <div className="control">
-              <Link to="/">
-                <Home />
-              </Link>
-            </div>
-            {next && (
-              <div className="control">
-                <Link to={`/images/${next.id}`}>
-                  <RightCircle />
-                </Link>
-              </div>
-            )}
-          </div>
-          <h1>Post</h1>
-          {post && <PostItem post={post} />}
-        </div>
-      )}
-    </StyledPostModal>
-  );
-}
-
-export const PostModal = ({ children }) =>
-  ReactDOM.createPortal(
-    <StyledPostModal>{children}</StyledPostModal>,
+  return ReactDOM.createPortal(
+    <StyledPostModal>
+      <div
+        onClick={back}
+        style={{
+          position: 'absolute',
+          top: '1em',
+          right: '1em',
+          fontWeight: 600,
+          color: '#fff',
+          backgroundColor: '#333',
+          // background: 'rgba(0, 0, 0, 0.15)',
+        }}
+      >
+        Back
+      </div>
+      {props.children}
+    </StyledPostModal>,
     document.getElementById('modal-root'),
   );
+};
 
 // PostModal.propTypes = {
 //   posts: PropTypes.arrayOf(
@@ -154,18 +107,5 @@ export const PostModal = ({ children }) =>
 //     }),
 //   ).isRequired,
 // };
-
-// Modal.propTypes = {
-//   handleClose: PropTypes.func.isRequired,
-//   show: PropTypes.bool.isRequired,
-//   children: PropTypes.element.isRequired,
-// };
-
-// ToggleModal.propTypes = {
-//   toggle: PropTypes.func.isRequired,
-//   content: PropTypes.func.isRequired,
-// };
-
-// ReactDOM.render(<PostModal />, container);
 
 export default PostModal;
