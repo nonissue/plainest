@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 // import { LeftCircle, RightCircle, Home } from '@ant-design/icons';
 
-const StyledPostItem = styled.div`
+const StyledPostItem = styled(motion.div)`
   font-family: 'Work Sans', 'Arial', sans-serif;
   width: 100%;
   img {

@@ -54,7 +54,7 @@ const item = {
   },
   exit: {
     transition: {
-      // when: 'afterChildren',
+      when: 'afterChildren',
       duration: 0,
     },
     opacity: 0,

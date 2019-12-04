@@ -14,14 +14,34 @@
   - https://codedaily.io/tutorials/77/Create-a-Modal-Route-with-React-Router
   - https://codepen.io/aesthetickz/pen/pYywpJ
 
+  Other inspo:
+
+  https://blog.sethcorker.com/page-transitions-in-react-router-with-framer-motion/
+  https://codesandbox.io/s/framer-motion-x-react-router-n7qhp
+  https://reacttricks.com/animating-next-page-transitions-with-framer-motion/
+  https://codesandbox.io/s/2wp1zoj09j
+  https://next-motion.heruc.now.sh
+
 ## Todos
 
 ### General
+
+#### Priority
+
+- [ ] reassess goals
 
 - [x] cache instagram api fetch results
 - [x] move grid to actual css grid
 - [ ] get insta tags and link em
 - [x] Logo moves on viewing postview
+- [ ] simplyify / remove as much as possible
+
+- [ ] reimplement postview next/prev
+- [ ] do modal
+- [ ] fix about icon, it sucks
+- [ ] get some kind of transition for PostView -> Grid
+- [ ] review stuff from framer motion app store clone and implement
+- [ ] blur up for images?
 - [ ] on modal click, soft redirect?
   - can use window.pushHistory or something
 - [o] button size on mobile

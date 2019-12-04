@@ -41,6 +41,7 @@ const AppWrapper = styled.div`
   .footer {
     /* z-index: -50; */
     opacity: 0;
+    padding: 5px 0 5px 0;
     display: flex;
     justify-content: center;
     bottom: 1em;
@@ -72,7 +73,7 @@ const gridTransition = {
   exit: {
     opacity: 0,
     // scale: 0.5,
-    transition: { duration: 1 },
+    transition: { duration: 5 },
   },
 };
 
@@ -137,7 +138,8 @@ function App() {
           <Switch>
             <Route exact path="/">
               <motion.div
-                initial={false}
+                // initial={false}
+                key="grid"
                 animate="enter"
                 enter="enter"
                 exit="exit"
@@ -153,6 +155,7 @@ function App() {
             </Route>
             <Route path="/images/:id">
               <motion.div
+                key="postView"
                 initial="exit"
                 animate="enter"
                 enter="enter"
@@ -162,24 +165,19 @@ function App() {
                 {!posts ? <Loading /> : <PostView posts={posts} />}
               </motion.div>
             </Route>
-            <Route
-              path="/posts/:id"
-              render={
-                posts &&
-                (props => (
-                  <motion.div
-                    initial="exit"
-                    animate="enter"
-                    enter="enter"
-                    exit="exit"
-                    variants={postTransition}
-                  >
-                    {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-                    <SinglePostView posts={posts} {...props} />
-                  </motion.div>
-                ))
-              }
-            />
+            <motion.div
+              key="singlePostView"
+              initial="exit"
+              animate="enter"
+              enter="enter"
+              exit="exit"
+              variants={postTransition}
+            >
+              <Route
+                path="/posts/:id"
+                render={posts && (props => <SinglePostView posts={posts} {...props} />)}
+              />
+            </motion.div>
             <Route exact path="/about">
               <About />
             </Route>
@@ -192,7 +190,7 @@ function App() {
           </Switch>
         </AnimatePresence>
       </div>
-      {/* <div className="footer">Copyright 2019 © plainsite</div> */}
+      <div className="footer">Copyright 2019 © plainsite</div>
     </AppWrapper>
   );
 }

@@ -82,15 +82,17 @@ export function Header() {
           exit={{ opacity: 1, scale: 1, transition: { duration: 1 } }}
           className="control"
         >
-          <button onClick={() => history.goBack()} type="button">
+          {/* <button onClick={() => history.goBack()} type="button"> */}
+          <Link to="/">
             <Left />
-          </button>
+          </Link>
+          {/* </button> */}
         </motion.div>
       ) : (
         <div className="control hidden">
-          <button type="button">
-            <Left />
-          </button>
+          {/* <button type="button"> */}
+          <Left />
+          {/* </button> */}
         </div>
       )}
 

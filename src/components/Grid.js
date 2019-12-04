@@ -65,22 +65,18 @@ const list = {
     // scale: 0,
     zIndex: 0,
     transition: {
-      duration: 0,
+      duration: 0.5,
     },
   },
 };
 
 export function Grid({ posts, setLoaded, loaded }) {
   useEffect(() => {
-    // Should check last fetch, and if it is stale, run posts-hydrate
-    const timer = setTimeout(() => {
-      setLoaded(true);
-    }, 0);
-    return () => clearTimeout(timer);
-
-    // setLoaded(false);
-  }, [setLoaded]);
-  // const [loaded, setLoaded] = useState(false);
+    // have to add delay in order for grid to render initially
+    // probably a better way to do this with useEffect
+    // Update: Got it!
+    setLoaded(true);
+  }, [setLoaded, posts]);
 
   return (
     <StyledGrid>
@@ -92,7 +88,7 @@ export function Grid({ posts, setLoaded, loaded }) {
         exit="exit"
         className="new-grid"
       >
-        {/* this animate presence doesn't do anything? */}
+        {/* Animate presence only if grid hasn't loaded yet */}
         <AnimatePresence initial={!loaded}>
           {!!posts && posts.map(post => <GridItem post={post} key={post.id} variants={list} />)}
         </AnimatePresence>
