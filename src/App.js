@@ -10,9 +10,7 @@ import {
   Error,
   Grid,
   Loading,
-  // ModalItem,
   // PostItem,
-  // PostModal,
   PostView,
   SinglePostView,
 } from './components';
@@ -196,18 +194,6 @@ function App() {
           </Switch>
         </AnimatePresence>
       </div>
-      {/* {background && (
-        <Route path="/images/:id">
-          {!posts ? (
-            <Loading />
-          ) : (
-            // pass in specific post?
-            <PostModal location={location} history={history}>
-              <ModalItem posts={posts} />
-            </PostModal>
-          )}
-        </Route>
-      )} */}
       {/* <div className="footer">Copyright 2019 © plainsite</div> */}
     </AppWrapper>
   );

@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-// import { ToggleModal } from './PostModal';
 import { Link } from 'react-router-dom';
 
 const GridItemWrapper = styled.div`
