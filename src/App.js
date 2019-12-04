@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Switch, Route, useLocation, useHistory, Redirect } from 'react-router-dom';
+import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -11,7 +11,7 @@ import {
   Grid,
   Loading,
   ModalItem,
-  PostItem,
+  // PostItem,
   PostModal,
   PostView,
   SinglePostView,
@@ -86,17 +86,6 @@ const postTransition = {
   exit: {
     opacity: 1,
     transition: { duration: 0.5 },
-  },
-};
-
-const modalTransition = {
-  enter: {
-    opacity: 1,
-    transition: { duration: 0 },
-  },
-  exit: {
-    opacity: 1,
-    transition: { duration: 0 },
   },
 };
 

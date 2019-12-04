@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useParams, Link, Redirect } from 'react-router-dom';
+// import { useParams, Link, Redirect } from 'react-router-dom';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { LeftCircle, RightCircle, Home } from '@ant-design/icons';
+// import { LeftCircle, RightCircle, Home } from '@ant-design/icons';
 
 import { PostItem } from './PostItem';
 
@@ -99,6 +100,9 @@ const variants = {
 };
 
 export function SinglePostView({ posts, match, history }) {
+  console.log(match);
+  console.log(history);
+
   return (
     <StyledSinglePostView
       variants={variants}
@@ -128,6 +132,8 @@ SinglePostView.propTypes = {
       images: PropTypes.object.isRequired,
     }),
   ).isRequired,
+  match: ReactRouterPropTypes.match.isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
 };
 
 export default SinglePostView;
