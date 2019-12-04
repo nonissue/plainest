@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useParams, Link, Redirect } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { LeftCircle, RightCircle, Home } from '@ant-design/icons';
@@ -59,13 +59,8 @@ const StyledPostView = styled(motion.div)`
     }
 
     a:hover {
-      /* opacity: 1; */
-      /* color: #333; */
-      /* background: #eee; */
-
       opacity: 1;
       color: #333;
-      /* background: #eee; */
     }
   }
 `;
@@ -74,9 +69,15 @@ const StyledPostView = styled(motion.div)`
 const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] };
 
 // Animations
+// no idea what this animates anymore
+// enter animation at least is handled in App.js
+// ("postTransition")
+// UPDATE: scratch that, animation timings are different for
+// navigating to page vs forced reload?
 const variants = {
   enter: {
     opacity: 0,
+    transition: { duration: 10 },
   },
   hidden: {
     opacity: 0,
@@ -86,19 +87,19 @@ const variants = {
     transition: {
       ...transition,
       delay: 0,
-      duration: 1,
+      duration: 10,
     },
   },
   exit: {
     opacity: 0,
     transition: {
       ...transition,
-      duration: 1,
+      duration: 3,
     },
   },
 };
 
-export function PostView({ posts, match, history }) {
+export function PostView({ posts }) {
   const { id } = useParams();
   const post = posts.find(p => p.id === id);
   const postIndex = posts.findIndex(p => p.id === id);

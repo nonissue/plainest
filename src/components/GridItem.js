@@ -9,32 +9,13 @@ const GridItemWrapper = styled.div`
   overflow: hidden;
   z-index: 1;
 
-  .post-modal {
-    font-family: 'Work Sans', 'Arial', sans-serif;
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 1;
-    width: 100%;
-    /* max-width: vh; */
-    z-index: 9999;
-    height: 100vh;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-    background: hsla(0, 0%, 80%, 0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    img {
-      width: auto;
-      max-width: 100vw;
-      height: auto;
-      max-height: 70vh;
+  .grid-image {
+    background-size: cover;
+    /* -webkit-filter: blur(px); */
+    height: 50vh;
+    @media (min-width: 768px) {
+      height: 40vh;
     }
-  }
-  img {
-    z-index: 1000;
   }
 `;
 
@@ -44,7 +25,7 @@ const transition = {
 };
 
 const imageVariants = {
-  hover: { scale: 1 },
+  hover: { scale: 1.2 },
   transition,
 };
 
@@ -87,18 +68,23 @@ export function GridItem({ post }) {
     <GridItemWrapper>
       <motion.div initial="hidden" enter="enter" exit="hidden" variants={item}>
         {post.images && (
-          <motion.div whileHover="hover" variants={frameVariants} key={post.id}>
-            <Link to={`/posts/${post.id}`}>
-              <motion.img
+          <Link to={`/posts/${post.id}`}>
+            <motion.div whileHover="hover" variants={frameVariants} key={post.id}>
+              <motion.div
                 whileHover="hover"
                 variants={imageVariants}
                 alt={post.caption}
                 key={post.id}
-                src={post.src}
+                className="grid-image"
+                style={{
+                  backgroundImage: `url(${post.src})`,
+                }}
                 transition={{ type: 'tween', stiffness: 20 }}
-              />
-            </Link>
-          </motion.div>
+              >
+                {/* <img src={post.src} /> */}
+              </motion.div>
+            </motion.div>
+          </Link>
         )}
       </motion.div>
     </GridItemWrapper>

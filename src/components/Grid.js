@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,6 +13,20 @@ const StyledGrid = styled.div`
     margin: 2vh auto;
     margin-top: 0;
     padding-bottom: 4vh;
+  }
+
+  .new-grid {
+    display: grid;
+    grid-gap: 2px;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-auto-rows: 50vh;
+    @media (min-width: 768px) {
+      grid-auto-rows: 40vh;
+    }
+    border: 1px solid transparent;
+    border-top: 1px solid #dadce0;
+    border-bottom: 1px solid #dadce0;
+    overflow: hidden;
   }
 
   .image-grid > div {
@@ -76,10 +90,10 @@ export function Grid({ posts, setLoaded, loaded }) {
         initial={false}
         animate="visible" // this has to be here?
         exit="exit"
-        className="image-grid"
+        className="new-grid"
       >
         {/* this animate presence doesn't do anything? */}
-        <AnimatePresence initial={loaded ? false : true}>
+        <AnimatePresence initial={!loaded}>
           {!!posts && posts.map(post => <GridItem post={post} key={post.id} variants={list} />)}
         </AnimatePresence>
       </motion.div>
@@ -96,6 +110,8 @@ Grid.propTypes = {
       images: PropTypes.object.isRequired,
     }),
   ).isRequired,
+  setLoaded: PropTypes.func.isRequired,
+  loaded: PropTypes.bool.isRequired,
 };
 
 export default Grid;
