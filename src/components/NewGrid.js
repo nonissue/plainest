@@ -9,33 +9,6 @@ import { GridItem } from './GridItem';
 
 // change below into css grid, rather than using css columns
 const StyledGrid = styled(motion.div)`
-  .image-grid {
-    column-count: 4;
-    column-gap: 0em;
-    column-width: 300px;
-    margin: 2vh auto;
-    margin-top: 0;
-    padding-bottom: 4vh;
-  }
-
-  .post-content {
-    pointer-events: auto;
-    position: relative;
-    border-radius: 20px;
-    background: #1c1c1e;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-  }
-  .post-open-link {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
-
   display: grid;
   grid-gap: 2px;
   grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
@@ -48,17 +21,66 @@ const StyledGrid = styled(motion.div)`
   border-bottom: 1px solid #dadce0;
   overflow: hidden;
 
-  .image-grid > div {
-    width: 100%;
+  .post {
+    pointer-events: auto;
+    position: relative;
+    border-radius: 20px;
+    background: #1c1c1e;
     overflow: hidden;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+  }
+  .post-content-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: block;
+    pointer-events: none;
+  }
+  .post-content-container.open {
+    top: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    z-index: 2;
+    overflow: hidden;
+    padding: 40px 0;
+  }
+  .post-open-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .post.img {
+    width: 100%;
+    height: 100%;
   }
 
-  .image-grid img {
+  .overlay {
+    z-index: 2;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.8);
+    will-change: opacity;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
-    overflow: hidden;
+    /* max-width: 990px; */
+  }
+
+  .overlay a {
     display: block;
-    /* z-index: 1; */
-    /* object-fit: cover; */
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100vw;
+    left: 0;
+
+    transform: translateX(-50%);
   }
 `;
 
@@ -134,7 +156,7 @@ export function NewGrid({ match, history }) {
 
 function Post({ isSelected, history, post }) {
   return (
-    <div className="post-content">
+    <div className="post">
       <Overlay isSelected={isSelected} />
       <div className={`post-content-container ${isSelected && 'open'}`}>
         <Image id={post.id} isSelected={isSelected} src={post.src} />
