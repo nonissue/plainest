@@ -5,15 +5,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 import { About } from './pages';
-import {
-  Header,
-  Error,
-  Grid,
-  Loading,
-  // PostItem,
-  PostView,
-  SinglePostView,
-} from './components';
+import { Header, Error, Grid, Loading, NewGrid, PostView, SinglePostView } from './components';
 import './App.css';
 
 const AppWrapper = styled.div`
@@ -135,23 +127,21 @@ function App() {
         if we do, all route children components have to be wrapped in motion.div */}
         <AnimatePresence exitBeforeEnter initial={false}>
           <Switch>
-            <Route exact path="/">
-              <motion.div
-                // initial={false}
+            <Route path={['/:id', '/']} component={NewGrid} />
+            {/* <motion.div
                 key="grid"
                 animate="enter"
                 enter="enter"
                 exit="exit"
                 variants={gridTransition}
               >
-                {/* if Grid is rendered before posts are available, children dont get staggered */}
+                
                 {!posts ? (
                   <Loading />
                 ) : (
                   <Grid posts={posts} setLoaded={setLoaded} loaded={loaded} />
                 )}
-              </motion.div>
-            </Route>
+              </motion.div> */}
             <Route path="/images/:id">
               <motion.div
                 key="postView"
