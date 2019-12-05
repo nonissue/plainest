@@ -10,8 +10,9 @@ import { GridItem } from './GridItem';
 // Issues:
 // - [x] Image doesn't move back properly (exit animation starts inside original container)
 // - [ ] weird flash when closing (I think related to overlay ++ zIndex)
-//  - could also be image positioning?
-// - removing css grid stuff seems to fix it....
+// - [ ] add next/prev
+// - [ ] center images vertically
+// - [ ] set point of interest
 const StyledGrid = styled(motion.div)`
   /* overflow: hidden; */
 
@@ -24,8 +25,8 @@ const StyledGrid = styled(motion.div)`
     grid-auto-rows: 40vh;
   }
   border: 1px solid transparent;
-  border-top: 1px solid #dadce0;
-  border-bottom: 1px solid #dadce0;
+  /* border-top: 1px solid #dadce0; */
+  /* border-bottom: 1px solid #dadce0; */
 
   .post {
     position: relative;
@@ -99,7 +100,7 @@ const StyledGrid = styled(motion.div)`
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    max-width: 990px;
+    /* max-width: 990px; */
   }
 
   .overlay a {
