@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
 import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
-import { GridItem } from './GridItem';
 
 // Issues:
 // - [x] Image doesn't move back properly (exit animation starts inside original container)
@@ -254,7 +253,7 @@ function Image({ isSelected, id, src }) {
   const inverted = useInvertedScale();
 
   return (
-    <motion.div className="post-image-container" style={{ ...inverted, originX: 0, originY: 0 }}>
+    <motion.div className="post-image-container" style={{ ...inverted, originX: 0.5, originY: 0 }}>
       <motion.img
         className="post-image"
         src={`${src}`}
