@@ -21,11 +21,11 @@ const StyledGrid = styled(motion.div)`
   /* grid-gap: 5px; */
   /* padding: 10px; */
   grid-template-columns: repeat(auto-fill, minmax(25vw, 1fr));
-  grid-auto-rows: 50vh;
+  grid-auto-rows: 20vh;
   @media (min-width: 768px) {
-    grid-auto-rows: 40vh;
+    grid-auto-rows: 20vh;
   }
-  border: 1px solid transparent;
+  /* border: 1px solid transparent; */
   /* border-top: 1px solid #dadce0; */
   /* border-bottom: 1px solid #dadce0; */
 
@@ -40,7 +40,7 @@ const StyledGrid = styled(motion.div)`
   .post-content {
     pointer-events: auto;
     position: relative;
-    border-radius: 20px;
+    /* border-radius: 20px; */
     /* background: #fff; */
     overflow: hidden;
     width: 100%;
@@ -49,8 +49,9 @@ const StyledGrid = styled(motion.div)`
   }
   .open .post-content {
     /* height: auto; */
-    max-width: 300px;
+    max-width: 60vw;
     overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
   .post-content-container {
     width: 100%;
@@ -67,6 +68,7 @@ const StyledGrid = styled(motion.div)`
     z-index: 1;
     overflow: hidden;
     padding: 20px 0;
+
     /* border: 1px solid #333; */
   }
   .post-open-link {
@@ -215,7 +217,7 @@ function Post({ isSelected, history, post }) {
       <Overlay isSelected={isSelected} />
       <div className={`post-content-container ${isSelected && 'open'}`}>
         <motion.div
-          layoutTransition={isSelected ? openSpring : closeTween}
+          layoutTransition={isSelected ? openSpring : closeSpring}
           style={{ zIndex, y }}
           ref={postRef}
           className="post-content"
@@ -224,7 +226,7 @@ function Post({ isSelected, history, post }) {
           <Image id={post.id} isSelected={isSelected} src={post.src} />
         </motion.div>
       </div>
-      <ContentPlaceholder />
+      {/* <ContentPlaceholder /> */}
       {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
     </div>
   );
@@ -241,8 +243,8 @@ function Image({ isSelected, id, src }) {
         alt=""
         initial={false}
         transition={closeSpring}
-        style={{ borderRadius: '20px' }}
-        animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
+        // style={{ borderRadius: '20px' }}
+        animate={isSelected ? { x: -20, y: -20 } : { x: 0, y: 0 }}
       />
     </motion.div>
   );
@@ -253,7 +255,7 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 1, delay: isSelected ? 0 : 0.5 }}
+      transition={{ duration: 0.5, delay: isSelected ? 0 : 0.5 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
