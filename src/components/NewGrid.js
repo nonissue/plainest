@@ -13,7 +13,9 @@ import { GridItem } from './GridItem';
 //  - could also be image positioning?
 // - removing css grid stuff seems to fix it....
 const StyledGrid = styled(motion.div)`
-  /* display: grid;
+  /* overflow: hidden; */
+
+  display: grid;
   grid-gap: 20px;
   padding: 20px;
   grid-template-columns: repeat(auto-fill, minmax(30vw, 1fr));
@@ -23,20 +25,15 @@ const StyledGrid = styled(motion.div)`
   }
   border: 1px solid transparent;
   border-top: 1px solid #dadce0;
-  border-bottom: 1px solid #dadce0; */
-  /* overflow: hidden; */
+  border-bottom: 1px solid #dadce0;
 
-  .post-list {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-  }
   .post {
     position: relative;
-    padding: 25px;
-    height: 200px;
-    flex: 0 0 40%;
-    max-width: 40%;
+    /* padding: 25px; */
+    width: 30vw;
+    /* height: 200px;
+    flex: 0 0 40%; */
+    /* max-width: 40%; */
   }
   .post-content {
     pointer-events: auto;
@@ -150,7 +147,7 @@ const list = {
   },
 };
 
-const openSpring = { type: 'spring', stiffness: 500, damping: 50 };
+const openSpring = { type: 'spring', stiffness: 500, damping: 30 };
 const closeSpring = { type: 'spring', stiffness: 300, damping: 35 };
 
 export function NewGrid({ match, history }) {
@@ -252,7 +249,7 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0, zIndex: isSelected ? 1 : 0 }}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: 1, delay: isSelected ? 0 : 0 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
