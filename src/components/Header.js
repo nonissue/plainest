@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Left, Question } from '@ant-design/icons';
 import { Logo } from './Logo';
 
@@ -71,7 +71,6 @@ const StyledHeader = styled.header`
 
 export function Header() {
   const location = useLocation();
-  const history = useHistory();
   return (
     <StyledHeader>
       {!(location.pathname === '/') ? (
