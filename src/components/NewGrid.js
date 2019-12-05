@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import { GridItem } from './GridItem';
 
 // change below into css grid, rather than using css columns
-const StyledGrid = styled.div`
+const StyledGrid = styled(motion.div)`
   .image-grid {
     column-count: 4;
     column-gap: 0em;
@@ -18,19 +18,35 @@ const StyledGrid = styled.div`
     padding-bottom: 4vh;
   }
 
-  .new-grid {
-    display: grid;
-    grid-gap: 2px;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-    grid-auto-rows: 50vh;
-    @media (min-width: 768px) {
-      grid-auto-rows: 40vh;
-    }
-    border: 1px solid transparent;
-    border-top: 1px solid #dadce0;
-    border-bottom: 1px solid #dadce0;
+  .post-content {
+    pointer-events: auto;
+    position: relative;
+    border-radius: 20px;
+    background: #1c1c1e;
     overflow: hidden;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
   }
+  .post-open-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  display: grid;
+  grid-gap: 2px;
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  grid-auto-rows: 50vh;
+  @media (min-width: 768px) {
+    grid-auto-rows: 40vh;
+  }
+  border: 1px solid transparent;
+  border-top: 1px solid #dadce0;
+  border-bottom: 1px solid #dadce0;
+  overflow: hidden;
 
   .image-grid > div {
     width: 100%;
@@ -101,14 +117,13 @@ export function NewGrid({ match, history }) {
   }, []);
 
   return (
-    <StyledGrid>
+    <StyledGrid variants={list}>
       {/* Animate presence only if grid hasn't loaded yet */}
       {!!posts &&
         posts.map(post => (
-          <GridItem
+          <Post
             post={post}
             key={post.id}
-            variants={list}
             isSelected={match.params.id === post.id}
             history={history}
           />
@@ -117,13 +132,14 @@ export function NewGrid({ match, history }) {
   );
 }
 
-function Post({ isSelected, id, caption, history, src, width, height, link, images }) {
+function Post({ isSelected, history, post }) {
   return (
-    <div>
+    <div className="post-content">
       <Overlay isSelected={isSelected} />
       <div className={`post-content-container ${isSelected && 'open'}`}>
-        <Image id={id} isSelected={isSelected} src={src} />
+        <Image id={post.id} isSelected={isSelected} src={post.src} />
       </div>
+      {!isSelected && <Link to={`posts/${post.id}`} className={`post-open-link`} />}
     </div>
   );
 }
@@ -171,13 +187,16 @@ NewGrid.propTypes = {
 };
 
 Post.propTypes = {
-  id: PropTypes.string.isRequired,
-  caption: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
-  images: PropTypes.object.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  src: PropTypes.string.isRequired,
+  post: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    caption: PropTypes.string.isRequired,
+    link: PropTypes.string.isRequired,
+    images: PropTypes.object.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    src: PropTypes.string.isRequired,
+  }).isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
   isSelected: PropTypes.bool.isRequired,
 };
 
