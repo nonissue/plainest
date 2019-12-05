@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
+import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 import { GridItem } from './GridItem';
 
-// change below into css grid, rather than using css columns
+// Issues:
+// - [x] Image doesn't move back properly (exit animation starts inside original container)
+// - [ ] weird flash when closing (I think related to overlay ++ zIndex)
+//  - could also be image positioning?
+// - removing css grid stuff seems to fix it....
 const StyledGrid = styled(motion.div)`
-  display: grid;
+  /* display: grid;
   grid-gap: 20px;
   padding: 20px;
   grid-template-columns: repeat(auto-fill, minmax(30vw, 1fr));
@@ -19,14 +23,26 @@ const StyledGrid = styled(motion.div)`
   }
   border: 1px solid transparent;
   border-top: 1px solid #dadce0;
-  border-bottom: 1px solid #dadce0;
-  overflow: hidden;
+  border-bottom: 1px solid #dadce0; */
+  /* overflow: hidden; */
 
+  .post-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+  }
   .post {
+    position: relative;
+    padding: 25px;
+    height: 200px;
+    flex: 0 0 40%;
+    max-width: 40%;
+  }
+  .post-content {
     pointer-events: auto;
     position: relative;
     /* border-radius: 20px; */
-    background: #fff;
+    /* background: #fff; */
     overflow: hidden;
     width: 100%;
     height: 100%;
@@ -34,7 +50,7 @@ const StyledGrid = styled(motion.div)`
   }
   .open .post-content {
     height: auto;
-    max-width: 700px;
+    max-width: 500px;
     overflow: hidden;
   }
   .post-content-container {
@@ -47,11 +63,12 @@ const StyledGrid = styled(motion.div)`
   .post-content-container.open {
     top: 0;
     left: 0;
-    right: 0;
+    /* right: 0; */
     position: fixed;
-    z-index: 2;
+    z-index: 1;
     overflow: hidden;
-    padding: 40px 0;
+    padding: 20px 0;
+    /* border: 1px solid #333; */
   }
   .post-open-link {
     position: absolute;
@@ -60,15 +77,25 @@ const StyledGrid = styled(motion.div)`
     right: 0;
     bottom: 0;
   }
-  .post.img {
-    width: 100%;
-    height: 100%;
+  .post-image-container.img {
+    /* width: 100%; */
+    /* height: 100%; */
+    /* border-radius: 20px; */
+  }
+  .post-image-container {
+    /* position: absolute;
+    top: 0;
+    left: 0; */
+    overflow: hidden;
+    /* height: 420px; */
+    /* width: 100vw; */
+    transform: translateZ(0);
   }
 
   .overlay {
-    z-index: 2;
+    z-index: 1;
     position: fixed;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(255, 255, 255, 0.8);
     will-change: opacity;
     top: 0;
     bottom: 0;
@@ -122,7 +149,8 @@ const closeSpring = { type: 'spring', stiffness: 300, damping: 35 };
 
 export function NewGrid({ match, history }) {
   const [posts, setPosts] = useState([]);
-  const [loaded, setLoaded] = useState(false);
+  //   const [loaded, setLoaded] = useState(false);
+
   // cancel request if component unmounts?
   // https://www.leighhalliday.com/use-effect-hook
   useEffect(() => {
@@ -148,7 +176,7 @@ export function NewGrid({ match, history }) {
   }, []);
 
   return (
-    <StyledGrid variants={list}>
+    <StyledGrid>
       {/* Animate presence only if grid hasn't loaded yet */}
       {!!posts &&
         posts.map(post => (
@@ -164,30 +192,51 @@ export function NewGrid({ match, history }) {
 }
 
 function Post({ isSelected, history, post }) {
+  const y = useMotionValue(0);
+  const zIndex = useMotionValue(isSelected ? 2 : 0);
+  const postRef = useRef(null);
+  const containerRef = useRef(null);
+  function checkZIndex(latest) {
+    if (isSelected) {
+      zIndex.set(2);
+    } else if (!isSelected && latest.scaleX < 1.01) {
+      zIndex.set(0);
+    }
+  }
   return (
-    <div className="post">
+    <div className="post" ref={containerRef}>
       <Overlay isSelected={isSelected} />
-      <motion.div
-        layoutTransition={isSelected ? openSpring : closeSpring}
-        className={`post-content-container ${isSelected && 'open'}`}
-      >
-        <Image id={post.id} isSelected={isSelected} src={post.src} />
-      </motion.div>
-      {!isSelected && <Link to={`posts/${post.id}`} className={`post-open-link`} />}
+      <div className={`post-content-container ${isSelected && 'open'}`}>
+        <motion.div
+          layoutTransition={isSelected ? openSpring : closeSpring}
+          style={{ zIndex, y }}
+          ref={postRef}
+          className="post-content"
+          onUpdate={checkZIndex}
+        >
+          <Image id={post.id} isSelected={isSelected} src={post.src} />
+        </motion.div>
+      </div>
+      {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
     </div>
   );
 }
 
 function Image({ isSelected, id, src }) {
+  const inverted = useInvertedScale();
+
   return (
-    <motion.img
-      className="card-image"
-      src={`${src}`}
-      alt=""
-      initial={false}
-      transition={closeSpring}
-      animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
-    />
+    <motion.div className="post-image-container" style={{ ...inverted, originX: 0, originY: 0 }}>
+      <motion.img
+        className="card-image"
+        src={`${src}`}
+        alt=""
+        initial={false}
+        transition={closeSpring}
+        // style={{ borderRadius: '20px' }}
+        animate={isSelected ? { x: -0, y: -0 } : { x: 0, y: 0 }}
+      />
+    </motion.div>
   );
 }
 
@@ -196,7 +245,7 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: 2 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
@@ -204,6 +253,16 @@ function Overlay({ isSelected }) {
     </motion.div>
   );
 }
+
+const ContentPlaceholder = React.memo(() => {
+  const inverted = useInvertedScale();
+  return (
+    <motion.div className="content-container" style={{ ...inverted, originY: 0, originX: 0 }}>
+      {/* <LoremIpsum p={6} avgWordsPerSentence={6} avgSentencesPerParagraph={4} /> */}
+      <p>Image</p>
+    </motion.div>
+  );
+});
 
 NewGrid.propTypes = {
   //   posts: PropTypes.arrayOf(
