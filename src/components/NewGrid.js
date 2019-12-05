@@ -49,9 +49,11 @@ const StyledGrid = styled(motion.div)`
   }
   .open .post-content {
     /* height: auto; */
-    max-width: 60vw;
+    /* max-width: 420px; */
+    height: auto;
+    width: auto;
+    max-height: 420px;
     overflow: hidden;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
   .post-content-container {
     width: 100%;
@@ -66,6 +68,7 @@ const StyledGrid = styled(motion.div)`
     /* right: 0; */
     position: fixed;
     z-index: 1;
+    /* max-width: 60vw; */
     overflow: hidden;
     padding: 20px 0;
 
@@ -78,8 +81,19 @@ const StyledGrid = styled(motion.div)`
     right: 0;
     bottom: 0;
   }
+
+  .post-image {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+    width: auto;
+  }
   .post-image-container.img {
-    /* width: 100%; */
+    width: 100%;
+    position: relative;
+    /* box-shadow: 0 20px 20px -1px rgba(0, 0, 0, 1), 0 2px 4px -1px rgba(0, 0, 0, 1); */
+
+    /* width: auto; */
+    /* height: auto; */
+    /* max-height: 420px; */
     /* height: 100%; */
     /* border-radius: 20px; */
   }
@@ -90,6 +104,7 @@ const StyledGrid = styled(motion.div)`
     left: 0; */
     overflow: hidden;
     /* height: 420px; */
+    /* width: 420px; */
     /* width: 100vw; */
     transform: translateZ(0);
   }
@@ -204,7 +219,7 @@ function Post({ isSelected, history, post }) {
   const y = useMotionValue(0);
   const zIndex = useMotionValue(isSelected ? 2 : 0);
   const postRef = useRef(null);
-  const containerRef = useRef(null);
+  //   const containerRef = useRef(null);
   function checkZIndex(latest) {
     if (isSelected) {
       zIndex.set(2);
@@ -213,7 +228,10 @@ function Post({ isSelected, history, post }) {
     }
   }
   return (
-    <div className="post" ref={containerRef}>
+    <div
+      className="post"
+      //   ref={containerRef}
+    >
       <Overlay isSelected={isSelected} />
       <div className={`post-content-container ${isSelected && 'open'}`}>
         <motion.div
@@ -244,7 +262,7 @@ function Image({ isSelected, id, src }) {
         initial={false}
         transition={closeSpring}
         // style={{ borderRadius: '20px' }}
-        animate={isSelected ? { x: -20, y: -20 } : { x: 0, y: 0 }}
+        animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
       />
     </motion.div>
   );
@@ -255,7 +273,7 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 0.5, delay: isSelected ? 0 : 0.5 }}
+      transition={{ duration: 0.5, delay: isSelected ? 0 : 0 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
