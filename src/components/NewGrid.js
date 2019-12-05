@@ -13,13 +13,14 @@ import { GridItem } from './GridItem';
 // - [ ] add next/prev
 // - [ ] center images vertically
 // - [ ] set point of interest
+// - [ ] images on close are obscured by other grid images, will fix
 const StyledGrid = styled(motion.div)`
   /* overflow: hidden; */
 
   display: grid;
-  grid-gap: 20px;
-  padding: 20px;
-  grid-template-columns: repeat(auto-fill, minmax(30vw, 1fr));
+  /* grid-gap: 5px; */
+  /* padding: 10px; */
+  grid-template-columns: repeat(auto-fill, minmax(25vw, 1fr));
   grid-auto-rows: 50vh;
   @media (min-width: 768px) {
     grid-auto-rows: 40vh;
@@ -31,7 +32,7 @@ const StyledGrid = styled(motion.div)`
   .post {
     position: relative;
     /* padding: 25px; */
-    width: 30vw;
+    /* width: 30vw; */
     /* height: 200px;
     flex: 0 0 40%; */
     /* max-width: 40%; */
@@ -39,7 +40,7 @@ const StyledGrid = styled(motion.div)`
   .post-content {
     pointer-events: auto;
     position: relative;
-    /* border-radius: 20px; */
+    border-radius: 20px;
     /* background: #fff; */
     overflow: hidden;
     width: 100%;
@@ -47,8 +48,8 @@ const StyledGrid = styled(motion.div)`
     margin: 0 auto;
   }
   .open .post-content {
-    height: auto;
-    max-width: 500px;
+    /* height: auto; */
+    max-width: 300px;
     overflow: hidden;
   }
   .post-content-container {
@@ -80,6 +81,7 @@ const StyledGrid = styled(motion.div)`
     /* height: 100%; */
     /* border-radius: 20px; */
   }
+
   .post-image-container {
     /* position: absolute;
     top: 0;
@@ -93,7 +95,7 @@ const StyledGrid = styled(motion.div)`
   .overlay {
     z-index: 1;
     position: fixed;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.9);
     will-change: opacity;
     top: 0;
     bottom: 0;
@@ -148,8 +150,9 @@ const list = {
   },
 };
 
-const openSpring = { type: 'spring', stiffness: 500, damping: 30 };
-const closeSpring = { type: 'spring', stiffness: 300, damping: 35 };
+const openSpring = { type: 'spring', stiffness: 500, damping: 100 };
+const closeSpring = { type: 'spring', stiffness: 500, damping: 200 };
+const closeTween = { type: 'tween', duration: 0.5 };
 
 export function NewGrid({ match, history }) {
   const [posts, setPosts] = useState([]);
@@ -180,7 +183,7 @@ export function NewGrid({ match, history }) {
   }, []);
 
   return (
-    <StyledGrid>
+    <StyledGrid animate={{ opacity: 1 }} style={{ opacity: 0 }} transition={{ duration: 0 }}>
       {/* Animate presence only if grid hasn't loaded yet */}
       {!!posts &&
         posts.map(post => (
@@ -212,7 +215,7 @@ function Post({ isSelected, history, post }) {
       <Overlay isSelected={isSelected} />
       <div className={`post-content-container ${isSelected && 'open'}`}>
         <motion.div
-          layoutTransition={isSelected ? openSpring : closeSpring}
+          layoutTransition={isSelected ? openSpring : closeTween}
           style={{ zIndex, y }}
           ref={postRef}
           className="post-content"
@@ -221,7 +224,7 @@ function Post({ isSelected, history, post }) {
           <Image id={post.id} isSelected={isSelected} src={post.src} />
         </motion.div>
       </div>
-      {/* <ContentPlaceholder /> */}
+      <ContentPlaceholder />
       {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
     </div>
   );
@@ -233,12 +236,12 @@ function Image({ isSelected, id, src }) {
   return (
     <motion.div className="post-image-container" style={{ ...inverted, originX: 0, originY: 0 }}>
       <motion.img
-        className="card-image"
+        className="post-image"
         src={`${src}`}
         alt=""
         initial={false}
         transition={closeSpring}
-        // style={{ borderRadius: '20px' }}
+        style={{ borderRadius: '20px' }}
         animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
       />
     </motion.div>
@@ -249,8 +252,8 @@ function Overlay({ isSelected }) {
   return (
     <motion.div
       initial={false}
-      animate={{ opacity: isSelected ? 1 : 0, zIndex: isSelected ? 1 : 0 }}
-      transition={{ duration: 1, delay: isSelected ? 0 : 0 }}
+      animate={{ opacity: isSelected ? 1 : 0 }}
+      transition={{ duration: 1, delay: isSelected ? 0 : 0.5 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
