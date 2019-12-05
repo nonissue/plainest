@@ -10,8 +10,9 @@ const StyledHeader = styled.header`
   position: sticky;
   top: 0;
   z-index: 50;
-  background: hsla(0, 0%, 100%, 0.9);
-  -webkit-backdrop-filter: blur(10px);
+  background: hsla(0, 0%, 100%, 0.95);
+
+  -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   animation: fadein 0.3s;
   font-size: calc(12px + 1.5vmin);
@@ -23,32 +24,15 @@ const StyledHeader = styled.header`
   justify-content: space-between;
   width: 100%;
 
-  button {
-    border: none;
-    text-align: center;
-    background: transparent;
-    transition: background 250ms ease-in-out, transform 150ms ease;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    font-size: 1em;
-    padding: 0;
-    transition: color 0.3s ease-out;
-  }
-
-  button:hover {
-    cursor: pointer;
-    color: #ff0000;
-  }
-
   .control {
     text-transform: uppercase;
-    font-size: 0.8em;
+    font-size: 0.7em;
     font-family: 'Lekton', monospace, sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 1.25em;
-    margin-right: 1.25em;
+    margin-left: 2em;
+    margin-right: 2em;
 
     a,
     a:link,
@@ -81,7 +65,6 @@ export function Header() {
           exit={{ opacity: 1, scale: 1, transition: { duration: 1 } }}
           className="control"
         >
-          {/* <button onClick={() => history.goBack()} type="button"> */}
           <Link to="/">
             <Left />
           </Link>
@@ -89,9 +72,7 @@ export function Header() {
         </motion.div>
       ) : (
         <div className="control hidden">
-          {/* <button type="button"> */}
           <Left />
-          {/* </button> */}
         </div>
       )}
 

@@ -24,19 +24,18 @@ const StyledPostItem = styled(motion.div)`
 `;
 
 export function PostItem({ post, isSelected }) {
-  const selected = isSelected || false;
-
   return (
-    <StyledPostItem>
-      {post && selected && (
+    post &&
+    isSelected && (
+      <StyledPostItem>
         <>
           <a href={post.link}>
             <img src={post.src} alt={post.caption} width={post.width} height={post.height} />
           </a>
           <p>{post.caption}</p>
         </>
-      )}
-    </StyledPostItem>
+      </StyledPostItem>
+    )
   );
 }
 

@@ -11,7 +11,6 @@ const GridItemWrapper = styled.div`
 
   .grid-image {
     background-size: cover;
-    /* -webkit-filter: blur(px); */
     height: 50vh;
     @media (min-width: 768px) {
       height: 40vh;
@@ -42,7 +41,7 @@ const item = {
     opacity: 1,
     zIndex: 0,
     transition: {
-      duration: 0.5,
+      duration: 0.3,
     },
   },
   hidden: {
@@ -80,9 +79,7 @@ export function GridItem({ post }) {
                   backgroundImage: `url(${post.src})`,
                 }}
                 transition={{ type: 'tween', stiffness: 20 }}
-              >
-                {/* <img src={post.src} /> */}
-              </motion.div>
+              />
             </motion.div>
           </Link>
         )}

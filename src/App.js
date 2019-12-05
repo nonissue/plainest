@@ -101,7 +101,6 @@ function getPostIndex(posts, id) {
 // home page
 function App() {
   const [posts, setPosts] = useState(null);
-  // eslint-disable-next-line no-unused-vars
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState({ status: null, msg: null });
   // cancel request if component unmounts?
@@ -165,12 +164,10 @@ function App() {
                 {!posts ? <Loading /> : <PostView posts={posts} />}
               </motion.div>
             </Route>
-            <Route path="/about">
-              <About />
-            </Route>
-
             <Route
               path="/posts/:id"
+              // Rendering gives us access to match & history in
+              // child component
               render={
                 posts &&
                 (props => (
@@ -187,6 +184,9 @@ function App() {
                 ))
               }
             />
+            <Route path="/about">
+              <About />
+            </Route>
 
             <Route path="/error/:id">
               <Error error={error} />

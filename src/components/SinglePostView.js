@@ -1,10 +1,10 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 // import { useParams, Link, Redirect } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-// import { LeftCircle, RightCircle, Home } from '@ant-design/icons';
 
 import { PostItem } from './PostItem';
 
@@ -17,6 +17,7 @@ const StyledSinglePostView = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   @media (min-width: 768px) {
     margin-top: 3em;
   }

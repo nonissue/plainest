@@ -13,6 +13,9 @@
   - https://codesandbox.io/s/react-router-modal-gallery-se6ry
   - https://codedaily.io/tutorials/77/Create-a-Modal-Route-with-React-Router
   - https://codepen.io/aesthetickz/pen/pYywpJ
+  - https://levelup.gitconnected.com/build-a-modal-using-react-context-portals-and-hooks-bd0c4e54537e
+  - https://codesandbox.io/s/app-store-ui-using-react-and-framer-motion-ecgc2
+  - https://codesandbox.io/s/7w6mq72l2q?from-embed
 
   Other inspo:
 
