@@ -102,7 +102,7 @@ const StyledGrid = styled(motion.div)`
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    /* max-width: 990px; */
+    max-width: 990px;
   }
 
   .overlay a {
@@ -114,6 +114,12 @@ const StyledGrid = styled(motion.div)`
     left: 50%;
 
     transform: translateX(-50%);
+  }
+
+  .post-container {
+    padding: 460px 35px 35px 35px;
+    max-width: 700px;
+    width: 90vw;
   }
 `;
 
@@ -217,6 +223,7 @@ function Post({ isSelected, history, post }) {
           <Image id={post.id} isSelected={isSelected} src={post.src} />
         </motion.div>
       </div>
+      {/* <ContentPlaceholder /> */}
       {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
     </div>
   );
@@ -234,7 +241,7 @@ function Image({ isSelected, id, src }) {
         initial={false}
         transition={closeSpring}
         // style={{ borderRadius: '20px' }}
-        animate={isSelected ? { x: -0, y: -0 } : { x: 0, y: 0 }}
+        animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
       />
     </motion.div>
   );
@@ -244,8 +251,8 @@ function Overlay({ isSelected }) {
   return (
     <motion.div
       initial={false}
-      animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 2 }}
+      animate={{ opacity: isSelected ? 1 : 0, zIndex: isSelected ? 1 : 0 }}
+      transition={{ duration: 0.2 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
