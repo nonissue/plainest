@@ -139,36 +139,9 @@ const StyledGrid = styled(motion.div)`
   }
 `;
 
-// Controls individual items as they load on grid
-// Exit currently doesn't work
-const list = {
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0,
-    },
-  },
-  enter: {
-    opacity: 0,
-  },
-  hidden: {
-    opacity: 0,
-    zIndex: 0,
-  },
-  exit: {
-    opacity: 0,
-    // scale: 0,
-    zIndex: 0,
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
-
 const openSpring = { type: 'spring', stiffness: 500, damping: 100 };
 const closeSpring = { type: 'spring', stiffness: 500, damping: 200 };
-const closeTween = { type: 'tween', duration: 0.5 };
+// const closeTween = { type: 'tween', duration: 0.5 };
 
 export function NewGrid({ match, history }) {
   const [posts, setPosts] = useState([]);
@@ -255,6 +228,7 @@ function Image({ isSelected, id, src }) {
   return (
     <motion.div className="post-image-container" style={{ ...inverted, originX: 0.5, originY: 0 }}>
       <motion.img
+        key={`post-${id}`}
         className="post-image"
         src={`${src}`}
         alt=""
@@ -305,6 +279,12 @@ NewGrid.propTypes = {
   //   ).isRequired,
   match: ReactRouterPropTypes.match.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
+};
+
+Image.propTypes = {
+  id: PropTypes.string.isRequired,
+  isSelected: PropTypes.bool.isRequired,
+  src: PropTypes.string.isRequired,
 };
 
 Post.propTypes = {
