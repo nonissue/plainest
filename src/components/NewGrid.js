@@ -10,8 +10,9 @@ import { GridItem } from './GridItem';
 // change below into css grid, rather than using css columns
 const StyledGrid = styled(motion.div)`
   display: grid;
-  grid-gap: 2px;
-  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  grid-gap: 20px;
+  padding: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(30vw, 1fr));
   grid-auto-rows: 50vh;
   @media (min-width: 768px) {
     grid-auto-rows: 40vh;
@@ -24,12 +25,17 @@ const StyledGrid = styled(motion.div)`
   .post {
     pointer-events: auto;
     position: relative;
-    border-radius: 20px;
-    background: #1c1c1e;
+    /* border-radius: 20px; */
+    background: #fff;
     overflow: hidden;
     width: 100%;
     height: 100%;
     margin: 0 auto;
+  }
+  .open .post-content {
+    height: auto;
+    max-width: 700px;
+    overflow: hidden;
   }
   .post-content-container {
     width: 100%;
@@ -78,7 +84,7 @@ const StyledGrid = styled(motion.div)`
     top: 0;
     bottom: 0;
     width: 100vw;
-    left: 0;
+    left: 50%;
 
     transform: translateX(-50%);
   }
@@ -110,6 +116,9 @@ const list = {
     },
   },
 };
+
+const openSpring = { type: 'spring', stiffness: 500, damping: 50 };
+const closeSpring = { type: 'spring', stiffness: 300, damping: 35 };
 
 export function NewGrid({ match, history }) {
   const [posts, setPosts] = useState([]);
@@ -158,9 +167,12 @@ function Post({ isSelected, history, post }) {
   return (
     <div className="post">
       <Overlay isSelected={isSelected} />
-      <div className={`post-content-container ${isSelected && 'open'}`}>
+      <motion.div
+        layoutTransition={isSelected ? openSpring : closeSpring}
+        className={`post-content-container ${isSelected && 'open'}`}
+      >
         <Image id={post.id} isSelected={isSelected} src={post.src} />
-      </div>
+      </motion.div>
       {!isSelected && <Link to={`posts/${post.id}`} className={`post-open-link`} />}
     </div>
   );
@@ -173,7 +185,8 @@ function Image({ isSelected, id, src }) {
       src={`${src}`}
       alt=""
       initial={false}
-      animate={isSelected ? { x: -20, y: -20 } : { x: 0, y: 0 }}
+      transition={closeSpring}
+      animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
     />
   );
 }
