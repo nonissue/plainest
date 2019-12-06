@@ -20,27 +20,24 @@ const StyledGrid = styled(motion.div)`
   /* grid-gap: 5px; */
   /* padding: 10px; */
   grid-template-columns: repeat(auto-fill, minmax(25vw, 1fr));
-  grid-auto-rows: 20vh;
+  grid-auto-rows: 30vh;
+
   @media (min-width: 768px) {
-    grid-auto-rows: 20vh;
+    grid-auto-rows: 50vh;
   }
-  /* border: 1px solid transparent; */
-  /* border-top: 1px solid #dadce0; */
-  /* border-bottom: 1px solid #dadce0; */
 
   .post {
     position: relative;
     /* padding: 25px; */
-    /* width: 30vw; */
-    /* height: 200px;
-    flex: 0 0 40%; */
+    height: 50vh;
+    /* flex: 0 0 40%; */
     /* max-width: 40%; */
   }
   .post-content {
     pointer-events: auto;
     position: relative;
     /* border-radius: 20px; */
-    /* background: #fff; */
+    background: #fff;
     overflow: hidden;
     width: 100%;
     height: 100%;
@@ -49,9 +46,10 @@ const StyledGrid = styled(motion.div)`
   .open .post-content {
     /* height: auto; */
     /* max-width: 420px; */
-    height: auto;
-    width: auto;
-    max-height: 420px;
+    /* height: auto; */
+    /* width: auto; */
+    max-height: 50vh;
+    max-width: 50vw;
     overflow: hidden;
   }
   .post-content-container {
@@ -64,13 +62,11 @@ const StyledGrid = styled(motion.div)`
   .post-content-container.open {
     top: 0;
     left: 0;
-    /* right: 0; */
+    right: 0;
     position: fixed;
     z-index: 1;
-    /* max-width: 60vw; */
     overflow: hidden;
-    padding: 20px 0;
-
+    /* padding: 40px 0; */
     /* border: 1px solid #333; */
   }
   .post-open-link {
@@ -83,41 +79,57 @@ const StyledGrid = styled(motion.div)`
 
   .post-image {
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
-    width: auto;
+    background-size: cover;
+    position: relative;
+    /* background-repeat: no-repeat; */
+    height: 50vh;
+    width: 50vw;
+    /* width: 40vw; */
+    /* height: 30vh; */
+    /* width: auto; */
+    /* height: 200px; */
+    /* width: 200px; */
   }
-  .post-image-container.img {
+  .post-image.openz {
+    margin: 0px auto;
+    width: auto;
+    max-width: 50vw;
+    height: 50vh;
+    /* height: auto; */
+    max-height: 70vh;
+    /* position: relative; */
+    /* background-size: cover; */
+    /* background-repeat: no-repeat; */
+    /* height: 600px; */
+    /* background: #ff0000; */
+    /* width: auto; */
+  }
+  /* .post-image-container.img {
     width: 100%;
     position: relative;
-    /* box-shadow: 0 20px 20px -1px rgba(0, 0, 0, 1), 0 2px 4px -1px rgba(0, 0, 0, 1); */
-
-    /* width: auto; */
-    /* height: auto; */
-    /* max-height: 420px; */
-    /* height: 100%; */
-    /* border-radius: 20px; */
-  }
+  } */
 
   .post-image-container {
-    /* position: absolute;
+    position: relative;
     top: 0;
-    left: 0; */
+    left: 0;
     overflow: hidden;
     /* height: 420px; */
-    /* width: 420px; */
-    /* width: 100vw; */
+    width: 100vw;
     transform: translateZ(0);
   }
 
   .overlay {
     z-index: 1;
     position: fixed;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.8);
     will-change: opacity;
     top: 0;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
+    /* max-width: 990px; */
     /* max-width: 990px; */
   }
 
@@ -133,7 +145,7 @@ const StyledGrid = styled(motion.div)`
   }
 
   .post-container {
-    padding: 460px 35px 35px 35px;
+    /* padding: 460px 35px 35px 35px; */
     max-width: 700px;
     width: 90vw;
   }
@@ -227,16 +239,17 @@ function Image({ isSelected, id, src }) {
 
   return (
     <motion.div className="post-image-container" style={{ ...inverted, originX: 0.5, originY: 0 }}>
-      <motion.img
-        key={`post-${id}`}
-        className="post-image"
-        src={`${src}`}
-        alt=""
-        initial={false}
-        transition={closeSpring}
-        // style={{ borderRadius: '20px' }}
-        animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
-      />
+        <motion.div
+          key={`post-${id}`}
+          className={`post-image ${isSelected && 'open'}`}
+          style={{ backgroundImage: `url(${src})` }}
+          alt=""
+          initial={false}
+          transition={closeSpring}
+          // style={{ borderRadius: '20px' }}
+          animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
+        >
+        </motion.div>
     </motion.div>
   );
 }
@@ -250,7 +263,7 @@ function Overlay({ isSelected }) {
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
-      <Link to="/" />
+      <Link style={{ border: '1px solid yellow' }} to="/" />
     </motion.div>
   );
 }
