@@ -351,7 +351,7 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      // transition={{ duration: 0.2, delay: isSelected ? 0.05 : 0.3 }}
+      transition={{ duration: 0.5, delay: isSelected ? 0.2 : 0.6 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
