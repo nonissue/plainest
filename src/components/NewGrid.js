@@ -65,7 +65,7 @@ const StyledGrid = styled(motion.div)`
     left: 0;
     right: 0;
     position: fixed;
-    z-index: 2;
+    z-index: 1;
     overflow: hidden;
     /* padding: 40px 0; */
     /* border: 1px solid #333; */
@@ -145,6 +145,18 @@ const StyledGrid = styled(motion.div)`
     max-width: 700px;
     width: 90vw;
   }
+  .caption-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    font-size: 0.7rem;
+    padding: 5px 10px;
+    margin: 0 auto;
+    color: #fff;
+    width: 100%;
+    background: #333;
+    /* max-width: 300px; */
+  }
 `;
 
 const openSpring = { type: 'spring', stiffness: 500, damping: 100 };
@@ -221,7 +233,8 @@ function Post({ isSelected, history, post }) {
           <Image id={post.id} isSelected={isSelected} src={post.src} />
         </motion.div>
       </div>
-      {/* <ContentPlaceholder /> */}
+      <Caption caption={post.caption} isSelected={isSelected} id={post.id} />
+      <ContentPlaceholder />
       {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
     </div>
   );
@@ -231,7 +244,10 @@ function Image({ isSelected, id, src }) {
   const inverted = useInvertedScale();
 
   return (
-    <motion.div className="post-image-container" style={{ ...inverted, originX: 0.5, originY: 0 }}>
+    <motion.div
+      className="post-image-container"
+      style={{ ...inverted, originX: 0.5, originY: 0.5 }}
+    >
       <motion.div
         key={`post-${id}`}
         className={`post-image ${isSelected && 'open'}`}
@@ -246,12 +262,44 @@ function Image({ isSelected, id, src }) {
   );
 }
 
+const scaleTranslate = ({ x, y, scaleX, scaleY }) =>
+  `scaleX(${scaleX}) scaleY(${scaleY}) translate(${x}, ${y}) translateZ(0)`;
+
+function Caption({ isSelected, id, caption }) {
+  const inverted = useInvertedScale();
+  const x = isSelected ? '0' : 0;
+  const opacity = isSelected ? '1' : 0;
+  const y = 0;
+
+  return (
+    <motion.div
+      className="caption-container"
+      initial={false}
+      animate={{ x, y, opacity }}
+      // transition={isSelected ? openSpring : closeSpring}
+      transition={{ duration: 2 }}
+      transformTemplate={scaleTranslate}
+      style={{
+        ...inverted,
+        originX: 0,
+        originY: 0,
+        zIndex: `${isSelected ? 1 : 0}`,
+        // background: `${isSelected ? '#121212' : 'transparent'}`,
+        visibility: `${isSelected ? 'visible' : 'hidden'}`,
+      }}
+    >
+      {/* <span className="category">{caption}</span> */}
+      <h2>{caption}</h2>
+    </motion.div>
+  );
+}
+
 function Overlay({ isSelected }) {
   return (
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 0.5, delay: isSelected ? 0 : 0 }}
+      transition={{ duration: 0.2, delay: isSelected ? 0.1 : 0.3 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
@@ -265,7 +313,7 @@ const ContentPlaceholder = React.memo(() => {
   return (
     <motion.div className="content-container" style={{ ...inverted, originY: 0, originX: 0 }}>
       {/* <LoremIpsum p={6} avgWordsPerSentence={6} avgSentencesPerParagraph={4} /> */}
-      <p>Image</p>
+      {/* <p>Image</p> */}
     </motion.div>
   );
 });
