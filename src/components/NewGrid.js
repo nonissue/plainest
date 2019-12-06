@@ -13,6 +13,7 @@ import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 // - [ ] center images vertically
 // - [ ] set point of interest
 // - [ ] images on close are obscured by other grid images, will fix
+// - [ ] disable scrolling when isSelected
 const StyledGrid = styled(motion.div)`
   /* overflow: hidden; */
 
@@ -185,6 +186,7 @@ const StyledGrid = styled(motion.div)`
     /* width: 100%; */
     background: #121212;
     width: 100%;
+    opacity: 0;
     h2 {
       /* max-width: 90%; */
     }
@@ -277,10 +279,7 @@ function Image({ isSelected, id, src }) {
   const inverted = useInvertedScale();
 
   return (
-    <motion.div
-      className="post-image-container"
-      style={{ ...inverted, originX: 0.5, originY: 0.5 }}
-    >
+    <motion.div className="post-image-container" style={{ ...inverted, originX: 0, originY: 0 }}>
       <motion.div
         key={`post-${id}`}
         className={`post-image ${isSelected && 'open'}`}
@@ -300,25 +299,25 @@ const scaleTranslate = ({ x, y, scaleX, scaleY }) =>
 
 function Caption({ isSelected, id, caption }) {
   const inverted = useInvertedScale();
-  const x = isSelected ? '0' : 0;
-  const opacity = isSelected ? '1' : 0;
-  const y = 0;
+  const x = isSelected ? 0 : 0;
+  const opacity = isSelected ? 1 : 0;
+  const y = isSelected ? 0 : 200;
 
   return (
     <motion.div
       className="caption-container"
-      initial={false}
+      initial={true}
       animate={{ x, y, opacity }}
       // transition={isSelected ? openSpring : closeSpring}
-      transition={{ duration: 2 }}
+      transition={{ duration: 0.5, type: 'spring', damping: 40, stiffness: 600 }}
       transformTemplate={scaleTranslate}
       style={{
         ...inverted,
         originX: 0,
         originY: 0,
-        zIndex: `${isSelected ? 1 : 0}`,
+        zIndex: `${isSelected ? 1 : 1}`,
         // background: `${isSelected ? '#121212' : 'transparent'}`,
-        visibility: `${isSelected ? 'visible' : 'hidden'}`,
+        // visibility: `${isSelected ? 'visible' : 'hidden'}`,
       }}
     >
       {/* <span className="category">{caption}</span> */}
@@ -332,7 +331,7 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 0.2, delay: isSelected ? 0.1 : 0.3 }}
+      transition={{ duration: 0.2, delay: isSelected ? 0.05 : 0.3 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
