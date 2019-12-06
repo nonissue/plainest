@@ -13,6 +13,7 @@ import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 // - [ ] center images vertically
 // - [ ] set point of interest
 // - [ ] images on close are obscured by other grid images, will fix
+// - [ ] fix image sizing finally...
 // - [ ] disable scrolling when isSelected
 const StyledGrid = styled(motion.div)`
   /* overflow: hidden; */
