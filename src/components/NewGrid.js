@@ -27,7 +27,7 @@ const StyledGrid = styled(motion.div)`
   .post {
     position: relative;
     padding: 25px;
-    height: 460px;
+    /* height: 460px; */
     flex: 0 0 40%;
     max-width: 40%;
   }
@@ -35,7 +35,7 @@ const StyledGrid = styled(motion.div)`
     pointer-events: auto;
     position: relative;
     /* border-radius: 20px; */
-    /* background: #fff; */
+    background: #fff;
     overflow: hidden;
     width: 100%;
     height: 100%;
@@ -53,6 +53,8 @@ const StyledGrid = styled(motion.div)`
       width: 50vw;
       height: 50vh;
     } */
+    height: auto;
+    max-width: 700px;
     overflow: hidden;
   }
   .post-content-container {
@@ -91,13 +93,13 @@ const StyledGrid = styled(motion.div)`
   }
 
   .post-image {
-    background-size: cover;
-    background-repeat: no-repeat;
+    /* background-size: cover;
+    background-repeat: no-repeat; */
     /* object-fit: cover; */
-    width: auto;
+    /* width: auto;
     height: auto;
     max-height: 70vh;
-    overflow: hidden;
+    overflow: hidden; */
     /* position: relative; */
     /* background-repeat: no-repeat; */
 
@@ -157,9 +159,10 @@ const StyledGrid = styled(motion.div)`
   .overlay a {
     display: block;
     position: fixed;
-    top: 0;
+    /* top: 50vh; */
     bottom: 0;
     width: 100vw;
+    height: 100vh;
     left: 50%;
 
     transform: translateX(-50%);
@@ -273,7 +276,7 @@ function Post({ isSelected, history, post }) {
       </div>
       <Caption caption={post.caption} isSelected={isSelected} id={post.id} />
       <ContentPlaceholder />
-      {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
+      {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link"></Link>}
     </div>
   );
 }
