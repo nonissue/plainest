@@ -18,7 +18,7 @@ import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 // - [ ] fix grid flashing
 // - [ ] adjust overlay timing, since grid post animation isn't a static time
 //       because it varies based on distance
-//
+// - [ ] looks weird going behind header (zindex)
 const StyledGrid = styled(motion.div)`
   display: flex;
   flex-wrap: wrap;
@@ -26,22 +26,22 @@ const StyledGrid = styled(motion.div)`
 
   .post {
     position: relative;
-    padding: 25px;
-    /* height: 460px; */
-    flex: 0 0 40%;
-    max-width: 40%;
+    /* padding: 25px; */
+    height: 400px;
+    flex: 0 0 30%;
+    max-width: 30%;
   }
   .post-content {
     pointer-events: auto;
     position: relative;
-    /* border-radius: 20px; */
-    background: #fff;
+    /* background: #fff; */
     overflow: hidden;
     width: 100%;
     height: 100%;
     margin: 0 auto;
   }
   .open .post-content {
+    /* this is what allows us to click outside image */
     /* height: auto; */
     /* max-width: 420px; */
     /* height: auto; */
@@ -53,8 +53,11 @@ const StyledGrid = styled(motion.div)`
       width: 50vw;
       height: 50vh;
     } */
+
     height: auto;
-    max-width: 700px;
+    /* if height isn't auto, can't click anywhere outside to return to grid */
+    max-height: 70vh;
+    max-width: 500px;
     overflow: hidden;
   }
   .post-content-container {
@@ -65,6 +68,7 @@ const StyledGrid = styled(motion.div)`
     pointer-events: none;
   }
   .post-content-container.open {
+    /* top: 15vh; */
     top: 15vh;
     left: 0;
     right: 0;
@@ -85,8 +89,8 @@ const StyledGrid = styled(motion.div)`
     transform: translateZ(0);
     /* position: relative;
     top: 0;
-    left: 0;
-    overflow: hidden;  */
+    left: 0;*/
+    overflow: hidden;
     /* height: 420px; */
     /* width: 100vw; */
     /* transform: translateZ(0); */
@@ -190,8 +194,8 @@ const StyledGrid = styled(motion.div)`
   }
 `;
 
-const openSpring = { type: 'spring', stiffness: 500, damping: 100 };
-const closeSpring = { type: 'spring', stiffness: 500, damping: 200 };
+const openSpring = { type: 'tween', stiffness: 500, damping: 100 };
+const closeSpring = { type: 'tween', stiffness: 500, damping: 200 };
 // const closeTween = { type: 'tween', duration: 0.5 };
 
 export function NewGrid({ match, history }) {
@@ -206,7 +210,6 @@ export function NewGrid({ match, history }) {
       const res = await axios('/.netlify/functions/posts-read-latest');
       const fetchedPosts = res.data.data.posts;
       setPosts(fetchedPosts);
-      console.log(fetchedPosts);
     };
 
     try {
@@ -259,7 +262,9 @@ function Post({ isSelected, history, post }) {
       <Overlay isSelected={isSelected} />
       <div className={`post-content-container ${isSelected && 'open'}`}>
         <motion.div
-          layoutTransition={isSelected ? openSpring : closeSpring}
+          // layoutTransition={isSelected ? openSpring : closeSpring}
+          layoutTransition
+          // initial={{ opacity: 0 }}
           style={{ zIndex, y }}
           ref={postRef}
           className="post-content"
@@ -276,7 +281,7 @@ function Post({ isSelected, history, post }) {
       </div>
       <Caption caption={post.caption} isSelected={isSelected} id={post.id} />
       <ContentPlaceholder />
-      {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link"></Link>}
+      {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
     </div>
   );
 }
