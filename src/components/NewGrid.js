@@ -15,38 +15,27 @@ import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 // - [ ] images on close are obscured by other grid images, will fix
 // - [ ] fix image sizing finally...
 // - [ ] disable scrolling when isSelected
+// - [ ] fix grid flashing
+// - [ ] adjust overlay timing, since grid post animation isn't a static time
+//       because it varies based on distance
+//
 const StyledGrid = styled(motion.div)`
-  /* overflow: hidden; */
-
-  display: grid;
-  /* grid-gap: 5px; */
-  /* padding: 10px; */
-  grid-template-columns: repeat(auto-fill, minmax(100vw, 1fr));
-  grid-auto-rows: 50vh;
-
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(auto-fill, minmax(25vw, 1fr));
-    grid-auto-rows: 25vh;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
 
   .post {
     position: relative;
-    /* padding: 25px; */
-    width: 100vw;
-    height: 50vh;
-    @media (min-width: 768px) {
-      width: 25vw;
-      height: 25vh;
-    }
-
-    /* flex: 0 0 40%; */
-    /* max-width: 40%; */
+    padding: 25px;
+    height: 460px;
+    flex: 0 0 40%;
+    max-width: 40%;
   }
   .post-content {
     pointer-events: auto;
-    /* position: relative; */
+    position: relative;
     /* border-radius: 20px; */
-    background: #fff;
+    /* background: #fff; */
     overflow: hidden;
     width: 100%;
     height: 100%;
@@ -58,12 +47,12 @@ const StyledGrid = styled(motion.div)`
     /* height: auto; */
     /* width: auto; */
 
-    width: 100vw;
+    /* width: 100vw;
     height: 50vh;
     @media (min-width: 768px) {
       width: 50vw;
       height: 50vh;
-    }
+    } */
     overflow: hidden;
   }
   .post-content-container {
@@ -90,35 +79,51 @@ const StyledGrid = styled(motion.div)`
     right: 0;
     bottom: 0;
   }
+  .post-image-container {
+    transform: translateZ(0);
+    /* position: relative;
+    top: 0;
+    left: 0;
+    overflow: hidden;  */
+    /* height: 420px; */
+    /* width: 100vw; */
+    /* transform: translateZ(0); */
+  }
 
   .post-image {
     background-size: cover;
+    background-repeat: no-repeat;
+    /* object-fit: cover; */
+    width: auto;
+    height: auto;
+    max-height: 70vh;
+    overflow: hidden;
     /* position: relative; */
     /* background-repeat: no-repeat; */
 
-    width: 100vw;
+    /* width: 100vw;
     height: 50vh;
     @media (min-width: 768px) {
       width: 25vw;
       height: 25vh;
-    }
+    } */
   }
 
   .post-image.open {
     /* margin: 0px auto; */
     /* width: 90vw; */
 
-    width: 100vw;
+    /* width: 100vw;
     height: 50vh;
     @media (min-width: 768px) {
       width: 50vw;
       height: 50vh;
-    }
+    } */
     /* @media (min-width: 768px) {
       width: 25vw;
       height: 25vh;
     } */
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.1); */
     /* height: auto; */
     /* max-height: 70vh; */
     /* position: relative; */
@@ -133,16 +138,6 @@ const StyledGrid = styled(motion.div)`
     position: relative;
   } */
 
-  .post-image-container {
-    position: relative;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    /* height: 420px; */
-    /* width: 100vw; */
-    transform: translateZ(0);
-  }
-
   .overlay {
     z-index: 1;
     position: fixed;
@@ -150,6 +145,8 @@ const StyledGrid = styled(motion.div)`
     will-change: opacity;
     top: 0;
     bottom: 0;
+    /* using the code below ensures overlay is always centered
+    no matter which post we click on */
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
@@ -168,11 +165,6 @@ const StyledGrid = styled(motion.div)`
     transform: translateX(-50%);
   }
 
-  .post-container {
-    /* padding: 460px 35px 35px 35px; */
-    /* max-width: 700px; */
-    width: 100vw;
-  }
   .caption-container {
     position: fixed;
     bottom: 0vh;
@@ -211,10 +203,12 @@ export function NewGrid({ match, history }) {
       const res = await axios('/.netlify/functions/posts-read-latest');
       const fetchedPosts = res.data.data.posts;
       setPosts(fetchedPosts);
+      console.log(fetchedPosts);
     };
 
     try {
       fetchData();
+
       // setLoaded(true);
     } catch (err) {
       // eslint-disable-next-line no-console
@@ -237,6 +231,8 @@ export function NewGrid({ match, history }) {
             key={post.id}
             isSelected={match.params.id === post.id}
             history={history}
+            width={post.width}
+            height={post.height}
           />
         ))}
     </StyledGrid>
@@ -266,7 +262,13 @@ function Post({ isSelected, history, post }) {
           className="post-content"
           onUpdate={checkZIndex}
         >
-          <Image id={post.id} isSelected={isSelected} src={post.src} />
+          <Image
+            id={post.id}
+            isSelected={isSelected}
+            src={post.src}
+            width={post.width}
+            height={post.height}
+          />
         </motion.div>
       </div>
       <Caption caption={post.caption} isSelected={isSelected} id={post.id} />
@@ -276,19 +278,28 @@ function Post({ isSelected, history, post }) {
   );
 }
 
-function Image({ isSelected, id, src }) {
+function Image({ isSelected, id, src, width, height }) {
   const inverted = useInvertedScale();
 
   return (
     <motion.div className="post-image-container" style={{ ...inverted, originX: 0, originY: 0 }}>
-      <motion.div
+      {/* <motion.div
         key={`post-${id}`}
         className={`post-image ${isSelected && 'open'}`}
-        style={{ backgroundImage: `url(${src})` }}
+        style={{ backgroundImage: `url(${src})`, width, backgroundSize: 'cover' }}
         alt=""
         initial={false}
         transition={closeSpring}
-        // style={{ borderRadius: '20px' }}
+        animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
+      /> */}
+      <motion.img
+        key={`post-${id}`}
+        className={`post-image ${isSelected && 'open'}`}
+        src={src}
+        // style={{ backgroundImage: `url(${src})`, width, backgroundSize: 'cover' }}
+        alt=""
+        initial={false}
+        transition={closeSpring}
         animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
       />
     </motion.div>
@@ -332,7 +343,7 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 0.2, delay: isSelected ? 0.05 : 0.3 }}
+      // transition={{ duration: 0.2, delay: isSelected ? 0.05 : 0.3 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >

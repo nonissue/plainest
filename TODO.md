@@ -38,7 +38,6 @@
 - [ ] get insta tags and link em
 - [x] Logo moves on viewing postview
 - [ ] simplyify / remove as much as possible
-
 - [ ] reimplement postview next/prev
 - [ ] do modal
 - [ ] fix about icon, it sucks
