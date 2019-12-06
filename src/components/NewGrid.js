@@ -19,23 +19,23 @@ const StyledGrid = styled(motion.div)`
   display: grid;
   /* grid-gap: 5px; */
   /* padding: 10px; */
-  grid-template-columns: repeat(auto-fill, minmax(25vw, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(50vw, 1fr));
   grid-auto-rows: 30vh;
 
   @media (min-width: 768px) {
-    grid-auto-rows: 50vh;
+    grid-auto-rows: 30vh;
   }
 
   .post {
     position: relative;
     /* padding: 25px; */
-    height: 50vh;
+    height: 30vh;
     /* flex: 0 0 40%; */
     /* max-width: 40%; */
   }
   .post-content {
     pointer-events: auto;
-    position: relative;
+    /* position: relative; */
     /* border-radius: 20px; */
     background: #fff;
     overflow: hidden;
@@ -48,8 +48,9 @@ const StyledGrid = styled(motion.div)`
     /* max-width: 420px; */
     /* height: auto; */
     /* width: auto; */
-    max-height: 50vh;
-    max-width: 50vw;
+    height: 50vh;
+    width: 50vw;
+    /* max-width: 50vw; */
     overflow: hidden;
   }
   .post-content-container {
@@ -60,11 +61,11 @@ const StyledGrid = styled(motion.div)`
     pointer-events: none;
   }
   .post-content-container.open {
-    top: 0;
+    top: 15vh;
     left: 0;
     right: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     overflow: hidden;
     /* padding: 40px 0; */
     /* border: 1px solid #333; */
@@ -80,23 +81,18 @@ const StyledGrid = styled(motion.div)`
   .post-image {
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
     background-size: cover;
-    position: relative;
+    /* position: relative; */
     /* background-repeat: no-repeat; */
-    height: 50vh;
+    height: 30vh;
     width: 50vw;
-    /* width: 40vw; */
-    /* height: 30vh; */
-    /* width: auto; */
-    /* height: 200px; */
-    /* width: 200px; */
   }
-  .post-image.openz {
-    margin: 0px auto;
-    width: auto;
+  .post-image.open {
+    /* margin: 0px auto; */
+    width: 50vw;
     max-width: 50vw;
     height: 50vh;
     /* height: auto; */
-    max-height: 70vh;
+    /* max-height: 70vh; */
     /* position: relative; */
     /* background-size: cover; */
     /* background-repeat: no-repeat; */
@@ -203,7 +199,7 @@ function Post({ isSelected, history, post }) {
   const y = useMotionValue(0);
   const zIndex = useMotionValue(isSelected ? 2 : 0);
   const postRef = useRef(null);
-  //   const containerRef = useRef(null);
+  const containerRef = useRef(null);
   function checkZIndex(latest) {
     if (isSelected) {
       zIndex.set(2);
@@ -212,10 +208,7 @@ function Post({ isSelected, history, post }) {
     }
   }
   return (
-    <div
-      className="post"
-      //   ref={containerRef}
-    >
+    <div className="post" ref={containerRef}>
       <Overlay isSelected={isSelected} />
       <div className={`post-content-container ${isSelected && 'open'}`}>
         <motion.div
@@ -239,17 +232,16 @@ function Image({ isSelected, id, src }) {
 
   return (
     <motion.div className="post-image-container" style={{ ...inverted, originX: 0.5, originY: 0 }}>
-        <motion.div
-          key={`post-${id}`}
-          className={`post-image ${isSelected && 'open'}`}
-          style={{ backgroundImage: `url(${src})` }}
-          alt=""
-          initial={false}
-          transition={closeSpring}
-          // style={{ borderRadius: '20px' }}
-          animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
-        >
-        </motion.div>
+      <motion.div
+        key={`post-${id}`}
+        className={`post-image ${isSelected && 'open'}`}
+        style={{ backgroundImage: `url(${src})` }}
+        alt=""
+        initial={false}
+        transition={closeSpring}
+        // style={{ borderRadius: '20px' }}
+        animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
+      />
     </motion.div>
   );
 }
@@ -263,7 +255,7 @@ function Overlay({ isSelected }) {
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
-      <Link style={{ border: '1px solid yellow' }} to="/" />
+      <Link to="/" />
     </motion.div>
   );
 }
