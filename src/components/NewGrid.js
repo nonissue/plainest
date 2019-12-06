@@ -19,17 +19,24 @@ const StyledGrid = styled(motion.div)`
   display: grid;
   /* grid-gap: 5px; */
   /* padding: 10px; */
-  grid-template-columns: repeat(auto-fill, minmax(50vw, 1fr));
-  grid-auto-rows: 30vh;
+  grid-template-columns: repeat(auto-fill, minmax(100vw, 1fr));
+  grid-auto-rows: 50vh;
 
   @media (min-width: 768px) {
-    grid-auto-rows: 30vh;
+    grid-template-columns: repeat(auto-fill, minmax(25vw, 1fr));
+    grid-auto-rows: 25vh;
   }
 
   .post {
     position: relative;
     /* padding: 25px; */
-    height: 30vh;
+    width: 100vw;
+    height: 50vh;
+    @media (min-width: 768px) {
+      width: 25vw;
+      height: 25vh;
+    }
+
     /* flex: 0 0 40%; */
     /* max-width: 40%; */
   }
@@ -48,9 +55,13 @@ const StyledGrid = styled(motion.div)`
     /* max-width: 420px; */
     /* height: auto; */
     /* width: auto; */
+
+    width: 100vw;
     height: 50vh;
-    width: 50vw;
-    /* max-width: 50vw; */
+    @media (min-width: 768px) {
+      width: 50vw;
+      height: 50vh;
+    }
     overflow: hidden;
   }
   .post-content-container {
@@ -79,18 +90,33 @@ const StyledGrid = styled(motion.div)`
   }
 
   .post-image {
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
     background-size: cover;
     /* position: relative; */
     /* background-repeat: no-repeat; */
-    height: 30vh;
-    width: 50vw;
+
+    width: 100vw;
+    height: 50vh;
+    @media (min-width: 768px) {
+      width: 25vw;
+      height: 25vh;
+    }
   }
+
   .post-image.open {
     /* margin: 0px auto; */
-    width: 50vw;
-    max-width: 50vw;
+    /* width: 90vw; */
+
+    width: 100vw;
     height: 50vh;
+    @media (min-width: 768px) {
+      width: 50vw;
+      height: 50vh;
+    }
+    /* @media (min-width: 768px) {
+      width: 25vw;
+      height: 25vh;
+    } */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
     /* height: auto; */
     /* max-height: 70vh; */
     /* position: relative; */
@@ -111,14 +137,14 @@ const StyledGrid = styled(motion.div)`
     left: 0;
     overflow: hidden;
     /* height: 420px; */
-    width: 100vw;
+    /* width: 100vw; */
     transform: translateZ(0);
   }
 
   .overlay {
     z-index: 1;
     position: fixed;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.9);
     will-change: opacity;
     top: 0;
     bottom: 0;
@@ -142,19 +168,26 @@ const StyledGrid = styled(motion.div)`
 
   .post-container {
     /* padding: 460px 35px 35px 35px; */
-    max-width: 700px;
-    width: 90vw;
+    /* max-width: 700px; */
+    width: 100vw;
   }
   .caption-container {
     position: fixed;
-    bottom: 0;
+    bottom: 0vh;
+    /* left: 30vh; */
     left: 0;
-    font-size: 0.7rem;
-    padding: 5px 10px;
-    margin: 0 auto;
+    text-align: left;
+    font-size: 0.5rem;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    /* margin: 0 auto; */
     color: #fff;
+    /* width: 100%; */
+    background: #121212;
     width: 100%;
-    background: #333;
+    h2 {
+      /* max-width: 90%; */
+    }
     /* max-width: 300px; */
   }
 `;
