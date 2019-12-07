@@ -21,6 +21,7 @@ import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 // - [ ] looks weird going behind header (zindex)
 // - [ ] remove unused CSS
 // = [ ] do components need to use react memo?
+// - [ ] fix about
 const StyledGrid = styled(motion.div)`
   display: flex;
   flex-wrap: wrap;
@@ -357,7 +358,7 @@ function Overlay({ isSelected }) {
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
-      <Link to="/" />
+      <Link to="/posts" />
     </motion.div>
   );
 }
