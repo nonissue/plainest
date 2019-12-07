@@ -19,6 +19,8 @@ import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 // - [ ] adjust overlay timing, since grid post animation isn't a static time
 //       because it varies based on distance
 // - [ ] looks weird going behind header (zindex)
+// - [ ] remove unused CSS
+// = [ ] do components need to use react memo?
 const StyledGrid = styled(motion.div)`
   display: flex;
   flex-wrap: wrap;
