@@ -5,7 +5,16 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 import { About } from './pages';
-import { Header, Error, Grid, Loading, NewGrid, PostView, SinglePostView } from './components';
+import {
+  Header,
+  Error,
+  Grid,
+  Loading,
+  NewGrid,
+  PostView,
+  SinglePostView,
+  MasonryGrid,
+} from './components';
 import './App.css';
 
 const AppWrapper = styled.div`

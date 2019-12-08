@@ -63,27 +63,34 @@ const StyledGrid = styled.div`
     padding-right: 0;
   }
   .post-content {
-    border-radius: 20px;
     position: relative;
     /* background: #fff; */
-    /* overflow: hidden; */
+    /* display: flex; */
+    /* justify-content: center; */
+    /* flex-wrap: row; */
+    overflow: hidden;
     width: 100%;
     height: 100%;
-
+    border-radius: 20px;
     margin: 0 auto;
   }
   .open .post-content {
-    height: auto;
-    max-width: 95vw;
+    /* height: auto; */
+    max-width: 640px;
     overflow: hidden;
     margin-top: 25px;
+
+    /* justify-content: center; */
+    /* flex-wrap: column; */
   }
   .post-content-container {
     width: 100%;
     height: 100%;
     position: relative;
+
     display: block;
     pointer-events: none;
+    /* object-position: center; */
   }
   .post-content-container.open {
     top: 0;
@@ -102,16 +109,23 @@ const StyledGrid = styled.div`
   }
   .post-image-container {
     position: relative;
+    width: 100%;
     overflow: hidden;
     transform: translateZ(0);
+    /* object-fit: none; */
+    /* object-position: center; */
   }
 
   .post-image-container img {
-    width: auto;
+    display: block;
+    width: 100%;
+    height: 100%;
+    /* height: auto; */
+    /* object-fit: none; */
+    /* object-position: center; */
   }
 
   .post-image {
-    width: auto;
   }
 
   .post-image.open {
@@ -165,6 +179,7 @@ const StyledGrid = styled.div`
     display: none;
     /* width: 100%; */
     opacity: 0;
+    width: 100%;
     p {
       margin: 0;
       padding: 0;
@@ -218,6 +233,7 @@ const closeSpring = { type: 'spring', stiffness: 1000, damping: 200 };
 
 export function NewGrid({ match, history }) {
   const [posts, setPosts] = useState([]);
+  const [postHeight, setPostHeight] = useState(null);
   //   const [loaded, setLoaded] = useState(false);
 
   // cancel request if component unmounts?
@@ -228,11 +244,13 @@ export function NewGrid({ match, history }) {
       const res = await axios('/.netlify/functions/posts-read-latest');
       const fetchedPosts = res.data.data.posts;
       setPosts(fetchedPosts);
+      setPostHeight(Math.min(...fetchedPosts.map(post => post.height)));
+      // console.log(fetchedPosts);
+      // console.log(Math.min(...fetchedPosts.map(post => post.height)));
     };
 
     try {
       fetchData();
-
       // setLoaded(true);
     } catch (err) {
       // eslint-disable-next-line no-console
@@ -241,8 +259,6 @@ export function NewGrid({ match, history }) {
       console.log(err);
       //   setError({ status: err.status, msg: err.message });
     }
-
-    // setLoaded(false);
   }, []);
 
   return (
@@ -250,6 +266,7 @@ export function NewGrid({ match, history }) {
       <div className="grid">
         {/* Animate presence only if grid hasn't loaded yet */}
         {!!posts &&
+          !!postHeight &&
           posts.map(post => (
             <Post
               post={post}
@@ -257,7 +274,7 @@ export function NewGrid({ match, history }) {
               isSelected={match.params.id === post.id}
               history={history}
               width={post.width}
-              height={post.height}
+              minHeight={postHeight}
             />
           ))}
       </div>
@@ -266,7 +283,7 @@ export function NewGrid({ match, history }) {
 }
 
 const Post = memo(
-  ({ isSelected, history, post }) => {
+  ({ isSelected, history, post, minHeight }) => {
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
     // const inverted = useInvertedScale();f
@@ -281,8 +298,9 @@ const Post = memo(
         zIndex.set(0);
       }
     }
+
     return (
-      <div className="post" ref={containerRef}>
+      <div className="post" style={{ maxHeight: minHeight }} ref={containerRef}>
         <Overlay isSelected={isSelected} />
         <div className={`post-content-container ${isSelected && 'open'}`}>
           <motion.div
@@ -312,26 +330,17 @@ const Post = memo(
   (prev, next) => prev.isSelected === next.isSelected,
 );
 
-function Image({ isSelected, id, src }) {
+function Image({ isSelected, id, src, width }) {
   const inverted = useInvertedScale();
 
   return (
     <motion.div
       className="post-image-container"
-      style={{ ...inverted, originX: 0.5, originY: 0 }}
+      style={{ ...inverted, originX: 0, originY: 0 }}
       // layoutTransition={{ closeSpring }}
       // transition={closeSpring}
     >
-      {/* <motion.div
-        key={`post-${id}`}
-        className={`post-image ${isSelected && 'open'}`}
-        style={{ backgroundImage: `url(${src})`, width, backgroundSize: 'cover' }}
-        alt=""
-        initial={false}
-        transition={closeSpring}
-        animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
-      /> */}
-      <motion.div
+      <motion.img
         key={`post-${id}`}
         className={`post-image ${isSelected && 'open'}`}
         src={src}
@@ -342,9 +351,8 @@ function Image({ isSelected, id, src }) {
         transition={closeSpring}
         animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
         style={{
-          background: `url(${src})`,
-          height: isSelected ? '70vh' : '400px',
-          backgroundSize: 'contain',
+          objectFit: 'contain',
+          display: 'block',
         }}
       />
     </motion.div>
@@ -406,17 +414,6 @@ const ContentPlaceholder = React.memo(() => {
 });
 
 NewGrid.propTypes = {
-  //   posts: PropTypes.arrayOf(
-  //     PropTypes.shape({
-  //       id: PropTypes.string.isRequired,
-  //       caption: PropTypes.string.isRequired,
-  //       link: PropTypes.string.isRequired,
-  //       images: PropTypes.object.isRequired,
-  //       width: PropTypes.number.isRequired,
-  //       height: PropTypes.number.isRequired,
-  //       src: PropTypes.string.isRequired,
-  //     }),
-  //   ).isRequired,
   match: ReactRouterPropTypes.match.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
 };
