@@ -39,7 +39,6 @@ const StyledGrid = styled.div`
     position: relative;
     padding: 25px;
     box-sizing: border-box;
-    height: 460px;
     flex: 0 0 40%;
     max-width: 40%;
   }
@@ -65,18 +64,19 @@ const StyledGrid = styled.div`
   }
   .post-content {
     border-radius: 20px;
-    pointer-events: auto;
     position: relative;
     /* background: #fff; */
-    overflow: hidden;
+    /* overflow: hidden; */
     width: 100%;
     height: 100%;
+
     margin: 0 auto;
   }
   .open .post-content {
     height: auto;
     max-width: 95vw;
     overflow: hidden;
+    margin-top: 25px;
   }
   .post-content-container {
     width: 100%;
@@ -86,8 +86,6 @@ const StyledGrid = styled.div`
     pointer-events: none;
   }
   .post-content-container.open {
-    /* top: 15vh; */
-    /* top: 10vh; */
     top: 0;
     left: 0;
     right: 0;
@@ -106,6 +104,10 @@ const StyledGrid = styled.div`
     position: relative;
     overflow: hidden;
     transform: translateZ(0);
+  }
+
+  .post-image-container img {
+    width: auto;
   }
 
   .post-image {
@@ -147,7 +149,7 @@ const StyledGrid = styled.div`
 
   .caption-container {
     position: relative;
-    margin-top: -4px; /* no idea why this is necessary */
+    margin-top: -8px; /* no idea why this is necessary */
     /* bottom: 0vh; */
     /* left: 30vh; */
     /* left: 0; */
@@ -160,6 +162,7 @@ const StyledGrid = styled.div`
     color: #121212;
     /* width: 100%; */
     background: #fff;
+    display: none;
     /* width: 100%; */
     opacity: 0;
     p {
@@ -168,6 +171,10 @@ const StyledGrid = styled.div`
       /* max-width: 90%; */
     }
     /* max-width: 300px; */
+  }
+
+  .caption-container .open {
+    display: block;
   }
 
   @media only screen and (max-width: 1200px) {
@@ -190,7 +197,7 @@ const StyledGrid = styled.div`
       max-width: 100%;
       padding-left: 0;
       padding-right: 0;
-      padding-bottom: 15px;
+      /* padding-bottom: 25px; */
     }
 
     .post:nth-child(4n + 1),
@@ -324,7 +331,7 @@ function Image({ isSelected, id, src }) {
         transition={closeSpring}
         animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
       /> */}
-      <motion.img
+      <motion.div
         key={`post-${id}`}
         className={`post-image ${isSelected && 'open'}`}
         src={src}
@@ -334,6 +341,11 @@ function Image({ isSelected, id, src }) {
         initial={false}
         transition={closeSpring}
         animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
+        style={{
+          background: `url(${src})`,
+          height: isSelected ? '70vh' : '400px',
+          backgroundSize: 'contain',
+        }}
       />
     </motion.div>
   );
@@ -347,12 +359,13 @@ function Caption({ isSelected, id, caption }) {
   const x = isSelected ? 0 : 0;
   const opacity = isSelected ? 1 : 0;
   const y = isSelected ? 0 : -20;
+  const display = isSelected ? 'block' : 'none';
 
   return (
     <motion.div
-      className="caption-container"
+      className={`caption-container ${isSelected && 'open'}`}
       // initial={true}
-      animate={{ x, y, opacity }}
+      animate={{ x, y, opacity, display }}
       // transition={isSelected ? openSpring : closeSpring}
       transition={{ type: 'tween', delay: 0 }}
       transformTemplate={scaleTranslate}
