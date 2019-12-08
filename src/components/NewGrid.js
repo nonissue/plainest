@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { memo, useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -23,7 +23,7 @@ import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 // = [ ] do components need to use react memo?
 // - [ ] fix about
 // - [ ] if we visit grid item directly, it fucks up zIndex aft
-const StyledGrid = styled(motion.div)`
+const StyledGrid = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
@@ -47,8 +47,8 @@ const StyledGrid = styled(motion.div)`
   .open .post-content {
     height: auto;
     /* if height isn't auto, can't click anywhere outside to return to grid */
-    max-height: 70vh;
-    max-width: 500px;
+    max-height: 80vh;
+    max-width: 450px;
     overflow: hidden;
   }
   .post-content-container {
@@ -136,7 +136,7 @@ const StyledGrid = styled(motion.div)`
   .overlay {
     z-index: 1;
     position: fixed;
-    background: rgba(255, 255, 255, 0.95);
+    /* background: rgba(255, 255, 255, 0.95); */
     background: rgba(0, 0, 0, 0.8);
     will-change: opacity;
     top: 0;
@@ -217,8 +217,8 @@ const StyledGrid = styled(motion.div)`
   }
 `;
 
-const openSpring = { type: 'spring', stiffness: 500, damping: 100 };
-const closeSpring = { type: 'spring', stiffness: 1000, damping: 100 };
+const openSpring = { type: 'spring', stiffness: 500, damping: 200 };
+const closeSpring = { type: 'spring', stiffness: 1000, damping: 200 };
 // const closeTween = { type: 'tween', duration: 0.5 };
 
 export function NewGrid({ match, history }) {
@@ -251,7 +251,7 @@ export function NewGrid({ match, history }) {
   }, []);
 
   return (
-    <StyledGrid animate={{ opacity: 1 }} style={{ opacity: 0 }} transition={{ duration: 0 }}>
+    <StyledGrid>
       {/* Animate presence only if grid hasn't loaded yet */}
       {!!posts &&
         posts.map(post => (
@@ -268,51 +268,54 @@ export function NewGrid({ match, history }) {
   );
 }
 
-const Post = React.memo(function PostComp({ isSelected, history, post }) {
-  const y = useMotionValue(0);
-  const zIndex = useMotionValue(isSelected ? 2 : 0);
-  console.log('isSelected');
-  console.log(zIndex);
-  const postRef = useRef(null);
-  const containerRef = useRef(null);
-  function checkZIndex(latest) {
-    console.log('onUpdate fired');
-    if (isSelected) {
-      zIndex.set(2);
-    } else if (!isSelected && latest.scaleX < 1.01) {
-      zIndex.set(0);
+const Post = memo(
+  ({ isSelected, history, post }) => {
+    const y = useMotionValue(0);
+    const zIndex = useMotionValue(isSelected ? 2 : 0);
+    // const inverted = useInvertedScale();f
+
+    const postRef = useRef(null);
+    const containerRef = useRef(null);
+    function checkZIndex(latest) {
+      console.log('onUpdate fired');
+      if (isSelected) {
+        zIndex.set(2);
+      } else if (!isSelected) {
+        zIndex.set(0);
+      }
     }
-  }
-  return (
-    <div className="post" ref={containerRef}>
-      <Overlay isSelected={isSelected} />
-      <div className={`post-content-container ${isSelected && 'open'}`}>
-        <motion.div
-          // without layout transition, zIndex doesn't update
-          layoutTransition={isSelected ? closeSpring : openSpring}
-          style={{ zIndex }}
-          ref={postRef}
-          className="post-content"
-          onUpdate={checkZIndex}
-        >
-          <Image
-            id={post.id}
-            isSelected={isSelected}
-            src={post.src}
-            width={post.width}
-            height={post.height}
-          />
-          <Caption caption={post.caption} isSelected={isSelected} id={post.id} />
-        </motion.div>
+    return (
+      <div className="post" ref={containerRef}>
+        <Overlay isSelected={isSelected} />
+        <div className={`post-content-container ${isSelected && 'open'}`}>
+          <motion.div
+            // without layout transition, zIndex doesn't update
+            layoutTransition={isSelected ? closeSpring : openSpring}
+            style={{ y, zIndex }}
+            ref={postRef}
+            className="post-content"
+            onUpdate={checkZIndex}
+          >
+            <Image
+              id={post.id}
+              isSelected={isSelected}
+              src={post.src}
+              width={post.width}
+              height={post.height}
+            />
+            <Caption caption={post.caption} isSelected={isSelected} id={post.id} />
+          </motion.div>
+        </div>
+
+        {/* <ContentPlaceholder /> */}
+        {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
       </div>
+    );
+  },
+  (prev, next) => prev.isSelected === next.isSelected,
+);
 
-      <ContentPlaceholder />
-      {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
-    </div>
-  );
-});
-
-function Image({ isSelected, id, src, width, height }) {
+function Image({ isSelected, id, src }) {
   const inverted = useInvertedScale();
 
   return (
@@ -353,7 +356,7 @@ function Caption({ isSelected, id, caption }) {
   const inverted = useInvertedScale();
   const x = isSelected ? 0 : 0;
   const opacity = isSelected ? 1 : 0;
-  const y = isSelected ? 0 : -200;
+  const y = isSelected ? 0 : 0;
 
   return (
     <motion.div
@@ -387,7 +390,7 @@ function Overlay({ isSelected }) {
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
-      <Link to="/posts" />
+      <Link to="/" />
     </motion.div>
   );
 }

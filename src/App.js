@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -127,10 +127,10 @@ function App() {
         if we do, all route children components have to be wrapped in motion.div */}
         {/* <AnimatePresence exitBeforeEnter initial={false}> */}
         <Switch>
-          <Route exact path="/">
+          {/* <Route exact path="/">
             <Redirect to="/posts" />
-          </Route>
-          <Route path={['/posts/:id', '/posts']} component={NewGrid} />
+          </Route> */}
+          <Route path={['/posts/:id', '/']} component={NewGrid} />
           {/* <motion.div
                 key="grid"
                 animate="enter"
