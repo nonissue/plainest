@@ -24,18 +24,47 @@ import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 // - [ ] fix about
 // - [ ] if we visit grid item directly, it fucks up zIndex aft
 const StyledGrid = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
+  max-width: 990px;
+  flex: 1 1 100%;
+  padding: 25px 25px;
+  margin: 0 auto;
+
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+  }
 
   .post {
     position: relative;
-    /* padding: 25px; */
-    height: 400px;
-    flex: 0 0 25%;
-    max-width: 25%;
+    padding: 25px;
+    box-sizing: border-box;
+    height: 460px;
+    flex: 0 0 40%;
+    max-width: 40%;
+  }
+
+  .post:nth-child(4n + 1),
+  .post:nth-child(4n + 4) {
+    flex: 0 0 60%;
+    max-width: 60%;
+  }
+
+  .post:nth-child(4n + 1),
+  .post:nth-child(4n + 4) {
+    flex: 0 0 60%;
+    max-width: 60%;
+  }
+
+  .post:nth-child(odd) {
+    padding-left: 0;
+  }
+
+  .post:nth-child(even) {
+    padding-right: 0;
   }
   .post-content {
+    border-radius: 20px;
     pointer-events: auto;
     position: relative;
     /* background: #fff; */
@@ -46,9 +75,7 @@ const StyledGrid = styled.div`
   }
   .open .post-content {
     height: auto;
-    /* if height isn't auto, can't click anywhere outside to return to grid */
-    max-height: 80vh;
-    max-width: 450px;
+    max-width: 95vw;
     overflow: hidden;
   }
   .post-content-container {
@@ -60,7 +87,8 @@ const StyledGrid = styled.div`
   }
   .post-content-container.open {
     /* top: 15vh; */
-    top: 0vh;
+    /* top: 10vh; */
+    top: 0;
     left: 0;
     right: 0;
     position: fixed;
@@ -76,61 +104,16 @@ const StyledGrid = styled.div`
   }
   .post-image-container {
     position: relative;
-    top: 0;
-    left: 0;
     overflow: hidden;
-    /* height: 420px;
-    width: 100vw; */
     transform: translateZ(0);
   }
 
   .post-image {
     width: auto;
-
-    /* background-size: cover;
-    background-repeat: no-repeat; */
-    /* object-fit: cover; */
-    /* width: auto;
-    height: auto;
-    max-height: 70vh;
-    overflow: hidden; */
-    /* position: relative; */
-    /* background-repeat: no-repeat; */
-
-    /* width: 100vw;
-    height: 50vh;
-    @media (min-width: 768px) {
-      width: 25vw;
-      height: 25vh;
-    } */
   }
 
   .post-image.open {
     width: 100%;
-    /* box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.01); */
-
-    /* margin: 0px auto; */
-    /* width: 90vw; */
-
-    /* width: 100vw;
-    height: 50vh;
-    @media (min-width: 768px) {
-      width: 50vw;
-      height: 50vh;
-    } */
-    /* @media (min-width: 768px) {
-      width: 25vw;
-      height: 25vh;
-    } */
-    /* box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.1); */
-    /* height: auto; */
-    /* max-height: 70vh; */
-    /* position: relative; */
-    /* background-size: cover; */
-    /* background-repeat: no-repeat; */
-    /* height: 600px; */
-    /* background: #ff0000; */
-    /* width: auto; */
   }
 
   .overlay {
@@ -164,12 +147,13 @@ const StyledGrid = styled.div`
 
   .caption-container {
     position: relative;
-    bottom: 0vh;
+    margin-top: -4px; /* no idea why this is necessary */
+    /* bottom: 0vh; */
     /* left: 30vh; */
-    left: 0;
-    z-index: 0;
+    /* left: 0; */
+    /* z-index: 0; */
     text-align: left;
-    font-size: 0.5rem;
+    /* font-size: 0.5rem; */
     padding: 10px 20px;
     box-sizing: border-box;
     /* margin: 0 auto; */
@@ -178,7 +162,9 @@ const StyledGrid = styled.div`
     background: #fff;
     /* width: 100%; */
     opacity: 0;
-    h2 {
+    p {
+      margin: 0;
+      padding: 0;
       /* max-width: 90%; */
     }
     /* max-width: 300px; */
@@ -197,12 +183,14 @@ const StyledGrid = styled.div`
     }
   }
 
-  @media only screen and (max-width: 800px) {
+  @media only screen and (max-width: 600px) {
+    padding: 0 25px;
     .post {
       flex: 1 0 100%;
       max-width: 100%;
       padding-left: 0;
       padding-right: 0;
+      padding-bottom: 15px;
     }
 
     .post:nth-child(4n + 1),
@@ -252,18 +240,20 @@ export function NewGrid({ match, history }) {
 
   return (
     <StyledGrid>
-      {/* Animate presence only if grid hasn't loaded yet */}
-      {!!posts &&
-        posts.map(post => (
-          <Post
-            post={post}
-            key={post.id}
-            isSelected={match.params.id === post.id}
-            history={history}
-            width={post.width}
-            height={post.height}
-          />
-        ))}
+      <div className="grid">
+        {/* Animate presence only if grid hasn't loaded yet */}
+        {!!posts &&
+          posts.map(post => (
+            <Post
+              post={post}
+              key={post.id}
+              isSelected={match.params.id === post.id}
+              history={history}
+              width={post.width}
+              height={post.height}
+            />
+          ))}
+      </div>
     </StyledGrid>
   );
 }
@@ -321,7 +311,7 @@ function Image({ isSelected, id, src }) {
   return (
     <motion.div
       className="post-image-container"
-      style={{ ...inverted, originX: 0.5, originY: 0.5 }}
+      style={{ ...inverted, originX: 0.5, originY: 0 }}
       // layoutTransition={{ closeSpring }}
       // transition={closeSpring}
     >
@@ -356,7 +346,7 @@ function Caption({ isSelected, id, caption }) {
   const inverted = useInvertedScale();
   const x = isSelected ? 0 : 0;
   const opacity = isSelected ? 1 : 0;
-  const y = isSelected ? 0 : 0;
+  const y = isSelected ? 0 : -20;
 
   return (
     <motion.div
@@ -364,19 +354,16 @@ function Caption({ isSelected, id, caption }) {
       // initial={true}
       animate={{ x, y, opacity }}
       // transition={isSelected ? openSpring : closeSpring}
-      transition={{ type: 'tween' }}
+      transition={{ type: 'tween', delay: 0 }}
       transformTemplate={scaleTranslate}
       style={{
         ...inverted,
-        originX: 0,
-        originY: 0,
+        originX: 0.5,
+        originY: 0.5,
         zIndex: `${isSelected ? 1 : 1}`,
-        // background: `${isSelected ? '#121212' : 'transparent'}`,
-        // visibility: `${isSelected ? 'visible' : 'hidden'}`,
       }}
     >
-      {/* <span className="category">{caption}</span> */}
-      <h2>{caption}</h2>
+      <p>{caption}</p>
     </motion.div>
   );
 }
@@ -390,7 +377,7 @@ function Overlay({ isSelected }) {
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
-      <Link to="/" />
+      <Link to="/posts" />
     </motion.div>
   );
 }

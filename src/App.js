@@ -127,10 +127,10 @@ function App() {
         if we do, all route children components have to be wrapped in motion.div */}
         {/* <AnimatePresence exitBeforeEnter initial={false}> */}
         <Switch>
-          {/* <Route exact path="/">
+          <Route exact path="/">
             <Redirect to="/posts" />
-          </Route> */}
-          <Route path={['/posts/:id', '/']} component={NewGrid} />
+          </Route>
+          <Route path={['/posts/:id', '/posts']} component={NewGrid} />
           {/* <motion.div
                 key="grid"
                 animate="enter"
