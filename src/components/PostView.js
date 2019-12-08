@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { LeftCircle, RightCircle, Home } from '@ant-design/icons';
+import {
+  AiOutlineLeftCircle as LeftCircle,
+  AiOutlineRightCircle as RightCircle,
+} from 'react-icons/ai';
 
 import { PostItem } from './PostItem';
 
@@ -137,7 +140,8 @@ export function PostView({ posts }) {
         )}
         <div className="control">
           <Link to="/">
-            <Home />
+            Home
+            {/* <Home /> */}
           </Link>
         </div>
         {next && (

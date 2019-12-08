@@ -2,14 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
-import { Left, Question } from '@ant-design/icons';
+// import { OutlineLeftCircle, Question } from '@ant-design/icons';
+import { AiOutlineLeft as Back, AiOutlineQuestionCircle as Question } from 'react-icons/ai';
 import { Logo } from './Logo';
 
 const StyledHeader = styled.header`
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); */
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 1;
   background: hsla(0, 0%, 100%, 0.95);
 
   -webkit-backdrop-filter: blur(20px);
@@ -57,7 +58,7 @@ export function Header() {
   const location = useLocation();
   return (
     <StyledHeader>
-      {!(location.pathname === '/') ? (
+      {!(location.pathname === '/posts') ? (
         <motion.div
           key="back"
           initial={{ opacity: 0 }}
@@ -65,14 +66,14 @@ export function Header() {
           exit={{ opacity: 1, scale: 1, transition: { duration: 1 } }}
           className="control"
         >
-          <Link to="/">
-            <Left />
+          <Link to="/posts">
+            <Back />
           </Link>
           {/* </button> */}
         </motion.div>
       ) : (
         <div className="control hidden">
-          <Left />
+          <Back />
         </div>
       )}
 

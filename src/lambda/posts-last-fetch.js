@@ -16,7 +16,7 @@ exports.handler = (event, context) => {
   const id = getId(event.path);
   console.log(`Function 'posts-last-fetch' invoked. Read id: ${id}`);
   return client
-    .query(q.Paginate(q.Match(q.Index('posts_fetchdate_latest')), { size: 1 }))
+    .query(q.Paginate(q.Match(q.Index('posts-fetch-date')), { size: 1 }))
     .then(response => {
       console.log('success', response);
       return {

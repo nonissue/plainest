@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { Switch, Route } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -10,9 +10,10 @@ import {
   Error,
   Grid,
   Loading,
-  // PostItem,
+  NewGrid,
   PostView,
   SinglePostView,
+  MasonryGrid,
 } from './components';
 import './App.css';
 
@@ -114,7 +115,7 @@ function App() {
     };
 
     try {
-      fetchData();
+      // fetchData();
       // setLoaded(true);
     } catch (err) {
       // eslint-disable-next-line no-console
@@ -133,38 +134,39 @@ function App() {
       <div>
         {/* if we don't use exitBeforeEnter, post -> grid gridTransition sucks
         if we do, all route children components have to be wrapped in motion.div */}
-        <AnimatePresence exitBeforeEnter initial={false}>
-          <Switch>
-            <Route exact path="/">
-              <motion.div
-                // initial={false}
+        {/* <AnimatePresence exitBeforeEnter initial={false}> */}
+        <Switch>
+          <Route exact path="/">
+            <Redirect to="/posts" />
+          </Route>
+          <Route path={['/posts/:id', '/posts']} component={NewGrid} />
+          {/* <motion.div
                 key="grid"
                 animate="enter"
                 enter="enter"
                 exit="exit"
                 variants={gridTransition}
               >
-                {/* if Grid is rendered before posts are available, children dont get staggered */}
+                
                 {!posts ? (
                   <Loading />
                 ) : (
                   <Grid posts={posts} setLoaded={setLoaded} loaded={loaded} />
                 )}
-              </motion.div>
-            </Route>
-            <Route path="/images/:id">
-              <motion.div
-                key="postView"
-                initial="exit"
-                animate="enter"
-                enter="enter"
-                exit="exit"
-                variants={postTransition}
-              >
-                {!posts ? <Loading /> : <PostView posts={posts} />}
-              </motion.div>
-            </Route>
-            <Route
+              </motion.div> */}
+          <Route path="/images/:id">
+            <motion.div
+              key="postView"
+              initial="exit"
+              animate="enter"
+              enter="enter"
+              exit="exit"
+              variants={postTransition}
+            >
+              {!posts ? <Loading /> : <PostView posts={posts} />}
+            </motion.div>
+          </Route>
+          {/* <Route
               path="/posts/:id"
               // Rendering gives us access to match & history in
               // child component
@@ -183,19 +185,19 @@ function App() {
                   </motion.div>
                 ))
               }
-            />
-            <Route path="/about">
-              <About />
-            </Route>
+            /> */}
+          <Route path="/about">
+            <About />
+          </Route>
 
-            <Route path="/error/:id">
-              <Error error={error} />
-            </Route>
-            <Route path="*">
-              <Error error={{ status: '404', msg: 'Page not found!' }} />
-            </Route>
-          </Switch>
-        </AnimatePresence>
+          <Route path="/error/:id">
+            <Error error={error} />
+          </Route>
+          <Route path="*">
+            <Error error={{ status: '404', msg: 'Page not found!' }} />
+          </Route>
+        </Switch>
+        {/* </AnimatePresence> */}
       </div>
       <div className="footer">Copyright 2019 © plainsite</div>
     </AppWrapper>

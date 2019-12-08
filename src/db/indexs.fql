@@ -10,10 +10,12 @@ CreateIndex({
 })
 
 CreateIndex({
-  name: "posts-latest4",
+  name: "posts-fetch-date",
   source: Collection("posts"),
-  values: 
-    { field: 'posts', reverse: true }
+  values: [
+    { field: ["data", "fetchDate"], reverse: true },
+    { field: ["ref"] }
+  ]
 })
 
 Paginate(Match(Index("posts-latest")))
