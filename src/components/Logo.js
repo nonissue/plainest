@@ -20,7 +20,7 @@ const LogoWrapper = styled.div`
     font-size: 1.2em;
     margin: 0;
     text-transform: uppercase;
-    font-family: 'Nunito', sans-serif;
+    /* font-family: 'Nunito', sans-serif; */
     font-family: 'Bebas Neue', 'Helvetica', sans-serif;
     font-weight: 400;
     color: #121212;
@@ -36,14 +36,11 @@ const LogoWrapper = styled.div`
     font-size: 0.6em;
     margin-left: 0.1em;
     border-bottom: 0.5px solid #ccc;
-    /* text-decoration: underline; */
   }
 
   h3::before {
     content: '@';
     font-family: 'Lekton', sans-serif;
-    /* color: #a0aec0;
-    color: #697077; */
     border-bottom: 1px solid #fff;
     color: #838b94;
     text-decoration: none;

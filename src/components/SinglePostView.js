@@ -1,12 +1,10 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { useParams, Link } from 'react-router-dom';
+// import { useParams, Link, Redirect } from 'react-router-dom';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  AiOutlineLeftCircle as LeftCircle,
-  AiOutlineRightCircle as RightCircle,
-} from 'react-icons/ai';
 
 import { PostItem } from './PostItem';
 
@@ -15,10 +13,11 @@ import { PostItem } from './PostItem';
 // TODO: or just copy how instagram do it...
 // Modal + space-between
 // TODO: change this to modal
-const StyledPostView = styled(motion.div)`
+const StyledSinglePostView = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   @media (min-width: 768px) {
     margin-top: 3em;
   }
@@ -62,8 +61,13 @@ const StyledPostView = styled(motion.div)`
     }
 
     a:hover {
+      /* opacity: 1; */
+      /* color: #333; */
+      /* background: #eee; */
+
       opacity: 1;
       color: #333;
+      /* background: #eee; */
     }
   }
 `;
@@ -72,15 +76,9 @@ const StyledPostView = styled(motion.div)`
 const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] };
 
 // Animations
-// no idea what this animates anymore
-// enter animation at least is handled in App.js
-// ("postTransition")
-// UPDATE: scratch that, animation timings are different for
-// navigating to page vs forced reload?
 const variants = {
   enter: {
     opacity: 0,
-    transition: { duration: 10 },
   },
   hidden: {
     opacity: 0,
@@ -90,74 +88,53 @@ const variants = {
     transition: {
       ...transition,
       delay: 0,
-      duration: 10,
+      duration: 1,
     },
   },
   exit: {
     opacity: 0,
     transition: {
       ...transition,
-      duration: 3,
+      duration: 1,
     },
   },
 };
 
-export function PostView({ posts }) {
-  const { id } = useParams();
-  const post = posts.find(p => p.id === id);
-  const postIndex = posts.findIndex(p => p.id === id);
+const postTransition = {
+  enter: {
+    opacity: 1,
+    transition: { duration: 1 },
+  },
+  exit: {
+    opacity: 0,
+    transition: { duration: 0.3 },
+  },
+};
 
-  let next = null;
-  let prev = null;
-
-  if (posts[postIndex + 1] !== null) {
-    next = posts[postIndex + 1];
-  }
-
-  if (posts[postIndex - 1] !== null) {
-    prev = posts[postIndex - 1];
-  }
-
+export function SinglePostView({ posts, match, history }) {
   return (
-    <StyledPostView
-      variants={variants}
-      initial="hidden"
-      animate="center"
+    <StyledSinglePostView
+      key="singlePost"
+      variants={postTransition}
+      initial="exit"
+      animate="enter"
+      enter="enter"
       exit="exit"
       className="post-item"
     >
-      <div className="controls">
-        {prev ? (
-          <div className="control">
-            <Link to={`/images/${prev.id}`}>
-              <LeftCircle />
-            </Link>
-          </div>
-        ) : (
-          <div className="control hidden">
-            <LeftCircle />
-          </div>
-        )}
-        <div className="control">
-          <Link to="/">
-            Home
-            {/* <Home /> */}
-          </Link>
-        </div>
-        {next && (
-          <div className="control">
-            <Link to={`/images/${next.id}`}>
-              <RightCircle />
-            </Link>
-          </div>
-        )}
-      </div>
-      {post && <PostItem post={post} />}
-    </StyledPostView>
+      {posts.map(post => (
+        <PostItem
+          key={post.id}
+          isSelected={match.params.id === post.id}
+          history={history}
+          post={post}
+        />
+      ))}
+    </StyledSinglePostView>
   );
 }
 
-PostView.propTypes = {
+SinglePostView.propTypes = {
   posts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -166,6 +143,8 @@ PostView.propTypes = {
       images: PropTypes.object.isRequired,
     }),
   ).isRequired,
+  match: ReactRouterPropTypes.match.isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
 };
 
-export default PostView;
+export default SinglePostView;

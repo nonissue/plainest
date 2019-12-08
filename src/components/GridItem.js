@@ -1,11 +1,21 @@
+/* eslint-disable jsx-a11y/interactive-supports-focus */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const GridItemWrapper = styled.div`
   overflow: hidden;
+  z-index: 1;
+
+  .grid-image {
+    background-size: cover;
+    height: 50vh;
+    @media (min-width: 768px) {
+      height: 40vh;
+    }
+  }
 `;
 
 const transition = {
@@ -14,7 +24,7 @@ const transition = {
 };
 
 const imageVariants = {
-  hover: { scale: 1.2 },
+  hover: { scale: 1.1 },
   transition,
 };
 
@@ -29,24 +39,24 @@ const item = {
   },
   visible: {
     opacity: 1,
+    zIndex: 0,
     transition: {
-      duration: 1.5,
+      duration: 0.3,
     },
   },
   hidden: {
     opacity: 0,
     transition: {
       when: 'beforeChildren',
-      staggerChildren: 0.5,
+      staggerChildren: 0.2,
     },
   },
   exit: {
     transition: {
-      // when: 'afterChildren',
-      duration: 1,
+      when: 'afterChildren',
+      duration: 0,
     },
     opacity: 0,
-    scale: 0.5,
   },
 };
 
@@ -57,18 +67,21 @@ export function GridItem({ post }) {
     <GridItemWrapper>
       <motion.div initial="hidden" enter="enter" exit="hidden" variants={item}>
         {post.images && (
-          <motion.div whileHover="hover" variants={frameVariants} key={post.id}>
-            <Link to={`/images/${post.id}`}>
-              <motion.img
+          <Link to={`/posts/${post.id}`}>
+            <motion.div whileHover="hover" variants={frameVariants} key={post.id}>
+              <motion.div
                 whileHover="hover"
                 variants={imageVariants}
                 alt={post.caption}
                 key={post.id}
-                src={post.src}
+                className="grid-image"
+                style={{
+                  backgroundImage: `url(${post.src})`,
+                }}
                 transition={{ type: 'tween', stiffness: 20 }}
               />
-            </Link>
-          </motion.div>
+            </motion.div>
+          </Link>
         )}
       </motion.div>
     </GridItemWrapper>
@@ -81,6 +94,8 @@ GridItem.propTypes = {
     caption: PropTypes.string.isRequired,
     link: PropTypes.string.isRequired,
     images: PropTypes.object.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
     src: PropTypes.string.isRequired,
   }).isRequired,
 };

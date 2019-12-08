@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
+// import { LeftCircle, RightCircle, Home } from '@ant-design/icons';
 
-const StyledPostItem = styled.div`
+const StyledPostItem = styled(motion.div)`
   font-family: 'Work Sans', 'Arial', sans-serif;
   width: 100%;
   img {
@@ -20,14 +23,19 @@ const StyledPostItem = styled.div`
   }
 `;
 
-export function PostItem({ post }) {
+export function PostItem({ post, isSelected }) {
   return (
-    <StyledPostItem>
-      <a href={post.link}>
-        <img src={post.src} alt={post.caption} width={post.width} height={post.height} />
-      </a>
-      <p>{post.caption}</p>
-    </StyledPostItem>
+    post &&
+    isSelected && (
+      <StyledPostItem>
+        <>
+          <a href={post.link}>
+            <img src={post.src} alt={post.caption} width={post.width} height={post.height} />
+          </a>
+          <p>{post.caption}</p>
+        </>
+      </StyledPostItem>
+    )
   );
 }
 
@@ -41,6 +49,11 @@ PostItem.propTypes = {
     height: PropTypes.number.isRequired,
     src: PropTypes.string.isRequired,
   }).isRequired,
+  isSelected: PropTypes.bool,
+};
+
+PostItem.defaultProps = {
+  isSelected: false,
 };
 
 export default PostItem;

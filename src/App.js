@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { Switch, Route, useLocation, Link } from 'react-router-dom';
-
+import { motion } from 'framer-motion';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
-import { AnimatePresence, motion } from 'framer-motion';
+import styled from 'styled-components';
+
 import { About } from './pages';
-import { Loading, PostView, AppHeader, Grid } from './components';
+import {
+  Header,
+  Error,
+  Grid,
+  Loading,
+  NewGrid,
+  PostView,
+  SinglePostView,
+  MasonryGrid,
+} from './components';
 import './App.css';
 
 const AppWrapper = styled.div`
   text-align: center;
   color: #121212;
-  font-family: 'Work Sans', sans-serif;
-
-  /* h3::before {
-    content: '@';
-    font-family: 'Lekton', sans-serif;
-    color: #a0aec0;
-    color: #697077;
-    color: #838b94;
-    font-weight: 600;
-    margin-right: 0.1em;
-  } */
+  font-family: 'Work Sans', 'Helvetica', 'Arial', sans-serif;
 
   i {
     color: #e2e8f0;
@@ -37,13 +36,13 @@ const AppWrapper = styled.div`
     letter-spacing: 0.15em;
     font-size: 0.45em;
     border-radius: 0.25em;
-    font-family: 'Oswald', sans-serif;
+    /* font-family: 'Oswald', sans-serif; */
   }
 
   .footer {
-    /* position: fixed; */
-    opacity: 0.7;
-    z-index: -50;
+    /* z-index: -50; */
+    opacity: 0;
+    padding: 5px 0 5px 0;
     display: flex;
     justify-content: center;
     bottom: 1em;
@@ -51,6 +50,18 @@ const AppWrapper = styled.div`
     font-size: 0.7em;
     font-family: 'Lekton', monospace;
     text-transform: uppercase;
+    animation: fadein 1s;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 `;
 
@@ -62,42 +73,37 @@ const gridTransition = {
   },
   exit: {
     opacity: 0,
-    y: 0,
     // scale: 0.5,
-    transition: { duration: 0.2 },
+    transition: { duration: 5 },
   },
 };
 
 const postTransition = {
   enter: {
     opacity: 1,
-    transition: { duration: 0.5 },
+    transition: { duration: 1 },
   },
   exit: {
     opacity: 0,
-    transition: { duration: 0.5 },
+    transition: { duration: 0.3 },
   },
 };
 
-// so if a route isn't wrapped
-function Error({ error }) {
-  return (
-    <motion.div initial={false} animate="enter" enter="enter" exit="exit" variants={gridTransition}>
-      <h2>Error: {error.status}</h2>
-      <p>{error.msg}</p>
-      <Link to="/">Home!</Link>
-    </motion.div>
-  );
+// eslint-disable-next-line no-unused-vars
+function getPostByID(posts, id) {
+  return posts.find(p => p.id === id);
+}
+
+// eslint-disable-next-line no-unused-vars
+function getPostIndex(posts, id) {
+  return posts.findIndex(p => p.id === id);
 }
 
 // home page
 function App() {
   const [posts, setPosts] = useState(null);
-  // eslint-disable-next-line no-unused-vars
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState({ status: null, msg: null });
-  const location = useLocation();
-
   // cancel request if component unmounts?
   // https://www.leighhalliday.com/use-effect-hook
   useEffect(() => {
@@ -109,60 +115,89 @@ function App() {
     };
 
     try {
-      fetchData();
-      setLoaded(true);
-      // setError({ status: '200', msg: 'loaded successfully' });
+      // fetchData();
+      // setLoaded(true);
     } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log('Error occurred: ');
+      // eslint-disable-next-line no-console
       console.log(err);
       setError({ status: err.status, msg: err.message });
-      // setLoaded(false);
     }
 
-    setLoaded(false);
+    // setLoaded(false);
   }, []);
 
   return (
     <AppWrapper>
-      <AppHeader />
+      <Header />
       <div>
         {/* if we don't use exitBeforeEnter, post -> grid gridTransition sucks
         if we do, all route children components have to be wrapped in motion.div */}
-        <AnimatePresence exitBeforeEnter>
-          <Switch location={location} key={location.pathname}>
-            <Route exact path="/">
-              <motion.div
-                initial={false}
+        {/* <AnimatePresence exitBeforeEnter initial={false}> */}
+        <Switch>
+          <Route exact path="/">
+            <Redirect to="/posts" />
+          </Route>
+          <Route path={['/posts/:id', '/posts']} component={NewGrid} />
+          {/* <motion.div
+                key="grid"
                 animate="enter"
                 enter="enter"
                 exit="exit"
                 variants={gridTransition}
               >
-                {/* if Grid is rendered before posts are available, children dont get staggered */}
-                {!posts ? <Loading /> : <Grid posts={posts} />}
-              </motion.div>
-            </Route>
-            <Route path="/images/:id">
-              <motion.div
-                initial={false}
-                animate="enter"
-                enter="enter"
-                exit="exit"
-                variants={postTransition}
-              >
-                {!posts ? <Loading /> : <PostView posts={posts} />}
-              </motion.div>
-            </Route>
-            <Route exact path="/about">
-              <About />
-            </Route>
-            <Route exact path="/error">
-              <Error error={error} />
-            </Route>
-            <Route path="*">
-              <Error error={{ status: 404, msg: 'Page not found!' }} />
-            </Route>
-          </Switch>
-        </AnimatePresence>
+                
+                {!posts ? (
+                  <Loading />
+                ) : (
+                  <Grid posts={posts} setLoaded={setLoaded} loaded={loaded} />
+                )}
+              </motion.div> */}
+          <Route path="/images/:id">
+            <motion.div
+              key="postView"
+              initial="exit"
+              animate="enter"
+              enter="enter"
+              exit="exit"
+              variants={postTransition}
+            >
+              {!posts ? <Loading /> : <PostView posts={posts} />}
+            </motion.div>
+          </Route>
+          {/* <Route
+              path="/posts/:id"
+              // Rendering gives us access to match & history in
+              // child component
+              render={
+                posts &&
+                (props => (
+                  <motion.div
+                    key="singlePostView"
+                    initial="exit"
+                    animate="enter"
+                    enter="enter"
+                    exit="exit"
+                    variants={postTransition}
+                  >
+                    <SinglePostView posts={posts} {...props} />
+                  </motion.div>
+                ))
+              }
+            /> */}
+          <Route path="/about">
+            <About />
+          </Route>
+
+          <Route path="/error/:id">
+            <Error error={error} />
+          </Route>
+          <Route path="*">
+            <Error error={{ status: '404', msg: 'Page not found!' }} />
+          </Route>
+        </Switch>
+        {/* </AnimatePresence> */}
       </div>
       <div className="footer">Copyright 2019 © plainsite</div>
     </AppWrapper>

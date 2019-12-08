@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -15,6 +15,20 @@ const StyledGrid = styled.div`
     padding-bottom: 4vh;
   }
 
+  .new-grid {
+    display: grid;
+    grid-gap: 2px;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-auto-rows: 50vh;
+    @media (min-width: 768px) {
+      grid-auto-rows: 40vh;
+    }
+    border: 1px solid transparent;
+    border-top: 1px solid #dadce0;
+    border-bottom: 1px solid #dadce0;
+    overflow: hidden;
+  }
+
   .image-grid > div {
     width: 100%;
     overflow: hidden;
@@ -24,6 +38,7 @@ const StyledGrid = styled.div`
     width: 100%;
     overflow: hidden;
     display: block;
+    /* z-index: 1; */
     /* object-fit: cover; */
   }
 `;
@@ -33,44 +48,48 @@ const StyledGrid = styled.div`
 const list = {
   visible: {
     opacity: 1,
-    x: 0,
     transition: {
       staggerChildren: 0.1,
       delayChildren: 0,
     },
   },
   enter: {
-    opacity: 1,
+    opacity: 0,
   },
   hidden: {
     opacity: 0,
-    scale: 1,
+    zIndex: 0,
   },
   exit: {
     opacity: 0,
-    scale: 0,
+    // scale: 0,
     zIndex: 0,
     transition: {
       duration: 0.5,
-      staggerChildren: 0,
-      when: 'beforeChildren',
     },
   },
 };
 
-export function Grid({ posts }) {
+export function Grid({ posts, setLoaded, loaded }) {
+  useEffect(() => {
+    // have to add delay in order for grid to render initially
+    // probably a better way to do this with useEffect
+    // Update: Got it!
+    setLoaded(true);
+  }, [setLoaded, posts]);
+
   return (
     <StyledGrid>
       <motion.div
         variants={list}
         key="list"
-        initial="hidden"
+        initial={false}
         animate="visible" // this has to be here?
         exit="exit"
-        className="image-grid"
+        className="new-grid"
       >
-        {/* this animate presence doesn't do anything? */}
-        <AnimatePresence exitBeforeEnter initial={false}>
+        {/* Animate presence only if grid hasn't loaded yet */}
+        <AnimatePresence initial={!loaded}>
           {!!posts && posts.map(post => <GridItem post={post} key={post.id} variants={list} />)}
         </AnimatePresence>
       </motion.div>
@@ -87,7 +106,8 @@ Grid.propTypes = {
       images: PropTypes.object.isRequired,
     }),
   ).isRequired,
-  // loaded: PropTypes.bool.isRequired,
+  setLoaded: PropTypes.func.isRequired,
+  loaded: PropTypes.bool.isRequired,
 };
 
 export default Grid;
