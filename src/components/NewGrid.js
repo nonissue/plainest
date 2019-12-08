@@ -26,7 +26,6 @@ import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 const StyledGrid = styled.div`
   max-width: 990px;
   flex: 1 1 100%;
-  /* padding: 25px 25px; */
   margin: 0 auto;
 
   .grid {
@@ -44,7 +43,6 @@ const StyledGrid = styled.div`
     flex: 0 0 40%;
     max-width: 40%;
     height: 150px;
-    /* height: 200px; */
   }
 
   .post:nth-child(4n + 1),
@@ -68,10 +66,6 @@ const StyledGrid = styled.div`
   }
   .post-content {
     position: relative;
-    /* background: #fff; */
-    /* display: flex; */
-    /* justify-content: center; */
-    /* flex-wrap: row; */
     overflow: hidden;
     width: 100%;
     height: 100%;
@@ -79,22 +73,16 @@ const StyledGrid = styled.div`
     margin: 0 auto;
   }
   .open .post-content {
-    /* height: auto; */
     max-width: 640px;
     overflow: hidden;
     margin-top: 25px;
-
-    /* justify-content: center; */
-    /* flex-wrap: column; */
   }
   .post-content-container {
     width: 100%;
     height: 100%;
     position: relative;
-
     display: block;
     pointer-events: none;
-    /* object-position: center; */
   }
   .post-content-container.open {
     top: 0;
@@ -116,17 +104,12 @@ const StyledGrid = styled.div`
     width: 100%;
     overflow: hidden;
     transform: translateZ(0);
-    /* object-fit: none; */
-    /* object-position: center; */
   }
 
   .post-image-container img {
     display: block;
     width: 100%;
     height: 100%;
-    /* height: auto; */
-    /* object-fit: none; */
-    /* object-position: center; */
   }
 
   .post-image {
@@ -139,7 +122,6 @@ const StyledGrid = styled.div`
   .overlay {
     z-index: 1;
     position: fixed;
-    /* background: rgba(255, 255, 255, 0.95); */
     background: rgba(0, 0, 0, 0.8);
     will-change: opacity;
     top: 0;
@@ -149,45 +131,35 @@ const StyledGrid = styled.div`
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    /* max-width: 990px; */
-    /* max-width: 990px; */
   }
 
   .overlay a {
     display: block;
     position: fixed;
-    /* top: 50vh; */
     bottom: 0;
     width: 100vw;
     height: 100vh;
     left: 50%;
-
     transform: translateX(-50%);
   }
 
   .caption-container {
     position: relative;
     text-align: left;
-    /* font-size: 0.5rem; */
     padding: 10px 20px;
     box-sizing: border-box;
-    /* margin: 0 auto; */
     color: #121212;
-    /* width: 100%; */
     background: #fff;
     display: none;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     font-weight: 500;
-    /* width: 100%; */
     opacity: 0;
     width: 100%;
     p {
       margin: 0;
       padding: 0;
-      /* max-width: 90%; */
     }
-    /* max-width: 300px; */
   }
 
   .caption-container .open {
@@ -196,8 +168,6 @@ const StyledGrid = styled.div`
 
   @media only screen and (max-width: 3000px) {
     .post {
-      /* flex: 0 0 50%;
-      max-width: 50%; */
       height: 250px;
     }
   }
@@ -223,11 +193,7 @@ const StyledGrid = styled.div`
 
   @media only screen and (max-width: 750px) {
     .open .post-content {
-      /* height: auto; */
       max-width: 90vw;
-
-      /* justify-content: center; */
-      /* flex-wrap: column; */
     }
     padding: 0 25px;
     .post {
@@ -236,7 +202,6 @@ const StyledGrid = styled.div`
       padding-left: 0;
       padding-right: 0;
       height: 225px;
-      /* padding-bottom: 25px; */
     }
 
     .post:nth-child(4n + 1),
@@ -252,18 +217,10 @@ const StyledGrid = styled.div`
 
   @media only screen and (max-width: 400px) {
     .open .post-content {
-      /* height: auto; */
       max-width: 90vw;
-
-      /* justify-content: center; */
-      /* flex-wrap: column; */
     }
     .open .post-content {
-      /* height: auto; */
       max-width: 90vw;
-
-      /* justify-content: center; */
-      /* flex-wrap: column; */
     }
     padding: 0 25px;
     .post {
@@ -272,8 +229,6 @@ const StyledGrid = styled.div`
       padding-left: 0;
       padding-right: 0;
       height: 150px;
-      /* height: 200px; */
-      /* padding-bottom: 25px; */
     }
 
     .post:nth-child(4n + 1),
@@ -299,7 +254,6 @@ const closeSpring = { type: 'spring', stiffness: 300, damping: 200 };
 export function NewGrid({ match, history }) {
   const [posts, setPosts] = useState([]);
   const [postHeight, setPostHeight] = useState(null);
-  //   const [loaded, setLoaded] = useState(false);
 
   // cancel request if component unmounts?
   // https://www.leighhalliday.com/use-effect-hook
@@ -310,8 +264,6 @@ export function NewGrid({ match, history }) {
       const fetchedPosts = res.data.data.posts;
       setPosts(fetchedPosts);
       setPostHeight(Math.min(...fetchedPosts.map(post => post.height)));
-      // console.log(fetchedPosts);
-      // console.log(Math.min(...fetchedPosts.map(post => post.height)));
     };
 
     try {
@@ -351,7 +303,6 @@ const Post = memo(
   ({ isSelected, history, post, maxHeight }) => {
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
-    // const inverted = useInvertedScale();f
 
     const postRef = useRef(null);
     const containerRef = useRef(null);
@@ -365,7 +316,7 @@ const Post = memo(
     }
 
     return (
-      <div className="post" style={{ maxHeight: maxHeight }} ref={containerRef}>
+      <div className="post" style={{ maxHeight }} ref={containerRef}>
         <Overlay isSelected={isSelected} />
         <div className={`post-content-container ${isSelected && 'open'}`}>
           <motion.div
@@ -402,15 +353,11 @@ function Image({ isSelected, id, src, width }) {
     <motion.div
       className="post-image-container"
       style={{ ...inverted, originX: 0.2, originY: -0.3 }}
-      // layoutTransition={{ closeSpring }}
-      // transition={closeSpring}
     >
       <motion.img
         key={`post-${id}`}
         className={`post-image ${isSelected && 'open'}`}
         src={src}
-        // animate={{ opacity }}
-        // style={{ backgroundImage: `url(${src})`, width, backgroundSize: 'cover' }}
         alt=""
         initial={false}
         transition={closeSpring}
@@ -437,10 +384,9 @@ function Caption({ isSelected, id, caption }) {
   return (
     <motion.div
       className={`caption-container ${isSelected && 'open'}`}
-      // initial={true}
       animate={{ x, y, opacity, display }}
-      // transition={isSelected ? openSpring : closeSpring}
-      transition={{ type: 'spring', delay: 0 }}
+      transition={isSelected ? openSpring : closeSpring}
+      // transition={{ type: 'spring', delay: 0 }}
       transformTemplate={scaleTranslate}
       style={{
         ...inverted,
@@ -471,10 +417,7 @@ function Overlay({ isSelected }) {
 const ContentPlaceholder = React.memo(() => {
   const inverted = useInvertedScale();
   return (
-    <motion.div className="content-container" style={{ ...inverted, originY: 0, originX: 0 }}>
-      {/* <LoremIpsum p={6} avgWordsPerSentence={6} avgSentencesPerParagraph={4} /> */}
-      {/* <p>Image</p> */}
-    </motion.div>
+    <motion.div className="content-container" style={{ ...inverted, originY: 0, originX: 0 }} />
   );
 });
 
