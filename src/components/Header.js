@@ -7,11 +7,11 @@ import { AiOutlineLeft as Back, AiOutlineQuestionCircle as Question } from 'reac
 import { Logo } from './Logo';
 
 const StyledHeader = styled.header`
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); */
   position: sticky;
   top: 0;
   z-index: 1;
-  background: hsla(0, 0%, 100%, 1);
+  background: hsla(0, 0%, 100%, 0.95);
 
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);

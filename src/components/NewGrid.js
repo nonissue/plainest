@@ -222,6 +222,13 @@ const StyledGrid = styled.div`
   }
 
   @media only screen and (max-width: 750px) {
+    .open .post-content {
+      /* height: auto; */
+      max-width: 90vw;
+
+      /* justify-content: center; */
+      /* flex-wrap: column; */
+    }
     padding: 0 25px;
     .post {
       flex: 1 0 100%;
@@ -244,6 +251,20 @@ const StyledGrid = styled.div`
   }
 
   @media only screen and (max-width: 400px) {
+    .open .post-content {
+      /* height: auto; */
+      max-width: 90vw;
+
+      /* justify-content: center; */
+      /* flex-wrap: column; */
+    }
+    .open .post-content {
+      /* height: auto; */
+      max-width: 90vw;
+
+      /* justify-content: center; */
+      /* flex-wrap: column; */
+    }
     padding: 0 25px;
     .post {
       flex: 1 0 100%;
