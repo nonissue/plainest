@@ -26,7 +26,7 @@ import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 const StyledGrid = styled.div`
   max-width: 990px;
   flex: 1 1 100%;
-  padding: 25px 25px;
+  /* padding: 25px 25px; */
   margin: 0 auto;
 
   .grid {
@@ -38,10 +38,13 @@ const StyledGrid = styled.div`
   .post {
     position: relative;
     padding: 25px;
+    padding-left: 0;
+    padding-bottom: 0;
     box-sizing: border-box;
     flex: 0 0 40%;
     max-width: 40%;
-    height: 250px;
+    height: 150px;
+    /* height: 200px; */
   }
 
   .post:nth-child(4n + 1),
@@ -164,11 +167,6 @@ const StyledGrid = styled.div`
 
   .caption-container {
     position: relative;
-    margin-top: -8px; /* no idea why this is necessary */
-    /* bottom: 0vh; */
-    /* left: 30vh; */
-    /* left: 0; */
-    /* z-index: 0; */
     text-align: left;
     /* font-size: 0.5rem; */
     padding: 10px 20px;
@@ -180,6 +178,7 @@ const StyledGrid = styled.div`
     display: none;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
+    font-weight: 500;
     /* width: 100%; */
     opacity: 0;
     width: 100%;
@@ -195,10 +194,20 @@ const StyledGrid = styled.div`
     display: block;
   }
 
+  @media only screen and (max-width: 3000px) {
+    .post {
+      /* flex: 0 0 50%;
+      max-width: 50%; */
+      height: 250px;
+    }
+  }
+
   @media only screen and (max-width: 1200px) {
     .post {
       flex: 0 0 50%;
       max-width: 50%;
+      height: 250px;
+      padding-left: 0;
     }
 
     .post:nth-child(4n + 1),
@@ -206,15 +215,20 @@ const StyledGrid = styled.div`
       flex: 0 0 50%;
       max-width: 50%;
     }
+
+    .grid {
+      padding: 25px;
+    }
   }
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 750px) {
     padding: 0 25px;
     .post {
       flex: 1 0 100%;
       max-width: 100%;
       padding-left: 0;
       padding-right: 0;
+      height: 225px;
       /* padding-bottom: 25px; */
     }
 
@@ -225,6 +239,33 @@ const StyledGrid = styled.div`
     }
 
     .post-content-container.open {
+      padding: 0;
+    }
+  }
+
+  @media only screen and (max-width: 400px) {
+    padding: 0 25px;
+    .post {
+      flex: 1 0 100%;
+      max-width: 100%;
+      padding-left: 0;
+      padding-right: 0;
+      height: 150px;
+      /* height: 200px; */
+      /* padding-bottom: 25px; */
+    }
+
+    .post:nth-child(4n + 1),
+    .post:nth-child(4n + 4) {
+      flex: 1 0 100%;
+      max-width: 100%;
+    }
+
+    .post-content-container.open {
+      padding: 0;
+    }
+
+    .grid {
       padding: 0;
     }
   }
