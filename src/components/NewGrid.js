@@ -268,13 +268,9 @@ export function NewGrid({ match, history }) {
 
     try {
       fetchData();
-      // setLoaded(true);
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.log('Error occurred: ');
-      // eslint-disable-next-line no-console
       console.log(err);
-      //   setError({ status: err.status, msg: err.message });
     }
   }, []);
 
@@ -307,7 +303,6 @@ const Post = memo(
     const postRef = useRef(null);
     const containerRef = useRef(null);
     function checkZIndex(latest) {
-      console.log('onUpdate fired');
       if (isSelected) {
         zIndex.set(2);
       } else if (!isSelected) {
@@ -346,7 +341,7 @@ const Post = memo(
   (prev, next) => prev.isSelected === next.isSelected,
 );
 
-function Image({ isSelected, id, src, width }) {
+function Image({ isSelected, id, src }) {
   const inverted = useInvertedScale();
 
   return (
@@ -374,7 +369,7 @@ function Image({ isSelected, id, src, width }) {
 const scaleTranslate = ({ x, y, scaleX, scaleY }) =>
   `scaleX(${scaleX}) scaleY(${scaleY}) translate(${x}, ${y}) translateZ(0)`;
 
-function Caption({ isSelected, id, caption }) {
+function Caption({ isSelected, caption }) {
   const inverted = useInvertedScale();
   const x = isSelected ? 0 : 0;
   const opacity = isSelected ? 1 : 0;
@@ -386,7 +381,6 @@ function Caption({ isSelected, id, caption }) {
       className={`caption-container ${isSelected && 'open'}`}
       animate={{ x, y, opacity, display }}
       transition={isSelected ? openSpring : closeSpring}
-      // transition={{ type: 'spring', delay: 0 }}
       transformTemplate={scaleTranslate}
       style={{
         ...inverted,
@@ -405,7 +399,7 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 0.2, delay: isSelected ? 0 : 0.3 }}
+      transition={{ duration: 0.2, delay: isSelected ? 0 : 0 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
@@ -430,6 +424,12 @@ Image.propTypes = {
   id: PropTypes.string.isRequired,
   isSelected: PropTypes.bool.isRequired,
   src: PropTypes.string.isRequired,
+};
+
+Caption.propTypes = {
+  // id: PropTypes.string.isRequired,
+  isSelected: PropTypes.bool.isRequired,
+  caption: PropTypes.string.isRequired,
 };
 
 Post.propTypes = {
