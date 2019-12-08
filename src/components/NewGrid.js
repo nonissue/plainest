@@ -31,8 +31,8 @@ const StyledGrid = styled(motion.div)`
     position: relative;
     /* padding: 25px; */
     height: 400px;
-    flex: 0 0 30%;
-    max-width: 30%;
+    flex: 0 0 25%;
+    max-width: 25%;
   }
   .post-content {
     pointer-events: auto;
@@ -69,6 +69,7 @@ const StyledGrid = styled(motion.div)`
     position: relative;
     display: block;
     pointer-events: none;
+    /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); */
   }
   .post-content-container.open {
     /* top: 15vh; */
@@ -77,7 +78,9 @@ const StyledGrid = styled(motion.div)`
     right: 0;
     position: fixed;
     z-index: 1;
-    overflow: hidden;
+    /* overflow: hidden; */
+    /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); */
+    /* box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); */
     /* padding: 40px 0; */
     /* border: 1px solid #333; */
   }
@@ -89,17 +92,18 @@ const StyledGrid = styled(motion.div)`
     bottom: 0;
   }
   .post-image-container {
-    transform: translateZ(0);
-    /* position: relative;
+    /* position: absolute;
     top: 0;
-    left: 0;*/
+    left: 0;
     overflow: hidden;
-    /* height: 420px; */
-    /* width: 100vw; */
-    /* transform: translateZ(0); */
+    height: 420px;
+    width: 100vw; */
+    transform: translateZ(0);
   }
 
   .post-image {
+    width: auto;
+
     /* background-size: cover;
     background-repeat: no-repeat; */
     /* object-fit: cover; */
@@ -119,6 +123,9 @@ const StyledGrid = styled(motion.div)`
   }
 
   .post-image.open {
+    width: 100%;
+    /* box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.01); */
+
     /* margin: 0px auto; */
     /* width: 90vw; */
 
@@ -142,15 +149,11 @@ const StyledGrid = styled(motion.div)`
     /* background: #ff0000; */
     /* width: auto; */
   }
-  /* .post-image-container.img {
-    width: 100%;
-    position: relative;
-  } */
 
   .overlay {
     z-index: 1;
     position: fixed;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     will-change: opacity;
     top: 0;
     bottom: 0;
@@ -195,10 +198,42 @@ const StyledGrid = styled(motion.div)`
     }
     /* max-width: 300px; */
   }
+
+  @media only screen and (max-width: 1200px) {
+    .post {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+
+    .post:nth-child(4n + 1),
+    .post:nth-child(4n + 4) {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+  }
+
+  @media only screen and (max-width: 800px) {
+    .post {
+      flex: 1 0 100%;
+      max-width: 100%;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .post:nth-child(4n + 1),
+    .post:nth-child(4n + 4) {
+      flex: 1 0 100%;
+      max-width: 100%;
+    }
+
+    .post-content-container.open {
+      padding: 0;
+    }
+  }
 `;
 
-const openSpring = { type: 'tween', stiffness: 500, damping: 100 };
-const closeSpring = { type: 'tween', stiffness: 500, damping: 200 };
+const openSpring = { type: 'spring', stiffness: 500, damping: 100 };
+const closeSpring = { type: 'spring', stiffness: 1000, damping: 100 };
 // const closeTween = { type: 'tween', duration: 0.5 };
 
 export function NewGrid({ match, history }) {
@@ -248,7 +283,7 @@ export function NewGrid({ match, history }) {
   );
 }
 
-function Post({ isSelected, history, post }) {
+const Post = React.memo(function PostComp({ isSelected, history, post }) {
   const y = useMotionValue(0);
   const zIndex = useMotionValue(isSelected ? 2 : 0);
   const postRef = useRef(null);
@@ -265,9 +300,11 @@ function Post({ isSelected, history, post }) {
       <Overlay isSelected={isSelected} />
       <div className={`post-content-container ${isSelected && 'open'}`}>
         <motion.div
-          // layoutTransition={isSelected ? openSpring : closeSpring}
-          layoutTransition
+          // layoutTransition={isSelected ? closeSpring : openSpring}
+          // layoutTransition
           // initial={{ opacity: 0 }}
+          // initial={{ opacity: 0 }}
+          // animate={{ opacity: 1 }}
           style={{ zIndex, y }}
           ref={postRef}
           className="post-content"
@@ -287,13 +324,18 @@ function Post({ isSelected, history, post }) {
       {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
     </div>
   );
-}
+});
 
 function Image({ isSelected, id, src, width, height }) {
   const inverted = useInvertedScale();
 
   return (
-    <motion.div className="post-image-container" style={{ ...inverted, originX: 0, originY: 0 }}>
+    <motion.div
+      className="post-image-container"
+      style={{ ...inverted, originX: 0.5, originY: 0.5 }}
+      // layoutTransition={{ closeSpring }}
+      // transition={closeSpring}
+    >
       {/* <motion.div
         key={`post-${id}`}
         className={`post-image ${isSelected && 'open'}`}
@@ -307,6 +349,7 @@ function Image({ isSelected, id, src, width, height }) {
         key={`post-${id}`}
         className={`post-image ${isSelected && 'open'}`}
         src={src}
+        // animate={{ opacity }}
         // style={{ backgroundImage: `url(${src})`, width, backgroundSize: 'cover' }}
         alt=""
         initial={false}
@@ -329,10 +372,10 @@ function Caption({ isSelected, id, caption }) {
   return (
     <motion.div
       className="caption-container"
-      initial={true}
+      // initial={true}
       animate={{ x, y, opacity }}
       // transition={isSelected ? openSpring : closeSpring}
-      transition={{ duration: 0.5, type: 'spring', damping: 40, stiffness: 600 }}
+      transition={{ type: 'tween' }}
       transformTemplate={scaleTranslate}
       style={{
         ...inverted,
@@ -354,7 +397,7 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 0.5, delay: isSelected ? 0.2 : 0.6 }}
+      transition={{ duration: 0.1, delay: isSelected ? 0 : 0.1 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
