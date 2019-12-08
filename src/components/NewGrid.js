@@ -41,6 +41,7 @@ const StyledGrid = styled.div`
     box-sizing: border-box;
     flex: 0 0 40%;
     max-width: 40%;
+    height: 250px;
   }
 
   .post:nth-child(4n + 1),
@@ -177,6 +178,8 @@ const StyledGrid = styled.div`
     /* width: 100%; */
     background: #fff;
     display: none;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
     /* width: 100%; */
     opacity: 0;
     width: 100%;
@@ -227,8 +230,8 @@ const StyledGrid = styled.div`
   }
 `;
 
-const openSpring = { type: 'spring', stiffness: 500, damping: 200 };
-const closeSpring = { type: 'spring', stiffness: 1000, damping: 200 };
+const openSpring = { type: 'spring', stiffness: 300, damping: 200 };
+const closeSpring = { type: 'spring', stiffness: 300, damping: 200 };
 // const closeTween = { type: 'tween', duration: 0.5 };
 
 export function NewGrid({ match, history }) {
@@ -274,7 +277,7 @@ export function NewGrid({ match, history }) {
               isSelected={match.params.id === post.id}
               history={history}
               width={post.width}
-              minHeight={postHeight}
+              maxHeight={postHeight}
             />
           ))}
       </div>
@@ -283,7 +286,7 @@ export function NewGrid({ match, history }) {
 }
 
 const Post = memo(
-  ({ isSelected, history, post, minHeight }) => {
+  ({ isSelected, history, post, maxHeight }) => {
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
     // const inverted = useInvertedScale();f
@@ -300,7 +303,7 @@ const Post = memo(
     }
 
     return (
-      <div className="post" style={{ maxHeight: minHeight }} ref={containerRef}>
+      <div className="post" style={{ maxHeight: maxHeight }} ref={containerRef}>
         <Overlay isSelected={isSelected} />
         <div className={`post-content-container ${isSelected && 'open'}`}>
           <motion.div
@@ -336,7 +339,7 @@ function Image({ isSelected, id, src, width }) {
   return (
     <motion.div
       className="post-image-container"
-      style={{ ...inverted, originX: 0, originY: 0 }}
+      style={{ ...inverted, originX: 0.2, originY: -0.3 }}
       // layoutTransition={{ closeSpring }}
       // transition={closeSpring}
     >
@@ -351,7 +354,7 @@ function Image({ isSelected, id, src, width }) {
         transition={closeSpring}
         animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
         style={{
-          objectFit: 'contain',
+          objectFit: 'cover',
           display: 'block',
         }}
       />
@@ -366,7 +369,7 @@ function Caption({ isSelected, id, caption }) {
   const inverted = useInvertedScale();
   const x = isSelected ? 0 : 0;
   const opacity = isSelected ? 1 : 0;
-  const y = isSelected ? 0 : -20;
+  const y = isSelected ? 0 : 0;
   const display = isSelected ? 'block' : 'none';
 
   return (
@@ -375,13 +378,13 @@ function Caption({ isSelected, id, caption }) {
       // initial={true}
       animate={{ x, y, opacity, display }}
       // transition={isSelected ? openSpring : closeSpring}
-      transition={{ type: 'tween', delay: 0 }}
+      transition={{ type: 'spring', delay: 0 }}
       transformTemplate={scaleTranslate}
       style={{
         ...inverted,
         originX: 0.5,
         originY: 0.5,
-        zIndex: `${isSelected ? 1 : 1}`,
+        zIndex: `${isSelected ? 1 : -1}`,
       }}
     >
       <p>{caption}</p>
@@ -394,7 +397,7 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 0.2, delay: isSelected ? 0 : 0 }}
+      transition={{ duration: 0.2, delay: isSelected ? 0 : 0.3 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
