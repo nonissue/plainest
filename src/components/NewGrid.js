@@ -22,6 +22,7 @@ import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 // - [ ] remove unused CSS
 // = [ ] do components need to use react memo?
 // - [ ] fix about
+// - [ ] if we visit grid item directly, it fucks up zIndex aft
 const StyledGrid = styled(motion.div)`
   display: flex;
   flex-wrap: wrap;
@@ -44,19 +45,6 @@ const StyledGrid = styled(motion.div)`
     margin: 0 auto;
   }
   .open .post-content {
-    /* this is what allows us to click outside image */
-    /* height: auto; */
-    /* max-width: 420px; */
-    /* height: auto; */
-    /* width: auto; */
-
-    /* width: 100vw;
-    height: 50vh;
-    @media (min-width: 768px) {
-      width: 50vw;
-      height: 50vh;
-    } */
-
     height: auto;
     /* if height isn't auto, can't click anywhere outside to return to grid */
     max-height: 70vh;
@@ -69,20 +57,15 @@ const StyledGrid = styled(motion.div)`
     position: relative;
     display: block;
     pointer-events: none;
-    /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); */
   }
   .post-content-container.open {
     /* top: 15vh; */
-    top: 15vh;
+    top: 0vh;
     left: 0;
     right: 0;
     position: fixed;
     z-index: 1;
-    /* overflow: hidden; */
-    /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); */
-    /* box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); */
-    /* padding: 40px 0; */
-    /* border: 1px solid #333; */
+    overflow: hidden;
   }
   .post-open-link {
     position: absolute;
@@ -92,11 +75,11 @@ const StyledGrid = styled(motion.div)`
     bottom: 0;
   }
   .post-image-container {
-    /* position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     overflow: hidden;
-    height: 420px;
+    /* height: 420px;
     width: 100vw; */
     transform: translateZ(0);
   }
@@ -154,6 +137,7 @@ const StyledGrid = styled(motion.div)`
     z-index: 1;
     position: fixed;
     background: rgba(255, 255, 255, 0.95);
+    background: rgba(0, 0, 0, 0.8);
     will-change: opacity;
     top: 0;
     bottom: 0;
@@ -179,19 +163,20 @@ const StyledGrid = styled(motion.div)`
   }
 
   .caption-container {
-    position: fixed;
+    position: relative;
     bottom: 0vh;
     /* left: 30vh; */
     left: 0;
+    z-index: 0;
     text-align: left;
     font-size: 0.5rem;
     padding: 10px 20px;
     box-sizing: border-box;
     /* margin: 0 auto; */
-    color: #fff;
+    color: #121212;
     /* width: 100%; */
-    background: #121212;
-    width: 100%;
+    background: #fff;
+    /* width: 100%; */
     opacity: 0;
     h2 {
       /* max-width: 90%; */
@@ -286,9 +271,12 @@ export function NewGrid({ match, history }) {
 const Post = React.memo(function PostComp({ isSelected, history, post }) {
   const y = useMotionValue(0);
   const zIndex = useMotionValue(isSelected ? 2 : 0);
+  console.log('isSelected');
+  console.log(zIndex);
   const postRef = useRef(null);
   const containerRef = useRef(null);
   function checkZIndex(latest) {
+    console.log('onUpdate fired');
     if (isSelected) {
       zIndex.set(2);
     } else if (!isSelected && latest.scaleX < 1.01) {
@@ -300,12 +288,9 @@ const Post = React.memo(function PostComp({ isSelected, history, post }) {
       <Overlay isSelected={isSelected} />
       <div className={`post-content-container ${isSelected && 'open'}`}>
         <motion.div
-          // layoutTransition={isSelected ? closeSpring : openSpring}
-          // layoutTransition
-          // initial={{ opacity: 0 }}
-          // initial={{ opacity: 0 }}
-          // animate={{ opacity: 1 }}
-          style={{ zIndex, y }}
+          // without layout transition, zIndex doesn't update
+          layoutTransition={isSelected ? closeSpring : openSpring}
+          style={{ zIndex }}
           ref={postRef}
           className="post-content"
           onUpdate={checkZIndex}
@@ -317,9 +302,10 @@ const Post = React.memo(function PostComp({ isSelected, history, post }) {
             width={post.width}
             height={post.height}
           />
+          <Caption caption={post.caption} isSelected={isSelected} id={post.id} />
         </motion.div>
       </div>
-      <Caption caption={post.caption} isSelected={isSelected} id={post.id} />
+
       <ContentPlaceholder />
       {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
     </div>
@@ -367,7 +353,7 @@ function Caption({ isSelected, id, caption }) {
   const inverted = useInvertedScale();
   const x = isSelected ? 0 : 0;
   const opacity = isSelected ? 1 : 0;
-  const y = isSelected ? 0 : 200;
+  const y = isSelected ? 0 : -200;
 
   return (
     <motion.div
@@ -397,7 +383,7 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 0.1, delay: isSelected ? 0 : 0.1 }}
+      transition={{ duration: 0.2, delay: isSelected ? 0 : 0 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >

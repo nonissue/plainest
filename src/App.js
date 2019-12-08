@@ -106,7 +106,7 @@ function App() {
     };
 
     try {
-      fetchData();
+      // fetchData();
       // setLoaded(true);
     } catch (err) {
       // eslint-disable-next-line no-console
