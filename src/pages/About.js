@@ -6,11 +6,16 @@ const AboutWrapper = styled.div`
   color: #121212;
   width: 50vw;
   margin: 0px auto;
-  padding-top: 10vw;
+  padding-top: 5vw;
   max-width: 500px;
   font-family: 'Work Sans', sans-serif;
   line-height: 1.5em;
+  text-align: left;
   font-family: 'Lekton', monospace;
+
+  h3 {
+    text-align: center;
+  }
 
   b {
     font-style: normal;
@@ -57,8 +62,9 @@ export function About() {
         variants={variants}
       >
         <p>
-          <b>About</b>
-          <br /> &quot;A kuest for klout™️&quot; Cooked up sporadically by{' '}
+          <h3>About</h3>
+          "Boring photos of buildings" <i>aka</i> &quot;A kuest for klout™️&quot; cooked up
+          sporadically by{' '}
           <a href="https://www.instagram.com/christiandy/" alt="christiandy instagram">
             @christiandy
           </a>{' '}

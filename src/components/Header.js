@@ -7,7 +7,8 @@ import { AiOutlineLeft as Back, AiOutlineQuestionCircle as Question } from 'reac
 import { Logo } from './Logo';
 
 const StyledHeader = styled.header`
-  /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); */
+  /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.06); */
+
   position: sticky;
   top: 0;
   z-index: 1;
@@ -24,6 +25,7 @@ const StyledHeader = styled.header`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  border-bottom: 1px solid #eee;
 
   .control {
     text-transform: uppercase;
@@ -69,7 +71,6 @@ export function Header() {
           <Link to="/posts">
             <Back />
           </Link>
-          {/* </button> */}
         </motion.div>
       ) : (
         <div className="control hidden">
