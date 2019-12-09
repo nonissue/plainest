@@ -8,14 +8,15 @@ import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 
 // Issues:
 // - [x] Image doesn't move back properly (exit animation starts inside original container)
-// - [ ] weird flash when closing (I think related to overlay ++ zIndex)
+// - [x] weird flash when closing (I think related to overlay ++ zIndex)
+// = [ ] scroll restoration?
 // - [ ] add next/prev
 // - [ ] add view on insta link
-// - [ ] center images vertically
+// - [x] center images vertically
 // - [ ] set point of interest
-// - [ ] images on close are obscured by other grid images, will fix
-// - [ ] fix image sizing finally...
-// - [ ] disable scrolling when isSelected
+// - [x] images on close are obscured by other grid images, will fix
+// - [x] fix image sizing finally...
+// - [x] disable scrolling when isSelected
 // - [x] fix grid flashing
 // - [c] adjust overlay timing, since grid post animation isn't a static time
 //       because it varies based on distance
@@ -394,19 +395,6 @@ function Caption({ isSelected, caption }) {
 
 function Overlay({ isSelected }) {
   // disable scroll when modal is shown
-  useEffect(() => {
-    function disableScroll() {
-      document.body.style.overflow = 'hidden';
-    }
-
-    console.log(isSelected);
-
-    // disableScroll();
-
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [isSelected]);
 
   return (
     <motion.div
