@@ -11,6 +11,7 @@ import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 // - [x] weird flash when closing (I think related to overlay ++ zIndex)
 // - [ ] handle data fetching here or in App? Can't think of a way to render error component from here
 // = [ ] scroll restoration?
+// - [ ] implement loading
 // - [ ] add next/prev
 // - [ ] add view on insta link
 // - [x] center images vertically
