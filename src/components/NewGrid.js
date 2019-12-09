@@ -10,6 +10,7 @@ import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 // - [x] Image doesn't move back properly (exit animation starts inside original container)
 // - [ ] weird flash when closing (I think related to overlay ++ zIndex)
 // - [ ] add next/prev
+// - [ ] add view on insta link
 // - [ ] center images vertically
 // - [ ] set point of interest
 // - [ ] images on close are obscured by other grid images, will fix
@@ -68,7 +69,6 @@ const StyledGrid = styled.div`
     position: relative;
     overflow: hidden;
     width: 100%;
-    /* box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); */
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     height: 100%;
     border-radius: 20px;
@@ -264,6 +264,9 @@ export function NewGrid({ match, history }) {
       const fetchedPosts = res.data.data.posts;
       setPosts(fetchedPosts);
       setPostHeight(Math.min(...fetchedPosts.map(post => post.height)));
+      fetchedPosts.find(p => p.id === match.params.id)
+        ? (document.body.style.overflow = 'hidden')
+        : (document.body.style.overflow = 'auto');
     };
 
     try {
@@ -272,7 +275,7 @@ export function NewGrid({ match, history }) {
       console.log('Error occurred: ');
       console.log(err);
     }
-  }, []);
+  }, [match.params.id]);
 
   return (
     <StyledGrid>
@@ -390,6 +393,21 @@ function Caption({ isSelected, caption }) {
 }
 
 function Overlay({ isSelected }) {
+  // disable scroll when modal is shown
+  useEffect(() => {
+    function disableScroll() {
+      document.body.style.overflow = 'hidden';
+    }
+
+    console.log(isSelected);
+
+    // disableScroll();
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isSelected]);
+
   return (
     <motion.div
       initial={false}
@@ -403,13 +421,6 @@ function Overlay({ isSelected }) {
   );
 }
 
-const ContentPlaceholder = React.memo(() => {
-  const inverted = useInvertedScale();
-  return (
-    <motion.div className="content-container" style={{ ...inverted, originY: 0, originX: 0 }} />
-  );
-});
-
 NewGrid.propTypes = {
   match: ReactRouterPropTypes.match.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
@@ -422,7 +433,6 @@ Image.propTypes = {
 };
 
 Caption.propTypes = {
-  // id: PropTypes.string.isRequired,
   isSelected: PropTypes.bool.isRequired,
   caption: PropTypes.string.isRequired,
 };
