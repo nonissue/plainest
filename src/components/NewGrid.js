@@ -250,7 +250,6 @@ const StyledGrid = styled.div`
 
 const openSpring = { type: 'spring', stiffness: 300, damping: 200 };
 const closeSpring = { type: 'spring', stiffness: 300, damping: 200 };
-// const closeTween = { type: 'tween', duration: 0.5 };
 
 export function NewGrid({ match, history }) {
   const [posts, setPosts] = useState([]);
@@ -265,9 +264,12 @@ export function NewGrid({ match, history }) {
       const fetchedPosts = res.data.data.posts;
       setPosts(fetchedPosts);
       setPostHeight(Math.min(...fetchedPosts.map(post => post.height)));
-      fetchedPosts.find(p => p.id === match.params.id)
-        ? (document.body.style.overflow = 'hidden')
-        : (document.body.style.overflow = 'auto');
+
+      if (fetchedPosts.find(p => p.id === match.params.id)) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = 'auto';
+      }
     };
 
     try {
