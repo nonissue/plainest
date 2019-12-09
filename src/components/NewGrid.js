@@ -15,14 +15,14 @@ import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 // - [ ] images on close are obscured by other grid images, will fix
 // - [ ] fix image sizing finally...
 // - [ ] disable scrolling when isSelected
-// - [ ] fix grid flashing
-// - [ ] adjust overlay timing, since grid post animation isn't a static time
+// - [x] fix grid flashing
+// - [c] adjust overlay timing, since grid post animation isn't a static time
 //       because it varies based on distance
-// - [ ] looks weird going behind header (zindex)
-// - [ ] remove unused CSS
+// - [x] looks weird going behind header (zindex)
+// - [x] remove unused CSS
 // = [ ] do components need to use react memo?
-// - [ ] fix about
-// - [ ] if we visit grid item directly, it fucks up zIndex aft
+// - [x] fix about
+// - [x] if we visit grid item directly, it fucks up zIndex aft
 const StyledGrid = styled.div`
   max-width: 990px;
   flex: 1 1 100%;
@@ -68,13 +68,15 @@ const StyledGrid = styled.div`
     position: relative;
     overflow: hidden;
     width: 100%;
+    /* box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); */
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     height: 100%;
     border-radius: 20px;
     margin: 0 auto;
   }
   .open .post-content {
     max-width: 640px;
-    overflow: hidden;
+    height: auto;
     margin-top: 25px;
   }
   .post-content-container {
@@ -122,7 +124,7 @@ const StyledGrid = styled.div`
   .overlay {
     z-index: 1;
     position: fixed;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(255, 255, 255, 0.94);
     will-change: opacity;
     top: 0;
     bottom: 0;
@@ -144,18 +146,16 @@ const StyledGrid = styled.div`
   }
 
   .caption-container {
-    position: relative;
-    text-align: left;
-    padding: 10px 20px;
-    box-sizing: border-box;
+    padding: 20px 20px;
+    line-height: 1.5em;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 500;
     color: #121212;
     background: #fff;
     display: none;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
     font-weight: 500;
     opacity: 0;
-    width: 100%;
+
     p {
       margin: 0;
       padding: 0;
@@ -277,7 +277,6 @@ export function NewGrid({ match, history }) {
   return (
     <StyledGrid>
       <div className="grid">
-        {/* Animate presence only if grid hasn't loaded yet */}
         {!!posts &&
           !!postHeight &&
           posts.map(post => (
@@ -296,13 +295,14 @@ export function NewGrid({ match, history }) {
 }
 
 const Post = memo(
-  ({ isSelected, history, post, maxHeight }) => {
+  ({ isSelected, post, maxHeight }) => {
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
 
     const postRef = useRef(null);
     const containerRef = useRef(null);
-    function checkZIndex(latest) {
+
+    function checkZIndex() {
       if (isSelected) {
         zIndex.set(2);
       } else if (!isSelected) {
@@ -333,7 +333,6 @@ const Post = memo(
           </motion.div>
         </div>
 
-        {/* <ContentPlaceholder /> */}
         {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
       </div>
     );
@@ -366,14 +365,11 @@ function Image({ isSelected, id, src }) {
   );
 }
 
-const scaleTranslate = ({ x, y, scaleX, scaleY }) =>
-  `scaleX(${scaleX}) scaleY(${scaleY}) translate(${x}, ${y}) translateZ(0)`;
-
 function Caption({ isSelected, caption }) {
   const inverted = useInvertedScale();
   const x = isSelected ? 0 : 0;
   const opacity = isSelected ? 1 : 0;
-  const y = isSelected ? 0 : 0;
+  const y = isSelected ? 0 : 200;
   const display = isSelected ? 'block' : 'none';
 
   return (
@@ -381,11 +377,10 @@ function Caption({ isSelected, caption }) {
       className={`caption-container ${isSelected && 'open'}`}
       animate={{ x, y, opacity, display }}
       transition={isSelected ? openSpring : closeSpring}
-      transformTemplate={scaleTranslate}
       style={{
         ...inverted,
-        originX: 0.5,
-        originY: 0.5,
+        originX: 0,
+        originY: 0,
         zIndex: `${isSelected ? 1 : -1}`,
       }}
     >
@@ -442,7 +437,7 @@ Post.propTypes = {
     height: PropTypes.number.isRequired,
     src: PropTypes.string.isRequired,
   }).isRequired,
-  history: ReactRouterPropTypes.history.isRequired,
+  maxHeight: PropTypes.number.isRequired,
   isSelected: PropTypes.bool.isRequired,
 };
 

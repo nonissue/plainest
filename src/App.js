@@ -45,8 +45,10 @@ const AppWrapper = styled.div`
     padding: 5px 0 5px 0;
     display: flex;
     justify-content: center;
-    bottom: 1em;
-    left: 1em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    /* bottom: 1em; */
+    /* left: 1em; */
     font-size: 0.7em;
     font-family: 'Lekton', monospace;
     text-transform: uppercase;
