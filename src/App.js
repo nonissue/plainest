@@ -5,16 +5,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 import { About } from './pages';
-import {
-  Header,
-  Error,
-  Grid,
-  Loading,
-  NewGrid,
-  PostView,
-  SinglePostView,
-  MasonryGrid,
-} from './components';
+import { Header, Error, Loading, NewGrid, PostView } from './components';
 import './App.css';
 
 const AppWrapper = styled.div`
@@ -154,18 +145,6 @@ function App() {
                   <Grid posts={posts} setLoaded={setLoaded} loaded={loaded} />
                 )}
               </motion.div> */}
-          <Route path="/images/:id">
-            <motion.div
-              key="postView"
-              initial="exit"
-              animate="enter"
-              enter="enter"
-              exit="exit"
-              variants={postTransition}
-            >
-              {!posts ? <Loading /> : <PostView posts={posts} />}
-            </motion.div>
-          </Route>
           {/* <Route
               path="/posts/:id"
               // Rendering gives us access to match & history in
