@@ -9,6 +9,7 @@ import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 // Issues:
 // - [x] Image doesn't move back properly (exit animation starts inside original container)
 // - [x] weird flash when closing (I think related to overlay ++ zIndex)
+// - [ ] handle data fetching here or in App? Can't think of a way to render error component from here
 // = [ ] scroll restoration?
 // - [ ] add next/prev
 // - [ ] add view on insta link
@@ -396,8 +397,6 @@ function Caption({ isSelected, caption }) {
 }
 
 function Overlay({ isSelected }) {
-  // disable scroll when modal is shown
-
   return (
     <motion.div
       initial={false}

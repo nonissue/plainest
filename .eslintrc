@@ -9,7 +9,6 @@
         "extensions": [".js", ".jsx"]
       }
     ],
-    "no-unused-expressions": [2, { "allowTernary": true }],
     "prettier/prettier": [
       "error",
       {
