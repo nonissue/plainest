@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
 import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
+import { Loading } from './Loading';
 
 // Issues:
 // - [x] Image doesn't move back properly (exit animation starts inside original container)
@@ -66,6 +67,7 @@ const StyledGrid = styled.div`
     padding-right: 0;
   }
   .post-content {
+    background: #eee;
     position: relative;
     overflow: hidden;
     width: 100%;
@@ -75,6 +77,7 @@ const StyledGrid = styled.div`
     margin: 0 auto;
   }
   .open .post-content {
+    background: none;
     max-width: 640px;
     height: auto;
     margin-top: 25px;
@@ -244,6 +247,7 @@ const closeSpring = { type: 'spring', stiffness: 300, damping: 200 };
 export function NewGrid({ match, history }) {
   const [posts, setPosts] = useState([]);
   const [postHeight, setPostHeight] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // cancel request if component unmounts?
   // https://www.leighhalliday.com/use-effect-hook
@@ -264,6 +268,10 @@ export function NewGrid({ match, history }) {
 
     try {
       fetchData();
+      // fake delay so loading shows
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     } catch (err) {
       console.log('Error occurred: ');
       console.log(err);
@@ -273,7 +281,10 @@ export function NewGrid({ match, history }) {
   return (
     <StyledGrid>
       <div className="grid">
-        {!!posts &&
+        {loading ? (
+          <Loading />
+        ) : (
+          !!posts &&
           !!postHeight &&
           posts.map(post => (
             <Post
@@ -284,7 +295,8 @@ export function NewGrid({ match, history }) {
               width={post.width}
               maxHeight={postHeight}
             />
-          ))}
+          ))
+        )}
       </div>
     </StyledGrid>
   );
