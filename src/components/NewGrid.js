@@ -9,12 +9,13 @@ import { Loading } from './Loading';
 
 // Issues:
 // - [x] Image doesn't move back properly (exit animation starts inside original container)
+// - [ ] dark mode
 // - [x] weird flash when closing (I think related to overlay ++ zIndex)
 // - [ ] handle data fetching here or in App? Can't think of a way to render error component from here
 // - [ ] full res insta images https://stackoverflow.com/questions/31302811/1080x1080-photos-via-instagram-api
 //    - see instagramapiresponse.json
 // = [ ] scroll restoration?
-// - [ ] implement loading
+// - [x] implement loading
 // - [ ] add next/prev
 // - [ ] add view on insta link
 // - [x] center images vertically
@@ -27,10 +28,10 @@ import { Loading } from './Loading';
 //       because it varies based on distance
 // - [x] looks weird going behind header (zindex)
 // - [x] remove unused CSS
-// = [ ] do components need to use react memo?
+// = [x] do components need to use react memo? yes for perf boost
 // - [x] fix about
 // - [x] if we visit grid item directly, it fucks up zIndex aft
-// - [ ] fix posts being refetched anytime params change
+// - [x] fix posts being refetched anytime params change
 const StyledGrid = styled.div`
   max-width: 990px;
   flex: 1 1 100%;
@@ -174,13 +175,11 @@ const StyledGrid = styled.div`
       height: 250px;
       padding-left: 0;
     }
-
     .post:nth-child(4n + 1),
     .post:nth-child(4n + 4) {
       flex: 0 0 50%;
       max-width: 50%;
     }
-
     .grid {
       padding: 25px;
     }
@@ -198,13 +197,11 @@ const StyledGrid = styled.div`
       padding-right: 0;
       height: 225px;
     }
-
     .post:nth-child(4n + 1),
     .post:nth-child(4n + 4) {
       flex: 1 0 100%;
       max-width: 100%;
     }
-
     .post-content-container.open {
       padding: 0;
     }
@@ -225,17 +222,14 @@ const StyledGrid = styled.div`
       padding-right: 0;
       height: 150px;
     }
-
     .post:nth-child(4n + 1),
     .post:nth-child(4n + 4) {
       flex: 1 0 100%;
       max-width: 100%;
     }
-
     .post-content-container.open {
       padding: 0;
     }
-
     .grid {
       padding: 0;
     }
@@ -250,7 +244,7 @@ export function NewGrid({ match, history }) {
   const [postHeight, setPostHeight] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // cancel request if component unmounts?
+  // fetch data on load hook
   // https://www.leighhalliday.com/use-effect-hook
   useEffect(() => {
     // Should check last fetch, and if it is stale, run posts-hydrate
@@ -273,6 +267,7 @@ export function NewGrid({ match, history }) {
     }
   }, []);
 
+  // disable scroll on modal shown
   useEffect(() => {
     // Should check last fetch, and if it is stale, run posts-hydrate
     if (posts.find(p => p.id === match.params.id)) {
@@ -311,6 +306,7 @@ const Post = memo(
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
 
+    // remove refs?
     const postRef = useRef(null);
     const containerRef = useRef(null);
 

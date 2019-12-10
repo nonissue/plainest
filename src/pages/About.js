@@ -63,8 +63,8 @@ export function About() {
       >
         <p>
           <h3>About</h3>
-          "Boring photos of buildings" <i>aka</i> &quot;A kuest for klout™️&quot; cooked up
-          sporadically by{' '}
+          &quot;Boring photos of buildings&quot; <i>aka</i> &quot;A kuest for klout™️&quot; cooked
+          up sporadically by{' '}
           <a href="https://www.instagram.com/christiandy/" alt="christiandy instagram">
             @christiandy
           </a>{' '}

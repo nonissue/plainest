@@ -31,7 +31,7 @@ const AppWrapper = styled.div`
     font-family: 'Lekton', monospace;
     text-transform: uppercase;
     animation: fadein 1s;
-    animation-delay: 0.5s;
+    animation-delay: 1.5s;
     animation-fill-mode: forwards;
   }
 
