@@ -33,6 +33,7 @@ import { Loading } from './Loading';
 // - [x] if we visit grid item directly, it fucks up zIndex aft
 // - [x] fix posts being refetched anytime params change
 const StyledGrid = styled.div`
+  /* media queries located at bottom of StyledGrid */
   max-width: 990px;
   flex: 1 1 100%;
   margin: 0 auto;
@@ -64,7 +65,6 @@ const StyledGrid = styled.div`
   .post:nth-child(odd) {
     padding-left: 0;
   }
-
   .post:nth-child(even) {
     padding-right: 0;
   }
@@ -157,11 +157,11 @@ const StyledGrid = styled.div`
       padding: 0;
     }
   }
-
   .caption-container .open {
     display: block;
   }
 
+  /* media queries */
   @media only screen and (max-width: 3000px) {
     .post {
       height: 250px;
