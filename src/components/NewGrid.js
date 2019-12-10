@@ -30,6 +30,7 @@ import { Loading } from './Loading';
 // = [ ] do components need to use react memo?
 // - [x] fix about
 // - [x] if we visit grid item directly, it fucks up zIndex aft
+// - [ ] fix posts being refetched anytime params change
 const StyledGrid = styled.div`
   max-width: 990px;
   flex: 1 1 100%;
@@ -258,12 +259,6 @@ export function NewGrid({ match, history }) {
       const fetchedPosts = res.data.data.posts;
       setPosts(fetchedPosts);
       setPostHeight(Math.min(...fetchedPosts.map(post => post.height)));
-
-      if (fetchedPosts.find(p => p.id === match.params.id)) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = 'auto';
-      }
     };
 
     try {
@@ -276,7 +271,16 @@ export function NewGrid({ match, history }) {
       console.log('Error occurred: ');
       console.log(err);
     }
-  }, [match.params.id]);
+  }, []);
+
+  useEffect(() => {
+    // Should check last fetch, and if it is stale, run posts-hydrate
+    if (posts.find(p => p.id === match.params.id)) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [match.params.id, posts]);
 
   return (
     <StyledGrid>
