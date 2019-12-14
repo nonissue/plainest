@@ -14,6 +14,7 @@ import { Loading } from './Loading';
 // - [ ] handle data fetching here or in App? Can't think of a way to render error component from here
 // - [ ] full res insta images https://stackoverflow.com/questions/31302811/1080x1080-photos-via-instagram-api
 //    - see instagramapiresponse.json
+// - [ ] prevent scroll on ios (if scroll is initiated before modal is shown, content still scrollable briefly)
 // = [ ] scroll restoration?
 // - [x] implement loading
 // - [ ] add next/prev
@@ -329,6 +330,7 @@ const Post = memo(
             ref={postRef}
             className="post-content"
             onUpdate={checkZIndex}
+            drag={isSelected && false}
           >
             <Image
               id={post.id}
@@ -405,6 +407,8 @@ function Overlay({ isSelected }) {
       transition={{ duration: 0.2, delay: isSelected ? 0 : 0 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
+      // attempt to prevent ios scrolling
+      onTouchStart={e => e.preventDefault()}
     >
       <Link to="/posts" />
     </motion.div>

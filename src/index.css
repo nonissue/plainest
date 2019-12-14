@@ -17,6 +17,8 @@ body {
   font-family: 'Work Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* attempt to disable ios scrolling */
+  -webkit-overflow-scrolling: touch;
 }
 
 code {
