@@ -26,6 +26,7 @@ const StyledHeader = styled.header`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+  border-bottom: 1px solid #ff0000;
   /* border-bottom: 1px solid #eee; */
 
   .control {

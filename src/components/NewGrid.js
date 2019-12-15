@@ -332,15 +332,22 @@ const Post = memo(
       };
     }, [isSelected, history]);
 
+    useEffect(() => {
+      const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop);
+      if (isSelected) {
+        scrollToRef(containerRef);
+      }
+    }, []);
+
     return (
       <div className="post" style={{ maxHeight }} ref={containerRef}>
         <Overlay isSelected={isSelected} />
         <div className={`post-content-container ${isSelected && 'open'}`}>
           <motion.div
+            ref={postRef}
             // without layout transition, zIndex doesn't update
             layoutTransition={isSelected ? closeSpring : openSpring}
             style={{ y, zIndex }}
-            ref={postRef}
             className="post-content"
             onUpdate={checkZIndex}
             drag={isSelected && false}

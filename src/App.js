@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { About } from './pages';
-import { Header, Error, NewGrid } from './components';
+import { Header, Error, NewGrid, LoadingBar } from './components';
 import './App.css';
 
 const AppWrapper = styled.div`
@@ -75,6 +75,8 @@ function App() {
           <Route path="/error/:id">
             <Error error={error} />
           </Route>
+          <Route path="/bar" component={LoadingBar} />
+
           <Route path="*">
             <Error error={{ status: '404', msg: 'Page not found!' }} />
           </Route>
