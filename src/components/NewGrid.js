@@ -282,76 +282,91 @@ export function NewGrid({ posts, match, history }) {
   );
 }
 
-const Post = memo(
-  ({ isSelected, post, maxHeight, history }) => {
-    const y = useMotionValue(0);
-    const zIndex = useMotionValue(isSelected ? 2 : 0);
-    const postRef = useRef(null);
-    const containerRef = useRef(null);
+// const Post = memo(
+const Post = ({ isSelected, post, maxHeight, history }) => {
+  const [fromGrid, setFromGrid] = useState(false);
+  const y = useMotionValue(0);
+  const zIndex = useMotionValue(isSelected ? 2 : 0);
+  const postRef = useRef(null);
+  const containerRef = useRef(null);
 
-    function checkZIndex() {
-      if (isSelected) {
-        zIndex.set(2);
-      } else if (!isSelected) {
-        zIndex.set(0);
+  function checkZIndex() {
+    if (isSelected) {
+      zIndex.set(2);
+    } else if (!isSelected) {
+      zIndex.set(0);
+    }
+  }
+
+  // dismiss modal when escape is pressed
+  useEffect(() => {
+    const dismissModal = event => {
+      if (isSelected && event.key === 'Escape') {
+        history.push('/');
       }
+    };
+
+    window.addEventListener('keydown', dismissModal);
+
+    return () => {
+      window.removeEventListener('keydown', dismissModal);
+    };
+  }, [isSelected, history]);
+
+  // when modal is dismissed, make sure scroll pos is in sync
+  // when visiting an item near end of list directly, when modal dismissed
+  // scroll pos was top of list
+  useEffect(() => {
+    const scrollToRef = ref =>
+      window.scrollTo({
+        top: ref.current.offsetTop - ref.current.offsetHeight,
+        behaviour: 'smooth',
+      });
+    if (isSelected && !fromGrid) {
+      scrollToRef(containerRef);
     }
 
-    // dismiss modal when escape is pressed
-    useEffect(() => {
-      const dismissModal = event => {
-        if (isSelected && event.key === 'Escape') {
-          history.push('/');
-        }
-      };
+    console.log(history.entries && history.entries[-1]);
+  }, [isSelected]);
 
-      window.addEventListener('keydown', dismissModal);
-
-      return () => {
-        window.removeEventListener('keydown', dismissModal);
-      };
-    }, [isSelected, history]);
-
-    // when modal is dismissed, make sure scroll pos is in sync
-    // when visiting an item near end of list directly, when modal dismissed
-    // scroll pos was top of list
-    useEffect(() => {
-      const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop);
-      if (isSelected) {
-        scrollToRef(containerRef);
-      }
-    }, [isSelected]);
-
-    return (
-      <div className="post" style={{ maxHeight }} ref={containerRef}>
-        <Overlay isSelected={isSelected} />
-        <div className={`post-content-container ${isSelected && 'open'}`}>
-          <motion.div
-            ref={postRef}
-            // without layout transition, zIndex doesn't update
-            layoutTransition={isSelected ? closeSpring : openSpring}
-            style={{ y, zIndex }}
-            className="post-content"
-            onUpdate={checkZIndex}
-            drag={isSelected && false}
-          >
-            <Image
-              id={post.id}
-              isSelected={isSelected}
-              src={post.src}
-              width={post.width}
-              height={post.height}
-            />
-            <Caption caption={post.caption} isSelected={isSelected} id={post.id} link={post.link} />
-          </motion.div>
-        </div>
-
-        {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
+  return (
+    <div className="post" style={{ maxHeight }} ref={containerRef}>
+      <Overlay isSelected={isSelected} />
+      <div className={`post-content-container ${isSelected && 'open'}`}>
+        <motion.div
+          ref={postRef}
+          // without layout transition, zIndex doesn't update
+          layoutTransition={isSelected ? closeSpring : openSpring}
+          style={{ y, zIndex }}
+          className="post-content"
+          onUpdate={checkZIndex}
+          drag={isSelected && false}
+        >
+          <Image
+            id={post.id}
+            isSelected={isSelected}
+            src={post.src}
+            width={post.width}
+            height={post.height}
+          />
+          <Caption caption={post.caption} isSelected={isSelected} id={post.id} link={post.link} />
+        </motion.div>
       </div>
-    );
-  },
-  (prev, next) => prev.isSelected === next.isSelected,
-);
+
+      {!isSelected && (
+        <Link
+          to={{
+            pathname: `posts/${post.id}`,
+          }}
+          className="post-open-link"
+          onClick={() => setFromGrid(true)}
+        />
+      )}
+    </div>
+  );
+};
+// (prev, next) => prev.isSelected === next.isSelected,
+// );
 
 function Image({ isSelected, id, src }) {
   const inverted = useInvertedScale();
@@ -411,7 +426,7 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 0.2, delay: isSelected ? 0 : 0 }}
+      transition={{ duration: 0.2, delay: isSelected ? 0 : 0.3 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
