@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
+import { FiInstagram } from 'react-icons/fi';
 import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { Loading } from './Loading';
@@ -176,6 +177,9 @@ const StyledGrid = styled.div`
     z-index: 2000 !important;
     position: relative;
     font-size: 1em;
+    padding-top: 1em;
+    opacity: 0.7;
+    color: #121212;
     /* allows us to click through overlay to actually use link */
     pointer-events: auto;
     display: block;
@@ -433,7 +437,9 @@ function Caption({ isSelected, caption, link }) {
     >
       <p>{caption}</p>
       <p>
-        <a href={link}>View on IG</a>
+        <a href={link}>
+          <FiInstagram />
+        </a>
       </p>
     </motion.div>
   );
