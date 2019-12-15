@@ -318,78 +318,69 @@ export function NewGrid({ match, history }) {
   );
 }
 
-const Post = ({ isSelected, post, maxHeight, history }) => {
-  const y = useMotionValue(0);
-  const zIndex = useMotionValue(isSelected ? 2 : 0);
+const Post = memo(
+  ({ isSelected, post, maxHeight, history }) => {
+    const y = useMotionValue(0);
+    const zIndex = useMotionValue(isSelected ? 2 : 0);
 
-  const [modalShown, setModalShown] = useState(false);
+    // remove refs?
+    const postRef = useRef(null);
+    const containerRef = useRef(null);
 
-  // remove refs?
-  const postRef = useRef(null);
-  const containerRef = useRef(null);
-
-  function checkZIndex() {
-    if (isSelected) {
-      zIndex.set(2);
-    } else if (!isSelected) {
-      zIndex.set(0);
-    }
-  }
-
-  function checkToDismiss() {
-    if (isSelected) {
-      console.log('Modal shown!');
-      setModalShown(true);
-    } else {
-      console.log('No modal shown');
-      setModalShown(false);
-    }
-  }
-
-  useEffect(() => {
-    const dismissModal = event => {
-      if (isSelected && event.key === 'Escape') {
-        history.push('/');
+    function checkZIndex() {
+      if (isSelected) {
+        zIndex.set(2);
+      } else if (!isSelected) {
+        zIndex.set(0);
       }
-    };
+    }
 
-    window.addEventListener('keydown', dismissModal);
+    useEffect(() => {
+      const dismissModal = event => {
+        if (isSelected && event.key === 'Escape') {
+          history.push('/');
+        }
+      };
 
-    return () => {
-      window.removeEventListener('keydown', dismissModal);
-    };
-  }, [isSelected, history]);
+      window.addEventListener('keydown', dismissModal);
 
-  return (
-    <div className="post" style={{ maxHeight }} ref={containerRef}>
-      <Overlay isSelected={isSelected} />
-      <div className={`post-content-container ${isSelected && 'open'}`}>
-        <motion.div
-          // without layout transition, zIndex doesn't update
-          layoutTransition={isSelected ? closeSpring : openSpring}
-          style={{ y, zIndex }}
-          ref={postRef}
-          className="post-content"
-          onUpdate={checkZIndex}
-          drag={isSelected && false}
-        >
-          <Image
-            id={post.id}
-            isSelected={isSelected}
-            src={post.src}
-            width={post.width}
-            height={post.height}
-          />
-          <Caption caption={post.caption} isSelected={isSelected} id={post.id} />
-        </motion.div>
+      return () => {
+        window.removeEventListener('keydown', dismissModal);
+      };
+    }, [isSelected, history]);
+
+    return (
+      <div className="post" style={{ maxHeight }} ref={containerRef}>
+        <Overlay isSelected={isSelected} />
+        <div className={`post-content-container ${isSelected && 'open'}`}>
+          <motion.div
+            // without layout transition, zIndex doesn't update
+            layoutTransition={isSelected ? closeSpring : openSpring}
+            style={{ y, zIndex }}
+            ref={postRef}
+            className="post-content"
+            onUpdate={checkZIndex}
+            drag={isSelected && false}
+          >
+            <Image
+              id={post.id}
+              isSelected={isSelected}
+              src={post.src}
+              width={post.width}
+              height={post.height}
+            />
+            <Caption caption={post.caption} isSelected={isSelected} id={post.id} />
+          </motion.div>
+        </div>
+
+        {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
       </div>
+    );
+  },
+  (prev, next) => prev.isSelected === next.isSelected,
+);
 
-      {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
-    </div>
-  );
-};
-// (prev, next) => prev.isSelected === next.isSelected,
-function Image({ isSelected, id, src, height }) {
+function Image({ isSelected, id, src }) {
   const inverted = useInvertedScale();
 
   return (
