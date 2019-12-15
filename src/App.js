@@ -72,6 +72,7 @@ async function getPosts() {
 // home page
 function App() {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // not really utilized ATM
   const [error, setError] = useState({ status: null, msg: null });
@@ -92,9 +93,7 @@ function App() {
 
     fetchData();
     // fake delay so loading shows
-    setTimeout(() => {
-      setLoading(false);
-    }, 0);
+    setLoading(false);
   }, []);
 
   return (
@@ -105,7 +104,7 @@ function App() {
           <Route
             exact
             path={['/posts/:id', '/']}
-            component={props => <NewGrid posts={posts} {...props} />}
+            component={props => !loading && <NewGrid posts={posts} {...props} />}
           />
           <Route path="/about">
             <About />

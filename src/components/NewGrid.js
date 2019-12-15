@@ -7,7 +7,6 @@ import { FiInstagram } from 'react-icons/fi';
 import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { Loading } from './Loading';
-import { getPosts } from './utils/getPosts';
 
 // Separate into individual components
 const StyledGrid = styled.div`
@@ -241,15 +240,13 @@ export function NewGrid({ posts, match, history }) {
   // https://www.leighhalliday.com/use-effect-hook
 
   useEffect(() => {
-    // body-scroll-lock package handles locking scroll for us
-    // should look into accessbility concerns of this
     if (posts.length !== 0) {
       setTimeout(() => {
         setLoading(false);
-      }, 1000);
-      // setLoading(false);
+      }, 500);
     }
   }, [posts]);
+
   // disable scroll on modal shown
   useEffect(() => {
     // body-scroll-lock package handles locking scroll for us
@@ -285,74 +282,76 @@ export function NewGrid({ posts, match, history }) {
   );
 }
 
-const Post = ({ isSelected, post, maxHeight, history }) => {
-  const y = useMotionValue(0);
-  const zIndex = useMotionValue(isSelected ? 2 : 0);
-  const postRef = useRef(null);
-  const containerRef = useRef(null);
+const Post = memo(
+  ({ isSelected, post, maxHeight, history }) => {
+    const y = useMotionValue(0);
+    const zIndex = useMotionValue(isSelected ? 2 : 0);
+    const postRef = useRef(null);
+    const containerRef = useRef(null);
 
-  function checkZIndex() {
-    if (isSelected) {
-      zIndex.set(2);
-    } else if (!isSelected) {
-      zIndex.set(0);
-    }
-  }
-
-  // dismiss modal when escape is pressed
-  useEffect(() => {
-    const dismissModal = event => {
-      if (isSelected && event.key === 'Escape') {
-        history.push('/');
+    function checkZIndex() {
+      if (isSelected) {
+        zIndex.set(2);
+      } else if (!isSelected) {
+        zIndex.set(0);
       }
-    };
-
-    window.addEventListener('keydown', dismissModal);
-
-    return () => {
-      window.removeEventListener('keydown', dismissModal);
-    };
-  }, [isSelected, history]);
-
-  // when modal is dismissed, make sure scroll pos is in sync
-  // when visiting an item near end of list directly, when modal dismissed
-  // scroll pos was top of list
-  useEffect(() => {
-    const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop);
-    if (isSelected) {
-      scrollToRef(containerRef);
     }
-  }, []);
 
-  return (
-    <div className="post" style={{ maxHeight }} ref={containerRef}>
-      <Overlay isSelected={isSelected} />
-      <div className={`post-content-container ${isSelected && 'open'}`}>
-        <motion.div
-          ref={postRef}
-          // without layout transition, zIndex doesn't update
-          layoutTransition={isSelected ? closeSpring : openSpring}
-          style={{ y, zIndex }}
-          className="post-content"
-          onUpdate={checkZIndex}
-          drag={isSelected && false}
-        >
-          <Image
-            id={post.id}
-            isSelected={isSelected}
-            src={post.src}
-            width={post.width}
-            height={post.height}
-          />
-          <Caption caption={post.caption} isSelected={isSelected} id={post.id} link={post.link} />
-        </motion.div>
+    // dismiss modal when escape is pressed
+    useEffect(() => {
+      const dismissModal = event => {
+        if (isSelected && event.key === 'Escape') {
+          history.push('/');
+        }
+      };
+
+      window.addEventListener('keydown', dismissModal);
+
+      return () => {
+        window.removeEventListener('keydown', dismissModal);
+      };
+    }, [isSelected, history]);
+
+    // when modal is dismissed, make sure scroll pos is in sync
+    // when visiting an item near end of list directly, when modal dismissed
+    // scroll pos was top of list
+    useEffect(() => {
+      const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop);
+      if (isSelected) {
+        scrollToRef(containerRef);
+      }
+    }, [isSelected]);
+
+    return (
+      <div className="post" style={{ maxHeight }} ref={containerRef}>
+        <Overlay isSelected={isSelected} />
+        <div className={`post-content-container ${isSelected && 'open'}`}>
+          <motion.div
+            ref={postRef}
+            // without layout transition, zIndex doesn't update
+            layoutTransition={isSelected ? closeSpring : openSpring}
+            style={{ y, zIndex }}
+            className="post-content"
+            onUpdate={checkZIndex}
+            drag={isSelected && false}
+          >
+            <Image
+              id={post.id}
+              isSelected={isSelected}
+              src={post.src}
+              width={post.width}
+              height={post.height}
+            />
+            <Caption caption={post.caption} isSelected={isSelected} id={post.id} link={post.link} />
+          </motion.div>
+        </div>
+
+        {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
       </div>
-
-      {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
-    </div>
-  );
-};
-// (prev, next) => prev.isSelected === next.isSelected,
+    );
+  },
+  (prev, next) => prev.isSelected === next.isSelected,
+);
 
 function Image({ isSelected, id, src }) {
   const inverted = useInvertedScale();
@@ -415,15 +414,24 @@ function Overlay({ isSelected }) {
       transition={{ duration: 0.2, delay: isSelected ? 0.2 : 0.2 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
-      // attempt to prevent ios scrolling
-      // onTouchStart={e => e.preventDefault()}
     >
       <Link to="/" />
     </motion.div>
   );
 }
 
+const PostPropTypes = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+  caption: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
+  images: PropTypes.object.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  src: PropTypes.string.isRequired,
+});
+
 NewGrid.propTypes = {
+  posts: PropTypes.arrayOf(PostPropTypes).isRequired,
   match: ReactRouterPropTypes.match.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
 };
@@ -437,19 +445,12 @@ Image.propTypes = {
 Caption.propTypes = {
   isSelected: PropTypes.bool.isRequired,
   caption: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
 };
 
 Post.propTypes = {
-  post: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    caption: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired,
-    images: PropTypes.object.isRequired,
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    src: PropTypes.string.isRequired,
-  }).isRequired,
-  maxHeight: PropTypes.number.isRequired,
+  post: PostPropTypes.isRequired,
+  // maxHeight: PropTypes.number.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
   isSelected: PropTypes.bool.isRequired,
 };
