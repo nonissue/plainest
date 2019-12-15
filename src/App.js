@@ -70,10 +70,7 @@ function App() {
       <Header />
       <div>
         <Switch>
-          <Route exact path="/">
-            <Redirect to="/posts" />
-          </Route>
-          <Route path={['/posts/:id', '/posts']} component={NewGrid} />
+          <Route exact path={['/posts/:id', '/']} component={NewGrid} />
           <Route path="/about">
             <About />
           </Route>

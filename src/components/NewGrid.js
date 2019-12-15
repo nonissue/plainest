@@ -1,32 +1,36 @@
 import React, { memo, useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
 import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
-import { Loading } from './Loading';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import { useKeyPress } from './utils/useKey';
+import { Loading } from './Loading';
 
 // Issues:
 // - [x] Image doesn't move back properly (exit animation starts inside original container)
 // - [ ] dark mode
+// - [ ] accessibility concerns of body-scroll-lock?
+// - [ ] add way to dismiss modal on escape press
 // - [x] weird flash when closing (I think related to overlay ++ zIndex)
 // - [ ] handle data fetching here or in App? Can't think of a way to render error component from here
 // - [ ] full res insta images https://stackoverflow.com/questions/31302811/1080x1080-photos-via-instagram-api
 //    - see instagramapiresponse.json
-// - [ ] prevent scroll on ios (if scroll is initiated before modal is shown, content still scrollable briefly)
+// - [x] prevent scroll on ios (if scroll is initiated before modal is shown, content still scrollable briefly)
+//  - [ ] I think this is fixed with body-scroll-lock package
 // = [ ] scroll restoration?
 // - [x] implement loading
 // - [ ] add next/prev
 // - [ ] add view on insta link
 // - [x] center images vertically
-// - [c] set point of interest
+// - [x] set point of interest (added object-position to better center the images)
 // - [x] images on close are obscured by other grid images, will fix
 // - [x] fix image sizing finally...
 // - [x] disable scrolling when isSelected
 // - [x] fix grid flashing
-// - [c] adjust overlay timing, since grid post animation isn't a static time
+// - [x] adjust overlay timing, since grid post animation isn't a static time
 //       because it varies based on distance
 // - [x] looks weird going behind header (zindex)
 // - [x] remove unused CSS
@@ -278,7 +282,8 @@ export function NewGrid({ match, history }) {
 
   // disable scroll on modal shown
   useEffect(() => {
-    // Should check last fetch, and if it is stale, run posts-hydrate
+    // body-scroll-lock package handles locking scroll for us
+    // should look into accessbility concerns of this
     const body = document.querySelector('body');
     if (posts.find(p => p.id === match.params.id)) {
       // document.body.style.overflow = 'hidden';
@@ -305,6 +310,7 @@ export function NewGrid({ match, history }) {
               history={history}
               width={post.width}
               maxHeight={postHeight}
+              match={match}
             />
           ))
         )}
@@ -313,54 +319,76 @@ export function NewGrid({ match, history }) {
   );
 }
 
-const Post = memo(
-  ({ isSelected, post, maxHeight }) => {
-    const y = useMotionValue(0);
-    const zIndex = useMotionValue(isSelected ? 2 : 0);
+const Post = ({ isSelected, post, maxHeight, history }) => {
+  const y = useMotionValue(0);
+  const zIndex = useMotionValue(isSelected ? 2 : 0);
 
-    // remove refs?
-    const postRef = useRef(null);
-    const containerRef = useRef(null);
+  const [modalShown, setModalShown] = useState(false);
 
-    function checkZIndex() {
-      if (isSelected) {
-        zIndex.set(2);
-      } else if (!isSelected) {
-        zIndex.set(0);
-      }
+  // remove refs?
+  const postRef = useRef(null);
+  const containerRef = useRef(null);
+
+  function checkZIndex() {
+    if (isSelected) {
+      zIndex.set(2);
+    } else if (!isSelected) {
+      zIndex.set(0);
     }
+  }
 
-    return (
-      <div className="post" style={{ maxHeight }} ref={containerRef}>
-        <Overlay isSelected={isSelected} />
-        <div className={`post-content-container ${isSelected && 'open'}`}>
-          <motion.div
-            // without layout transition, zIndex doesn't update
-            layoutTransition={isSelected ? closeSpring : openSpring}
-            style={{ y, zIndex }}
-            ref={postRef}
-            className="post-content"
-            onUpdate={checkZIndex}
-            drag={isSelected && false}
-          >
-            <Image
-              id={post.id}
-              isSelected={isSelected}
-              src={post.src}
-              width={post.width}
-              height={post.height}
-            />
-            <Caption caption={post.caption} isSelected={isSelected} id={post.id} />
-          </motion.div>
-        </div>
+  function checkToDismiss() {
+    if (isSelected) {
+      console.log('Modal shown!');
+      setModalShown(true);
+    } else {
+      console.log('No modal shown');
+      setModalShown(false);
+    }
+  }
 
-        {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
+  useEffect(() => {
+    const dismissModal = event => {
+      if (isSelected && (event.key === 'Escape' || event.key === 'Control')) {
+        history.push('/');
+      }
+    };
+    window.addEventListener('keydown', dismissModal);
+
+    return () => {
+      window.removeEventListener('keydown', dismissModal);
+    };
+  }, [isSelected, history]);
+
+  return (
+    <div className="post" style={{ maxHeight }} ref={containerRef}>
+      <Overlay isSelected={isSelected} />
+      <div className={`post-content-container ${isSelected && 'open'}`}>
+        <motion.div
+          // without layout transition, zIndex doesn't update
+          layoutTransition={isSelected ? closeSpring : openSpring}
+          style={{ y, zIndex }}
+          ref={postRef}
+          className="post-content"
+          onUpdate={checkZIndex}
+          drag={isSelected && false}
+        >
+          <Image
+            id={post.id}
+            isSelected={isSelected}
+            src={post.src}
+            width={post.width}
+            height={post.height}
+          />
+          <Caption caption={post.caption} isSelected={isSelected} id={post.id} />
+        </motion.div>
       </div>
-    );
-  },
-  (prev, next) => prev.isSelected === next.isSelected,
-);
 
+      {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
+    </div>
+  );
+};
+// (prev, next) => prev.isSelected === next.isSelected,
 function Image({ isSelected, id, src, height }) {
   const inverted = useInvertedScale();
 
@@ -420,7 +448,7 @@ function Overlay({ isSelected }) {
       // attempt to prevent ios scrolling
       onTouchStart={e => e.preventDefault()}
     >
-      <Link to="/posts" />
+      <Link to="/" />
     </motion.div>
   );
 }
