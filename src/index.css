@@ -21,6 +21,10 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
