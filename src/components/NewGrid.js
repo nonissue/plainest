@@ -111,13 +111,19 @@ const StyledGrid = styled.div`
   .post-image-container {
     position: relative;
     width: 100%;
+    height: 100%;
     overflow: hidden;
     transform: translateZ(0);
+    object-fit: none;
+    object-position: center center;
   }
   .post-image-container img {
     display: block;
     width: 100%;
     height: 100%;
+    /* object-fit: cover; */
+    /* object-fit: none;
+    object-position: 50% 50%; */
   }
   .post-image.open {
     width: 100%;
@@ -354,7 +360,7 @@ const Post = memo(
   (prev, next) => prev.isSelected === next.isSelected,
 );
 
-function Image({ isSelected, id, src }) {
+function Image({ isSelected, id, src, height }) {
   const inverted = useInvertedScale();
 
   return (
@@ -371,8 +377,11 @@ function Image({ isSelected, id, src }) {
         transition={closeSpring}
         animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
         style={{
-          objectFit: 'cover',
+          // objectFit: 'cover',
           display: 'block',
+          objectFit: 'none',
+          // objectPosition: `0px ${height / 50}px`,
+          // objectPosition: 'bottom bottom',
         }}
       />
     </motion.div>
