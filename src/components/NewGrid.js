@@ -272,7 +272,7 @@ export function NewGrid({ match, history }) {
   // disable scroll on modal shown
   useEffect(() => {
     // Should check last fetch, and if it is stale, run posts-hydrate
-    const body = document.querySelector('html');
+    const body = document.querySelector('body');
     if (posts.find(p => p.id === match.params.id)) {
       // document.body.style.overflow = 'hidden';
       disableBodyScroll(body);
