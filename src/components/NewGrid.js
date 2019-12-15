@@ -305,8 +305,6 @@ const Post = memo(
   ({ isSelected, post, maxHeight, history }) => {
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
-
-    // remove refs?
     const postRef = useRef(null);
     const containerRef = useRef(null);
 
@@ -318,6 +316,7 @@ const Post = memo(
       }
     }
 
+    // dismiss modal when escape is pressed
     useEffect(() => {
       const dismissModal = event => {
         if (isSelected && event.key === 'Escape') {
@@ -332,6 +331,9 @@ const Post = memo(
       };
     }, [isSelected, history]);
 
+    // when modal is dismissed, make sure scroll pos is in sync
+    // when visiting an item near end of list directly, when modal dismissed
+    // scroll pos was top of list
     useEffect(() => {
       const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop);
       if (isSelected) {
