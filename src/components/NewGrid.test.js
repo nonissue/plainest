@@ -1,131 +1,10 @@
-// https://www.instagram.com/p/B5CNU9yAs3l/?__a=1
-// graphql.shortcode_media.display_url
-{
-  "graphql": {
-    "shortcode_media": {
-      "__typename": "GraphImage",
-      "id": "2180363784932216293",
-      "shortcode": "B5CNU9yAs3l",
-      "dimensions": { "height": 719, "width": 1080 },
-      "gating_info": null,
-      "fact_check_overall_rating": null,
-      "fact_check_information": null,
-      "media_preview": "ACob6AikIrCfUZCDyAPXoev+FKdSdl5xnsR/X39KfMTY28VDLcRwjLHp2HJz6YrDn1CZ2C5Cg/3ff1/wrMdu3JPf/Pv607lKPc3bjVsDEI+pI/l2/nVb+0ZjzuUZ9z/jWf5krJjkoOuAMfifUe9V93tUl2S3LfknoCOKmKjvyP8AP6e1Q/1xSqcflmszMWONV56n19Mn/DimOMJgDJznI9u1PTnr3NRkkPgdOtF2FxiSMoKDo3BzSi3HrUWeSO2aiyaer6jvY//Z",
-      "display_url": "https://instagram.fyyc5-1.fna.fbcdn.net/v/t51.2885-15/e35/s1080x1080/73512656_1180072088868680_7295576525326634614_n.jpg?_nc_ht=instagram.fyyc5-1.fna.fbcdn.net&_nc_cat=108&oh=f37eb6f50ad7c0d92b04a7f93c38eb79&oe=5E7EBF0A",
-      "display_resources": [
-        {
-          "src": "https://instagram.fyyc5-1.fna.fbcdn.net/v/t51.2885-15/sh0.08/e35/s640x640/73512656_1180072088868680_7295576525326634614_n.jpg?_nc_ht=instagram.fyyc5-1.fna.fbcdn.net&_nc_cat=108&oh=b788a1b3322ddf1d52e4b070e9fd28da&oe=5E6E91CE",
-          "config_width": 640,
-          "config_height": 426
-        },
-        {
-          "src": "https://instagram.fyyc5-1.fna.fbcdn.net/v/t51.2885-15/sh0.08/e35/s750x750/73512656_1180072088868680_7295576525326634614_n.jpg?_nc_ht=instagram.fyyc5-1.fna.fbcdn.net&_nc_cat=108&oh=bd6861d3fc098cfb7a6b094162bde6c2&oe=5E810E0A",
-          "config_width": 750,
-          "config_height": 499
-        },
-        {
-          "src": "https://instagram.fyyc5-1.fna.fbcdn.net/v/t51.2885-15/e35/s1080x1080/73512656_1180072088868680_7295576525326634614_n.jpg?_nc_ht=instagram.fyyc5-1.fna.fbcdn.net&_nc_cat=108&oh=f37eb6f50ad7c0d92b04a7f93c38eb79&oe=5E7EBF0A",
-          "config_width": 1080,
-          "config_height": 719
-        }
-      ],
-      "accessibility_caption": "Image may contain: plant, tree, sky, flower, outdoor and nature",
-      "is_video": false,
-      "tracking_token": "eyJ2ZXJzaW9uIjo1LCJwYXlsb2FkIjp7ImlzX2FuYWx5dGljc190cmFja2VkIjpmYWxzZSwidXVpZCI6IjJkOTliNTY5YzFkYzQ1YWI5ZThkYTY3NGI4YzA3OTM5MjE4MDM2Mzc4NDkzMjIxNjI5MyIsInNlcnZlcl90b2tlbiI6IjE1NzU5MzQyMDk2MzR8MjE4MDM2Mzc4NDkzMjIxNjI5M3wxNDMyMDI1fDJmNjQxN2YxODYyODdiOWRmZjVkOTA5ZGNkOWFjYzdkMmY4NGYwNTFjODQ0OWU1MmZmNzJiYWY3MWMyYmUyYmIifSwic2lnbmF0dXJlIjoiIn0=",
-      "edge_media_to_tagged_user": { "edges": [] },
-      "edge_media_to_caption": { "edges": [{ "node": { "text": "X-ivy" } }] },
-      "caption_is_edited": false,
-      "has_ranked_comments": false,
-      "edge_media_to_parent_comment": {
-        "count": 1,
-        "page_info": { "has_next_page": false, "end_cursor": null },
-        "edges": [
-          {
-            "node": {
-              "id": "18026870917244855",
-              "text": "\ud83d\ude0d\ud83d\ude0d",
-              "created_at": 1574139865,
-              "did_report_as_spam": false,
-              "owner": {
-                "id": "254773300",
-                "is_verified": false,
-                "profile_pic_url": "https://instagram.fyyc5-1.fna.fbcdn.net/vp/49f19267d2acda20d937a9ec78873376/5E80FE03/t51.2885-19/s150x150/74377874_1138671353008914_46241791162187776_n.jpg?_nc_ht=instagram.fyyc5-1.fna.fbcdn.net",
-                "username": "chriskeo"
-              },
-              "viewer_has_liked": false,
-              "edge_liked_by": { "count": 0 },
-              "edge_threaded_comments": {
-                "count": 0,
-                "page_info": { "has_next_page": false, "end_cursor": null },
-                "edges": []
-              }
-            }
-          }
-        ]
-      },
-      "edge_media_preview_comment": {
-        "count": 1,
-        "edges": [
-          {
-            "node": {
-              "id": "18026870917244855",
-              "text": "\ud83d\ude0d\ud83d\ude0d",
-              "created_at": 1574139865,
-              "did_report_as_spam": false,
-              "owner": {
-                "id": "254773300",
-                "is_verified": false,
-                "profile_pic_url": "https://instagram.fyyc5-1.fna.fbcdn.net/vp/49f19267d2acda20d937a9ec78873376/5E80FE03/t51.2885-19/s150x150/74377874_1138671353008914_46241791162187776_n.jpg?_nc_ht=instagram.fyyc5-1.fna.fbcdn.net",
-                "username": "chriskeo"
-              },
-              "viewer_has_liked": false,
-              "edge_liked_by": { "count": 0 }
-            }
-          }
-        ]
-      },
-      "comments_disabled": false,
-      "taken_at_timestamp": 1574139639,
-      "edge_media_preview_like": {
-        "count": 54,
-        "edges": [
-          {
-            "node": {
-              "id": "194622543",
-              "is_verified": false,
-              "profile_pic_url": "https://instagram.fyyc5-1.fna.fbcdn.net/vp/696e24c10d0b66ebcf0edb54df98f558/5E887A1C/t51.2885-19/s150x150/56666977_476961299509238_4654505635482697728_n.jpg?_nc_ht=instagram.fyyc5-1.fna.fbcdn.net",
-              "username": "arjun_d12"
-            }
-          }
-        ]
-      },
-      "edge_media_to_sponsor_user": { "edges": [] },
-      "location": null,
-      "viewer_has_liked": true,
-      "viewer_has_saved": false,
-      "viewer_has_saved_to_collection": false,
-      "viewer_in_photo_of_you": false,
-      "viewer_can_reshare": true,
-      "owner": {
-        "id": "20196334360",
-        "is_verified": false,
-        "profile_pic_url": "https://instagram.fyyc5-1.fna.fbcdn.net/vp/779848c6a9b801954dc9bf8c9bcce503/5E8A9D41/t51.2885-19/s150x150/70426237_728140644329069_6401152277943418880_n.jpg?_nc_ht=instagram.fyyc5-1.fna.fbcdn.net",
-        "username": "plain.site",
-        "blocked_by_viewer": false,
-        "followed_by_viewer": true,
-        "full_name": "",
-        "has_blocked_viewer": false,
-        "is_private": false,
-        "is_unpublished": false,
-        "requested_by_viewer": false
-      },
-      "is_ad": false,
-      "edge_web_media_to_related_media": { "edges": [] }
-    }
-  }
-}
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { act } from 'react-dom/test-utils';
+import { NewGrid } from './NewGrid';
 
-
+// fake posts for testing newGrid component
 const livePosts = [
   {
     id: '2180363784932216293_20196334360',
@@ -558,3 +437,21 @@ const livePosts = [
     caption: 'i',
   },
 ];
+
+it('renders without crashing', () => {
+  const div = document.createElement('div');
+
+  act(() => {
+    ReactDOM.render(
+      <Router>
+        <Route
+          exact
+          path={['/posts/:id', '/']}
+          component={props => <NewGrid posts={livePosts} {...props} />}
+        />
+      </Router>,
+      div,
+    );
+  });
+  ReactDOM.unmountComponentAtNode(div);
+});

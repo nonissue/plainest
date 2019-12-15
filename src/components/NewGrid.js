@@ -1,5 +1,4 @@
 import React, { memo, useEffect, useState, useRef } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
@@ -8,7 +7,9 @@ import { FiInstagram } from 'react-icons/fi';
 import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { Loading } from './Loading';
+import { getPosts } from './utils/getPosts';
 
+// Separate into individual components
 const StyledGrid = styled.div`
   /* media queries located at bottom of StyledGrid */
   max-width: 990px;
@@ -234,47 +235,32 @@ const StyledGrid = styled.div`
 const openSpring = { type: 'spring', stiffness: 300, damping: 200 };
 const closeSpring = { type: 'spring', stiffness: 300, damping: 200 };
 
-export function NewGrid({ match, history }) {
-  const [posts, setPosts] = useState([]);
-  const [postHeight, setPostHeight] = useState(null);
+export function NewGrid({ posts, match, history }) {
   const [loading, setLoading] = useState(true);
 
-  // fetch data on load hook
   // https://www.leighhalliday.com/use-effect-hook
-  useEffect(() => {
-    // Should check last fetch, and if it is stale, run posts-hydrate
-    const fetchData = async () => {
-      const res = await axios('/.netlify/functions/posts-read-latest');
-      const fetchedPosts = res.data.data.posts;
-      setPosts(fetchedPosts);
-      setPostHeight(Math.min(...fetchedPosts.map(post => post.height)));
-    };
 
-    try {
-      fetchData();
-      // fake delay so loading shows
+  useEffect(() => {
+    // body-scroll-lock package handles locking scroll for us
+    // should look into accessbility concerns of this
+    if (posts.length !== 0) {
       setTimeout(() => {
         setLoading(false);
       }, 1000);
-    } catch (err) {
-      console.log('Error occurred: ');
-      console.log(err);
+      // setLoading(false);
     }
-  }, []);
-
+  }, [posts]);
   // disable scroll on modal shown
   useEffect(() => {
     // body-scroll-lock package handles locking scroll for us
     // should look into accessbility concerns of this
     const body = document.querySelector('body');
     if (posts.find(p => p.id === match.params.id)) {
-      // document.body.style.overflow = 'hidden';
       disableBodyScroll(body);
     } else {
-      // document.body.style.overflow = 'auto';
       enableBodyScroll(body);
     }
-  }, [match.params.id, posts]);
+  }, [match, posts]);
 
   return (
     <StyledGrid>
@@ -283,7 +269,6 @@ export function NewGrid({ match, history }) {
           <Loading />
         ) : (
           !!posts &&
-          !!postHeight &&
           posts.map(post => (
             <Post
               post={post}
@@ -291,7 +276,6 @@ export function NewGrid({ match, history }) {
               isSelected={match.params.id === post.id}
               history={history}
               width={post.width}
-              maxHeight={postHeight}
               match={match}
             />
           ))
@@ -301,76 +285,74 @@ export function NewGrid({ match, history }) {
   );
 }
 
-const Post = memo(
-  ({ isSelected, post, maxHeight, history }) => {
-    const y = useMotionValue(0);
-    const zIndex = useMotionValue(isSelected ? 2 : 0);
-    const postRef = useRef(null);
-    const containerRef = useRef(null);
+const Post = ({ isSelected, post, maxHeight, history }) => {
+  const y = useMotionValue(0);
+  const zIndex = useMotionValue(isSelected ? 2 : 0);
+  const postRef = useRef(null);
+  const containerRef = useRef(null);
 
-    function checkZIndex() {
-      if (isSelected) {
-        zIndex.set(2);
-      } else if (!isSelected) {
-        zIndex.set(0);
-      }
+  function checkZIndex() {
+    if (isSelected) {
+      zIndex.set(2);
+    } else if (!isSelected) {
+      zIndex.set(0);
     }
+  }
 
-    // dismiss modal when escape is pressed
-    useEffect(() => {
-      const dismissModal = event => {
-        if (isSelected && event.key === 'Escape') {
-          history.push('/');
-        }
-      };
-
-      window.addEventListener('keydown', dismissModal);
-
-      return () => {
-        window.removeEventListener('keydown', dismissModal);
-      };
-    }, [isSelected, history]);
-
-    // when modal is dismissed, make sure scroll pos is in sync
-    // when visiting an item near end of list directly, when modal dismissed
-    // scroll pos was top of list
-    useEffect(() => {
-      const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop);
-      if (isSelected) {
-        scrollToRef(containerRef);
+  // dismiss modal when escape is pressed
+  useEffect(() => {
+    const dismissModal = event => {
+      if (isSelected && event.key === 'Escape') {
+        history.push('/');
       }
-    }, []);
+    };
 
-    return (
-      <div className="post" style={{ maxHeight }} ref={containerRef}>
-        <Overlay isSelected={isSelected} />
-        <div className={`post-content-container ${isSelected && 'open'}`}>
-          <motion.div
-            ref={postRef}
-            // without layout transition, zIndex doesn't update
-            layoutTransition={isSelected ? closeSpring : openSpring}
-            style={{ y, zIndex }}
-            className="post-content"
-            onUpdate={checkZIndex}
-            drag={isSelected && false}
-          >
-            <Image
-              id={post.id}
-              isSelected={isSelected}
-              src={post.src}
-              width={post.width}
-              height={post.height}
-            />
-            <Caption caption={post.caption} isSelected={isSelected} id={post.id} link={post.link} />
-          </motion.div>
-        </div>
+    window.addEventListener('keydown', dismissModal);
 
-        {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
+    return () => {
+      window.removeEventListener('keydown', dismissModal);
+    };
+  }, [isSelected, history]);
+
+  // when modal is dismissed, make sure scroll pos is in sync
+  // when visiting an item near end of list directly, when modal dismissed
+  // scroll pos was top of list
+  useEffect(() => {
+    const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop);
+    if (isSelected) {
+      scrollToRef(containerRef);
+    }
+  }, []);
+
+  return (
+    <div className="post" style={{ maxHeight }} ref={containerRef}>
+      <Overlay isSelected={isSelected} />
+      <div className={`post-content-container ${isSelected && 'open'}`}>
+        <motion.div
+          ref={postRef}
+          // without layout transition, zIndex doesn't update
+          layoutTransition={isSelected ? closeSpring : openSpring}
+          style={{ y, zIndex }}
+          className="post-content"
+          onUpdate={checkZIndex}
+          drag={isSelected && false}
+        >
+          <Image
+            id={post.id}
+            isSelected={isSelected}
+            src={post.src}
+            width={post.width}
+            height={post.height}
+          />
+          <Caption caption={post.caption} isSelected={isSelected} id={post.id} link={post.link} />
+        </motion.div>
       </div>
-    );
-  },
-  (prev, next) => prev.isSelected === next.isSelected,
-);
+
+      {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
+    </div>
+  );
+};
+// (prev, next) => prev.isSelected === next.isSelected,
 
 function Image({ isSelected, id, src }) {
   const inverted = useInvertedScale();

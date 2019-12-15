@@ -1,4 +1,5 @@
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
@@ -55,12 +56,45 @@ function getPostIndex(posts, id) {
   return posts.findIndex(p => p.id === id);
 }
 
+async function getPosts() {
+  let res;
+
+  try {
+    res = await axios('/.netlify/functions/posts-read-latest');
+    // return res.data.data.posts;
+  } catch (err) {
+    console.log('Getposts error');
+    // throw new Error('getPosts error');
+  }
+  return res.data.data.posts;
+}
+
 // home page
 function App() {
+  const [posts, setPosts] = useState([]);
+
   // not really utilized ATM
   const [error, setError] = useState({ status: null, msg: null });
   useEffect(() => {
     setError({ status: '500', msg: 'Unknown error occurred.' });
+  }, []);
+
+  useEffect(() => {
+    // Should check last fetch, and if it is stale, run posts-hydrate
+    const fetchData = async () => {
+      try {
+        const fetchedPosts = await getPosts();
+        setPosts(fetchedPosts);
+      } catch (err) {
+        throw new Error(err);
+      }
+    };
+
+    fetchData();
+    // fake delay so loading shows
+    setTimeout(() => {
+      setLoading(false);
+    }, 0);
   }, []);
 
   return (
@@ -68,7 +102,11 @@ function App() {
       <Header />
       <div>
         <Switch>
-          <Route exact path={['/posts/:id', '/']} component={NewGrid} />
+          <Route
+            exact
+            path={['/posts/:id', '/']}
+            component={props => <NewGrid posts={posts} {...props} />}
+          />
           <Route path="/about">
             <About />
           </Route>

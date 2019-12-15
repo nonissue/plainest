@@ -61,8 +61,8 @@ export function About() {
         exit="exit"
         variants={variants}
       >
+        <h3>About</h3>
         <p>
-          <h3>About</h3>
           &quot;Boring photos of buildings&quot; <i>aka</i> &quot;A kuest for klout™️&quot; cooked
           up sporadically by{' '}
           <a href="https://www.instagram.com/christiandy/" alt="christiandy instagram">
