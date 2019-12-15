@@ -12,7 +12,7 @@ import { Loading } from './Loading';
 // - [x] Image doesn't move back properly (exit animation starts inside original container)
 // - [ ] dark mode
 // - [ ] accessibility concerns of body-scroll-lock?
-// - [ ] add way to dismiss modal on escape press
+// - [x] add way to dismiss modal on escape press
 // - [x] weird flash when closing (I think related to overlay ++ zIndex)
 // - [ ] handle data fetching here or in App? Can't think of a way to render error component from here
 // - [ ] full res insta images https://stackoverflow.com/questions/31302811/1080x1080-photos-via-instagram-api
@@ -170,6 +170,14 @@ const StyledGrid = styled.div`
     }
   }
   .caption-container .open {
+    display: block;
+  }
+  .caption-container a {
+    z-index: 2000 !important;
+    position: relative;
+    font-size: 1em;
+    /* allows us to click through overlay to actually use link */
+    pointer-events: auto;
     display: block;
   }
 
@@ -369,7 +377,7 @@ const Post = memo(
               width={post.width}
               height={post.height}
             />
-            <Caption caption={post.caption} isSelected={isSelected} id={post.id} />
+            <Caption caption={post.caption} isSelected={isSelected} id={post.id} link={post.link} />
           </motion.div>
         </div>
 
@@ -404,7 +412,7 @@ function Image({ isSelected, id, src }) {
   );
 }
 
-function Caption({ isSelected, caption }) {
+function Caption({ isSelected, caption, link }) {
   const inverted = useInvertedScale();
   const x = isSelected ? 0 : 0;
   const opacity = isSelected ? 1 : 0;
@@ -424,6 +432,9 @@ function Caption({ isSelected, caption }) {
       }}
     >
       <p>{caption}</p>
+      <p>
+        <a href={link}>View on IG</a>
+      </p>
     </motion.div>
   );
 }
@@ -437,7 +448,7 @@ function Overlay({ isSelected }) {
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
       // attempt to prevent ios scrolling
-      onTouchStart={e => e.preventDefault()}
+      // onTouchStart={e => e.preventDefault()}
     >
       <Link to="/" />
     </motion.div>
@@ -471,6 +482,7 @@ Post.propTypes = {
     src: PropTypes.string.isRequired,
   }).isRequired,
   maxHeight: PropTypes.number.isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
   isSelected: PropTypes.bool.isRequired,
 };
 
