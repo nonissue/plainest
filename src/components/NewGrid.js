@@ -271,10 +271,13 @@ export function NewGrid({ match, history }) {
 
   // disable scroll on modal shown
   useEffect(() => {
-    const body = document.querySelector('body');
+    // Should check last fetch, and if it is stale, run posts-hydrate
+    const body = document.querySelector('html');
     if (posts.find(p => p.id === match.params.id)) {
+      // document.body.style.overflow = 'hidden';
       disableBodyScroll(body);
     } else {
+      // document.body.style.overflow = 'auto';
       enableBodyScroll(body);
     }
   }, [match.params.id, posts]);
@@ -405,7 +408,7 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 0.2, delay: isSelected ? 0 : 0 }}
+      transition={{ duration: 0.2, delay: isSelected ? 0.2 : 0.2 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
       // attempt to prevent ios scrolling
