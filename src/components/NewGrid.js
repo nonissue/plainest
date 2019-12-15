@@ -121,6 +121,7 @@ const StyledGrid = styled.div`
     display: block;
     width: 100%;
     height: 100%;
+    object-fit: cover;
     /* object-fit: cover; */
     /* object-fit: none;
     object-position: 50% 50%; */
@@ -377,11 +378,7 @@ function Image({ isSelected, id, src, height }) {
         transition={closeSpring}
         animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
         style={{
-          // objectFit: 'cover',
           display: 'block',
-          objectFit: 'none',
-          // objectPosition: `0px ${height / 50}px`,
-          // objectPosition: 'bottom bottom',
         }}
       />
     </motion.div>
