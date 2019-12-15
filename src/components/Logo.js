@@ -53,7 +53,7 @@ export function Logo() {
   return (
     <LogoWrapper>
       <h1>
-        <Link to="/">plainestsite</Link>
+        <Link to="/">plainest site</Link>
       </h1>
       <h3>
         <a href="https://instagram.com/plainestsite">plainestsite</a>

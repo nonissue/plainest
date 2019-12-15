@@ -325,9 +325,7 @@ const Post = ({ isSelected, post, maxHeight, history }) => {
     if (isSelected && !fromGrid) {
       scrollToRef(containerRef);
     }
-
-    console.log(history.entries && history.entries[-1]);
-  }, [isSelected]);
+  }, [fromGrid, isSelected]);
 
   return (
     <div className="post" style={{ maxHeight }} ref={containerRef}>
