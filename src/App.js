@@ -57,13 +57,11 @@ function getPostIndex(posts, id) {
 
 // home page
 function App() {
+  // not really utilized ATM
   const [error, setError] = useState({ status: null, msg: null });
   useEffect(() => {
     setError({ status: '500', msg: 'Unknown error occurred.' });
   }, []);
-
-  // cancel request if component unmounts?
-  // https://www.leighhalliday.com/use-effect-hook
 
   return (
     <AppWrapper>

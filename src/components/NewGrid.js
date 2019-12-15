@@ -9,35 +9,6 @@ import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { Loading } from './Loading';
 
-// Issues:
-// - [x] Image doesn't move back properly (exit animation starts inside original container)
-// - [ ] dark mode
-// - [ ] accessibility concerns of body-scroll-lock?
-// - [x] add way to dismiss modal on escape press
-// - [x] weird flash when closing (I think related to overlay ++ zIndex)
-// - [ ] handle data fetching here or in App? Can't think of a way to render error component from here
-// - [ ] full res insta images https://stackoverflow.com/questions/31302811/1080x1080-photos-via-instagram-api
-//    - see instagramapiresponse.json
-// - [x] prevent scroll on ios (if scroll is initiated before modal is shown, content still scrollable briefly)
-//  - [ ] I think this is fixed with body-scroll-lock package
-// = [ ] scroll restoration?
-// - [x] implement loading
-// - [ ] add next/prev
-// - [ ] add view on insta link
-// - [x] center images vertically
-// - [x] set point of interest (added object-position to better center the images)
-// - [x] images on close are obscured by other grid images, will fix
-// - [x] fix image sizing finally...
-// - [x] disable scrolling when isSelected
-// - [x] fix grid flashing
-// - [x] adjust overlay timing, since grid post animation isn't a static time
-//       because it varies based on distance
-// - [x] looks weird going behind header (zindex)
-// - [x] remove unused CSS
-// = [x] do components need to use react memo? yes for perf boost
-// - [x] fix about
-// - [x] if we visit grid item directly, it fucks up zIndex aft
-// - [x] fix posts being refetched anytime params change
 const StyledGrid = styled.div`
   /* media queries located at bottom of StyledGrid */
   max-width: 990px;
