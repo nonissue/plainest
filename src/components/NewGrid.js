@@ -349,7 +349,7 @@ const Post = ({ isSelected, post, maxHeight, history }) => {
 
   useEffect(() => {
     const dismissModal = event => {
-      if (isSelected && (event.key === 'Escape' || event.key === 'Control')) {
+      if (isSelected && event.key === 'Escape') {
         history.push('/');
       }
     };
