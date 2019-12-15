@@ -6,6 +6,7 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
 import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 import { Loading } from './Loading';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
 // Issues:
 // - [x] Image doesn't move back properly (exit animation starts inside original container)
@@ -270,11 +271,11 @@ export function NewGrid({ match, history }) {
 
   // disable scroll on modal shown
   useEffect(() => {
-    // Should check last fetch, and if it is stale, run posts-hydrate
+    const body = document.querySelector('body');
     if (posts.find(p => p.id === match.params.id)) {
-      document.body.style.overflow = 'hidden';
+      disableBodyScroll(body);
     } else {
-      document.body.style.overflow = 'auto';
+      enableBodyScroll(body);
     }
   }, [match.params.id, posts]);
 
