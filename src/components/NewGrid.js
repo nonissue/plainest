@@ -1,12 +1,11 @@
 import React, { memo, useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
 import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
-import { useKeyPress } from './utils/useKey';
 import { Loading } from './Loading';
 
 // Issues:
@@ -353,6 +352,7 @@ const Post = ({ isSelected, post, maxHeight, history }) => {
         history.push('/');
       }
     };
+
     window.addEventListener('keydown', dismissModal);
 
     return () => {
