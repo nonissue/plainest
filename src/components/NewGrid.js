@@ -4,37 +4,21 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
+import { FiInstagram } from 'react-icons/fi';
 import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import { Loading } from './Loading';
 
-// Issues:
-// - [x] Image doesn't move back properly (exit animation starts inside original container)
-// - [ ] weird flash when closing (I think related to overlay ++ zIndex)
-// - [ ] add next/prev
-// - [ ] center images vertically
-// - [ ] set point of interest
-// - [ ] images on close are obscured by other grid images, will fix
-// - [ ] fix image sizing finally...
-// - [ ] disable scrolling when isSelected
-// - [ ] fix grid flashing
-// - [ ] adjust overlay timing, since grid post animation isn't a static time
-//       because it varies based on distance
-// - [ ] looks weird going behind header (zindex)
-// - [ ] remove unused CSS
-// = [ ] do components need to use react memo?
-// - [ ] fix about
-// - [ ] if we visit grid item directly, it fucks up zIndex aft
 const StyledGrid = styled.div`
+  /* media queries located at bottom of StyledGrid */
   max-width: 990px;
   flex: 1 1 100%;
-  /* padding: 25px 25px; */
   margin: 0 auto;
-
   .grid {
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
   }
-
   .post {
     position: relative;
     padding: 25px;
@@ -44,57 +28,45 @@ const StyledGrid = styled.div`
     flex: 0 0 40%;
     max-width: 40%;
     height: 150px;
-    /* height: 200px; */
   }
-
   .post:nth-child(4n + 1),
   .post:nth-child(4n + 4) {
     flex: 0 0 60%;
     max-width: 60%;
   }
-
   .post:nth-child(4n + 1),
   .post:nth-child(4n + 4) {
     flex: 0 0 60%;
     max-width: 60%;
   }
-
   .post:nth-child(odd) {
     padding-left: 0;
   }
-
   .post:nth-child(even) {
     padding-right: 0;
   }
   .post-content {
+    background: #eee;
     position: relative;
-    /* background: #fff; */
-    /* display: flex; */
-    /* justify-content: center; */
-    /* flex-wrap: row; */
     overflow: hidden;
     width: 100%;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     height: 100%;
     border-radius: 20px;
     margin: 0 auto;
   }
   .open .post-content {
-    /* height: auto; */
+    background: none;
     max-width: 640px;
-    overflow: hidden;
+    height: auto;
     margin-top: 25px;
-
-    /* justify-content: center; */
-    /* flex-wrap: column; */
   }
   .post-content-container {
     width: 100%;
     height: 100%;
     position: relative;
-
     display: block;
     pointer-events: none;
-    /* object-position: center; */
   }
   .post-content-container.open {
     top: 0;
@@ -114,33 +86,28 @@ const StyledGrid = styled.div`
   .post-image-container {
     position: relative;
     width: 100%;
+    height: 100%;
     overflow: hidden;
     transform: translateZ(0);
-    /* object-fit: none; */
-    /* object-position: center; */
+    object-fit: none;
+    object-position: center center;
   }
-
   .post-image-container img {
     display: block;
     width: 100%;
     height: 100%;
-    /* height: auto; */
-    /* object-fit: none; */
-    /* object-position: center; */
+    object-fit: cover;
+    /* object-fit: cover; */
+    /* object-fit: none;
+    object-position: 50% 50%; */
   }
-
-  .post-image {
-  }
-
   .post-image.open {
     width: 100%;
   }
-
   .overlay {
     z-index: 1;
     position: fixed;
-    /* background: rgba(255, 255, 255, 0.95); */
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(255, 255, 255, 0.94);
     will-change: opacity;
     top: 0;
     bottom: 0;
@@ -149,55 +116,49 @@ const StyledGrid = styled.div`
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    /* max-width: 990px; */
-    /* max-width: 990px; */
   }
-
   .overlay a {
     display: block;
     position: fixed;
-    /* top: 50vh; */
     bottom: 0;
     width: 100vw;
     height: 100vh;
     left: 50%;
-
     transform: translateX(-50%);
   }
-
   .caption-container {
-    position: relative;
-    text-align: left;
-    /* font-size: 0.5rem; */
-    padding: 10px 20px;
-    box-sizing: border-box;
-    /* margin: 0 auto; */
+    padding: 20px 20px;
+    line-height: 1.5em;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 500;
     color: #121212;
-    /* width: 100%; */
     background: #fff;
     display: none;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
     font-weight: 500;
-    /* width: 100%; */
     opacity: 0;
-    width: 100%;
     p {
       margin: 0;
       padding: 0;
-      /* max-width: 90%; */
     }
-    /* max-width: 300px; */
   }
-
   .caption-container .open {
     display: block;
   }
+  .caption-container a {
+    z-index: 2000 !important;
+    position: relative;
+    font-size: 1em;
+    padding-top: 1em;
+    opacity: 0.7;
+    color: #121212;
+    /* allows us to click through overlay to actually use link */
+    pointer-events: auto;
+    display: block;
+  }
 
+  /* media queries */
   @media only screen and (max-width: 3000px) {
     .post {
-      /* flex: 0 0 50%;
-      max-width: 50%; */
       height: 250px;
     }
   }
@@ -209,13 +170,11 @@ const StyledGrid = styled.div`
       height: 250px;
       padding-left: 0;
     }
-
     .post:nth-child(4n + 1),
     .post:nth-child(4n + 4) {
       flex: 0 0 50%;
       max-width: 50%;
     }
-
     .grid {
       padding: 25px;
     }
@@ -223,11 +182,7 @@ const StyledGrid = styled.div`
 
   @media only screen and (max-width: 750px) {
     .open .post-content {
-      /* height: auto; */
       max-width: 90vw;
-
-      /* justify-content: center; */
-      /* flex-wrap: column; */
     }
     padding: 0 25px;
     .post {
@@ -236,15 +191,12 @@ const StyledGrid = styled.div`
       padding-left: 0;
       padding-right: 0;
       height: 225px;
-      /* padding-bottom: 25px; */
     }
-
     .post:nth-child(4n + 1),
     .post:nth-child(4n + 4) {
       flex: 1 0 100%;
       max-width: 100%;
     }
-
     .post-content-container.open {
       padding: 0;
     }
@@ -252,18 +204,10 @@ const StyledGrid = styled.div`
 
   @media only screen and (max-width: 400px) {
     .open .post-content {
-      /* height: auto; */
       max-width: 90vw;
-
-      /* justify-content: center; */
-      /* flex-wrap: column; */
     }
     .open .post-content {
-      /* height: auto; */
       max-width: 90vw;
-
-      /* justify-content: center; */
-      /* flex-wrap: column; */
     }
     padding: 0 25px;
     .post {
@@ -272,20 +216,15 @@ const StyledGrid = styled.div`
       padding-left: 0;
       padding-right: 0;
       height: 150px;
-      /* height: 200px; */
-      /* padding-bottom: 25px; */
     }
-
     .post:nth-child(4n + 1),
     .post:nth-child(4n + 4) {
       flex: 1 0 100%;
       max-width: 100%;
     }
-
     .post-content-container.open {
       padding: 0;
     }
-
     .grid {
       padding: 0;
     }
@@ -294,14 +233,13 @@ const StyledGrid = styled.div`
 
 const openSpring = { type: 'spring', stiffness: 300, damping: 200 };
 const closeSpring = { type: 'spring', stiffness: 300, damping: 200 };
-// const closeTween = { type: 'tween', duration: 0.5 };
 
 export function NewGrid({ match, history }) {
   const [posts, setPosts] = useState([]);
   const [postHeight, setPostHeight] = useState(null);
-  //   const [loaded, setLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  // cancel request if component unmounts?
+  // fetch data on load hook
   // https://www.leighhalliday.com/use-effect-hook
   useEffect(() => {
     // Should check last fetch, and if it is stale, run posts-hydrate
@@ -310,27 +248,41 @@ export function NewGrid({ match, history }) {
       const fetchedPosts = res.data.data.posts;
       setPosts(fetchedPosts);
       setPostHeight(Math.min(...fetchedPosts.map(post => post.height)));
-      // console.log(fetchedPosts);
-      // console.log(Math.min(...fetchedPosts.map(post => post.height)));
     };
 
     try {
       fetchData();
-      // setLoaded(true);
+      // fake delay so loading shows
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.log('Error occurred: ');
-      // eslint-disable-next-line no-console
       console.log(err);
-      //   setError({ status: err.status, msg: err.message });
     }
   }, []);
+
+  // disable scroll on modal shown
+  useEffect(() => {
+    // body-scroll-lock package handles locking scroll for us
+    // should look into accessbility concerns of this
+    const body = document.querySelector('body');
+    if (posts.find(p => p.id === match.params.id)) {
+      // document.body.style.overflow = 'hidden';
+      disableBodyScroll(body);
+    } else {
+      // document.body.style.overflow = 'auto';
+      enableBodyScroll(body);
+    }
+  }, [match.params.id, posts]);
 
   return (
     <StyledGrid>
       <div className="grid">
-        {/* Animate presence only if grid hasn't loaded yet */}
-        {!!posts &&
+        {loading ? (
+          <Loading />
+        ) : (
+          !!posts &&
           !!postHeight &&
           posts.map(post => (
             <Post
@@ -340,23 +292,25 @@ export function NewGrid({ match, history }) {
               history={history}
               width={post.width}
               maxHeight={postHeight}
+              match={match}
             />
-          ))}
+          ))
+        )}
       </div>
     </StyledGrid>
   );
 }
 
 const Post = memo(
-  ({ isSelected, history, post, maxHeight }) => {
+  ({ isSelected, post, maxHeight, history }) => {
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
-    // const inverted = useInvertedScale();f
 
+    // remove refs?
     const postRef = useRef(null);
     const containerRef = useRef(null);
-    function checkZIndex(latest) {
-      console.log('onUpdate fired');
+
+    function checkZIndex() {
       if (isSelected) {
         zIndex.set(2);
       } else if (!isSelected) {
@@ -364,17 +318,39 @@ const Post = memo(
       }
     }
 
+    useEffect(() => {
+      const dismissModal = event => {
+        if (isSelected && event.key === 'Escape') {
+          history.push('/');
+        }
+      };
+
+      window.addEventListener('keydown', dismissModal);
+
+      return () => {
+        window.removeEventListener('keydown', dismissModal);
+      };
+    }, [isSelected, history]);
+
+    useEffect(() => {
+      const scrollToRef = ref => window.scrollTo(0, ref.current.offsetTop);
+      if (isSelected) {
+        scrollToRef(containerRef);
+      }
+    }, []);
+
     return (
-      <div className="post" style={{ maxHeight: maxHeight }} ref={containerRef}>
+      <div className="post" style={{ maxHeight }} ref={containerRef}>
         <Overlay isSelected={isSelected} />
         <div className={`post-content-container ${isSelected && 'open'}`}>
           <motion.div
+            ref={postRef}
             // without layout transition, zIndex doesn't update
             layoutTransition={isSelected ? closeSpring : openSpring}
             style={{ y, zIndex }}
-            ref={postRef}
             className="post-content"
             onUpdate={checkZIndex}
+            drag={isSelected && false}
           >
             <Image
               id={post.id}
@@ -383,11 +359,10 @@ const Post = memo(
               width={post.width}
               height={post.height}
             />
-            <Caption caption={post.caption} isSelected={isSelected} id={post.id} />
+            <Caption caption={post.caption} isSelected={isSelected} id={post.id} link={post.link} />
           </motion.div>
         </div>
 
-        {/* <ContentPlaceholder /> */}
         {!isSelected && <Link to={`posts/${post.id}`} className="post-open-link" />}
       </div>
     );
@@ -395,28 +370,23 @@ const Post = memo(
   (prev, next) => prev.isSelected === next.isSelected,
 );
 
-function Image({ isSelected, id, src, width }) {
+function Image({ isSelected, id, src }) {
   const inverted = useInvertedScale();
 
   return (
     <motion.div
       className="post-image-container"
       style={{ ...inverted, originX: 0.2, originY: -0.3 }}
-      // layoutTransition={{ closeSpring }}
-      // transition={closeSpring}
     >
       <motion.img
         key={`post-${id}`}
         className={`post-image ${isSelected && 'open'}`}
         src={src}
-        // animate={{ opacity }}
-        // style={{ backgroundImage: `url(${src})`, width, backgroundSize: 'cover' }}
         alt=""
         initial={false}
         transition={closeSpring}
         animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
         style={{
-          objectFit: 'cover',
           display: 'block',
         }}
       />
@@ -424,32 +394,31 @@ function Image({ isSelected, id, src, width }) {
   );
 }
 
-const scaleTranslate = ({ x, y, scaleX, scaleY }) =>
-  `scaleX(${scaleX}) scaleY(${scaleY}) translate(${x}, ${y}) translateZ(0)`;
-
-function Caption({ isSelected, id, caption }) {
+function Caption({ isSelected, caption, link }) {
   const inverted = useInvertedScale();
   const x = isSelected ? 0 : 0;
   const opacity = isSelected ? 1 : 0;
-  const y = isSelected ? 0 : 0;
+  const y = isSelected ? 0 : 200;
   const display = isSelected ? 'block' : 'none';
 
   return (
     <motion.div
       className={`caption-container ${isSelected && 'open'}`}
-      // initial={true}
       animate={{ x, y, opacity, display }}
-      // transition={isSelected ? openSpring : closeSpring}
-      transition={{ type: 'spring', delay: 0 }}
-      transformTemplate={scaleTranslate}
+      transition={isSelected ? openSpring : closeSpring}
       style={{
         ...inverted,
-        originX: 0.5,
-        originY: 0.5,
+        originX: 0,
+        originY: 0,
         zIndex: `${isSelected ? 1 : -1}`,
       }}
     >
       <p>{caption}</p>
+      <p>
+        <a href={link}>
+          <FiInstagram />
+        </a>
+      </p>
     </motion.div>
   );
 }
@@ -459,24 +428,16 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 0.2, delay: isSelected ? 0 : 0.3 }}
+      transition={{ duration: 0.2, delay: isSelected ? 0.2 : 0.2 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
+      // attempt to prevent ios scrolling
+      // onTouchStart={e => e.preventDefault()}
     >
-      <Link to="/posts" />
+      <Link to="/" />
     </motion.div>
   );
 }
-
-const ContentPlaceholder = React.memo(() => {
-  const inverted = useInvertedScale();
-  return (
-    <motion.div className="content-container" style={{ ...inverted, originY: 0, originX: 0 }}>
-      {/* <LoremIpsum p={6} avgWordsPerSentence={6} avgSentencesPerParagraph={4} /> */}
-      {/* <p>Image</p> */}
-    </motion.div>
-  );
-});
 
 NewGrid.propTypes = {
   match: ReactRouterPropTypes.match.isRequired,
@@ -489,6 +450,11 @@ Image.propTypes = {
   src: PropTypes.string.isRequired,
 };
 
+Caption.propTypes = {
+  isSelected: PropTypes.bool.isRequired,
+  caption: PropTypes.string.isRequired,
+};
+
 Post.propTypes = {
   post: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -499,6 +465,7 @@ Post.propTypes = {
     height: PropTypes.number.isRequired,
     src: PropTypes.string.isRequired,
   }).isRequired,
+  maxHeight: PropTypes.number.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
   isSelected: PropTypes.bool.isRequired,
 };
