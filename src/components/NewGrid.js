@@ -381,7 +381,7 @@ function Caption({ isSelected, caption, link }) {
   const inverted = useInvertedScale();
   const x = isSelected ? 0 : 0;
   const opacity = isSelected ? 1 : 0;
-  const y = isSelected ? 0 : 200;
+  const y = isSelected ? 0 : 0;
   const display = isSelected ? 'block' : 'none';
 
   return (
@@ -411,7 +411,7 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 0.2, delay: isSelected ? 0.2 : 0.2 }}
+      transition={{ duration: 0.2, delay: isSelected ? 0 : 0 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
