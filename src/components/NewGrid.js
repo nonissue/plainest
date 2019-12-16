@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
 import { FiInstagram } from 'react-icons/fi';
-import { motion, useInvertedScale, useMotionValue } from 'framer-motion';
+import { motion, useInvertedScale, useMotionValue, useAnimation } from 'framer-motion';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { Loading } from './Loading';
 
@@ -367,74 +367,84 @@ const Post = ({ isSelected, post, maxHeight, history }) => {
 };
 // (prev, next) => prev.isSelected === next.isSelected,
 // );
-const ImagePlaceholder = styled(motion.div)`
+const ImagePlaceholder = styled.div`
   background-image: linear-gradient(
     to right,
     rgba(0, 0, 0, 0.1) 0,
     rgba(0, 0, 0, 0.17) 15%,
     rgba(0, 0, 0, 0.1) 30%
   );
-  background-size: 1200px 100%;
+  background-size: 600px 100%;
   /* height: 400px; */
   position: static;
   overflow: hidden;
-  -webkit-animation: placeholderShimmer 2s linear;
+  /* -webkit-animation: placeholderShimmer 2s linear;
   animation: placeholderShimmer 2s linear;
   -webkit-animation-iteration-count: infinite;
-  animation-iteration-count: infinite;
+  animation-iteration-count: infinite; */
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+
+  --backgroundOffset: 600px;
 
   @-webkit-keyframes placeholderShimmer {
     0% {
-      background-position: -1500px 0;
+      background-position: (-1 * var(--backgroundOffset)) 0;
     }
 
     100% {
-      background-position: 1500px 0;
+      background-position: var(--backgroundOffset) 0;
     }
   }
 
   @keyframes placeholderShimmer {
     0% {
-      background-position: -1500px 0;
+      background-position: (-1 * var(--backgroundOffset)) 0;
     }
 
     100% {
-      background-position: 1500px 0;
+      background-position: var(--backgroundOffset) 0;
     }
   }
 `;
 
 function Image({ isSelected, id, src, height, width }) {
+  const controls = useAnimation();
   const [loaded, setLoaded] = useState(false);
 
   const inverted = useInvertedScale();
 
+  useEffect(() => {
+    if (!loaded) return;
+    controls.start({
+      opacity: 1,
+      transition: {
+        // type: 'spring',
+        // stiffness: 700,
+        // damping: 80,
+        duration: 0.5,
+        // delay: 2,
+      },
+    });
+  }, [loaded]);
+
   return (
-    <motion.div
-      className="post-image-container"
-      style={{ ...inverted, originX: 0.2, originY: -0.3 }}
-    >
-      {!loaded && (
-        <ImagePlaceholder
-          initial={false}
-          animate={{ opacity: 0.5 }}
-          // enter={{ opacity: 0 }}
-          style={{ height, width }}
-          transition={{ duration: 1 }}
-          exit={{ opacity: 1 }}
-        ></ImagePlaceholder>
-      )}
+    <motion.div className="post-image-container" style={{ ...inverted, originX: 0, originY: 0 }}>
+      {!loaded && <ImagePlaceholder initial={false} style={{ height, width }} />}
       <motion.img
         key={`post-${id}`}
         className={`post-image ${isSelected && 'open'}`}
         src={src}
         alt=""
-        transition={{ duration: 0.4, delay: 1.25 }}
-        animate={{ opacity: 1 }}
+        transition={{ ...closeSpring, duration: 0.4 }}
+        animate={controls}
         onLoad={() =>
           setTimeout(() => {
             setLoaded(true);
-          }, 850)
+          }, 500)
         }
         style={{
           display: `${loaded ? 'block' : 'none'}`,
@@ -445,21 +455,15 @@ function Image({ isSelected, id, src, height, width }) {
 }
 
 function Caption({ isSelected, caption, link }) {
-  const inverted = useInvertedScale();
-  const x = isSelected ? 0 : 0;
   const opacity = isSelected ? 1 : 0;
-  const y = isSelected ? 0 : 0;
   const display = isSelected ? 'block' : 'none';
 
   return (
     <motion.div
       className={`caption-container ${isSelected && 'open'}`}
-      animate={{ x, y, opacity, display }}
+      animate={{ opacity, display }}
       transition={isSelected ? openSpring : closeSpring}
       style={{
-        ...inverted,
-        originX: 0,
-        originY: 0,
         zIndex: `${isSelected ? 1 : -1}`,
       }}
     >
