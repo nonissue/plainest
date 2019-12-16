@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { About } from './pages';
 import { Header, Error, NewGrid, LoadingBar } from './components';
+import { testPosts } from './posts';
 import './App.css';
 
 const AppWrapper = styled.div`
@@ -85,13 +86,16 @@ function App() {
     const fetchData = async () => {
       try {
         const fetchedPosts = await getPosts();
+        console.log(fetchedPosts);
         setPosts(fetchedPosts);
       } catch (err) {
         throw new Error(err);
       }
     };
 
-    fetchData();
+    console.log(testPosts);
+    // fetchData();
+    setPosts(testPosts);
     // fake delay so loading shows
     setLoading(false);
   }, []);
@@ -112,7 +116,7 @@ function App() {
           <Route path="/error/:id">
             <Error error={error} />
           </Route>
-          <Route path="/bar" component={LoadingBar} />
+          {/* <Route path="/bar" component={LoadingBar} /> */}
 
           <Route path="*">
             <Error error={{ status: '404', msg: 'Page not found!' }} />

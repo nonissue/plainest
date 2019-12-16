@@ -70,7 +70,7 @@ export function Header() {
           exit={{ opacity: 1, scale: 1, transition: { duration: 1 } }}
           className="control"
         >
-          <Link to="/posts">
+          <Link to="/">
             <Back />
           </Link>
         </motion.div>

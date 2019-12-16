@@ -37,18 +37,18 @@ export function LoadingBar({ demo }) {
   useEffect(() => {
     function fakeLoad() {
       //   while (progress < 100) {
-      setTimeout(() => {
-        setProgress(30);
-      }, 1000);
-      setTimeout(() => {
-        setProgress(70);
-      }, 1500);
-      setTimeout(() => {
-        setProgress(99);
-      }, 2000);
-      setTimeout(() => {
-        setProgress(100);
-      }, 2200);
+      // setTimeout(() => {
+      //   setProgress(30);
+      // }, 1000);
+      // setTimeout(() => {
+      //   setProgress(70);
+      // }, 1500);
+      // setTimeout(() => {
+      //   setProgress(99);
+      // }, 2000);
+      // setTimeout(() => {
+      //   setProgress(100);
+      // }, 2200);
     }
     // }
 

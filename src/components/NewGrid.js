@@ -431,7 +431,7 @@ function Image({ isSelected, id, src, height, width, caption }) {
 
   return (
     <motion.div className="post-image-container" style={{ ...inverted, originX: 0, originY: 0 }}>
-      {!loaded && <ImagePlaceholder style={{ height, width }} />}
+      {!loaded && false && <ImagePlaceholder style={{ height, width }} />}
       <motion.img
         key={`post-${id}`}
         className={`post-image ${isSelected && 'open'}`}
@@ -439,12 +439,7 @@ function Image({ isSelected, id, src, height, width, caption }) {
         alt={caption}
         transition={{ ...closeSpring, duration: 0.4 }}
         animate={controls}
-        onLoad={() =>
-          // setTimeout(() => {
-          //   setLoaded(true);
-          // }, 500)
-          setLoaded(true)
-        }
+        onLoad={() => setLoaded(true)}
         style={{
           display: `${loaded ? 'block' : 'none'}`,
         }}
