@@ -1,11 +1,13 @@
-// import axios from 'axios';
-// import axios, * as others from 'axios';
-// import axios from 'axios';
-import mockAxios from 'axios';
-import { handler } from './instagram';
+/*
+Tests:
+- should return an array of posts with correct shape when given instagram api response
+- should only be called once
+- should return the right status
+- if an error is return from external api call, throw error
+*/
 
-// jest.mock('axios');
-// axios.mockResolvedValue();
+import mockAxios from 'axios';
+// import { handler } from './instagram';
 afterEach(() => {
   jest.clearAllMocks();
 });

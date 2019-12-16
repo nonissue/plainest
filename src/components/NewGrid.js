@@ -91,12 +91,14 @@ const StyledGrid = styled.div`
     transform: translateZ(0);
     object-fit: none;
     object-position: center center;
+    background: rgba(0, 0, 0, 0.05);
   }
   .post-image-container img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    opacity: 0;
     /* object-fit: cover; */
     /* object-fit: none;
     object-position: 50% 50%; */
@@ -365,8 +367,46 @@ const Post = ({ isSelected, post, maxHeight, history }) => {
 };
 // (prev, next) => prev.isSelected === next.isSelected,
 // );
+const ImagePlaceholder = styled(motion.div)`
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.1) 0,
+    rgba(0, 0, 0, 0.17) 15%,
+    rgba(0, 0, 0, 0.1) 30%
+  );
+  background-size: 1200px 100%;
+  /* height: 400px; */
+  position: static;
+  overflow: hidden;
+  -webkit-animation: placeholderShimmer 2s linear;
+  animation: placeholderShimmer 2s linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
 
-function Image({ isSelected, id, src }) {
+  @-webkit-keyframes placeholderShimmer {
+    0% {
+      background-position: -1500px 0;
+    }
+
+    100% {
+      background-position: 1500px 0;
+    }
+  }
+
+  @keyframes placeholderShimmer {
+    0% {
+      background-position: -1500px 0;
+    }
+
+    100% {
+      background-position: 1500px 0;
+    }
+  }
+`;
+
+function Image({ isSelected, id, src, height, width }) {
+  const [loaded, setLoaded] = useState(false);
+
   const inverted = useInvertedScale();
 
   return (
@@ -374,16 +414,30 @@ function Image({ isSelected, id, src }) {
       className="post-image-container"
       style={{ ...inverted, originX: 0.2, originY: -0.3 }}
     >
+      {!loaded && (
+        <ImagePlaceholder
+          initial={false}
+          animate={{ opacity: 0.5 }}
+          // enter={{ opacity: 0 }}
+          style={{ height, width }}
+          transition={{ duration: 1 }}
+          exit={{ opacity: 1 }}
+        ></ImagePlaceholder>
+      )}
       <motion.img
         key={`post-${id}`}
         className={`post-image ${isSelected && 'open'}`}
         src={src}
         alt=""
-        initial={false}
-        transition={closeSpring}
-        animate={isSelected ? { x: 0, y: 0 } : { x: 0, y: 0 }}
+        transition={{ duration: 0.4, delay: 1.25 }}
+        animate={{ opacity: 1 }}
+        onLoad={() =>
+          setTimeout(() => {
+            setLoaded(true);
+          }, 850)
+        }
         style={{
-          display: 'block',
+          display: `${loaded ? 'block' : 'none'}`,
         }}
       />
     </motion.div>
@@ -424,7 +478,7 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 0.2, delay: isSelected ? 0 : 0.3 }}
+      transition={{ duration: 0.4, delay: isSelected ? 0 : 0.4 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
