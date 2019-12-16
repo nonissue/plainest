@@ -63,18 +63,20 @@ export function Header() {
   return (
     <StyledHeader>
       {!(location.pathname === '/') ? (
-        <motion.div
-          key="back"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { delay: 0.1, duration: 0.5 } }}
-          exit={{ opacity: 1, scale: 1, transition: { duration: 1 } }}
-          className="control"
-        >
+        // <motion.div
+        //   key="back"
+        //   initial={{ opacity: 0 }}
+        //   animate={{ opacity: 1, transition: { delay: 0.1, duration: 0.5 } }}
+        //   exit={{ opacity: 1, scale: 1, transition: { duration: 1 } }}
+        //   className="control"
+        // >
+        <div className="control">
           <Link to="/">
             <Back />
           </Link>
-        </motion.div>
+        </div>
       ) : (
+        // </motion.div>
         <div className="control hidden">
           <Back />
         </div>
