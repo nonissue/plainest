@@ -243,9 +243,10 @@ export function NewGrid({ posts, match, history }) {
 
   useEffect(() => {
     if (posts.length !== 0) {
-      setTimeout(() => {
-        setLoading(false);
-      }, 500);
+      // setTimeout(() => {
+      //   setLoading(false);
+      // }, 500);
+      setLoading(false);
     }
   }, [posts]);
 
@@ -264,7 +265,7 @@ export function NewGrid({ posts, match, history }) {
   return (
     <StyledGrid>
       <div className="grid">
-        {loading ? (
+        {loading && false ? (
           <Loading />
         ) : (
           !!posts &&
@@ -346,6 +347,7 @@ const Post = ({ isSelected, post, maxHeight, history }) => {
             id={post.id}
             isSelected={isSelected}
             src={post.src}
+            caption={post.caption}
             width={post.width}
             height={post.height}
           />
@@ -368,9 +370,9 @@ const Post = ({ isSelected, post, maxHeight, history }) => {
 // (prev, next) => prev.isSelected === next.isSelected,
 // );
 const ImagePlaceholder = styled.div`
-  background-image: linear-gradient(
+  background-image: radial-gradient(
     to right,
-    rgba(0, 0, 0, 0.1) 0,
+    rgba(0, 0, 0, 0.8) 0,
     rgba(0, 0, 0, 0.17) 15%,
     rgba(0, 0, 0, 0.1) 30%
   );
@@ -411,7 +413,7 @@ const ImagePlaceholder = styled.div`
   }
 `;
 
-function Image({ isSelected, id, src, height, width }) {
+function Image({ isSelected, id, src, height, width, caption }) {
   const controls = useAnimation();
   const [loaded, setLoaded] = useState(false);
 
@@ -422,29 +424,26 @@ function Image({ isSelected, id, src, height, width }) {
     controls.start({
       opacity: 1,
       transition: {
-        // type: 'spring',
-        // stiffness: 700,
-        // damping: 80,
         duration: 0.5,
-        // delay: 2,
       },
     });
   }, [loaded]);
 
   return (
     <motion.div className="post-image-container" style={{ ...inverted, originX: 0, originY: 0 }}>
-      {!loaded && <ImagePlaceholder initial={false} style={{ height, width }} />}
+      {!loaded && <ImagePlaceholder style={{ height, width }} />}
       <motion.img
         key={`post-${id}`}
         className={`post-image ${isSelected && 'open'}`}
         src={src}
-        alt=""
+        alt={caption}
         transition={{ ...closeSpring, duration: 0.4 }}
         animate={controls}
         onLoad={() =>
-          setTimeout(() => {
-            setLoaded(true);
-          }, 500)
+          // setTimeout(() => {
+          //   setLoaded(true);
+          // }, 500)
+          setLoaded(true)
         }
         style={{
           display: `${loaded ? 'block' : 'none'}`,
