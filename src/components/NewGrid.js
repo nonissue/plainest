@@ -1,4 +1,5 @@
 import React, { memo, useEffect, useState, useRef } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
@@ -241,16 +242,48 @@ const StyledGrid = styled.div`
 const openSpring = { type: 'spring', stiffness: 300, damping: 200 };
 const closeSpring = { type: 'spring', stiffness: 300, damping: 200 };
 
-export function NewGrid({ posts, match, history }) {
-  // const [isLoading, setIsLoading] = useState(true);
+async function getPosts() {
+  let res;
 
+  try {
+    res = await axios('/.netlify/functions/posts-read-latest');
+    // throw new Error({ code: 500, msg: 'Couldnt fetch posts' });
+  } catch (err) {
+    throw new Error('Couldnt fetch posts');
+  }
+  return res.data.data.posts;
+}
+
+export function NewGrid({ match, history }) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   // https://www.leighhalliday.com/use-effect-hook
 
-  // useEffect(() => {
-  //   if (posts.length !== 0) {
-  //     setIsLoading(false);
-  //   }
-  // }, [posts]);
+  const [posts, setPosts] = useState([]);
+
+  // not really utilized ATM
+  // const [error, setError] = useState({ code: undefined, msg: undefined });
+
+  /* hmmmmmmmmmmmmmmmmmmm
+  If I fetch posts here, they are fetched on every route...
+  */
+  useEffect(() => {
+    // setError({ code: undefined, msg: undefined });
+    // Should check last fetch, and if it is stale, run posts-hydrate
+    const fetchData = async () => {
+      try {
+        const fetchedPosts = await getPosts();
+        setPosts(fetchedPosts);
+      } catch (err) {
+        setIsError(true);
+        console.log('Error');
+        // setError({ code: 500, msg: 'Error fetching posts!' });
+      }
+    };
+
+    fetchData();
+    setIsLoading(false);
+  }, []);
 
   useEffect(() => {
     // body-scroll-lock package handles locking scroll for us
@@ -266,17 +299,19 @@ export function NewGrid({ posts, match, history }) {
   return (
     <StyledGrid>
       <div className="grid">
-        {posts.length !== 0 &&
-          posts.map(post => (
-            <Post
-              post={post}
-              key={post.id}
-              isSelected={match.params.id === post.id}
-              history={history}
-              width={post.width}
-              match={match}
-            />
-          ))}
+        {isError
+          ? 'Error!'
+          : posts.length !== 0 &&
+            posts.map(post => (
+              <Post
+                post={post}
+                key={post.id}
+                isSelected={match.params.id === post.id}
+                history={history}
+                width={post.width}
+                match={match}
+              />
+            ))}
       </div>
     </StyledGrid>
   );

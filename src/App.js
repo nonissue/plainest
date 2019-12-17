@@ -78,43 +78,36 @@ async function getPosts() {
 
 // home page
 function App() {
-  const [posts, setPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState({ code: undefined, msg: undefined });
+  // const [posts, setPosts] = useState([]);
 
   // not really utilized ATM
-  const [error, setError] = useState({ code: undefined, msg: undefined });
 
   /* hmmmmmmmmmmmmmmmmmmm
   If I fetch posts here, they are fetched on every route...
-  */
-  useEffect(() => {
-    setError({ code: undefined, msg: undefined });
-    // Should check last fetch, and if it is stale, run posts-hydrate
-    const fetchData = async () => {
-      try {
-        const fetchedPosts = await getPosts();
-        setPosts(fetchedPosts);
-      } catch (err) {
-        setError({ code: 500, msg: 'Error fetching posts!' });
-      }
-    };
+  // */
+  // useEffect(() => {
+  //   setError({ code: undefined, msg: undefined });
+  //   //   // Should check last fetch, and if it is stale, run posts-hydrate
+  //   //   const fetchData = async () => {
+  //   //     try {
+  //   //       const fetchedPosts = await getPosts();
+  //   //       setPosts(fetchedPosts);
+  //   //     } catch (err) {
+  //   //       setError({ code: 500, msg: 'Error fetching posts!' });
+  //   //     }
+  //   //   };
 
-    fetchData();
-    setIsLoading(false);
-  }, []);
+  //   //   fetchData();
+  //   //   setIsLoading(false);
+  // }, []);
 
   return (
     <AppWrapper>
       <Header />
       <div>
         <Switch>
-          <Route
-            exact
-            path={['/posts/:id', '/']}
-            component={props =>
-              isLoading && !error.code ? <Loading /> : <NewGrid posts={posts} {...props} />
-            }
-          />
+          <Route exact path={['/posts/:id', '/']} component={props => <NewGrid {...props} />} />
           <Route path="/about">
             <About />
           </Route>
