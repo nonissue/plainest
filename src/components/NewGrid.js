@@ -59,7 +59,7 @@ const StyledGrid = styled.div`
     background: none;
     max-width: 640px;
     height: auto;
-    margin-top: 25px;
+    margin-top: 6vw;
   }
   .post-content-container {
     width: 100%;
@@ -166,7 +166,7 @@ const StyledGrid = styled.div`
     font-size: 1em;
     /* padding-top: 1em; */
     opacity: 0.7;
-    color: #121212;
+    /* color: #121212; */
     /* allows us to click through overlay to actually use link */
     pointer-events: auto;
     display: block;
@@ -191,12 +191,13 @@ const StyledGrid = styled.div`
       transition: color 0.2s ease-out;
       @media only screen and (min-width: 1000px) {
         font-size: 1em;
-        /* color: #ff0000; */
+
         margin-right: 1rem;
       }
     }
     a:hover {
-      color: #121212;
+      /* color: #121212; */
+      color: hsla(205.9, 85.3%, 40%, 1);
     }
   }
 
@@ -226,7 +227,7 @@ const StyledGrid = styled.div`
 
   @media only screen and (max-width: 750px) {
     .open .post-content {
-      max-width: 90vw;
+      max-width: 100vw;
     }
     padding: 0 25px;
     .post {
@@ -250,9 +251,7 @@ const StyledGrid = styled.div`
     .open .post-content {
       max-width: 90vw;
     }
-    .open .post-content {
-      max-width: 90vw;
-    }
+
     padding: 0 25px;
     .post {
       flex: 1 0 100%;

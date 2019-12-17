@@ -3,17 +3,23 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 const AboutWrapper = styled.div`
-  color: #121212;
+  /* color: #121212;*/
+  color: #032d4d;
   width: 50vw;
   margin: 0px auto;
   padding-top: 5vw;
   max-width: 500px;
   font-family: 'Work Sans', sans-serif;
   line-height: 1.5em;
-  text-align: left;
+  text-align: center;
   font-family: 'Lekton', monospace;
 
   h3 {
+    /* font-family: 'Open Sans'; */
+    font-family: 'Bebas Neue', 'Helvetica', sans-serif;
+    font-weight: 400;
+    /* text-transform: uppercase; */
+    letter-spacing: 0.1em;
     text-align: center;
   }
 
@@ -22,19 +28,25 @@ const AboutWrapper = styled.div`
     font-family: 'Lekton', monospace;
     text-transform: uppercase;
     font-weight: 600;
-    color: #121212;
   }
 
   a:link,
   a:visited {
-    color: #121212;
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: hsla(205.9, 92.3%, 40%, 0.5);
+    /* border-bottom: 1px solid hsla(205.9, 92.3%, 40%, 0.5); */
+    /* margin-bottom: -1px; */
+    /* padding-bottom: 0px; */
+    text-underline-offset: 0.1rem;
     font-weight: 700;
-    text-decoration: none;
+    transition: all 0.1s ease-out;
   }
 
   a:hover {
-    color: #ff0000;
-  }
+    color: #fa6400;
+    color: hsla(205.9, 85.3%, 40%, 1);
+    text-decoration-color: transparent;
 `;
 
 const variants = {

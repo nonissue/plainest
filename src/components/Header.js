@@ -51,7 +51,8 @@ const StyledHeader = styled.header`
 
     a:hover {
       opacity: 1;
-      color: #333;
+      /* color: #333; */
+      color: #0f72bd;
     }
   }
   .hidden {

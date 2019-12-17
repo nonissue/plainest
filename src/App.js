@@ -8,9 +8,26 @@ import { Header, Error, NewGrid, LoadingBar } from './components';
 import { testPosts } from './posts';
 import './App.css';
 
+/*
+
+Theme stuff:
+body text: #032d4d;
+link hover: hsla(205.9, 85.3%, 40%, 1);
+logo color: #054B81;
+text-underline: hsla(205.9, 92.3%, 40%, 0.5);
+
+font-families?
+box-shadows?
+
+darkmode lightmode?
+
+
+*/
+
 const AppWrapper = styled.div`
   text-align: center;
-  color: #121212;
+  /* color: #121212; */
+  color: #032d4d;
   font-family: 'Work Sans', 'Helvetica', 'Arial', sans-serif;
 
   .url {
