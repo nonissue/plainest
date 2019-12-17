@@ -1,6 +1,6 @@
 {
   "extends": ["react-app", "airbnb", "plugin:jsx-a11y/recommended", "prettier", "prettier/react"],
-  "plugins": ["jsx-a11y", "prettier"],
+  "plugins": ["jsx-a11y", "prettier", "react-hooks"],
   "rules": {
     "semi": 0,
     "react/jsx-filename-extension": [
@@ -14,6 +14,8 @@
       {
         "semi": true
       }
-    ]
+    ],
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
   }
 }

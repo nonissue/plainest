@@ -266,10 +266,7 @@ export function NewGrid({ posts, match, history }) {
   return (
     <StyledGrid>
       <div className="grid">
-        {loading ? (
-          <Loading />
-        ) : (
-          !!posts &&
+        {posts.length !== 0 &&
           posts.map(post => (
             <Post
               post={post}
@@ -279,8 +276,7 @@ export function NewGrid({ posts, match, history }) {
               width={post.width}
               match={match}
             />
-          ))
-        )}
+          ))}
       </div>
     </StyledGrid>
   );

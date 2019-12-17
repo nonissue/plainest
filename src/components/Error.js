@@ -51,7 +51,7 @@ export function Error({ error }) {
     >
       <h3>Error: {error.status || id}</h3>
 
-      <p>{error.msg || 'An unknown problem has occurred.'}</p>
+      <p>{error.msg !== null ? error.msg : 'An unknown problem has occurred.'}</p>
       <p>
         Notify <a href="mailto:andy@nonissue.org">support</a>.
       </p>

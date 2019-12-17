@@ -1,10 +1,11 @@
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
+// import { history } from './history';
 import { About } from './pages';
-import { Header, Error, NewGrid } from './components';
+import { Header, Error as ErrorPage, NewGrid, Loading } from './components';
 // import { testPosts } from './posts';
 import './App.css';
 
@@ -68,6 +69,7 @@ async function getPosts() {
 
   try {
     res = await axios('/.netlify/functions/posts-read-latest');
+    // throw new Error({ msg: 'Couldnt fetch posts' });
   } catch (err) {
     throw new Error('Couldnt fetch posts');
   }
@@ -77,13 +79,13 @@ async function getPosts() {
 // home page
 function App() {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState({ code: undefined, msg: undefined });
 
   // not really utilized ATM
-  const [error, setError] = useState({ status: null, msg: null });
-  useEffect(() => {
-    setError({ status: '500', msg: 'Unknown error occurred.' });
-  }, []);
+  const [error, setError] = useState(false);
+  // useEffect(() => {
+  //   setError({ status: '500', msg: 'Unknown error occurred.' });
+  // }, []);
 
   useEffect(() => {
     // Should check last fetch, and if it is stale, run posts-hydrate
@@ -92,12 +94,14 @@ function App() {
         const fetchedPosts = await getPosts();
         setPosts(fetchedPosts);
       } catch (err) {
-        throw new Error(err);
+        setError({ code: 500, msg: 'error fetching posts' });
       }
     };
 
     fetchData();
-    setLoading(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   }, []);
 
   return (
@@ -108,20 +112,23 @@ function App() {
           <Route
             exact
             path={['/posts/:id', '/']}
-            component={props => !loading && <NewGrid posts={posts} {...props} />}
+            component={props =>
+              loading && !error.code ? <Loading /> : <NewGrid posts={posts} {...props} />
+            }
           />
           <Route path="/about">
             <About />
           </Route>
           <Route path="/error/:id">
-            <Error error={error} />
+            <ErrorPage error={error} />
           </Route>
           {/* <Route path="/bar" component={LoadingBar} /> */}
 
           <Route path="*">
-            <Error error={{ status: '404', msg: 'Page not found!' }} />
+            <ErrorPage error={{ status: '404', msg: 'Page not found!' }} />
           </Route>
         </Switch>
+        {error.code !== null && error.msg}
       </div>
       <div className="footer">Copyright 2019 © plainsite</div>
     </AppWrapper>
