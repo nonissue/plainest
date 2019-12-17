@@ -64,43 +64,9 @@ const AppWrapper = styled.div`
   }
 `;
 
-async function getPosts() {
-  let res;
-
-  try {
-    res = await axios('/.netlify/functions/posts-read-latest');
-    // throw new Error({ code: 500, msg: 'Couldnt fetch posts' });
-  } catch (err) {
-    throw new Error('Couldnt fetch posts');
-  }
-  return res.data.data.posts;
-}
-
 // home page
 function App() {
-  const [error, setError] = useState({ code: undefined, msg: undefined });
-  // const [posts, setPosts] = useState([]);
-
-  // not really utilized ATM
-
-  /* hmmmmmmmmmmmmmmmmmmm
-  If I fetch posts here, they are fetched on every route...
-  // */
-  // useEffect(() => {
-  //   setError({ code: undefined, msg: undefined });
-  //   //   // Should check last fetch, and if it is stale, run posts-hydrate
-  //   //   const fetchData = async () => {
-  //   //     try {
-  //   //       const fetchedPosts = await getPosts();
-  //   //       setPosts(fetchedPosts);
-  //   //     } catch (err) {
-  //   //       setError({ code: 500, msg: 'Error fetching posts!' });
-  //   //     }
-  //   //   };
-
-  //   //   fetchData();
-  //   //   setIsLoading(false);
-  // }, []);
+  const defaultError = { code: 500, msg: 'An unexpected error occurred!' };
 
   return (
     <AppWrapper>
@@ -112,7 +78,7 @@ function App() {
             <About />
           </Route>
           <Route exact path={['/error', '/error/:id']}>
-            <ErrorPage error={error} />
+            <ErrorPage error={defaultError} />
           </Route>
           {/* <Route path="/bar" component={LoadingBar} /> */}
 
@@ -122,7 +88,6 @@ function App() {
         </Switch>
         {/* This is such a brain dead way to do this, but it's 4 am 
         look at this: https://www.robinwieruch.de/react-hooks-fetch-data */}
-        {error.code && (error.msg ? error.msg : 'An unknown error has occurred')}
       </div>
       <div className="footer">Copyright 2019 © plainsite</div>
     </AppWrapper>

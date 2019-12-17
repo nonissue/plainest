@@ -255,19 +255,15 @@ async function getPosts() {
 }
 
 export function NewGrid({ match, history }) {
+  // implement reducer rather than multiple set states
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   // https://www.leighhalliday.com/use-effect-hook
 
   const [posts, setPosts] = useState([]);
 
-  // not really utilized ATM
-  // const [error, setError] = useState({ code: undefined, msg: undefined });
-
-  /* hmmmmmmmmmmmmmmmmmmm
-  If I fetch posts here, they are fetched on every route...
-  */
   useEffect(() => {
+    setIsError(false);
     // setError({ code: undefined, msg: undefined });
     // Should check last fetch, and if it is stale, run posts-hydrate
     const fetchData = async () => {
@@ -283,7 +279,7 @@ export function NewGrid({ match, history }) {
 
     fetchData();
     setIsLoading(false);
-  }, []);
+  }, [posts]);
 
   useEffect(() => {
     // body-scroll-lock package handles locking scroll for us
@@ -298,27 +294,41 @@ export function NewGrid({ match, history }) {
 
   return (
     <StyledGrid>
-      <div className="grid">
-        {isError
-          ? 'Error!'
-          : posts.length !== 0 &&
-            posts.map(post => (
-              <Post
-                post={post}
-                key={post.id}
-                isSelected={match.params.id === post.id}
-                history={history}
-                width={post.width}
-                match={match}
-              />
-            ))}
-      </div>
+      <motion.div className="grid">
+        {/* {isError && 'Error!'} */}
+        {/* {posts.length === 0 && !isError ? (
+          <Loading />
+        ) : ( */}
+        {posts.length !== 0 &&
+          posts.map((post, i) => (
+            <Post
+              post={post}
+              isSelected={match.params.id === post.id}
+              history={history}
+              width={post.width}
+              match={match}
+              index={i}
+              // variants={item}
+            />
+          ))}
+        {/* )} */}
+      </motion.div>
     </StyledGrid>
   );
 }
 
+const variants = {
+  visible: i => ({
+    opacity: 1,
+    transition: {
+      delay: i * 0.2,
+    },
+  }),
+  hidden: { opacity: 0 },
+};
+
 const Post = memo(
-  ({ isSelected, post, history }) => {
+  ({ isSelected, post, history, index }) => {
     const [fromGrid, setFromGrid] = useState(false);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
     const postRef = useRef(null);
@@ -362,7 +372,15 @@ const Post = memo(
     }, [fromGrid, isSelected]);
 
     return (
-      <div className="post" ref={containerRef}>
+      <motion.div
+        className="post"
+        key={`asd-${post.id}`}
+        variants={variants}
+        animate="visible"
+        initial="hidden"
+        custom={index}
+        ref={containerRef}
+      >
         <Overlay isSelected={isSelected} />
         <div className={`post-content-container ${isSelected && 'open'}`}>
           <motion.div
@@ -394,14 +412,14 @@ const Post = memo(
             onClick={() => setFromGrid(true)}
           />
         )}
-      </div>
+      </motion.div>
     );
   },
   (prev, next) => prev.isSelected === next.isSelected,
 );
 
 function Caption({ isSelected, caption, link }) {
-  const opacity = isSelected ? 1 : 0;
+  const opacity = isSelected ? 1 : 1;
   const display = isSelected ? 'block' : 'none';
 
   return (
@@ -448,7 +466,6 @@ const PostPropTypes = PropTypes.shape({
 });
 
 NewGrid.propTypes = {
-  posts: PropTypes.arrayOf(PostPropTypes).isRequired,
   match: ReactRouterPropTypes.match.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
 };

@@ -13,7 +13,16 @@ const StyledError = styled(motion.div)`
   }
 
   h3 {
-    font-family: 'Lekton', monospace, sans-serif;
+    /* font-family: 'Lekton', monospace, sans-serif; */
+    font-family: 'Bebas Neue', 'Helvetica', sans-serif;
+  }
+  h4 {
+    /* color: hsl(208.1, 79.3%, 50.8%); */
+    font-weight: 400;
+    /* font-family: 'Bebas Neue', 'Helvetica', sans-serif; */
+    font-family: 'Open Sans', sans-serif;
+    opacity: 0.7;
+    /* font-family: 'Lekton', monospace, sans-serif; */
   }
   a,
   a:link,
@@ -49,12 +58,13 @@ export function Error({ error }) {
       exit="exit"
       variants={gridTransition}
     >
-      <h3>Error: {error.code ? error.code : id || '500'}</h3>
+      <h3>Error {error.code ? error.code : id || '500'}</h3>
 
       <p>{error.msg ? error.msg : 'An unknown problem has occurred.'}</p>
       <p>
         Notify <a href="mailto:andy@nonissue.org">support</a>.
       </p>
+      <h4>¯\_(ツ)_/¯ </h4>
     </StyledError>
   );
 }

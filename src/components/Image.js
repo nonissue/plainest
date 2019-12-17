@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { motion, useInvertedScale, useAnimation } from 'framer-motion';
+import { motion, useInvertedScale, useAnimation, AnimatePresence } from 'framer-motion';
 
 const closeSpring = { type: 'spring', stiffness: 300, damping: 200 };
 
@@ -14,13 +14,15 @@ const StyledImage = styled(motion.div)`
   object-fit: none;
   object-position: center center;
   background: rgba(0, 0, 0, 0.05);
+  transform: translateZ(0);
+  will-change: opacity;
 
   img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0;
+    opacity: 1;
   }
 
   .post-image.open {
@@ -87,7 +89,7 @@ export function Image({ isSelected, id, src, caption, height, width }) {
   }, [controls, loaded]);
 
   return (
-    <StyledImage style={{ ...inverted, originX: 0, originY: 0 }}>
+    <StyledImage style={{ ...inverted, originX: 0, originY: 0.5 }} key={`image-wrapper-${id}`}>
       {!loaded && false && <ImagePlaceholder style={{ height, width }} />}
       <motion.img
         key={`post-${id}`}
@@ -95,7 +97,7 @@ export function Image({ isSelected, id, src, caption, height, width }) {
         src={src}
         alt={caption}
         transition={{ ...closeSpring, duration: 0.4 }}
-        animate={controls}
+        // animate={controls}
         onLoad={() => {
           setLoaded(true);
           console.log('Loaded image!');
