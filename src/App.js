@@ -1,4 +1,4 @@
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
@@ -28,7 +28,7 @@ darkmode lightmode?
 const AppWrapper = styled.div`
   text-align: center;
   color: #032d4d;
-  font-family: 'Work Sans', 'Helvetica', 'Arial', sans-serif;
+  /* font-family: 'Work Sans', 'Helvetica', 'Arial', sans-serif; */
 
   .url {
     font-weight: 300;
@@ -79,7 +79,7 @@ async function getPosts() {
 // home page
 function App() {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   // not really utilized ATM
   const [error, setError] = useState({ code: undefined, msg: undefined });
@@ -88,6 +88,7 @@ function App() {
   If I fetch posts here, they are fetched on every route...
   */
   useEffect(() => {
+    setError({ code: undefined, msg: undefined });
     // Should check last fetch, and if it is stale, run posts-hydrate
     const fetchData = async () => {
       try {
@@ -99,9 +100,7 @@ function App() {
     };
 
     fetchData();
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    setIsLoading(false);
   }, []);
 
   return (
@@ -113,7 +112,7 @@ function App() {
             exact
             path={['/posts/:id', '/']}
             component={props =>
-              loading && !error.code ? <Loading /> : <NewGrid posts={posts} {...props} />
+              isLoading && !error.code ? <Loading /> : <NewGrid posts={posts} {...props} />
             }
           />
           <Route path="/about">
@@ -125,10 +124,11 @@ function App() {
           {/* <Route path="/bar" component={LoadingBar} /> */}
 
           <Route path="*">
-            <ErrorPage error={{ code: '404', msg: 'Page not found!' }} />
+            <ErrorPage error={{ code: 404, msg: 'Page not found!' }} />
           </Route>
         </Switch>
-        {/* This is such a brain dead way to do this, but it's 4 am */}
+        {/* This is such a brain dead way to do this, but it's 4 am 
+        look at this: https://www.robinwieruch.de/react-hooks-fetch-data */}
         {error.code && (error.msg ? error.msg : 'An unknown error has occurred')}
       </div>
       <div className="footer">Copyright 2019 © plainsite</div>

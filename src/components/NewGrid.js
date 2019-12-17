@@ -242,15 +242,15 @@ const openSpring = { type: 'spring', stiffness: 300, damping: 200 };
 const closeSpring = { type: 'spring', stiffness: 300, damping: 200 };
 
 export function NewGrid({ posts, match, history }) {
-  const [loading, setLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
 
   // https://www.leighhalliday.com/use-effect-hook
 
-  useEffect(() => {
-    if (posts.length !== 0) {
-      setLoading(false);
-    }
-  }, [posts]);
+  // useEffect(() => {
+  //   if (posts.length !== 0) {
+  //     setIsLoading(false);
+  //   }
+  // }, [posts]);
 
   useEffect(() => {
     // body-scroll-lock package handles locking scroll for us
@@ -282,87 +282,88 @@ export function NewGrid({ posts, match, history }) {
   );
 }
 
-// const Post = memo(
-const Post = ({ isSelected, post, maxHeight, history }) => {
-  const [fromGrid, setFromGrid] = useState(false);
-  const zIndex = useMotionValue(isSelected ? 2 : 0);
-  const postRef = useRef(null);
-  const containerRef = useRef(null);
+const Post = memo(
+  ({ isSelected, post, history }) => {
+    const [fromGrid, setFromGrid] = useState(false);
+    const zIndex = useMotionValue(isSelected ? 2 : 0);
+    const postRef = useRef(null);
+    const containerRef = useRef(null);
 
-  function checkZIndex() {
-    if (isSelected) {
-      zIndex.set(2);
-    } else if (!isSelected) {
-      zIndex.set(0);
-    }
-  }
-
-  // dismiss modal when escape is pressed
-  useEffect(() => {
-    const dismissModal = event => {
-      if (isSelected && event.key === 'Escape') {
-        history.push('/');
+    function checkZIndex() {
+      if (isSelected) {
+        zIndex.set(2);
+      } else if (!isSelected) {
+        zIndex.set(0);
       }
-    };
-
-    window.addEventListener('keydown', dismissModal);
-
-    return () => {
-      window.removeEventListener('keydown', dismissModal);
-    };
-  }, [isSelected, history]);
-
-  // when modal is dismissed, make sure scroll pos is in sync
-  // when visiting an item near end of list directly, when modal dismissed
-  // scroll pos was top of list
-  useEffect(() => {
-    const scrollToRef = ref =>
-      window.scrollTo({
-        top: ref.current.offsetTop - ref.current.offsetHeight,
-        behaviour: 'smooth',
-      });
-    if (isSelected && !fromGrid) {
-      scrollToRef(containerRef);
     }
-  }, [fromGrid, isSelected]);
 
-  return (
-    <div className="post" style={{ maxHeight }} ref={containerRef}>
-      <Overlay isSelected={isSelected} />
-      <div className={`post-content-container ${isSelected && 'open'}`}>
-        <motion.div
-          ref={postRef}
-          // without layout transition, zIndex doesn't update
-          layoutTransition={isSelected ? closeSpring : openSpring}
-          style={{ zIndex }}
-          className="post-content"
-          onUpdate={checkZIndex}
-        >
-          <Image
-            id={post.id}
-            isSelected={isSelected}
-            src={post.src}
-            caption={post.caption}
-            width={post.width}
-            height={post.height}
+    // dismiss modal when escape is pressed
+    useEffect(() => {
+      const dismissModal = event => {
+        if (isSelected && event.key === 'Escape') {
+          history.push('/');
+        }
+      };
+
+      window.addEventListener('keydown', dismissModal);
+
+      return () => {
+        window.removeEventListener('keydown', dismissModal);
+      };
+    }, [isSelected, history]);
+
+    // when modal is dismissed, make sure scroll pos is in sync
+    // when visiting an item near end of list directly, when modal dismissed
+    // scroll pos was top of list
+    useEffect(() => {
+      const scrollToRef = ref =>
+        window.scrollTo({
+          top: ref.current.offsetTop - ref.current.offsetHeight,
+          behaviour: 'smooth',
+        });
+      if (isSelected && !fromGrid) {
+        scrollToRef(containerRef);
+      }
+    }, [fromGrid, isSelected]);
+
+    return (
+      <div className="post" ref={containerRef}>
+        <Overlay isSelected={isSelected} />
+        <div className={`post-content-container ${isSelected && 'open'}`}>
+          <motion.div
+            ref={postRef}
+            // without layout transition, zIndex doesn't update
+            layoutTransition={isSelected ? closeSpring : openSpring}
+            style={{ zIndex }}
+            className="post-content"
+            onUpdate={checkZIndex}
+          >
+            <Image
+              id={post.id}
+              isSelected={isSelected}
+              src={post.src}
+              caption={post.caption}
+              width={post.width}
+              height={post.height}
+            />
+            <Caption caption={post.caption} isSelected={isSelected} id={post.id} link={post.link} />
+          </motion.div>
+        </div>
+
+        {!isSelected && (
+          <Link
+            to={{
+              pathname: `posts/${post.id}`,
+            }}
+            className="post-open-link"
+            onClick={() => setFromGrid(true)}
           />
-          <Caption caption={post.caption} isSelected={isSelected} id={post.id} link={post.link} />
-        </motion.div>
+        )}
       </div>
-
-      {!isSelected && (
-        <Link
-          to={{
-            pathname: `posts/${post.id}`,
-          }}
-          className="post-open-link"
-          onClick={() => setFromGrid(true)}
-        />
-      )}
-    </div>
-  );
-  // (prev, next) => prev.isSelected === next.isSelected,
-};
+    );
+  },
+  (prev, next) => prev.isSelected === next.isSelected,
+);
 
 function Caption({ isSelected, caption, link }) {
   const opacity = isSelected ? 1 : 0;
@@ -431,7 +432,6 @@ Caption.propTypes = {
 
 Post.propTypes = {
   post: PostPropTypes.isRequired,
-  maxHeight: PropTypes.number.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
   isSelected: PropTypes.bool.isRequired,
 };
