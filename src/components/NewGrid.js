@@ -172,25 +172,31 @@ const StyledGrid = styled.div`
     display: block;
   }
 
-  @media only screen and (max-width: 700px) {
-    /* .caption-container { */
-    font-size: 0.8em;
-    /* } */
-  }
   .links {
     /* display: inline; */
 
     /* padding-right: 5px; */
-    a {
+    a,
+    a:link {
       font-size: 0.8em;
       /* display: inline; */
       /* float: right; */
       bottom: 0;
-      margin-right: 1.3em;
-      margin-bottom: 0.9em;
+      margin-right: 0.8rem;
+      margin-bottom: 0.45rem;
       right: 0;
+      color: #ccc;
       text-align: right;
       position: absolute;
+      transition: color 0.2s ease-out;
+      @media only screen and (min-width: 1000px) {
+        font-size: 1em;
+        /* color: #ff0000; */
+        margin-right: 1rem;
+      }
+    }
+    a:hover {
+      color: #121212;
     }
   }
 

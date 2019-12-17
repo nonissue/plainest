@@ -93,9 +93,9 @@ function App() {
       }
     };
 
-    console.log(testPosts);
-    // fetchData();
-    setPosts(testPosts);
+    // console.log(testPosts);
+    fetchData();
+    // setPosts(testPosts);
     // fake delay so loading shows
     setLoading(false);
   }, []);
