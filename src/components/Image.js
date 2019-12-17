@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
 import { motion, useInvertedScale, useMotionValue, useAnimation } from 'framer-motion';
-import { Loading } from './Loading';
 
-const closeSpring = { type: 'tween', stiffness: 300, damping: 200 };
+const closeSpring = { type: 'spring', stiffness: 300, damping: 200 };
 
 const StyledImage = styled(motion.div)`
   position: relative;
@@ -22,7 +21,7 @@ const StyledImage = styled(motion.div)`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* opacity: 0; */
+    opacity: 0;
   }
   .post-image.open {
     width: 100%;
@@ -73,7 +72,7 @@ export function Image({ isSelected, id, src, height, width, caption }) {
   const controls = useAnimation();
   const [loaded, setLoaded] = useState(false);
 
-  //   const inverted = useInvertedScale();
+  const inverted = useInvertedScale();
 
   useEffect(() => {
     if (!loaded) return;
@@ -86,27 +85,15 @@ export function Image({ isSelected, id, src, height, width, caption }) {
   }, [loaded]);
 
   return (
-    <StyledImage style={{ originX: 0, originY: 0 }}>
-      {/* {!loaded && false && <ImagePlaceholder style={{ height, width }} />} */}
-      {/* <motion.img
+    <StyledImage style={{ ...inverted, originX: 0, originY: 0 }}>
+      {!loaded && false && <ImagePlaceholder style={{ height, width }} />}
+      <motion.img
         key={`post-${id}`}
         className={`post-image ${isSelected && 'open'}`}
         src={src}
         alt={caption}
         transition={{ ...closeSpring, duration: 0.4 }}
         animate={controls}
-        onLoad={() => setLoaded(true)}
-        style={{
-          display: `${loaded ? 'block' : 'none'}`,
-        }}
-      /> */}
-      <img
-        key={`post-${id}`}
-        className={`post-image ${isSelected && 'open'}`}
-        src={src}
-        alt={caption}
-        // transition={{ ...closeSpring, duration: 0.4 }}
-        // animate={controls}
         onLoad={() => setLoaded(true)}
         style={{
           display: `${loaded ? 'block' : 'none'}`,

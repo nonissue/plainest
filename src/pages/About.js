@@ -47,6 +47,7 @@ const AboutWrapper = styled.div`
     color: #fa6400;
     color: hsla(205.9, 85.3%, 40%, 1);
     text-decoration-color: transparent;
+  }
 `;
 
 const variants = {

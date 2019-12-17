@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState, useRef, useLayoutEffect } from 'react';
+import React, { memo, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
@@ -191,7 +191,7 @@ const StyledGrid = styled.div`
 
   @media only screen and (max-width: 750px) {
     .open .post-content {
-      max-width: 90vw;
+      max-width: 100vw;
     }
     padding: 0 25px;
     .post {
@@ -330,14 +330,6 @@ const Post = memo(
       }
     }, [fromGrid, isSelected]);
 
-    useEffect(() => {
-      if (isSelected) {
-        zIndex.set(2);
-      } else if (!isSelected) {
-        zIndex.set(0);
-      }
-    }, [zIndex, isSelected]);
-
     return (
       <div className="post" style={{ maxHeight }} ref={containerRef}>
         <Overlay isSelected={isSelected} />
@@ -345,8 +337,7 @@ const Post = memo(
           <motion.div
             ref={postRef}
             // without layout transition, zIndex doesn't update
-            transition={openSpring}
-            // positionTransition={isSelected ? closeSpring : openSpring}
+            layoutTransition={isSelected ? closeSpring : openSpring}
             style={{ zIndex }}
             className="post-content"
             onUpdate={checkZIndex}
@@ -378,41 +369,6 @@ const Post = memo(
   },
   (prev, next) => prev.isSelected === next.isSelected,
 );
-
-// function Image({ isSelected, id, src, height, width, caption }) {
-//   const controls = useAnimation();
-//   const [loaded, setLoaded] = useState(false);
-
-//   const inverted = useInvertedScale();
-
-//   useEffect(() => {
-//     if (!loaded) return;
-//     controls.start({
-//       opacity: 1,
-//       transition: {
-//         duration: 0.5,
-//       },
-//     });
-//   }, [loaded]);
-
-//   return (
-//     <motion.div className="post-image-container" style={{ ...inverted, originX: 0, originY: 0 }}>
-//       {!loaded && false && <ImagePlaceholder style={{ height, width }} />}
-//       <motion.img
-//         key={`post-${id}`}
-//         className={`post-image ${isSelected && 'open'}`}
-//         src={src}
-//         alt={caption}
-//         transition={{ ...closeSpring, duration: 0.4 }}
-//         animate={controls}
-//         onLoad={() => setLoaded(true)}
-//         style={{
-//           display: `${loaded ? 'block' : 'none'}`,
-//         }}
-//       />
-//     </motion.div>
-//   );
-// }
 
 function Caption({ isSelected, caption, link }) {
   const opacity = isSelected ? 1 : 0;
