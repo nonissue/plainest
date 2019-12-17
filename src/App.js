@@ -69,7 +69,7 @@ async function getPosts() {
 
   try {
     res = await axios('/.netlify/functions/posts-read-latest');
-    // throw new Error({ msg: 'Couldnt fetch posts' });
+    // throw new Error({ code: 500, msg: 'Couldnt fetch posts' });
   } catch (err) {
     throw new Error('Couldnt fetch posts');
   }
@@ -79,14 +79,14 @@ async function getPosts() {
 // home page
 function App() {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState({ code: undefined, msg: undefined });
+  const [loading, setLoading] = useState(true);
 
   // not really utilized ATM
-  const [error, setError] = useState(false);
-  // useEffect(() => {
-  //   setError({ status: '500', msg: 'Unknown error occurred.' });
-  // }, []);
+  const [error, setError] = useState({ code: undefined, msg: undefined });
 
+  /* hmmmmmmmmmmmmmmmmmmm
+  If I fetch posts here, they are fetched on every route...
+  */
   useEffect(() => {
     // Should check last fetch, and if it is stale, run posts-hydrate
     const fetchData = async () => {
@@ -94,7 +94,7 @@ function App() {
         const fetchedPosts = await getPosts();
         setPosts(fetchedPosts);
       } catch (err) {
-        setError({ code: 500, msg: 'error fetching posts' });
+        setError({ code: 500, msg: 'Error fetching posts!' });
       }
     };
 
@@ -119,16 +119,17 @@ function App() {
           <Route path="/about">
             <About />
           </Route>
-          <Route path="/error/:id">
+          <Route exact path={['/error', '/error/:id']}>
             <ErrorPage error={error} />
           </Route>
           {/* <Route path="/bar" component={LoadingBar} /> */}
 
           <Route path="*">
-            <ErrorPage error={{ status: '404', msg: 'Page not found!' }} />
+            <ErrorPage error={{ code: '404', msg: 'Page not found!' }} />
           </Route>
         </Switch>
-        {error.code !== null && error.msg}
+        {/* This is such a brain dead way to do this, but it's 4 am */}
+        {error.code && (error.msg ? error.msg : 'An unknown error has occurred')}
       </div>
       <div className="footer">Copyright 2019 © plainsite</div>
     </AppWrapper>

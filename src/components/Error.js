@@ -49,9 +49,9 @@ export function Error({ error }) {
       exit="exit"
       variants={gridTransition}
     >
-      <h3>Error: {error.status || id}</h3>
+      <h3>Error: {error.code ? error.code : id || '500'}</h3>
 
-      <p>{error.msg !== null ? error.msg : 'An unknown problem has occurred.'}</p>
+      <p>{error.msg ? error.msg : 'An unknown problem has occurred.'}</p>
       <p>
         Notify <a href="mailto:andy@nonissue.org">support</a>.
       </p>
@@ -61,14 +61,14 @@ export function Error({ error }) {
 
 Error.defaultProps = {
   error: {
-    status: '500',
+    code: '500',
     msg: 'An unknown error has occurred',
   },
 };
 
 Error.propTypes = {
   error: PropTypes.shape({
-    status: PropTypes.string,
+    code: PropTypes.number,
     msg: PropTypes.string,
   }),
 };
