@@ -66,7 +66,7 @@ const AppWrapper = styled.div`
 
 // home page
 function App() {
-  const defaultError = { code: 500, msg: 'An unexpected error occurred!' };
+  const defaultError = { msg: 'An unexpected error occurred!' };
 
   return (
     <AppWrapper>

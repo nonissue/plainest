@@ -29,7 +29,6 @@ const StyledError = styled(motion.div)`
   a:active,
   a:visited {
     text-decoration: underline;
-    /* font-weight: 500; */
     color: #555;
   }
 `;
@@ -58,7 +57,7 @@ export function Error({ error }) {
       exit="exit"
       variants={gridTransition}
     >
-      <h3>Error {error.code ? error.code : id || '500'}</h3>
+      <h3>Error {error.code || id || '500'}</h3>
 
       <p>{error.msg ? error.msg : 'An unknown problem has occurred.'}</p>
       <p>

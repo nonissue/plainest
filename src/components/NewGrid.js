@@ -300,7 +300,7 @@ export function NewGrid({ match, history }) {
           <Loading />
         ) : (
           posts.length !== 0 &&
-          posts.map((post, i) => (
+          posts.map(post => (
             <Post
               post={post}
               isSelected={match.params.id === post.id}
@@ -361,12 +361,7 @@ const Post = memo(
     }, [fromGrid, isSelected]);
 
     return (
-      <motion.div
-        className="post"
-        key={`asd-${post.id}`}
-        // so this does stagger, but each individual grid item
-        ref={containerRef}
-      >
+      <motion.div className="post" key={`asd-${post.id}`} ref={containerRef}>
         <Overlay isSelected={isSelected} />
         <div className={`post-content-container ${isSelected && 'open'}`}>
           <motion.div
