@@ -1,9 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import logo2x from './logo2x.png';
+import logo from './logo.png';
+import PSLogo2x from '../PSLogo2x.png';
+import PSLogo from '../PSLogo.png';
 
 const LogoWrapper = styled.div`
-  padding: 1.5vh 8px 2vh 1vh;
+  padding: 3vh 8px 3vh 1vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,14 +54,16 @@ const LogoWrapper = styled.div`
 `;
 
 export function Logo() {
+  console.log(logo2x);
   return (
     <LogoWrapper>
-      <h1>
+      <img src={PSLogo} height={'60px'} srcset={PSLogo + ' 1x,' + PSLogo2x + ' 2x'} />
+      {/* <h1>
         <Link to="/">plainest site</Link>
       </h1>
       <h3>
         <a href="https://instagram.com/plainestsite">plainestsite</a>
-      </h3>
+      </h3> */}
     </LogoWrapper>
   );
 }

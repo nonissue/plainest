@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 // import { OutlineLeftCircle, Question } from '@ant-design/icons';
 import { AiOutlineLeft as Back, AiOutlineQuestionCircle as Question } from 'react-icons/ai';
+import { IconContext } from 'react-icons';
 
 import { Logo } from './Logo';
 
@@ -26,7 +27,7 @@ const StyledHeader = styled.header`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  border-bottom: 1px solid #ccc;
+  /* border-bottom: 1px solid #ccc; */
   /* border-bottom: 1px solid #eee; */
 
   .control {
@@ -42,7 +43,7 @@ const StyledHeader = styled.header`
     a,
     a:link,
     a:visited {
-      color: #333;
+      color: #aaa;
       opacity: 9;
       text-decoration: none;
       transition: color 0.2s ease-out;
@@ -50,11 +51,17 @@ const StyledHeader = styled.header`
 
     a:hover {
       opacity: 1;
-      color: #ff0000;
+      color: #333;
     }
   }
   .hidden {
     visibility: hidden;
+  }
+
+  @media only screen and (max-width: 700px) {
+    .control a {
+      font-size: 1.5em;
+    }
   }
 `;
 
@@ -91,7 +98,10 @@ export function Header() {
         </div>
       ) : (
         <div className="control hidden">
-          <Question />
+          <Question value={{ color: 'grey' }} />
+          {/* <IconContext.Provider value={{ color: 'blue' }}>
+            <div></div>
+          </IconContext.Provider> */}
         </div>
       )}
     </StyledHeader>

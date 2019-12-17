@@ -52,7 +52,7 @@ const StyledGrid = styled.div`
     width: 100%;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     height: 100%;
-    border-radius: 20px;
+    border-radius: 10px;
     margin: 0 auto;
   }
   .open .post-content {
@@ -129,18 +129,32 @@ const StyledGrid = styled.div`
     transform: translateX(-50%);
   }
   .caption-container {
-    padding: 20px 20px;
+    padding: 10px 10px;
     line-height: 1.5em;
     font-family: 'Open Sans', sans-serif;
-    font-weight: 500;
-    color: #121212;
+    color: #032d4d;
+    font-weight: 400;
+    /* color: #121212; */
     background: #fff;
     display: none;
     font-weight: 500;
+    /* max-width: 9%; */
     opacity: 0;
     p {
       margin: 0;
       padding: 0;
+      max-width: 90%;
+      margin: 0 auto;
+    }
+    @media only screen and (max-width: 700px) {
+      /* .caption-container { */
+      font-size: 0.8em;
+      /* } */
+    }
+    @media only screen and (max-width: 500px) {
+      /* .caption-container { */
+      font-size: 0.9em;
+      /* } */
     }
   }
   .caption-container .open {
@@ -150,12 +164,34 @@ const StyledGrid = styled.div`
     z-index: 2000 !important;
     position: relative;
     font-size: 1em;
-    padding-top: 1em;
+    /* padding-top: 1em; */
     opacity: 0.7;
     color: #121212;
     /* allows us to click through overlay to actually use link */
     pointer-events: auto;
     display: block;
+  }
+
+  @media only screen and (max-width: 700px) {
+    /* .caption-container { */
+    font-size: 0.8em;
+    /* } */
+  }
+  .links {
+    /* display: inline; */
+
+    /* padding-right: 5px; */
+    a {
+      font-size: 0.8em;
+      /* display: inline; */
+      /* float: right; */
+      bottom: 0;
+      margin-right: 1.3em;
+      margin-bottom: 0.9em;
+      right: 0;
+      text-align: right;
+      position: absolute;
+    }
   }
 
   /* media queries */
@@ -462,11 +498,11 @@ function Caption({ isSelected, caption, link }) {
       }}
     >
       <p>{caption}</p>
-      <p>
+      <div className="links">
         <a href={link}>
           <FiInstagram />
         </a>
-      </p>
+      </div>
     </motion.div>
   );
 }
