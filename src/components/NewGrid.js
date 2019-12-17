@@ -308,6 +308,7 @@ export function NewGrid({ match, history }) {
               width={post.width}
               match={match}
               index={i}
+              key={post.id}
               // variants={item}
             />
           ))}
@@ -378,7 +379,7 @@ const Post = memo(
         variants={variants}
         animate="visible"
         initial="hidden"
-        custom={index}
+        custom={`${isSelected ? 0 : index}`}
         ref={containerRef}
       >
         <Overlay isSelected={isSelected} />
