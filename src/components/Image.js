@@ -10,7 +10,7 @@ const StyledImage = styled(motion.div)`
   width: 100%;
   height: 100%;
   overflow: hidden;
-  transform: perspective(500px) translateZ(-300px);
+  transform: translateZ(0);
   object-fit: none;
   object-position: center center;
   background: rgba(0, 0, 0, 0.05);
@@ -21,6 +21,9 @@ const StyledImage = styled(motion.div)`
     height: 100%;
     object-fit: cover;
     opacity: 0;
+    /* object-fit: cover; */
+    /* object-fit: none;*/
+    /* object-position: 50% 50%; */
   }
   .post-image.open {
     width: 100%;
@@ -75,12 +78,14 @@ export function Image({ isSelected, id, src, caption, height, width }) {
 
   useEffect(() => {
     if (!loaded) return;
+    // if (loaded) {
     controls.start({
       opacity: 1,
       transition: {
         duration: 0.5,
       },
     });
+    // }
   }, [controls, loaded]);
 
   return (
@@ -93,7 +98,10 @@ export function Image({ isSelected, id, src, caption, height, width }) {
         alt={caption}
         transition={{ ...closeSpring, duration: 0.4 }}
         animate={controls}
-        onLoad={() => setLoaded(true)}
+        onLoad={() => {
+          setLoaded(true);
+          console.log('Loaded image!');
+        }}
         style={{
           display: `${loaded ? 'block' : 'none'}`,
         }}

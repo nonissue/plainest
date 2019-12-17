@@ -26,7 +26,6 @@ darkmode lightmode?
 
 const AppWrapper = styled.div`
   text-align: center;
-  /* color: #121212; */
   color: #032d4d;
   font-family: 'Work Sans', 'Helvetica', 'Arial', sans-serif;
 
@@ -64,25 +63,13 @@ const AppWrapper = styled.div`
   }
 `;
 
-// eslint-disable-next-line no-unused-vars
-function getPostByID(posts, id) {
-  return posts.find(p => p.id === id);
-}
-
-// eslint-disable-next-line no-unused-vars
-function getPostIndex(posts, id) {
-  return posts.findIndex(p => p.id === id);
-}
-
 async function getPosts() {
   let res;
 
   try {
     res = await axios('/.netlify/functions/posts-read-latest');
-    // return res.data.data.posts;
   } catch (err) {
-    console.log('Getposts error');
-    // throw new Error('getPosts error');
+    throw new Error('Couldnt fetch posts');
   }
   return res.data.data.posts;
 }
@@ -103,17 +90,13 @@ function App() {
     const fetchData = async () => {
       try {
         const fetchedPosts = await getPosts();
-        console.log(fetchedPosts);
         setPosts(fetchedPosts);
       } catch (err) {
         throw new Error(err);
       }
     };
 
-    // console.log(testPosts);
     fetchData();
-    // setPosts(testPosts);
-    // fake delay so loading shows
     setLoading(false);
   }, []);
 
