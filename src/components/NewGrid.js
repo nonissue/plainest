@@ -295,11 +295,11 @@ export function NewGrid({ match, history }) {
   return (
     <StyledGrid>
       <motion.div className="grid">
-        {/* {isError && 'Error!'} */}
-        {/* {posts.length === 0 && !isError ? (
+        {isError && 'Error!'}
+        {posts.length === 0 && !isError ? (
           <Loading />
-        ) : ( */}
-        {posts.length !== 0 &&
+        ) : (
+          posts.length !== 0 &&
           posts.map((post, i) => (
             <Post
               post={post}
@@ -307,29 +307,17 @@ export function NewGrid({ match, history }) {
               history={history}
               width={post.width}
               match={match}
-              index={i}
               key={post.id}
-              // variants={item}
             />
-          ))}
-        {/* )} */}
+          ))
+        )}
       </motion.div>
     </StyledGrid>
   );
 }
 
-const variants = {
-  visible: i => ({
-    opacity: 1,
-    transition: {
-      delay: i * 0.2,
-    },
-  }),
-  hidden: { opacity: 0 },
-};
-
 const Post = memo(
-  ({ isSelected, post, history, index }) => {
+  ({ isSelected, post, history }) => {
     const [fromGrid, setFromGrid] = useState(false);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
     const postRef = useRef(null);
@@ -376,10 +364,7 @@ const Post = memo(
       <motion.div
         className="post"
         key={`asd-${post.id}`}
-        variants={variants}
-        animate="visible"
-        initial="hidden"
-        custom={`${isSelected ? 0 : index}`}
+        // so this does stagger, but each individual grid item
         ref={containerRef}
       >
         <Overlay isSelected={isSelected} />

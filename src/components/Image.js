@@ -97,7 +97,7 @@ export function Image({ isSelected, id, src, caption, height, width }) {
         src={src}
         alt={caption}
         transition={{ ...closeSpring, duration: 0.4 }}
-        // animate={controls}
+        animate={controls}
         onLoad={() => {
           setLoaded(true);
           console.log('Loaded image!');
