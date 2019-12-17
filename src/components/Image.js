@@ -21,10 +21,8 @@ const StyledImage = styled(motion.div)`
     height: 100%;
     object-fit: cover;
     opacity: 0;
-    /* object-fit: cover; */
-    /* object-fit: none;*/
-    /* object-position: 50% 50%; */
   }
+
   .post-image.open {
     width: 100%;
   }
