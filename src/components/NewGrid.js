@@ -291,7 +291,6 @@ export function NewGrid({ posts, match, history }) {
     }
   }, [posts]);
 
-  // disable scroll on modal shown
   useEffect(() => {
     // body-scroll-lock package handles locking scroll for us
     // should look into accessbility concerns of this
@@ -329,7 +328,6 @@ export function NewGrid({ posts, match, history }) {
 // const Post = memo(
 const Post = ({ isSelected, post, maxHeight, history }) => {
   const [fromGrid, setFromGrid] = useState(false);
-  const y = useMotionValue(0);
   const zIndex = useMotionValue(isSelected ? 2 : 0);
   const postRef = useRef(null);
   const containerRef = useRef(null);
@@ -379,7 +377,7 @@ const Post = ({ isSelected, post, maxHeight, history }) => {
           ref={postRef}
           // without layout transition, zIndex doesn't update
           layoutTransition={isSelected ? closeSpring : openSpring}
-          style={{ y, zIndex }}
+          style={{ zIndex }}
           className="post-content"
           onUpdate={checkZIndex}
           drag={isSelected && false}
