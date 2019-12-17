@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { About } from './pages';
-import { Header, Error, NewGrid, LoadingBar } from './components';
-import { testPosts } from './posts';
+import { Header, Error, NewGrid } from './components';
+// import { testPosts } from './posts';
 import './App.css';
 
 /*

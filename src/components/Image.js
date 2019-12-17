@@ -1,8 +1,7 @@
-import React, { memo, useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
-import { motion, useInvertedScale, useMotionValue, useAnimation } from 'framer-motion';
+import { motion, useInvertedScale, useAnimation } from 'framer-motion';
 
 const closeSpring = { type: 'spring', stiffness: 300, damping: 200 };
 
@@ -11,7 +10,7 @@ const StyledImage = styled(motion.div)`
   width: 100%;
   height: 100%;
   overflow: hidden;
-  transform: translateZ(0);
+  transform: perspective(500px) translateZ(-300px);
   object-fit: none;
   object-position: center center;
   background: rgba(0, 0, 0, 0.05);
@@ -68,7 +67,7 @@ const ImagePlaceholder = styled.div`
   }
 `;
 
-export function Image({ isSelected, id, src, height, width, caption }) {
+export function Image({ isSelected, id, src, caption, height, width }) {
   const controls = useAnimation();
   const [loaded, setLoaded] = useState(false);
 
@@ -82,7 +81,7 @@ export function Image({ isSelected, id, src, height, width, caption }) {
         duration: 0.5,
       },
     });
-  }, [loaded]);
+  }, [controls, loaded]);
 
   return (
     <StyledImage style={{ ...inverted, originX: 0, originY: 0 }}>
@@ -102,5 +101,14 @@ export function Image({ isSelected, id, src, height, width, caption }) {
     </StyledImage>
   );
 }
+
+Image.propTypes = {
+  id: PropTypes.string.isRequired,
+  isSelected: PropTypes.bool.isRequired,
+  src: PropTypes.string.isRequired,
+  caption: PropTypes.string.isRequired,
+  height: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
+};
 
 export default Image;

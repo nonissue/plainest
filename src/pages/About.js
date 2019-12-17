@@ -35,9 +35,6 @@ const AboutWrapper = styled.div`
     color: inherit;
     text-decoration: underline;
     text-decoration-color: hsla(205.9, 92.3%, 40%, 0.5);
-    /* border-bottom: 1px solid hsla(205.9, 92.3%, 40%, 0.5); */
-    /* margin-bottom: -1px; */
-    /* padding-bottom: 0px; */
     text-underline-offset: 0.1rem;
     font-weight: 700;
     transition: all 0.1s ease-out;

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
 import { FiInstagram } from 'react-icons/fi';
-import { motion, useInvertedScale, useMotionValue, useAnimation } from 'framer-motion';
+import { motion, useMotionValue } from 'framer-motion';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { Loading } from './Loading';
 import { Image } from './Image';
@@ -191,7 +191,7 @@ const StyledGrid = styled.div`
 
   @media only screen and (max-width: 750px) {
     .open .post-content {
-      max-width: 100vw;
+      max-width: 90vw;
     }
     padding: 0 25px;
     .post {
@@ -341,7 +341,6 @@ const Post = memo(
             style={{ zIndex }}
             className="post-content"
             onUpdate={checkZIndex}
-            // drag={isSelected}
           >
             <Image
               id={post.id}
@@ -437,7 +436,7 @@ Caption.propTypes = {
 
 Post.propTypes = {
   post: PostPropTypes.isRequired,
-  // maxHeight: PropTypes.number.isRequired,
+  maxHeight: PropTypes.number.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
   isSelected: PropTypes.bool.isRequired,
 };

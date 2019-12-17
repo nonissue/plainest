@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import logo2x from './logo2x.png';
-import logo from './logo.png';
+
 import PSLogo2x from '../PSLogo2x.png';
 import PSLogo from '../PSLogo.png';
 
@@ -30,7 +30,6 @@ const LogoWrapper = styled.div`
     font-size: 1.2em;
     margin: 0;
     text-transform: uppercase;
-    /* font-family: 'Nunito', sans-serif; */
     font-family: 'Bebas Neue', 'Helvetica', sans-serif;
     font-weight: 400;
 
@@ -56,7 +55,6 @@ const LogoWrapper = styled.div`
     text-decoration: none;
     /* for some reason this removes the underline, which i want */
     display: inline-block;
-    /* border-bottom: 1px solid #fff; */
     color: #9cb6c9;
     text-decoration: none !important;
     font-weight: 500;
@@ -64,19 +62,33 @@ const LogoWrapper = styled.div`
   }
 `;
 
-export function Logo() {
-  console.log(logo2x);
+export function Logo({ showImage }) {
   return (
     <LogoWrapper>
-      {/* <img src={PSLogo} height={'60px'} srcset={PSLogo + ' 1x,' + PSLogo2x + ' 2x'} /> */}
-      <h1>
-        <Link to="/">plainest site</Link>
-      </h1>
-      <h3>
-        <a href="https://instagram.com/plainestsite">plainestsite</a>
-      </h3>
+      {showImage ? (
+        <img
+          src={PSLogo}
+          alt="Plainest.site Logo"
+          height="60px"
+          // srcSet={PSLogo + ' 1x,' + PSLogo2x + ' 2x'}
+          srcSet={`${PSLogo} 1x, ${PSLogo2x} 2x`}
+        />
+      ) : (
+        <>
+          <h1>
+            <Link to="/">plainest site</Link>
+          </h1>
+          <h3>
+            <a href="https://instagram.com/plainestsite">plainestsite</a>
+          </h3>
+        </>
+      )}
     </LogoWrapper>
   );
 }
+
+Logo.propTypes = {
+  showImage: PropTypes.bool.isRequired,
+};
 
 export default Logo;

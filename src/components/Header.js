@@ -1,10 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
-// import { OutlineLeftCircle, Question } from '@ant-design/icons';
 import { AiOutlineLeft as Back, AiOutlineQuestionCircle as Question } from 'react-icons/ai';
-import { IconContext } from 'react-icons';
 
 import { Logo } from './Logo';
 
@@ -27,8 +24,6 @@ const StyledHeader = styled.header`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  /* border-bottom: 1px solid #ccc; */
-  /* border-bottom: 1px solid #eee; */
 
   .control {
     text-transform: uppercase;
@@ -71,26 +66,18 @@ export function Header() {
   return (
     <StyledHeader>
       {!(location.pathname === '/') ? (
-        // <motion.div
-        //   key="back"
-        //   initial={{ opacity: 0 }}
-        //   animate={{ opacity: 1, transition: { delay: 0.1, duration: 0.5 } }}
-        //   exit={{ opacity: 1, scale: 1, transition: { duration: 1 } }}
-        //   className="control"
-        // >
         <div className="control">
           <Link to="/">
             <Back />
           </Link>
         </div>
       ) : (
-        // </motion.div>
         <div className="control hidden">
           <Back />
         </div>
       )}
 
-      <Logo />
+      <Logo showImage={false} />
       {!(location.pathname === '/about') ? (
         <div className="control">
           <Link to="/about">
@@ -99,10 +86,7 @@ export function Header() {
         </div>
       ) : (
         <div className="control hidden">
-          <Question value={{ color: 'grey' }} />
-          {/* <IconContext.Provider value={{ color: 'blue' }}>
-            <div></div>
-          </IconContext.Provider> */}
+          <Question />
         </div>
       )}
     </StyledHeader>
