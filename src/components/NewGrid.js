@@ -68,7 +68,7 @@ const StyledGrid = styled.div`
     padding-right: 0;
   } */
   .post-content {
-    background: #eee;
+    /* background: #eee; */
     position: relative;
     overflow: hidden;
     width: 100%;
@@ -109,7 +109,7 @@ const StyledGrid = styled.div`
     z-index: 1;
     position: fixed;
     background: rgba(255, 255, 255, 0.94);
-    /* will-change: opacity; */
+    will-change: opacity;
     top: 0;
     bottom: 0;
     /* using the code below ensures overlay is always centered
@@ -117,7 +117,6 @@ const StyledGrid = styled.div`
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    transform-style: preserve-3d;
   }
   .overlay a {
     display: block;
@@ -155,7 +154,7 @@ const StyledGrid = styled.div`
     display: block;
   }
   .caption-container a {
-    z-index: 2000 !important;
+    /* z-index: 2000 !important; */
     position: relative;
     font-size: 1em;
     opacity: 0.7;
@@ -277,16 +276,20 @@ async function getPosts() {
 const sidebarPoses = {
   open: {
     opacity: 1,
-    scale: 1,
     transition: {
-      type: 'tween',
       when: 'beforeChildren',
-      staggerChildren: 0.1,
+      staggerChildren: 0.5,
       delayChildren: 0,
-      delay: 0.2,
     },
   },
-  closed: { opacity: 0, scale: 0.95 },
+  closed: { opacity: 0 },
+};
+
+const singleItemView = {
+  open: {
+    opacity: 1,
+  },
+  closed: { opacity: 0 },
 };
 
 const itemPoses = {
@@ -294,12 +297,12 @@ const itemPoses = {
     opacity: 1,
     // scale: 1,
     transition: {
-      // scale: {
-      // type: 'spring',
-      // stiffness: 500,
-      // velocity: 20,
-      // damping: 200,
-      // },
+      opacity: {
+        type: 'spring',
+        stiffness: 500,
+        velocity: 20,
+        damping: 200,
+      },
     },
   },
   closed: {
@@ -332,8 +335,14 @@ export function NewGrid({ match, history }) {
     // console.log(match);
     console.log(match.path);
     fetchData();
-    setIsLoading(false);
+    // setIsLoading(false);
   }, [match.path]);
+
+  useEffect(() => {
+    if (posts.length !== 0) {
+      setIsLoading(false);
+    }
+  }, [posts]);
 
   useEffect(() => {
     // body-scroll-lock package handles locking scroll for us
@@ -349,30 +358,34 @@ export function NewGrid({ match, history }) {
   return (
     <StyledGrid>
       {/* {isError && 'Error!'} */}
-      {posts.length === 0 && !isError && <Loading />}
-      {posts.length !== 0 && (
-        <motion.div
-          // sketchy way to only show animation when routed from grid -> item
-          // dont want to show it on direct griditem visit
-          variants={match.path === '/posts/:id' ? { open: { opacity: 1 } } : sidebarPoses}
-          // variants={sidebarPoses}
-          initial="closed"
-          animate="open"
-          className="grid"
-        >
-          {posts.map((post, i) => (
-            <Post
-              post={post}
-              isSelected={match.params.id === post.id}
-              history={history}
-              width={post.width}
-              match={match}
-              delay={match.params.id === post.id ? 0 : i}
-              key={post.id}
-            />
-          ))}
-        </motion.div>
-      )}
+      {/* {posts.length === 0 && !isError && <Loading />} */}
+      <div className="grid">
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <motion.div
+            // sketchy way to only show animation when routed from grid -> item
+            // dont want to show it on direct griditem visit
+            variants={match.path === '/posts/:id' ? singleItemView : sidebarPoses}
+            // variants={sidebarPoses}
+            intial={match.path === '/posts/:id' ? 'false' : 'closed'}
+            animate="open"
+            className="grid"
+          >
+            {posts.map((post, i) => (
+              <Post
+                post={post}
+                isSelected={match.params.id === post.id}
+                history={history}
+                width={post.width}
+                match={match}
+                // delay={match.params.id === post.id ? 0 : i}
+                key={post.id}
+              />
+            ))}
+          </motion.div>
+        )}
+      </div>
     </StyledGrid>
   );
 }
@@ -423,10 +436,10 @@ const Post = ({ isSelected, post, history, delay }) => {
 
   return (
     <motion.div
-      // variants={itemPoses}
+      variants={itemPoses}
       ref={containerRef}
       // variants={isSelected ? 'false' : itemPoses}
-      // key={post.id}
+      key={post.id}
       className="post"
     >
       <Overlay isSelected={isSelected} />
@@ -446,7 +459,7 @@ const Post = ({ isSelected, post, history, delay }) => {
             caption={post.caption}
             width={post.width}
             height={post.height}
-            delay={delay}
+            // delay={delay}
           />
           <Caption caption={post.caption} isSelected={isSelected} id={post.id} link={post.link} />
         </motion.div>

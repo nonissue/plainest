@@ -22,7 +22,7 @@ const StyledImage = styled(motion.div)`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    will-change: opacity;
+    /* will-change: opacity; */
     /* scale: 1; */
   }
 
@@ -35,7 +35,7 @@ const ImagePlaceholder = styled.div`
   background-color: #ffffff;
   /* border: 1px solid #555; */
   box-sizing: border-box;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   /* height: 50px; */
   /* height: 100%; */
   --backgroundOffset: 600px;
@@ -119,17 +119,12 @@ export function Image({ isSelected, id, src, caption, height, width, delay }) {
     // if (loaded) {
     controls.start({
       opacity: 1,
-      transition: {
-        // ...closeSpring,
-        delay: 0 * delay,
-        // delay: 0.2,
-      },
     });
     // }
   }, [controls, loaded, delay]);
 
   return (
-    <StyledImage style={{ ...inverted, originX: 0, originY: 0 }} key={`image-wrapper-${id}`}>
+    <StyledImage style={{ ...inverted, originX: 0.5, originY: 0 }} key={`image-wrapper-${id}`}>
       {!loaded && <ImagePlaceholder style={{ width, height }} />}
       <motion.img
         key={`post-${id}`}
