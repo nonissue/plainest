@@ -10,19 +10,19 @@ const StyledImage = styled(motion.div)`
   width: 100%;
   height: 100%;
   overflow: hidden;
-  transform: translateZ(0);
+  /* transform: translateZ(0); */
   object-fit: none;
   object-position: center center;
   /* background: rgba(0, 0, 0, 0.05); */
-  transform: translateZ(0);
-  will-change: opacity;
+  /* transform: translateZ(0); */
+  /* will-change: opacity; */
 
   img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    will-change: opacity, scale;
+    will-change: opacity;
     /* scale: 1; */
   }
 
@@ -136,11 +136,9 @@ export function Image({ isSelected, id, src, caption, height, width, delay }) {
         className={`post-image ${isSelected && 'open'}`}
         src={src}
         alt={caption}
-        // transition={{ ...closeSpring, duration: 0.4 }}
         animate={controls}
         onLoad={() => {
-          setTimeout(() => setLoaded(true), 500);
-          console.log('Loaded image!');
+          setTimeout(() => setLoaded(true), 0);
         }}
         style={{
           display: `${loaded ? 'block' : 'none'}`,

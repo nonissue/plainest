@@ -28,6 +28,7 @@ darkmode lightmode?
 const AppWrapper = styled.div`
   text-align: center;
   color: #032d4d;
+  /* -webkit-transform: translate3d(0px, 0px, 0px); */
   /* font-family: 'Work Sans', 'Helvetica', 'Arial', sans-serif; */
 
   .url {

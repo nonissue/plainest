@@ -10,16 +10,27 @@ import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { Loading } from './Loading';
 import { Image } from './Image';
 
+// december:
+// readdded grid stagger
 // Separate into individual components
 const StyledGrid = styled.div`
   /* media queries located at bottom of StyledGrid */
-  max-width: 700px;
+  max-width: 990px;
   flex: 1 1 100%;
   margin: 0 auto;
+  /* will-change: scale; */
+  /* z-index: 0; */
+  /* -webkit-transform: translateZ(0); */
   .grid {
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
+    /* perspective: 0px; */
+    /* transform: translateZ(-1000px); */
+    /* transform-style: flat; */
+    /* -webkit-transform: translateZ(-1000px); */
+    /* will-change: scale; */
+    /* transform: translateZ(0); */
   }
   .post {
     position: relative;
@@ -31,23 +42,6 @@ const StyledGrid = styled.div`
     max-width: calc(100% / 3);
     height: 100px;
   }
-  /* I want to select
-  [1] [2] [ * ]
-  [ * ] [5] [6]
-  [7] [8] [ * ]
-  [ * ] [11] [12]
-  [13] [14] [ * ]
-  
-
-  3, 4, 9, 10, 15, 16
-  */
-
-  /* creates grid:
-  [ 25% ] [ 25% ] [   50%   ]
-  [   50%   ] [ 25% ] [ 25% ]
-  [ 25% ] [ 25% ] [   50%   ]
-  [   50%   ] [ 25% ] [ 25% ]
-  */
   .post:nth-child(4n + 1) {
     flex: 0 0 calc(100% * 2 / 3);
     max-width: calc(100% * 2 / 3);
@@ -115,7 +109,7 @@ const StyledGrid = styled.div`
     z-index: 1;
     position: fixed;
     background: rgba(255, 255, 255, 0.94);
-    will-change: opacity;
+    /* will-change: opacity; */
     top: 0;
     bottom: 0;
     /* using the code below ensures overlay is always centered
@@ -123,6 +117,7 @@ const StyledGrid = styled.div`
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
+    transform-style: preserve-3d;
   }
   .overlay a {
     display: block;
@@ -281,14 +276,23 @@ async function getPosts() {
 
 const sidebarPoses = {
   open: {
-    transition: { when: 'beforeChildren', staggerChildren: 0.1, delayChildren: 0 },
+    opacity: 1,
+    scale: 1,
+    transition: {
+      type: 'tween',
+      when: 'beforeChildren',
+      staggerChildren: 0.1,
+      delayChildren: 0,
+      delay: 0.2,
+    },
   },
-  closed: {},
+  closed: { opacity: 0, scale: 0.95 },
 };
 
 const itemPoses = {
   open: {
     opacity: 1,
+    // scale: 1,
     transition: {
       // scale: {
       // type: 'spring',
@@ -298,7 +302,9 @@ const itemPoses = {
       // },
     },
   },
-  closed: { opacity: 0 },
+  closed: {
+    opacity: 0.1,
+  },
 };
 
 export function NewGrid({ match, history }) {
@@ -323,10 +329,11 @@ export function NewGrid({ match, history }) {
         // setError({ code: 500, msg: 'Error fetching posts!' });
       }
     };
-
+    // console.log(match);
+    console.log(match.path);
     fetchData();
     setIsLoading(false);
-  }, []);
+  }, [match.path]);
 
   useEffect(() => {
     // body-scroll-lock package handles locking scroll for us
@@ -341,10 +348,18 @@ export function NewGrid({ match, history }) {
 
   return (
     <StyledGrid>
-      {isError && 'Error!'}
+      {/* {isError && 'Error!'} */}
       {posts.length === 0 && !isError && <Loading />}
       {posts.length !== 0 && (
-        <motion.div variants={sidebarPoses} initial="closed" animate="open" className="grid">
+        <motion.div
+          // sketchy way to only show animation when routed from grid -> item
+          // dont want to show it on direct griditem visit
+          variants={match.path === '/posts/:id' ? { open: { opacity: 1 } } : sidebarPoses}
+          // variants={sidebarPoses}
+          initial="closed"
+          animate="open"
+          className="grid"
+        >
           {posts.map((post, i) => (
             <Post
               post={post}
@@ -353,6 +368,7 @@ export function NewGrid({ match, history }) {
               width={post.width}
               match={match}
               delay={match.params.id === post.id ? 0 : i}
+              key={post.id}
             />
           ))}
         </motion.div>
@@ -409,8 +425,8 @@ const Post = ({ isSelected, post, history, delay }) => {
     <motion.div
       // variants={itemPoses}
       ref={containerRef}
-      variants={isSelected ? 'false' : itemPoses}
-      key={post.id}
+      // variants={isSelected ? 'false' : itemPoses}
+      // key={post.id}
       className="post"
     >
       <Overlay isSelected={isSelected} />
@@ -452,7 +468,7 @@ const Post = ({ isSelected, post, history, delay }) => {
 // );
 
 function Caption({ isSelected, caption, link }) {
-  const opacity = isSelected ? 1 : 1;
+  const opacity = isSelected ? 1 : 0;
   const display = isSelected ? 'block' : 'none';
 
   return (
