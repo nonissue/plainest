@@ -13,7 +13,7 @@ import { Image } from './Image';
 // Separate into individual components
 const StyledGrid = styled.div`
   /* media queries located at bottom of StyledGrid */
-  max-width: 990px;
+  max-width: 700px;
   flex: 1 1 100%;
   margin: 0 auto;
   .grid {
@@ -27,34 +27,60 @@ const StyledGrid = styled.div`
     padding-left: 0;
     padding-bottom: 0;
     box-sizing: border-box;
-    flex: 0 0 40%;
-    max-width: 40%;
-    height: 150px;
+    flex: 0 0 calc(100% / 3);
+    max-width: calc(100% / 3);
+    height: 100px;
+  }
+  /* I want to select
+  [1] [2] [ * ]
+  [ * ] [5] [6]
+  [7] [8] [ * ]
+  [ * ] [11] [12]
+  [13] [14] [ * ]
+  
+
+  3, 4, 9, 10, 15, 16
+  */
+
+  /* creates grid:
+  [ 25% ] [ 25% ] [   50%   ]
+  [   50%   ] [ 25% ] [ 25% ]
+  [ 25% ] [ 25% ] [   50%   ]
+  [   50%   ] [ 25% ] [ 25% ]
+  */
+  .post:nth-child(4n + 1) {
+    flex: 0 0 calc(100% * 2 / 3);
+    max-width: calc(100% * 2 / 3);
+  }
+  .post:nth-child(4n + 4) {
+    flex: 0 0 calc(100% * 2 / 3);
+    max-width: calc(100% * 2 / 3);
+  }
+  /* select 1, 5, 9, 13 */
+  /* .post:nth-child(4n + 1),
+  .post:nth-child(4n + 4) {
+    flex: 0 0 50%;
+    max-width: 50%;
   }
   .post:nth-child(4n + 1),
   .post:nth-child(4n + 4) {
-    flex: 0 0 60%;
-    max-width: 60%;
-  }
-  .post:nth-child(4n + 1),
-  .post:nth-child(4n + 4) {
-    flex: 0 0 60%;
-    max-width: 60%;
+    flex: 0 0 50%;
+    max-width: 50%;
   }
   .post:nth-child(odd) {
     padding-left: 0;
   }
   .post:nth-child(even) {
     padding-right: 0;
-  }
+  } */
   .post-content {
     background: #eee;
     position: relative;
     overflow: hidden;
     width: 100%;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     height: 100%;
-    border-radius: 10px;
+    border-radius: 5px;
     margin: 0 auto;
   }
   .open .post-content {
@@ -169,7 +195,7 @@ const StyledGrid = styled.div`
   /* media queries */
   @media only screen and (max-width: 3000px) {
     .post {
-      height: 250px;
+      height: 200px;
     }
   }
 
@@ -247,12 +273,36 @@ async function getPosts() {
 
   try {
     res = await axios('/.netlify/functions/posts-read-latest');
-    // throw new Error({ code: 500, msg: 'Couldnt fetch posts' });
   } catch (err) {
     throw new Error('Couldnt fetch posts');
   }
   return res.data.data.posts;
 }
+
+const sidebarPoses = {
+  open: {
+    y: 0,
+    transition: { when: 'beforeChildren', staggerChildren: 0, delayChildren: 0 },
+  },
+  closed: { y: 0 },
+};
+
+const itemPoses = {
+  open: {
+    scale: 1,
+    opacity: [0.7, 1],
+    y: 0,
+    transition: {
+      // scale: {
+      // type: 'spring',
+      // stiffness: 500,
+      // velocity: 20,
+      // damping: 200,
+      // },
+    },
+  },
+  closed: { scale: 1, opacity: 0, y: 0 },
+};
 
 export function NewGrid({ match, history }) {
   // implement reducer rather than multiple set states
@@ -279,7 +329,7 @@ export function NewGrid({ match, history }) {
 
     fetchData();
     setIsLoading(false);
-  }, [posts]);
+  }, []);
 
   useEffect(() => {
     // body-scroll-lock package handles locking scroll for us
@@ -294,110 +344,115 @@ export function NewGrid({ match, history }) {
 
   return (
     <StyledGrid>
-      <motion.div className="grid">
-        {isError && 'Error!'}
-        {posts.length === 0 && !isError ? (
-          <Loading />
-        ) : (
-          posts.length !== 0 &&
-          posts.map(post => (
+      {isError && 'Error!'}
+      {posts.length === 0 && !isError && <Loading />}
+      {posts.length !== 0 && (
+        <motion.div variants={sidebarPoses} initial="closed" animate="open" className="grid">
+          {posts.map((post, i) => (
             <Post
               post={post}
               isSelected={match.params.id === post.id}
               history={history}
               width={post.width}
               match={match}
-              key={post.id}
+              delay={i}
             />
-          ))
-        )}
-      </motion.div>
+          ))}
+        </motion.div>
+      )}
     </StyledGrid>
   );
 }
 
-const Post = memo(
-  ({ isSelected, post, history }) => {
-    const [fromGrid, setFromGrid] = useState(false);
-    const zIndex = useMotionValue(isSelected ? 2 : 0);
-    const postRef = useRef(null);
-    const containerRef = useRef(null);
+// const Post = memo(
+const Post = ({ isSelected, post, history, delay }) => {
+  const [fromGrid, setFromGrid] = useState(false);
+  const zIndex = useMotionValue(isSelected ? 2 : 0);
+  const postRef = useRef(null);
+  const containerRef = useRef(null);
 
-    function checkZIndex() {
-      if (isSelected) {
-        zIndex.set(2);
-      } else if (!isSelected) {
-        zIndex.set(0);
-      }
+  function checkZIndex() {
+    if (isSelected) {
+      zIndex.set(2);
+    } else if (!isSelected) {
+      zIndex.set(0);
     }
+  }
 
-    // dismiss modal when escape is pressed
-    useEffect(() => {
-      const dismissModal = event => {
-        if (isSelected && event.key === 'Escape') {
-          history.push('/');
-        }
-      };
-
-      window.addEventListener('keydown', dismissModal);
-
-      return () => {
-        window.removeEventListener('keydown', dismissModal);
-      };
-    }, [isSelected, history]);
-
-    // when modal is dismissed, make sure scroll pos is in sync
-    // when visiting an item near end of list directly, when modal dismissed
-    // scroll pos was top of list
-    useEffect(() => {
-      const scrollToRef = ref =>
-        window.scrollTo({
-          top: ref.current.offsetTop - ref.current.offsetHeight,
-          behaviour: 'smooth',
-        });
-      if (isSelected && !fromGrid) {
-        scrollToRef(containerRef);
+  // dismiss modal when escape is pressed
+  useEffect(() => {
+    const dismissModal = event => {
+      if (isSelected && event.key === 'Escape') {
+        history.push('/');
       }
-    }, [fromGrid, isSelected]);
+    };
 
-    return (
-      <motion.div className="post" key={`asd-${post.id}`} ref={containerRef}>
-        <Overlay isSelected={isSelected} />
-        <div className={`post-content-container ${isSelected && 'open'}`}>
-          <motion.div
-            ref={postRef}
-            // without layout transition, zIndex doesn't update
-            layoutTransition={isSelected ? closeSpring : openSpring}
-            style={{ zIndex }}
-            className="post-content"
-            onUpdate={checkZIndex}
-          >
-            <Image
-              id={post.id}
-              isSelected={isSelected}
-              src={post.src}
-              caption={post.caption}
-              width={post.width}
-              height={post.height}
-            />
-            <Caption caption={post.caption} isSelected={isSelected} id={post.id} link={post.link} />
-          </motion.div>
-        </div>
+    window.addEventListener('keydown', dismissModal);
 
-        {!isSelected && (
-          <Link
-            to={{
-              pathname: `posts/${post.id}`,
-            }}
-            className="post-open-link"
-            onClick={() => setFromGrid(true)}
+    return () => {
+      window.removeEventListener('keydown', dismissModal);
+    };
+  }, [isSelected, history]);
+
+  // when modal is dismissed, make sure scroll pos is in sync
+  // when visiting an item near end of list directly, when modal dismissed
+  // scroll pos was top of list
+  useEffect(() => {
+    const scrollToRef = ref =>
+      window.scrollTo({
+        top: ref.current.offsetTop - ref.current.offsetHeight,
+        behaviour: 'smooth',
+      });
+    if (isSelected && !fromGrid) {
+      scrollToRef(containerRef);
+    }
+  }, [fromGrid, isSelected]);
+
+  return (
+    <motion.div
+      // variants={itemPoses}
+      ref={containerRef}
+      variants={itemPoses}
+      key={post.id}
+      className="post"
+    >
+      <Overlay isSelected={isSelected} />
+      <div className={`post-content-container ${isSelected && 'open'}`}>
+        <motion.div
+          ref={postRef}
+          // without layout transition, zIndex doesn't update
+          layoutTransition={isSelected ? closeSpring : openSpring}
+          style={{ zIndex }}
+          className="post-content"
+          onUpdate={checkZIndex}
+        >
+          <Image
+            id={post.id}
+            isSelected={isSelected}
+            src={post.src}
+            caption={post.caption}
+            width={post.width}
+            height={post.height}
+            delay={delay}
           />
-        )}
-      </motion.div>
-    );
-  },
-  (prev, next) => prev.isSelected === next.isSelected,
-);
+          <Caption caption={post.caption} isSelected={isSelected} id={post.id} link={post.link} />
+        </motion.div>
+      </div>
+
+      {!isSelected && (
+        <Link
+          to={{
+            pathname: `posts/${post.id}`,
+          }}
+          className="post-open-link"
+          onClick={() => setFromGrid(true)}
+        />
+      )}
+    </motion.div>
+  );
+};
+// (prev, next) => prev.isSelected === next.isSelected,
+// );
 
 function Caption({ isSelected, caption, link }) {
   const opacity = isSelected ? 1 : 1;

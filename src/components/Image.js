@@ -13,7 +13,7 @@ const StyledImage = styled(motion.div)`
   transform: translateZ(0);
   object-fit: none;
   object-position: center center;
-  background: rgba(0, 0, 0, 0.05);
+  /* background: rgba(0, 0, 0, 0.05); */
   transform: translateZ(0);
   will-change: opacity;
 
@@ -22,7 +22,8 @@ const StyledImage = styled(motion.div)`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 1;
+    will-change: opacity, scale;
+    /* scale: 1; */
   }
 
   .post-image.open {
@@ -31,46 +32,83 @@ const StyledImage = styled(motion.div)`
 `;
 
 const ImagePlaceholder = styled.div`
-  background-image: radial-gradient(
+  background-color: #ffffff;
+  /* border: 1px solid #555; */
+  box-sizing: border-box;
+  border-radius: 5px;
+  /* height: 50px; */
+  height: 100%;
+  --backgroundOffset: 600px;
+  /* background-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(rgba(0, 0, 0, 0.08)),
+    color-stop(15%, rgba(0, 0, 0, 0.15)),
+    color-stop(30%, rgba(0, 0, 0, 0.08))
+  );*/
+  /* background-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(rgba(0, 0, 0, 0.12)),
+    color-stop(15%, rgba(0, 0, 0, 0.18)),
+    color-stop(30%, rgba(0, 0, 0, 0.12))
+  );
+  background-image: -webkit-linear-gradient(
+    left,
+    rgba(0, 0, 0, 0.12) 0%,
+    rgba(0, 0, 0, 0.18) 15%,
+    rgba(0, 0, 0, 0.12) 30%
+  ); */
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0.15) 50%,
+    rgba(0, 0, 0, 0.1) 75%
+  );
+  background-size: var(--backgroundOffset) 100%;
+  max-width: 30rem;
+  /* background-image: radial-gradient(
     to right,
     rgba(0, 0, 0, 0.8) 0,
-    rgba(0, 0, 0, 0.17) 15%,
+    rgba(0, 0, 0, 0.5) 15%,
     rgba(0, 0, 0, 0.1) 30%
-  );
-  background-size: 600px 100%;
+  ); */
+
+  /* background-size: 200px 100%; */
   position: static;
   overflow: hidden;
 
-  -webkit-transform: translateZ(0);
-  -moz-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  -o-transform: translateZ(0);
-  transform: translateZ(0);
+  --backgroundOffset: 1000px;
 
-  --backgroundOffset: 600px;
+  -webkit-animation: placeholderShimmer 42 linear;
+  animation: placeholderShimmer 2s linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
 
   @-webkit-keyframes placeholderShimmer {
     0% {
-      background-position: (-1 * var(--backgroundOffset)) 0;
+      background-position: (-1 * var(--backgroundOffset)) var(--backgroundOffset);
     }
 
     100% {
-      background-position: var(--backgroundOffset) 0;
+      background-position: var(--backgroundOffset) var(--backgroundOffset);
     }
   }
 
   @keyframes placeholderShimmer {
     0% {
-      background-position: (-1 * var(--backgroundOffset)) 0;
+      background-position: (-1 * var(--backgroundOffset)) var(--backgroundOffset);
     }
 
     100% {
-      background-position: var(--backgroundOffset) 0;
+      background-position: var(--backgroundOffset) var(--backgroundOffset);
     }
   }
 `;
 
-export function Image({ isSelected, id, src, caption, height, width }) {
+export function Image({ isSelected, id, src, caption, height, width, delay }) {
   const controls = useAnimation();
   const [loaded, setLoaded] = useState(false);
 
@@ -81,29 +119,35 @@ export function Image({ isSelected, id, src, caption, height, width }) {
     // if (loaded) {
     controls.start({
       opacity: 1,
+      // scale: 1,
+
       transition: {
-        duration: 0.5,
+        // ...closeSpring,
+        delay: 0.2 * delay,
+        // delay: 0.2,
       },
     });
     // }
-  }, [controls, loaded]);
+  }, [controls, loaded, delay]);
 
   return (
-    <StyledImage style={{ ...inverted, originX: 0, originY: 0.5 }} key={`image-wrapper-${id}`}>
-      {!loaded && false && <ImagePlaceholder style={{ height, width }} />}
+    <StyledImage style={{ ...inverted, originX: 0, originY: 0 }} key={`image-wrapper-${id}`}>
+      {!loaded && <ImagePlaceholder style={{ width: '100%' }} />}
       <motion.img
         key={`post-${id}`}
         className={`post-image ${isSelected && 'open'}`}
         src={src}
         alt={caption}
-        transition={{ ...closeSpring, duration: 0.4 }}
+        // transition={{ ...closeSpring, duration: 0.4 }}
         animate={controls}
         onLoad={() => {
-          setLoaded(true);
+          setTimeout(() => setLoaded(true), 500);
           console.log('Loaded image!');
         }}
         style={{
           display: `${loaded ? 'block' : 'none'}`,
+          // scale: 1.5,
+          opacity: 0,
         }}
       />
     </StyledImage>
