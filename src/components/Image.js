@@ -37,7 +37,7 @@ const ImagePlaceholder = styled.div`
   box-sizing: border-box;
   border-radius: 5px;
   /* height: 50px; */
-  height: 100%;
+  /* height: 100%; */
   --backgroundOffset: 600px;
   /* background-image: -webkit-gradient(
     linear,
@@ -68,7 +68,7 @@ const ImagePlaceholder = styled.div`
     rgba(0, 0, 0, 0.1) 75%
   );
   background-size: var(--backgroundOffset) 100%;
-  max-width: 30rem;
+  /* max-width: 30rem; */
   /* background-image: radial-gradient(
     to right,
     rgba(0, 0, 0, 0.8) 0,
@@ -119,11 +119,9 @@ export function Image({ isSelected, id, src, caption, height, width, delay }) {
     // if (loaded) {
     controls.start({
       opacity: 1,
-      // scale: 1,
-
       transition: {
         // ...closeSpring,
-        delay: 0.2 * delay,
+        delay: 0 * delay,
         // delay: 0.2,
       },
     });
@@ -132,7 +130,7 @@ export function Image({ isSelected, id, src, caption, height, width, delay }) {
 
   return (
     <StyledImage style={{ ...inverted, originX: 0, originY: 0 }} key={`image-wrapper-${id}`}>
-      {!loaded && <ImagePlaceholder style={{ width: '100%' }} />}
+      {!loaded && <ImagePlaceholder style={{ width, height }} />}
       <motion.img
         key={`post-${id}`}
         className={`post-image ${isSelected && 'open'}`}
@@ -146,7 +144,7 @@ export function Image({ isSelected, id, src, caption, height, width, delay }) {
         }}
         style={{
           display: `${loaded ? 'block' : 'none'}`,
-          // scale: 1.5,
+          height: `${isSelected ? 'unset' : height}`,
           opacity: 0,
         }}
       />

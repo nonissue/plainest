@@ -281,17 +281,14 @@ async function getPosts() {
 
 const sidebarPoses = {
   open: {
-    y: 0,
-    transition: { when: 'beforeChildren', staggerChildren: 0, delayChildren: 0 },
+    transition: { when: 'beforeChildren', staggerChildren: 0.1, delayChildren: 0 },
   },
-  closed: { y: 0 },
+  closed: {},
 };
 
 const itemPoses = {
   open: {
-    scale: 1,
-    opacity: [0.7, 1],
-    y: 0,
+    opacity: 1,
     transition: {
       // scale: {
       // type: 'spring',
@@ -301,7 +298,7 @@ const itemPoses = {
       // },
     },
   },
-  closed: { scale: 1, opacity: 0, y: 0 },
+  closed: { opacity: 0 },
 };
 
 export function NewGrid({ match, history }) {
@@ -355,7 +352,7 @@ export function NewGrid({ match, history }) {
               history={history}
               width={post.width}
               match={match}
-              delay={i}
+              delay={match.params.id === post.id ? 0 : i}
             />
           ))}
         </motion.div>
@@ -412,7 +409,7 @@ const Post = ({ isSelected, post, history, delay }) => {
     <motion.div
       // variants={itemPoses}
       ref={containerRef}
-      variants={itemPoses}
+      variants={isSelected ? 'false' : itemPoses}
       key={post.id}
       className="post"
     >
