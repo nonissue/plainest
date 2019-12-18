@@ -275,10 +275,10 @@ async function getPosts() {
 
 const sidebarPoses = {
   open: {
-    y: 0,
+    x: 0,
     transition: { when: 'beforeChildren', staggerChildren: 0.2 },
   },
-  closed: { y: -180 },
+  closed: { x: -180 },
 };
 
 const singleItemView = {
@@ -314,6 +314,7 @@ function ImDumb({ posts, match, history }) {
           history={history}
           width={post.width}
           match={match}
+          key={post.id}
           // delay={match.params.id === post.id ? 0 : i}
           variants={itemPoses}
         />
