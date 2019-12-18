@@ -24,6 +24,7 @@ const StyledImage = styled(motion.div)`
     object-fit: cover;
     /* will-change: opacity; */
     /* scale: 1; */
+    opacity: 1;
   }
 
   .post-image.open {
@@ -124,21 +125,20 @@ export function Image({ isSelected, id, src, caption, height, width, delay }) {
   }, [controls, loaded, delay]);
 
   return (
-    <StyledImage style={{ ...inverted, originX: 0.5, originY: 0 }} key={`image-wrapper-${id}`}>
-      {!loaded && <ImagePlaceholder style={{ width, height }} />}
+    <StyledImage style={{ ...inverted, originX: 0, originY: 0 }} key={`image-wrapper-${id}`}>
+      {/* {!loaded && <ImagePlaceholder style={{ width, height }} />} */}
       <motion.img
         key={`post-${id}`}
         className={`post-image ${isSelected && 'open'}`}
         src={src}
         alt={caption}
-        animate={controls}
+        // animate={controls}
         onLoad={() => {
           setTimeout(() => setLoaded(true), 0);
         }}
         style={{
           display: `${loaded ? 'block' : 'none'}`,
           height: `${isSelected ? 'unset' : height}`,
-          opacity: 0,
         }}
       />
     </StyledImage>

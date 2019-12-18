@@ -275,14 +275,10 @@ async function getPosts() {
 
 const sidebarPoses = {
   open: {
-    opacity: 1,
-    transition: {
-      when: 'beforeChildren',
-      staggerChildren: 0.5,
-      delayChildren: 0,
-    },
+    x: 0,
+    transition: { when: 'beforeChildren', staggerChildren: 0.2 },
   },
-  closed: { opacity: 0 },
+  closed: { x: -180 },
 };
 
 const singleItemView = {
@@ -294,21 +290,44 @@ const singleItemView = {
 
 const itemPoses = {
   open: {
+    scale: 1,
     opacity: 1,
-    // scale: 1,
     transition: {
-      opacity: {
+      scale: {
         type: 'spring',
-        stiffness: 500,
-        velocity: 20,
-        damping: 200,
+        stiffness: 400,
+        velocity: 40,
+        damping: 20,
       },
     },
   },
-  closed: {
-    opacity: 0.1,
-  },
+  closed: { scale: 0.5, opacity: 0.1 },
 };
+
+function ImDumb({ posts }) {
+  return (
+    <motion.div variants={sidebarPoses} initial="closed" animate="open" className="grid">
+      {posts.map((post, i) => (
+        // <Post
+        //   post={post}
+        //   isSelected={match.params.id === post.id}
+        //   history={history}
+        //   width={post.width}
+        //   match={match}
+        //   // delay={match.params.id === post.id ? 0 : i}
+        //   // variants={itemPoses}
+        // />
+        <motion.div
+          key={`${i} sad`}
+          variants={itemPoses}
+          style={{ opacity: 0, width: '200px', height: '200px', background: '#ff0000' }}
+        >
+          !
+        </motion.div>
+      ))}
+    </motion.div>
+  );
+}
 
 export function NewGrid({ match, history }) {
   // implement reducer rather than multiple set states
@@ -335,14 +354,10 @@ export function NewGrid({ match, history }) {
     // console.log(match);
     console.log(match.path);
     fetchData();
-    // setIsLoading(false);
-  }, [match.path]);
-
-  useEffect(() => {
-    if (posts.length !== 0) {
+    setTimeout(() => {
       setIsLoading(false);
-    }
-  }, [posts]);
+    }, 0);
+  }, [match.path]);
 
   useEffect(() => {
     // body-scroll-lock package handles locking scroll for us
@@ -355,37 +370,48 @@ export function NewGrid({ match, history }) {
     }
   }, [match, posts]);
 
+  const [items, setItems] = React.useState([0, 1, 2, 3, 4, 5]);
+
   return (
     <StyledGrid>
       {/* {isError && 'Error!'} */}
-      {/* {posts.length === 0 && !isError && <Loading />} */}
-      <div className="grid">
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <motion.div
-            // sketchy way to only show animation when routed from grid -> item
-            // dont want to show it on direct griditem visit
-            variants={match.path === '/posts/:id' ? singleItemView : sidebarPoses}
-            // variants={sidebarPoses}
-            intial={match.path === '/posts/:id' ? 'false' : 'closed'}
+      {/* <motion.ul
+            variants={sidebarPoses}
+            initial="closed"
             animate="open"
-            className="grid"
-          >
-            {posts.map((post, i) => (
-              <Post
-                post={post}
-                isSelected={match.params.id === post.id}
-                history={history}
-                width={post.width}
-                match={match}
-                // delay={match.params.id === post.id ? 0 : i}
-                key={post.id}
-              />
+        >
+            {items.map(i => (
+                <motion.li key={i} variants={itemPoses} style={{ opacity: 0, width: '200px', height: '200px', background: '#ff0000'}} />
             ))}
+        </motion.ul> */}
+      <motion.div
+        // sketchy way to only show animation when routed from grid -> item
+        // dont want to show it on direct griditem visit
+        // variants={match.path === '/posts/:id' ? singleItemView : sidebarPoses}
+        variants={sidebarPoses}
+        initial="closed"
+        animate="open"
+        className="grid"
+      >
+        {posts.map((post, i) => (
+          // <Post
+          //   post={post}
+          //   isSelected={match.params.id === post.id}
+          //   history={history}
+          //   width={post.width}
+          //   match={match}
+          //   // delay={match.params.id === post.id ? 0 : i}
+          //   // variants={itemPoses}
+          // />
+          <motion.div
+            key={`${i} sad`}
+            variants={itemPoses}
+            style={{ opacity: 0, width: '200px', height: '200px', background: '#ff0000' }}
+          >
+            Hi
           </motion.div>
-        )}
-      </div>
+        ))}
+      </motion.div>
     </StyledGrid>
   );
 }
@@ -436,10 +462,12 @@ const Post = ({ isSelected, post, history, delay }) => {
 
   return (
     <motion.div
-      variants={itemPoses}
       ref={containerRef}
+      variants={itemPoses}
       // variants={isSelected ? 'false' : itemPoses}
-      key={post.id}
+      // key={post.id}
+      // initial="closed"
+      // animate="open"
       className="post"
     >
       <Overlay isSelected={isSelected} />
@@ -459,7 +487,7 @@ const Post = ({ isSelected, post, history, delay }) => {
             caption={post.caption}
             width={post.width}
             height={post.height}
-            // delay={delay}
+            delay={delay}
           />
           <Caption caption={post.caption} isSelected={isSelected} id={post.id} link={post.link} />
         </motion.div>
