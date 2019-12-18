@@ -275,10 +275,10 @@ async function getPosts() {
 
 const sidebarPoses = {
   open: {
-    x: 0,
+    y: 0,
     transition: { when: 'beforeChildren', staggerChildren: 0.2 },
   },
-  closed: { x: -180 },
+  closed: { y: -180 },
 };
 
 const singleItemView = {
@@ -296,34 +296,27 @@ const itemPoses = {
       scale: {
         type: 'spring',
         stiffness: 400,
-        velocity: 40,
+        velocity: 2,
         damping: 20,
       },
     },
   },
-  closed: { scale: 0.5, opacity: 0.1 },
+  closed: { scale: 0.9, opacity: 0.1 },
 };
 
-function ImDumb({ posts }) {
+function ImDumb({ posts, match, history }) {
   return (
     <motion.div variants={sidebarPoses} initial="closed" animate="open" className="grid">
-      {posts.map((post, i) => (
-        // <Post
-        //   post={post}
-        //   isSelected={match.params.id === post.id}
-        //   history={history}
-        //   width={post.width}
-        //   match={match}
-        //   // delay={match.params.id === post.id ? 0 : i}
-        //   // variants={itemPoses}
-        // />
-        <motion.div
-          key={`${i} sad`}
+      {posts.map(post => (
+        <Post
+          post={post}
+          isSelected={match.params.id === post.id}
+          history={history}
+          width={post.width}
+          match={match}
+          // delay={match.params.id === post.id ? 0 : i}
           variants={itemPoses}
-          style={{ opacity: 0, width: '200px', height: '200px', background: '#ff0000' }}
-        >
-          !
-        </motion.div>
+        />
       ))}
     </motion.div>
   );
@@ -370,48 +363,9 @@ export function NewGrid({ match, history }) {
     }
   }, [match, posts]);
 
-  const [items, setItems] = React.useState([0, 1, 2, 3, 4, 5]);
-
   return (
     <StyledGrid>
-      {/* {isError && 'Error!'} */}
-      {/* <motion.ul
-            variants={sidebarPoses}
-            initial="closed"
-            animate="open"
-        >
-            {items.map(i => (
-                <motion.li key={i} variants={itemPoses} style={{ opacity: 0, width: '200px', height: '200px', background: '#ff0000'}} />
-            ))}
-        </motion.ul> */}
-      <motion.div
-        // sketchy way to only show animation when routed from grid -> item
-        // dont want to show it on direct griditem visit
-        // variants={match.path === '/posts/:id' ? singleItemView : sidebarPoses}
-        variants={sidebarPoses}
-        initial="closed"
-        animate="open"
-        className="grid"
-      >
-        {posts.map((post, i) => (
-          // <Post
-          //   post={post}
-          //   isSelected={match.params.id === post.id}
-          //   history={history}
-          //   width={post.width}
-          //   match={match}
-          //   // delay={match.params.id === post.id ? 0 : i}
-          //   // variants={itemPoses}
-          // />
-          <motion.div
-            key={`${i} sad`}
-            variants={itemPoses}
-            style={{ opacity: 0, width: '200px', height: '200px', background: '#ff0000' }}
-          >
-            Hi
-          </motion.div>
-        ))}
-      </motion.div>
+      {posts.length !== 0 && <ImDumb posts={posts} match={match} history={history} />}
     </StyledGrid>
   );
 }
