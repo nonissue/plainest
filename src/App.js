@@ -1,11 +1,10 @@
 import { Switch, Route } from 'react-router-dom';
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 // import { history } from './history';
 import { About } from './pages';
-import { Header, Error as ErrorPage, NewGrid, Loading } from './components';
+import { Header, Error as ErrorPage, NewGrid } from './components';
 // import { testPosts } from './posts';
 import './App.css';
 
@@ -21,7 +20,6 @@ font-families?
 box-shadows?
 
 darkmode lightmode?
-
 
 */
 
