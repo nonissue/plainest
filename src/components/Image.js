@@ -112,7 +112,7 @@ const ImagePlaceholder = styled.div`
 export function Image({ isSelected, id, src, caption, height, width, delay }) {
   const controls = useAnimation();
   const [loaded, setLoaded] = useState(false);
-  const [imgHeight, setImgHeight] = useState();
+  // const [imgHeight, setImgHeight] = useState();
   const targetRef = useRef();
 
   const inverted = useInvertedScale();
@@ -123,7 +123,6 @@ export function Image({ isSelected, id, src, caption, height, width, delay }) {
     //   console.log(imgHeight);
     // }
     if (!loaded) return;
-    // if (loaded) {
     controls.start({
       opacity: 1,
     });
@@ -138,8 +137,7 @@ export function Image({ isSelected, id, src, caption, height, width, delay }) {
         className={`post-image ${isSelected && 'open'}`}
         src={src}
         alt={caption}
-        ref={targetRef}
-        // animate={controls}
+        animate={controls}
         onLoad={() => {
           setTimeout(() => setLoaded(true), 0);
         }}
