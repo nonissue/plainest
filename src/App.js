@@ -65,7 +65,16 @@ const AppWrapper = styled.div`
   }
 `;
 
-// home page
+/*
+The same newgrid component is serverd for both the root route and for the /posts/:id route
+This is so that, when a post is clicked, we can render the individual post modal above 
+the rest of the posts AND update the url at the same time.
+Routing to the individual post is easy but we would wouldn't be able to have modal appear
+ABOVE the existing post grid.
+
+Issues: How we do serve 404 whne a visit to /post/:id isn't a valid post?
+
+*/
 function App() {
   const defaultError = { code: 500, msg: 'An unexpected error occurred!' };
 
@@ -74,6 +83,7 @@ function App() {
       <Header />
       <div>
         <Switch>
+          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
           <Route exact path={['/posts/:id', '/']} component={props => <NewGrid {...props} />} />
           <Route path="/about">
             <About />
@@ -81,14 +91,10 @@ function App() {
           <Route exact path={['/error', '/error/:id']}>
             <ErrorPage error={defaultError} />
           </Route>
-          {/* <Route path="/bar" component={LoadingBar} /> */}
-
           <Route path="*">
             <ErrorPage error={{ code: 404, msg: 'Page not found!' }} />
           </Route>
         </Switch>
-        {/* This is such a brain dead way to do this, but it's 4 am 
-        look at this: https://www.robinwieruch.de/react-hooks-fetch-data */}
       </div>
       <div className="footer">Copyright 2019 © plainsite</div>
     </AppWrapper>

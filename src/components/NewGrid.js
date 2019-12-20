@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
 import { FiInstagram } from 'react-icons/fi';
@@ -306,7 +306,12 @@ const itemPoses = {
 
 function ImDumb({ posts, match, history }) {
   return (
-    <motion.div variants={sidebarPoses} initial="closed" animate="open" className="grid">
+    <motion.div
+      variants={match.path !== '/' ? {} : sidebarPoses}
+      // initial={`${? 'false' : 'closed'}`}
+      animate="open"
+      className="grid"
+    >
       {posts.map(post => (
         <Post
           post={post}
@@ -316,7 +321,6 @@ function ImDumb({ posts, match, history }) {
           match={match}
           key={post.id}
           // delay={match.params.id === post.id ? 0 : i}
-          variants={itemPoses}
         />
       ))}
     </motion.div>
@@ -339,6 +343,11 @@ export function NewGrid({ match, history }) {
       try {
         const fetchedPosts = await getPosts();
         setPosts(fetchedPosts);
+
+        if (match.path !== '/' && !fetchedPosts.some(p => p.id === match.params.id)) {
+          console.log('no post found!');
+          setIsError(true);
+        }
       } catch (err) {
         setIsError(true);
         console.log('Error');
@@ -348,6 +357,7 @@ export function NewGrid({ match, history }) {
     // console.log(match);
     console.log(match.path);
     fetchData();
+
     setTimeout(() => {
       setIsLoading(false);
     }, 0);
@@ -366,6 +376,7 @@ export function NewGrid({ match, history }) {
 
   return (
     <StyledGrid>
+      {isError && <Redirect to="/error/404" />}
       {posts.length !== 0 && <ImDumb posts={posts} match={match} history={history} />}
     </StyledGrid>
   );
@@ -418,11 +429,9 @@ const Post = ({ isSelected, post, history, delay }) => {
   return (
     <motion.div
       ref={containerRef}
-      variants={itemPoses}
-      // variants={isSelected ? 'false' : itemPoses}
-      // key={post.id}
-      // initial="closed"
-      // animate="open"
+      variants={isSelected ? {} : itemPoses}
+      initial="closed"
+      // animate={`${isSelected ? 'false' : 'open'}`}
       className="post"
     >
       <Overlay isSelected={isSelected} />
