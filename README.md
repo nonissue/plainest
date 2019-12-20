@@ -21,6 +21,13 @@ export FAUNA_DB_KEY=$FAUNA_DB_KEY && export INSTAGRAM_ACCESS_TOKEN=$INSTAGRAM_AC
 posix-source .env && export FAUNA_DB_KEY=$FAUNA_DB_KEY && export INSTAGRAM_ACCESS_TOKEN=$INSTAGRAM_ACCESS_TOKEN && yarn start
 ```
 
+Newer!
+
+```
+posix-source .env && export FAUNA_DB_KEY=$FAUNA_DB_KEY && export INSTAGRAM_ACCESS_TOKEN=$INSTAGRAM_ACCESS_TOKEN && yarn start:lambda
+posix-source .env && export FAUNA_DB_KEY=$FAUNA_DB_KEY && export INSTAGRAM_ACCESS_TOKEN=$INSTAGRAM_ACCESS_TOKEN && yarn start:app
+```
+
 ## Misc
 
 ### Inspiration
