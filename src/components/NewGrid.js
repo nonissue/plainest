@@ -320,6 +320,7 @@ function ImDumb({ posts, match, history }) {
           width={post.width}
           match={match}
           key={post.id}
+
           // delay={match.params.id === post.id ? 0 : i}
         />
       ))}
@@ -383,7 +384,7 @@ export function NewGrid({ match, history }) {
 }
 
 // const Post = memo(
-const Post = ({ isSelected, post, history, delay }) => {
+const Post = ({ isSelected, post, history, delay, match }) => {
   const [fromGrid, setFromGrid] = useState(false);
   const zIndex = useMotionValue(isSelected ? 2 : 0);
   const postRef = useRef(null);
@@ -429,8 +430,8 @@ const Post = ({ isSelected, post, history, delay }) => {
   return (
     <motion.div
       ref={containerRef}
-      variants={isSelected ? {} : itemPoses}
       initial="closed"
+      variants={match.path === '/' ? itemPoses : {}}
       // animate={`${isSelected ? 'false' : 'open'}`}
       className="post"
     >
