@@ -33,35 +33,9 @@ const StyledImage = styled(motion.div)`
 `;
 
 const ImagePlaceholder = styled.div`
+  --backgroundOffset: 1000px;
   background-color: #ffffff;
-  /* border: 1px solid #555; */
   box-sizing: border-box;
-  /* border-radius: 5px; */
-  /* height: 50px; */
-  /* height: 100%; */
-  --backgroundOffset: 600px;
-  /* background-image: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    from(rgba(0, 0, 0, 0.08)),
-    color-stop(15%, rgba(0, 0, 0, 0.15)),
-    color-stop(30%, rgba(0, 0, 0, 0.08))
-  );*/
-  /* background-image: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    from(rgba(0, 0, 0, 0.12)),
-    color-stop(15%, rgba(0, 0, 0, 0.18)),
-    color-stop(30%, rgba(0, 0, 0, 0.12))
-  );
-  background-image: -webkit-linear-gradient(
-    left,
-    rgba(0, 0, 0, 0.12) 0%,
-    rgba(0, 0, 0, 0.18) 15%,
-    rgba(0, 0, 0, 0.12) 30%
-  ); */
   background-image: linear-gradient(
     to right,
     rgba(0, 0, 0, 0.1) 0%,
@@ -69,19 +43,9 @@ const ImagePlaceholder = styled.div`
     rgba(0, 0, 0, 0.1) 75%
   );
   background-size: var(--backgroundOffset) 100%;
-  /* max-width: 30rem; */
-  /* background-image: radial-gradient(
-    to right,
-    rgba(0, 0, 0, 0.8) 0,
-    rgba(0, 0, 0, 0.5) 15%,
-    rgba(0, 0, 0, 0.1) 30%
-  ); */
 
-  /* background-size: 200px 100%; */
   position: static;
   overflow: hidden;
-
-  --backgroundOffset: 1000px;
 
   -webkit-animation: placeholderShimmer 42 linear;
   animation: placeholderShimmer 2s linear;
@@ -109,25 +73,19 @@ const ImagePlaceholder = styled.div`
   }
 `;
 
-export function Image({ isSelected, id, src, caption, height, width, delay }) {
+export function Image({ isSelected, id, src, caption, height, width }) {
   const controls = useAnimation();
   const [loaded, setLoaded] = useState(false);
-  // const [imgHeight, setImgHeight] = useState();
-  const targetRef = useRef();
 
   const inverted = useInvertedScale();
 
+  // animates our image in once onLoad fires
   useEffect(() => {
-    // if (targetRef.current) {
-    //   setImgHeight(targetRef.current);
-    //   console.log(imgHeight);
-    // }
     if (!loaded) return;
     controls.start({
       opacity: 1,
     });
-    // }
-  }, [controls, loaded, delay]);
+  }, [controls, loaded]);
 
   return (
     <StyledImage style={{ ...inverted, originX: 0, originY: 0 }} key={`image-wrapper-${id}`}>

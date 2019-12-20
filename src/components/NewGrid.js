@@ -8,28 +8,24 @@ import { FiInstagram } from 'react-icons/fi';
 import { motion, useMotionValue } from 'framer-motion';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { Image } from './Image';
+/*
+Currently there's too much complexity here to handle weird cases I didn't
+consider when originally writing things. It's hard to reason about some things
+and there are lots of unintended consequences when modifying existing code
 
-// december:
-// readdded grid stagger
-// Separate into individual components
+Need to think of a list of things that I'm currently checking for after a change, and
+test for them. Also, reduce side effects
+*/
 const StyledGrid = styled.div`
   /* media queries located at bottom of StyledGrid */
   max-width: 990px;
   flex: 1 1 100%;
   margin: 0 auto;
-  /* will-change: scale; */
-  /* z-index: 0; */
-  /* -webkit-transform: translateZ(0); */
+
   .grid {
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
-    /* perspective: 0px; */
-    /* transform: translateZ(-1000px); */
-    /* transform-style: flat; */
-    /* -webkit-transform: translateZ(-1000px); */
-    /* will-change: scale; */
-    /* transform: translateZ(0); */
   }
   .post {
     position: relative;
@@ -49,23 +45,6 @@ const StyledGrid = styled.div`
     flex: 0 0 calc(100% * 2 / 3);
     max-width: calc(100% * 2 / 3);
   }
-  /* select 1, 5, 9, 13 */
-  /* .post:nth-child(4n + 1),
-  .post:nth-child(4n + 4) {
-    flex: 0 0 50%;
-    max-width: 50%;
-  }
-  .post:nth-child(4n + 1),
-  .post:nth-child(4n + 4) {
-    flex: 0 0 50%;
-    max-width: 50%;
-  }
-  .post:nth-child(odd) {
-    padding-left: 0;
-  }
-  .post:nth-child(even) {
-    padding-right: 0;
-  } */
   .post-content {
     /* background: #eee; */
     position: relative;
@@ -258,8 +237,36 @@ const StyledGrid = styled.div`
   }
 `;
 
+// Move these to animations to own file
+
 const openSpring = { type: 'spring', stiffness: 300, damping: 200 };
 const closeSpring = { type: 'spring', stiffness: 300, damping: 200 };
+
+const transition = {
+  duration: 0.5,
+  ease: [0.43, 0.13, 0.23, 0.96],
+};
+
+const sidebarPoses = {
+  open: {
+    y: 0,
+    transition: {
+      ...closeSpring,
+      when: 'beforeChildren',
+      staggerChildren: 0.5,
+    },
+  },
+  closed: { y: 0 },
+};
+
+const itemPoses = {
+  open: {
+    scale: 1,
+    opacity: 1,
+    transition,
+  },
+  closed: { scale: 1, opacity: 0 },
+};
 
 async function getPosts() {
   let res;
@@ -271,38 +278,6 @@ async function getPosts() {
   }
   return res.data.data.posts;
 }
-
-const transition = {
-  duration: 0.5,
-  ease: [0.43, 0.13, 0.23, 0.96],
-};
-
-const sidebarPoses = {
-  open: {
-    y: 0,
-    // scale: 1,
-    transition: {
-      ...closeSpring,
-      when: 'beforeChildren',
-      staggerChildren: 0.5,
-      // type: 'spring',
-      // velocity: 300,
-      // damping: 25,
-      // stiffness: 500,
-    },
-  },
-  closed: { y: 0 },
-};
-
-const itemPoses = {
-  open: {
-    scale: 1,
-    opacity: 1,
-    // y: '0%',
-    transition,
-  },
-  closed: { scale: 1, opacity: 0 },
-};
 
 function ImDumb({ posts, match, history }) {
   return (
@@ -328,7 +303,6 @@ function ImDumb({ posts, match, history }) {
 
 export function NewGrid({ match, history }) {
   // implement reducer rather than multiple set states
-  // const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   // https://www.leighhalliday.com/use-effect-hook
 
@@ -336,27 +310,27 @@ export function NewGrid({ match, history }) {
 
   useEffect(() => {
     setIsError(false);
-    // setError({ code: undefined, msg: undefined });
     // Should check last fetch, and if it is stale, run posts-hydrate
     const fetchData = async () => {
       try {
         const fetchedPosts = await getPosts();
         setPosts(fetchedPosts);
 
+        // If we aren't at router root or we can't find the post id in our posts list
+        // setError (and we redirect to error page below in return)
         if (match.path !== '/' && !fetchedPosts.some(p => p.id === match.params.id)) {
           setIsError(true);
         }
       } catch (err) {
         setIsError(true);
-        // setError({ code: 500, msg: 'Error fetching posts!' });
       }
     };
-    // console.log(match);
+
     fetchData();
 
-    setTimeout(() => {
-      // setIsLoading(false);
-    }, 0);
+    // setTimeout(() => {
+    // setIsLoading(false);
+    // }, 0);
   }, [match]);
 
   useEffect(() => {
@@ -426,6 +400,8 @@ const Post = memo(
       <motion.div
         ref={containerRef}
         initial="closed"
+        // if we are on the router root, animate things
+        // if not, don't (as it indiciates a direct visit)
         variants={match.path === '/' ? itemPoses : {}}
         className="post"
       >
@@ -534,13 +510,6 @@ ImDumb.propTypes = {
     }),
   ).isRequired,
 };
-
-// ImDumb.defaultProps = {
-//   error: {
-//     code: '500',
-//     msg: 'An unknown error has occurred',
-//   },
-// };
 
 Image.propTypes = {
   id: PropTypes.string.isRequired,
