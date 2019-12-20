@@ -273,12 +273,26 @@ async function getPosts() {
   return res.data.data.posts;
 }
 
+const transition = {
+  duration: 0.5,
+  ease: [0.43, 0.13, 0.23, 0.96],
+};
+
 const sidebarPoses = {
   open: {
-    x: 0,
-    transition: { when: 'beforeChildren', staggerChildren: 0.2 },
+    y: 0,
+    // scale: 1,
+    transition: {
+      ...closeSpring,
+      when: 'beforeChildren',
+      staggerChildren: 0.5,
+      // type: 'spring',
+      // velocity: 300,
+      // damping: 25,
+      // stiffness: 500,
+    },
   },
-  closed: { x: -180 },
+  closed: { y: 0 },
 };
 
 const singleItemView = {
@@ -292,16 +306,10 @@ const itemPoses = {
   open: {
     scale: 1,
     opacity: 1,
-    transition: {
-      scale: {
-        type: 'spring',
-        stiffness: 400,
-        velocity: 2,
-        damping: 20,
-      },
-    },
+    // y: '0%',
+    transition,
   },
-  closed: { scale: 0.9, opacity: 0.1 },
+  closed: { scale: 1, opacity: 0 },
 };
 
 function ImDumb({ posts, match, history }) {
@@ -310,6 +318,7 @@ function ImDumb({ posts, match, history }) {
       variants={match.path !== '/' ? {} : sidebarPoses}
       // initial={`${? 'false' : 'closed'}`}
       animate="open"
+      initial="closed"
       className="grid"
     >
       {posts.map(post => (
@@ -432,7 +441,6 @@ const Post = ({ isSelected, post, history, delay, match }) => {
       ref={containerRef}
       initial="closed"
       variants={match.path === '/' ? itemPoses : {}}
-      // animate={`${isSelected ? 'false' : 'open'}`}
       className="post"
     >
       <Overlay isSelected={isSelected} />

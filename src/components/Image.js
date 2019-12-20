@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { motion, useInvertedScale, useAnimation, AnimatePresence } from 'framer-motion';
@@ -112,10 +112,16 @@ const ImagePlaceholder = styled.div`
 export function Image({ isSelected, id, src, caption, height, width, delay }) {
   const controls = useAnimation();
   const [loaded, setLoaded] = useState(false);
+  const [imgHeight, setImgHeight] = useState();
+  const targetRef = useRef();
 
   const inverted = useInvertedScale();
 
   useEffect(() => {
+    // if (targetRef.current) {
+    //   setImgHeight(targetRef.current);
+    //   console.log(imgHeight);
+    // }
     if (!loaded) return;
     // if (loaded) {
     controls.start({
@@ -126,19 +132,20 @@ export function Image({ isSelected, id, src, caption, height, width, delay }) {
 
   return (
     <StyledImage style={{ ...inverted, originX: 0, originY: 0 }} key={`image-wrapper-${id}`}>
-      {/* {!loaded && <ImagePlaceholder style={{ width, height }} />} */}
+      {!loaded && <ImagePlaceholder style={{ width, height }} />}
       <motion.img
         key={`post-${id}`}
         className={`post-image ${isSelected && 'open'}`}
         src={src}
         alt={caption}
+        ref={targetRef}
         // animate={controls}
         onLoad={() => {
           setTimeout(() => setLoaded(true), 0);
         }}
         style={{
           display: `${loaded ? 'block' : 'none'}`,
-          height: `${isSelected ? 'unset' : height}`,
+          height: isSelected ? 'initial' : 'inherit',
         }}
       />
     </StyledImage>
