@@ -294,13 +294,6 @@ const sidebarPoses = {
   closed: { y: 0 },
 };
 
-const singleItemView = {
-  open: {
-    opacity: 1,
-  },
-  closed: { opacity: 0 },
-};
-
 const itemPoses = {
   open: {
     scale: 1,
@@ -315,7 +308,6 @@ function ImDumb({ posts, match, history }) {
   return (
     <motion.div
       variants={match.path !== '/' ? {} : sidebarPoses}
-      // initial={`${? 'false' : 'closed'}`}
       animate="open"
       initial="closed"
       className="grid"
@@ -328,8 +320,6 @@ function ImDumb({ posts, match, history }) {
           width={post.width}
           match={match}
           key={post.id}
-
-          // delay={match.params.id === post.id ? 0 : i}
         />
       ))}
     </motion.div>
@@ -338,7 +328,7 @@ function ImDumb({ posts, match, history }) {
 
 export function NewGrid({ match, history }) {
   // implement reducer rather than multiple set states
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   // https://www.leighhalliday.com/use-effect-hook
 
@@ -354,23 +344,20 @@ export function NewGrid({ match, history }) {
         setPosts(fetchedPosts);
 
         if (match.path !== '/' && !fetchedPosts.some(p => p.id === match.params.id)) {
-          console.log('no post found!');
           setIsError(true);
         }
       } catch (err) {
         setIsError(true);
-        console.log('Error');
         // setError({ code: 500, msg: 'Error fetching posts!' });
       }
     };
     // console.log(match);
-    console.log(match.path);
     fetchData();
 
     setTimeout(() => {
-      setIsLoading(false);
+      // setIsLoading(false);
     }, 0);
-  }, [match.path]);
+  }, [match]);
 
   useEffect(() => {
     // body-scroll-lock package handles locking scroll for us
@@ -392,7 +379,7 @@ export function NewGrid({ match, history }) {
 }
 
 const Post = memo(
-  ({ isSelected, post, history, delay, match }) => {
+  ({ isSelected, post, history, match }) => {
     const [fromGrid, setFromGrid] = useState(false);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
     const postRef = useRef(null);
@@ -459,7 +446,6 @@ const Post = memo(
               caption={post.caption}
               width={post.width}
               height={post.height}
-              delay={delay}
             />
             <Caption caption={post.caption} isSelected={isSelected} id={post.id} link={post.link} />
           </motion.div>
@@ -525,12 +511,36 @@ const PostPropTypes = PropTypes.shape({
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   src: PropTypes.string.isRequired,
+  match: ReactRouterPropTypes.match.isRequired,
 });
 
 NewGrid.propTypes = {
   match: ReactRouterPropTypes.match.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
 };
+
+ImDumb.propTypes = {
+  match: ReactRouterPropTypes.match.isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
+  posts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      caption: PropTypes.string.isRequired,
+      link: PropTypes.string.isRequired,
+      images: PropTypes.object.isRequired,
+      width: PropTypes.number.isRequired,
+      height: PropTypes.number.isRequired,
+      src: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+};
+
+// ImDumb.defaultProps = {
+//   error: {
+//     code: '500',
+//     msg: 'An unknown error has occurred',
+//   },
+// };
 
 Image.propTypes = {
   id: PropTypes.string.isRequired,
@@ -546,6 +556,7 @@ Caption.propTypes = {
 
 Post.propTypes = {
   post: PostPropTypes.isRequired,
+  match: ReactRouterPropTypes.match.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
   isSelected: PropTypes.bool.isRequired,
 };
