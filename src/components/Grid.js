@@ -51,16 +51,23 @@ const StyledGrid = styled.div`
   .post-content {
     position: relative;
     overflow: hidden;
+
+    box-sizing: border-box;
     width: 100%;
     /* box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); */
     /* better box shadow */
-    box-shadow: 0 2.9px 2.5px -5px rgba(0, 0, 0, 0.1), 0 5.9px 5.8px -5px rgba(0, 0, 0, 0.055),
-      0 9.1px 10.4px -5px rgba(0, 0, 0, 0.035), 0 12.7px 17.2px -5px rgba(0, 0, 0, 0.022),
-      0 16.9px 28.3px -5px rgba(0, 0, 0, 0.013), 0 22.1px 49.5px -5px rgba(0, 0, 0, 0.007),
-      0 29px 107px -5px rgba(0, 0, 0, 0.002);
     height: 100%;
-    border-radius: 0px;
+    box-shadow: 0 0.7px 1px rgba(0, 0, 0, 0.1), 0 1.8px 2.3px rgba(0, 0, 0, 0.029),
+      0 3.4px 4.4px rgba(0, 0, 0, 0.024), 0 6px 7.8px rgba(0, 0, 0, 0.02),
+      0 11.3px 14.6px rgba(0, 0, 0, 0.016), 0 27px 35px rgba(0, 0, 0, 0.011);
+
+    border-radius: 5px;
     margin: 0 auto;
+    /* border: 1px solid hsla(0, 0%, 0%, 0.15); */
+    /* box-shadow: 0 0.5px 1.1px rgba(0, 0, 0, 0.05), 0 1.1px 2.5px rgba(0, 0, 0, 0.04),
+      0 2.1px 4.5px rgba(0, 0, 0, 0.034), 0 3.4px 7.4px rgba(0, 0, 0, 0.028),
+      0 5.6px 12.2px rgba(0, 0, 0, 0.023), 0 10.1px 21.3px rgba(0, 0, 0, 0.018),
+      0 23px 46px rgba(0, 0, 0, 0.012); */
   }
   .open .post-content {
     background: none;
@@ -93,7 +100,8 @@ const StyledGrid = styled.div`
   .overlay {
     z-index: 1;
     position: fixed;
-    background: rgba(255, 255, 255, 0.94);
+    background: rgba(255, 255, 255, 0.97);
+    /* background: hsla(0, 0%, 0%, 0.5); */
     top: 0;
     bottom: 0;
     /* using the code below ensures overlay is always centered
