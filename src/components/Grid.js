@@ -354,22 +354,8 @@ function GridWrapper({ posts, match, history }) {
 const Post = memo(
   ({ isSelected, post, history, match }) => {
     const [fromGrid, setFromGrid] = useState(false);
-    // const zIndex = useMotionValue(isSelected ? 2 : 0);
-    const [zIndex, setZIndex] = useState(0);
     const postRef = useRef(null);
     const containerRef = useRef(null);
-
-    // dismiss modal when escape is pressed
-    // useEffect(() => {
-    //   function checkZIndex() {
-    //     if (isSelected) {
-    //       setZIndex(0);
-    //     } else if (!isSelected) {
-    //       setZIndex(0);
-    //     }
-    //   }
-    //   checkZIndex();
-    // }, [isSelected, zIndex, setZIndex]);
 
     useEffect(() => {
       const dismissModal = event => {
@@ -411,14 +397,7 @@ const Post = memo(
         <Overlay isSelected={isSelected} />
         <div className={`post-content-container ${isSelected && 'open'}`}>
           <div ref={postRef} className="post-content">
-            <Image
-              id={post.id}
-              isSelected={isSelected}
-              src={post.src}
-              caption={post.caption}
-              width={post.width}
-              height={post.height}
-            />
+            <Image id={post.id} isSelected={isSelected} src={post.src} caption={post.caption} />
             <Caption caption={post.caption} isSelected={isSelected} id={post.id} link={post.link} />
           </div>
         </div>

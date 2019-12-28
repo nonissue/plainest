@@ -10,24 +10,37 @@ const StyledImage = styled(motion.div)`
   overflow: hidden;
   object-fit: none;
   object-position: center center;
-  background: #eee;
 
+  --backgroundOffset: 1000px;
+  background: #fff;
   background-image: linear-gradient(
     to right,
-    rgba(0, 0, 0, 0.1) 0%,
-    rgba(0, 0, 0, 0.16) 15%,
-    rgba(0, 0, 0, 0.1) 30%
+    rgba(0, 0, 0, 0.05) 0%,
+    rgba(0, 0, 0, 0.15) 50%,
+    rgba(0, 0, 0, 0.05) 100%
   );
   background-size: var(--backgroundOffset) 100%;
-  --backgroundOffset: 1000px;
+
   /* border: 1px solid #ff0000; */
   position: static;
-  overflow: hidden;
 
   -webkit-animation: placeholderShimmer 2s linear;
   animation: placeholderShimmer 2s linear;
   -webkit-animation-iteration-count: infinite;
   animation-iteration-count: infinite;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    max-height: 80vh;
+  }
+
+  .post-image.open {
+    width: 100%;
+  }
 
   @-webkit-keyframes placeholderShimmer {
     0% {
@@ -48,22 +61,9 @@ const StyledImage = styled(motion.div)`
       background-position: var(--backgroundOffset) var(--backgroundOffset);
     }
   }
-
-  img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    max-height: 80vh;
-  }
-
-  .post-image.open {
-    width: 100%;
-  }
 `;
 
-export function Image({ isSelected, id, src, caption, height, width }) {
+export function Image({ isSelected, id, src, caption }) {
   const controls = useAnimation();
   const [loaded, setLoaded] = useState(false);
 
@@ -85,7 +85,7 @@ export function Image({ isSelected, id, src, caption, height, width }) {
           alt={caption}
           animate={controls}
           onLoad={() => {
-            setTimeout(() => setLoaded(true), isSelected ? 500 : 0);
+            setTimeout(() => setLoaded(true), isSelected ? 1000 : 0);
           }}
           initial={{ opacity: 0 }}
           exit={{ opacity: 0 }}
@@ -100,8 +100,8 @@ Image.propTypes = {
   isSelected: PropTypes.bool.isRequired,
   src: PropTypes.string.isRequired,
   caption: PropTypes.string.isRequired,
-  height: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
+  // height: PropTypes.number.isRequired,
+  // width: PropTypes.number.isRequired,
 };
 
 export default Image;

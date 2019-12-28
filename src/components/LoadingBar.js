@@ -64,10 +64,9 @@ export function LoadingBar({ demo }) {
       <StyledLoadingBar
         style={{
           width: `${progress}%`,
-          //   visibility: `${progress >= 100 ? 'block' : 'block'}`,
           background: `${progress < 100 && '#ff0000'}`,
         }}
-      ></StyledLoadingBar>
+      />
       <div className="toggle-buttons">
         {/* call setProgress func on button click and bind the callback*/}
         {/* depending on the percentageRange condition to decrease /*/}

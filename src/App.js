@@ -1,11 +1,9 @@
 import { Switch, Route } from 'react-router-dom';
 import React from 'react';
 import styled from 'styled-components';
-
-// import { history } from './history';
 import { About } from './pages';
-import { Header, Error as ErrorPage, Grid } from './components';
-// import { testPosts } from './posts';
+import { Header, Error as ErrorPage, LoadingBar, Grid } from './components';
+
 import './App.css';
 
 /*
@@ -27,8 +25,6 @@ darkmode lightmode?
 const AppWrapper = styled.div`
   text-align: center;
   color: #032d4d;
-  /* -webkit-transform: translate3d(0px, 0px, 0px); */
-  /* font-family: 'Work Sans', 'Helvetica', 'Arial', sans-serif; */
 
   .url {
     font-weight: 300;
@@ -87,6 +83,7 @@ function App() {
           <Route path="/about">
             <About />
           </Route>
+          <Route path="/loadingbar" component={LoadingBar} />
           <Route exact path={['/error', '/error/:id']}>
             <ErrorPage error={defaultError} />
           </Route>
