@@ -2,7 +2,7 @@
 import { Error } from './Error';
 import { Header } from './Header';
 import { Loading } from './Loading';
-import { NewGrid } from './NewGrid';
+import { Grid } from './Grid';
 import { LoadingBar } from './LoadingBar';
 
-export { Header, Error, Loading, NewGrid, LoadingBar };
+export { Header, Error, Loading, Grid, LoadingBar };

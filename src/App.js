@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 // import { history } from './history';
 import { About } from './pages';
-import { Header, Error as ErrorPage, NewGrid } from './components';
+import { Header, Error as ErrorPage, Grid } from './components';
 // import { testPosts } from './posts';
 import './App.css';
 
@@ -65,7 +65,7 @@ const AppWrapper = styled.div`
 `;
 
 /*
-The same newgrid component is serverd for both the root route and for the /posts/:id route
+The same Grid component is serverd for both the root route and for the /posts/:id route
 This is so that, when a post is clicked, we can render the individual post modal above 
 the rest of the posts AND update the url at the same time.
 Routing to the individual post is easy but we would wouldn't be able to have modal appear
@@ -83,7 +83,7 @@ function App() {
       <div>
         <Switch>
           {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-          <Route exact path={['/posts/:id', '/']} component={props => <NewGrid {...props} />} />
+          <Route exact path={['/posts/:id', '/']} component={props => <Grid {...props} />} />
           <Route path="/about">
             <About />
           </Route>

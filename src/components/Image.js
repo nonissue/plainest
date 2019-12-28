@@ -8,20 +8,14 @@ const StyledImage = styled(motion.div)`
   width: 100%;
   height: 100%;
   overflow: hidden;
-  /* transform: translateZ(0); */
   object-fit: none;
   object-position: center center;
-  /* background: rgba(0, 0, 0, 0.05); */
-  /* transform: translateZ(0); */
-  /* will-change: opacity; */
 
   img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* will-change: opacity; */
-    /* scale: 1; */
     opacity: 0;
   }
 

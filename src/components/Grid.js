@@ -279,29 +279,7 @@ async function getPosts() {
   return res.data.data.posts;
 }
 
-function GridWrapper({ posts, match, history }) {
-  return (
-    <motion.div
-      variants={match.path !== '/' ? {} : gridVariants}
-      animate="open"
-      initial="closed"
-      className="grid"
-    >
-      {posts.map(post => (
-        <Post
-          post={post}
-          isSelected={match.params.id === post.id}
-          history={history}
-          width={post.width}
-          match={match}
-          key={post.id}
-        />
-      ))}
-    </motion.div>
-  );
-}
-
-export function NewGrid({ match, history }) {
+export function Grid({ match, history }) {
   // implement reducer rather than multiple set states
   const [isError, setIsError] = useState(false);
   // https://www.leighhalliday.com/use-effect-hook
@@ -349,6 +327,28 @@ export function NewGrid({ match, history }) {
         <Loading />
       )}
     </StyledGrid>
+  );
+}
+
+function GridWrapper({ posts, match, history }) {
+  return (
+    <motion.div
+      variants={match.path !== '/' ? {} : gridVariants}
+      animate="open"
+      initial="closed"
+      className="grid"
+    >
+      {posts.map(post => (
+        <Post
+          post={post}
+          isSelected={match.params.id === post.id}
+          history={history}
+          width={post.width}
+          match={match}
+          key={post.id}
+        />
+      ))}
+    </motion.div>
   );
 }
 
@@ -440,7 +440,6 @@ const Post = memo(
 
 function Caption({ isSelected, caption, link }) {
   const opacity = isSelected ? 1 : 0;
-  const display = isSelected ? 'block' : 'none';
 
   return (
     <motion.div
@@ -448,9 +447,6 @@ function Caption({ isSelected, caption, link }) {
       animate={{ opacity }}
       transition={{ duration: 0.5 }}
       style={{ display: 'block' }}
-      // style={{
-      //   zIndex: `${isSelected ? 1 : -1}`,
-      // }}
     >
       <p>{caption}</p>
       <div className="links">
@@ -486,7 +482,7 @@ const PostPropTypes = PropTypes.shape({
   src: PropTypes.string.isRequired,
 });
 
-NewGrid.propTypes = {
+Grid.propTypes = {
   match: ReactRouterPropTypes.match.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
 };
@@ -524,4 +520,4 @@ Overlay.propTypes = {
   isSelected: PropTypes.bool.isRequired,
 };
 
-export default NewGrid;
+export default Grid;
