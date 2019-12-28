@@ -46,6 +46,7 @@ it('renders without crashing', () => {
         <Route
           exact
           path={['/posts/:id', '/']}
+          // eslint-disable-next-line react/jsx-props-no-spreading
           component={props => <NewGrid posts={posts} {...props} />}
         />
       </Router>,

@@ -498,7 +498,6 @@ const PostPropTypes = PropTypes.shape({
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   src: PropTypes.string.isRequired,
-  match: ReactRouterPropTypes.match.isRequired,
 });
 
 NewGrid.propTypes = {
