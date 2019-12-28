@@ -1,12 +1,13 @@
-import React, { memo, useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import React, { memo, useEffect, useState, useRef } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
-import { FiInstagram } from 'react-icons/fi';
-import { motion } from 'framer-motion';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import { FiInstagram } from 'react-icons/fi';
+import { Link, Redirect } from 'react-router-dom';
+import { motion } from 'framer-motion';
+
 import { Image } from './Image';
 import { Loading } from './Loading';
 import { gridVariants, itemVariants } from './utils/animations';
@@ -48,13 +49,17 @@ const StyledGrid = styled.div`
     max-width: calc(100% * 2 / 3);
   }
   .post-content {
-    /* background: #eee; */
     position: relative;
     overflow: hidden;
     width: 100%;
-    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    /* box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); */
+    /* better box shadow */
+    box-shadow: 0 2.9px 2.5px -5px rgba(0, 0, 0, 0.1), 0 5.9px 5.8px -5px rgba(0, 0, 0, 0.055),
+      0 9.1px 10.4px -5px rgba(0, 0, 0, 0.035), 0 12.7px 17.2px -5px rgba(0, 0, 0, 0.022),
+      0 16.9px 28.3px -5px rgba(0, 0, 0, 0.013), 0 22.1px 49.5px -5px rgba(0, 0, 0, 0.007),
+      0 29px 107px -5px rgba(0, 0, 0, 0.002);
     height: 100%;
-    border-radius: 5px;
+    border-radius: 0px;
     margin: 0 auto;
   }
   .open .post-content {
@@ -303,7 +308,9 @@ export function Grid({ match, history }) {
 function GridWrapper({ posts, match, history }) {
   return (
     <motion.div
-      variants={match.path !== '/' ? {} : gridVariants}
+      // if we are on the router root, animate things
+      // if not, don't (as it indiciates a direct visit)
+      variants={match.path === '/' ? gridVariants : {}}
       animate="open"
       initial="closed"
       className="grid"
@@ -324,10 +331,14 @@ function GridWrapper({ posts, match, history }) {
 
 const Post = memo(
   ({ isSelected, post, history, match }) => {
+    // used for deciding if we should scrollTo
     const [fromGrid, setFromGrid] = useState(false);
+
+    // refs are used for restoring scroll pos later
     const postRef = useRef(null);
     const containerRef = useRef(null);
 
+    // dismiss modal with escape
     useEffect(() => {
       const dismissModal = event => {
         if (isSelected && event.key === 'Escape') {
@@ -445,12 +456,6 @@ GridWrapper.propTypes = {
       PostPropTypes,
     }),
   ).isRequired,
-};
-
-Image.propTypes = {
-  id: PropTypes.string.isRequired,
-  isSelected: PropTypes.bool.isRequired,
-  src: PropTypes.string.isRequired,
 };
 
 Caption.propTypes = {

@@ -1,10 +1,10 @@
-import { Switch, Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import React from 'react';
 import styled from 'styled-components';
-import { About } from './pages';
-import { Header, Error as ErrorPage, LoadingBar, Grid } from './components';
 
 import './App.css';
+import { Error as ErrorPage, Grid, Header, LoadingBar } from './components';
+import { About } from './pages';
 
 /*
 
