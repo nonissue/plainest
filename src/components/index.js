@@ -1,9 +1,8 @@
 // components/index.js
-import { PostView } from './PostView';
+import { Error } from './Error';
+import { Header } from './Header';
 import { Loading } from './Loading';
-import { Nav } from './Nav';
-import { PostItem } from './PostItem';
-import { AppHeader } from './AppHeader';
 import { Grid } from './Grid';
+import { LoadingBar } from './LoadingBar';
 
-export { Nav, Loading, PostView, PostItem, AppHeader, Grid };
+export { Header, Error, Loading, Grid, LoadingBar };

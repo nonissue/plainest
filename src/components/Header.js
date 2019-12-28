@@ -1,17 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
-import { Left, Question } from '@ant-design/icons';
+import { AiOutlineLeft as Back, AiOutlineQuestionCircle as Question } from 'react-icons/ai';
+
 import { Logo } from './Logo';
 
 const StyledHeader = styled.header`
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  /* box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.06); */
+
   position: sticky;
   top: 0;
-  z-index: 50;
-  background: hsla(0, 0%, 100%, 0.9);
-  -webkit-backdrop-filter: blur(10px);
+  z-index: 1;
+  background: hsla(100, 0%, 100%, 0.95);
+
+  -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   animation: fadein 0.3s;
   font-size: calc(12px + 1.5vmin);
@@ -25,18 +27,18 @@ const StyledHeader = styled.header`
 
   .control {
     text-transform: uppercase;
-    font-size: 0.8em;
+    font-size: 0.7em;
     font-family: 'Lekton', monospace, sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 1.25em;
-    margin-right: 1.25em;
+    margin-left: 2em;
+    margin-right: 2em;
 
     a,
     a:link,
     a:visited {
-      color: #333;
+      color: #aaa;
       opacity: 9;
       text-decoration: none;
       transition: color 0.2s ease-out;
@@ -44,36 +46,39 @@ const StyledHeader = styled.header`
 
     a:hover {
       opacity: 1;
-      color: #ff0000;
+      /* color: #333; */
+      color: #0f72bd;
     }
   }
   .hidden {
     visibility: hidden;
   }
+
+  @media only screen and (max-width: 700px) {
+    .control a {
+      font-size: 1.5em;
+    }
+  }
 `;
 
-export function AppHeader() {
+export function Header() {
   const location = useLocation();
   return (
     <StyledHeader>
       {!(location.pathname === '/') ? (
-        <motion.div
-          key="back"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { delay: 0.5, duration: 1 } }}
-          exit={{ opacity: 1, scale: 1, transition: { duration: 5 } }}
-          className="control"
-        >
+        <div className="control">
           <Link to="/">
-            <Left />
+            <Back />
           </Link>
-        </motion.div>
+        </div>
       ) : (
         <div className="control hidden">
-          <Left />
+          <Back />
         </div>
       )}
-      <Logo />
+
+      <Logo showImage={false} />
+
       {!(location.pathname === '/about') ? (
         <div className="control">
           <Link to="/about">
@@ -89,4 +94,4 @@ export function AppHeader() {
   );
 }
 
-export default AppHeader;
+export default Header;

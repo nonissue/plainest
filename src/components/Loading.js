@@ -19,7 +19,7 @@ const LoadingWrapper = styled.div`
 
   @keyframes fadein {
     0% {
-      opacity: 0;
+      opacity: 0.2;
     }
     100% {
       opacity: 1;
@@ -31,7 +31,7 @@ export function Loading() {
   return (
     <LoadingWrapper>
       {/* <Oval /> */}
-      <BounceLoader size={30} />
+      <BounceLoader size={50} color="#054B81" />
     </LoadingWrapper>
   );
 }

@@ -1,34 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
-import { Switch, Route, useLocation } from 'react-router-dom';
 
-import axios from 'axios';
-import { AnimatePresence, motion } from 'framer-motion';
-import { About } from './pages';
-import { Loading, PostView, AppHeader, Grid } from './components';
 import './App.css';
+import { Error as ErrorPage, Grid, Header, LoadingBar } from './components';
+import { About } from './pages';
+
+/*
+
+Theme stuff:
+body text: #032d4d;
+link hover: hsla(205.9, 85.3%, 40%, 1);
+logo color: #054B81;
+text-underline: hsla(205.9, 92.3%, 40%, 0.5);
+darker-blue: color: #021728;
+
+font-families?
+box-shadows?
+
+darkmode lightmode?
+
+*/
 
 const AppWrapper = styled.div`
   text-align: center;
-  color: #121212;
-  font-family: 'Work Sans', sans-serif;
-
-  /* h3::before {
-    content: '@';
-    font-family: 'Lekton', sans-serif;
-    color: #a0aec0;
-    color: #697077;
-    color: #838b94;
-    font-weight: 600;
-    margin-right: 0.1em;
-  } */
-
-  i {
-    color: #e2e8f0;
-    opacity: 0.7;
-    font-style: normal;
-    font-family: 'Work Sans', sans-serif;
-  }
+  color: #032d4d;
 
   .url {
     font-weight: 300;
@@ -37,102 +33,66 @@ const AppWrapper = styled.div`
     letter-spacing: 0.15em;
     font-size: 0.45em;
     border-radius: 0.25em;
-    font-family: 'Oswald', sans-serif;
   }
 
   .footer {
-    position: fixed;
-    bottom: 1em;
-    left: 1em;
+    opacity: 0;
+    padding: 5px 0 5px 0;
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+    margin-bottom: 2em;
     font-size: 0.7em;
     font-family: 'Lekton', monospace;
     text-transform: uppercase;
+    animation: fadein 1s;
+    animation-delay: 1.5s;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 `;
 
-// this is ignored completely?
+/*
+The same Grid component is serverd for both the root route and for the /posts/:id route
+This is so that, when a post is clicked, we can render the individual post modal above 
+the rest of the posts AND update the url at the same time.
+Routing to the individual post is easy but we would wouldn't be able to have modal appear
+ABOVE the existing post grid.
 
-const variants = {
-  enter: {
-    opacity: 1,
-  },
-  exit: {
-    opacity: 0,
-    // scale: 1,
-    transition: { duration: 0.2 },
-  },
-};
+Issues: How we do serve 404 whne a visit to /post/:id isn't a valid post?
 
-const variants2 = {
-  enter: {
-    opacity: 1,
-  },
-  exit: {
-    opacity: 0,
-    transition: { duration: 0.3 },
-  },
-};
-
-// home page
+*/
 function App() {
-  console.log(process.env);
-  console.log(process.env.LOCAL_TEST_KEY);
-  const [posts, setPosts] = useState(null);
-  // eslint-disable-next-line no-unused-vars
-  const [loading, setLoading] = useState(true);
-  const location = useLocation();
-
-  // cancel request if component unmounts?
-  // https://www.leighhalliday.com/use-effect-hook
-  useEffect(() => {
-    // Should check last fetch, and if it is stale, run posts-hydrate
-    const fetchData = async () => {
-      setLoading(true);
-      const res = await axios('/.netlify/functions/posts-read-latest');
-      const fetchedPosts = res.data.data.posts;
-      setPosts(fetchedPosts);
-    };
-
-    fetchData();
-    setLoading(false);
-  }, []);
+  const defaultError = { code: 500, msg: 'An unexpected error occurred!' };
 
   return (
     <AppWrapper>
-      <AppHeader />
+      <Header />
       <div>
-        <AnimatePresence exitBeforeEnter>
-          <Switch location={location} key={location.pathname}>
-            <Route exact path="/">
-              <motion.div
-                initial={false}
-                animate="enter"
-                enter="enter"
-                exit="exit"
-                variants={variants}
-              >
-                {/* if Grid is rendered before posts are available, children dont get staggered */}
-                {!posts ? <Loading /> : <Grid posts={posts} />}
-              </motion.div>
-            </Route>
-            <Route path="/images/:id">
-              <motion.div
-                initial={false}
-                animate="enter"
-                enter="enter"
-                exit="exit"
-                variants={variants2}
-              >
-                {!posts ? <Loading /> : <PostView posts={posts} />}
-              </motion.div>
-            </Route>
-            <Route exact path="/about">
-              <About />
-            </Route>
-          </Switch>
-        </AnimatePresence>
+        <Switch>
+          {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+          <Route exact path={['/posts/:id', '/']} component={props => <Grid {...props} />} />
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/loadingbar" component={LoadingBar} />
+          <Route exact path={['/error', '/error/:id']}>
+            <ErrorPage error={defaultError} />
+          </Route>
+          <Route path="*">
+            <ErrorPage error={{ code: 404, msg: 'Page not found!' }} />
+          </Route>
+        </Switch>
       </div>
-      {/* <div className="footer">Copyright 2019 © plainsite</div> */}
+      <div className="footer">Copyright 2019 © plainsite</div>
     </AppWrapper>
   );
 }

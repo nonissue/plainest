@@ -6,10 +6,9 @@ const axios = require('axios');
 export async function handler(event, context) {
   const endpoint = 'https://api.instagram.com/v1/users/self/media/recent';
   const token = process.env.INSTAGRAM_ACCESS_TOKEN;
-  const limit = 15;
+  const limit = 10;
 
   try {
-    // perform our axios data request
     const response = await axios.get(`${endpoint}?access_token=${token}&count=${limit}`);
     const { data: posts } = response.data;
 

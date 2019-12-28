@@ -1,0 +1,29 @@
+import axios from 'axios';
+
+import handler from './posts-read-all';
+
+jest.mock('axios');
+
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
+describe('handler', () => {
+  it('fetches successfully data from an API', async () => {
+    const data = [];
+
+    axios.get.mockResolvedValueOnce({ results: [] });
+    // axios.get.mockImplementationOnce(() => Promise.resolve(data));
+    handler.then(response => {
+      expect(response).toEqual({ results: [] });
+    });
+  });
+
+  it('fetches erroneously data from an API', async () => {
+    const errorMessage = 'Network Error';
+
+    axios.get.mockImplementationOnce(() => Promise.reject(new Error(errorMessage)));
+
+    await expect(handler('/')).rejects.toThrow(errorMessage);
+  });
+});
