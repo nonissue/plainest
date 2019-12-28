@@ -100,7 +100,7 @@ const StyledGrid = styled.div`
   .overlay {
     z-index: 1;
     position: fixed;
-    background: rgba(255, 255, 255, 0.97);
+    background: rgba(255, 255, 255, 0.95);
     /* background: hsla(0, 0%, 0%, 0.5); */
     top: 0;
     bottom: 0;
@@ -432,7 +432,7 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 0.5, delay: isSelected ? 0 : 0 }}
+      transition={{ duration: 0.3, delay: isSelected ? 0 : 0 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
