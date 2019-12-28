@@ -358,19 +358,18 @@ const Post = memo(
     const postRef = useRef(null);
     const containerRef = useRef(null);
 
-    function checkZIndex() {
-      if (isSelected) {
-        zIndex.set(2);
-      } else if (!isSelected) {
-        zIndex.set(0);
-      }
-    }
-
     // dismiss modal when escape is pressed
 
     useEffect(() => {
+      function checkZIndex() {
+        if (isSelected) {
+          zIndex.set(2);
+        } else if (!isSelected) {
+          zIndex.set(0);
+        }
+      }
       checkZIndex();
-    }, [isSelected]);
+    }, [isSelected, zIndex]);
 
     useEffect(() => {
       const dismissModal = event => {
@@ -414,11 +413,13 @@ const Post = memo(
           <motion.div
             ref={postRef}
             // without layout transition, zIndex doesn't update
-            // UpdatE: So just run it as useEffect(isSelected?)
+            // Update: So just run it as useEffect(isSelected?)
+            // disabling the following two lines seems to improve performance
+            // and fix rerendering flash when exiting modal
             // layoutTransition={isSelected ? closeSpring : openSpring}
-            style={{ zIndex }}
+            // style={{ zIndex }}
             className="post-content"
-            onUpdate={checkZIndex}
+            // onUpdate={checkZIndex}
           >
             <Image
               id={post.id}
@@ -475,7 +476,7 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 0.4, delay: isSelected ? 0 : 0 }}
+      transition={{ duration: 0.2, delay: isSelected ? 0 : 0 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >

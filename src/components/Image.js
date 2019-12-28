@@ -24,7 +24,7 @@ const StyledImage = styled(motion.div)`
     object-fit: cover;
     /* will-change: opacity; */
     /* scale: 1; */
-    opacity: 1;
+    opacity: 0.5;
   }
 
   .post-image.open {
@@ -88,7 +88,7 @@ export function Image({ isSelected, id, src, caption, height, width }) {
   }, [controls, loaded]);
 
   return (
-    <StyledImage style={{ ...inverted, originX: 0, originY: 0 }} key={`image-wrapper-${id}`}>
+    <StyledImage style={{ originX: 0, originY: 0 }} key={`image-wrapper-${id}`}>
       {!loaded && <ImagePlaceholder style={{ width, height }} />}
       <motion.img
         key={`post-${id}`}
