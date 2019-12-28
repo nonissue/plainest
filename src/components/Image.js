@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation, AnimatePresence } from 'framer-motion';
 
 const StyledImage = styled(motion.div)`
   position: relative;
@@ -10,36 +10,21 @@ const StyledImage = styled(motion.div)`
   overflow: hidden;
   object-fit: none;
   object-position: center center;
+  background: #eee;
 
-  img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-  }
-
-  .post-image.open {
-    width: 100%;
-  }
-`;
-
-const ImagePlaceholder = styled.div`
-  --backgroundOffset: 1000px;
-  background-color: #ffffff;
-  box-sizing: border-box;
   background-image: linear-gradient(
     to right,
     rgba(0, 0, 0, 0.1) 0%,
-    rgba(0, 0, 0, 0.15) 50%,
-    rgba(0, 0, 0, 0.1) 75%
+    rgba(0, 0, 0, 0.16) 15%,
+    rgba(0, 0, 0, 0.1) 30%
   );
   background-size: var(--backgroundOffset) 100%;
-
+  --backgroundOffset: 1000px;
+  /* border: 1px solid #ff0000; */
   position: static;
   overflow: hidden;
 
-  -webkit-animation: placeholderShimmer 42 linear;
+  -webkit-animation: placeholderShimmer 2s linear;
   animation: placeholderShimmer 2s linear;
   -webkit-animation-iteration-count: infinite;
   animation-iteration-count: infinite;
@@ -63,6 +48,32 @@ const ImagePlaceholder = styled.div`
       background-position: var(--backgroundOffset) var(--backgroundOffset);
     }
   }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+  }
+
+  .post-image.open {
+    width: 100%;
+  }
+`;
+
+const ImagePlaceholder = styled(motion.div)`
+  --backgroundOffset: 1000px;
+  background-color: #ccc;
+  box-sizing: border-box;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0.16) 15%,
+    rgba(0, 0, 0, 0.1) 30%
+  );
+  /* border: 1px solid #ff0000; */
+  background-size: var(--backgroundOffset) 100%;
 `;
 
 export function Image({ isSelected, id, src, caption, height, width }) {
@@ -78,22 +89,28 @@ export function Image({ isSelected, id, src, caption, height, width }) {
   }, [controls, loaded]);
 
   return (
-    <StyledImage style={{ originX: 0, originY: 0 }} key={`image-wrapper-${id}`}>
-      {!loaded && <ImagePlaceholder style={{ width, height }} />}
-      <motion.img
-        key={`post-${id}`}
-        className={`post-image ${isSelected && 'open'}`}
-        src={src}
-        alt={caption}
-        animate={controls}
-        onLoad={() => {
-          setTimeout(() => setLoaded(true), isSelected ? 300 : 0);
-        }}
-        style={{
-          display: `${loaded ? 'block' : 'none'}`,
-          height: isSelected ? 'initial' : 'inherit',
-        }}
-      />
+    <StyledImage style={{}} key={`image-wrapper-${id}`}>
+      <AnimatePresence>
+        {/* {!loaded && (
+          <ImagePlaceholder
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+        )} */}
+        <motion.img
+          key={`post-${id}`}
+          className={`post-image ${isSelected && 'open'}`}
+          src={src}
+          alt={caption}
+          animate={controls}
+          onLoad={() => {
+            setTimeout(() => setLoaded(true), isSelected ? 500 : 0);
+          }}
+          initial={{ opacity: 0 }}
+          exit={{ opacity: 0 }}
+        />
+      </AnimatePresence>
     </StyledImage>
   );
 }
