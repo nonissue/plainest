@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { act } from 'react-dom/test-utils';
-import { NewGrid } from './NewGrid';
+import { Grid } from './Grid';
 
-// fake posts for testing newGrid component
+// fake posts for testing Grid component
 const posts = [
   {
     id: '2132993117535947662_20196334360',
@@ -47,7 +47,7 @@ it('renders without crashing', () => {
           exact
           path={['/posts/:id', '/']}
           // eslint-disable-next-line react/jsx-props-no-spreading
-          component={props => <NewGrid posts={posts} {...props} />}
+          component={props => <Grid posts={posts} {...props} />}
         />
       </Router>,
       div,

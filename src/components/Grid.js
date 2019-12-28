@@ -5,7 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
 import { FiInstagram } from 'react-icons/fi';
-import { motion, useMotionValue } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { Image } from './Image';
 import { Loading } from './Loading';
@@ -239,7 +239,6 @@ const StyledGrid = styled.div`
 
 // Move these to animations to own file
 
-const openSpring = { type: 'spring', stiffness: 300, damping: 200 };
 const closeSpring = { type: 'spring', stiffness: 300, damping: 200 };
 
 const transition = {
@@ -355,21 +354,22 @@ function GridWrapper({ posts, match, history }) {
 const Post = memo(
   ({ isSelected, post, history, match }) => {
     const [fromGrid, setFromGrid] = useState(false);
-    const zIndex = useMotionValue(isSelected ? 2 : 0);
+    // const zIndex = useMotionValue(isSelected ? 2 : 0);
+    const [zIndex, setZIndex] = useState(0);
     const postRef = useRef(null);
     const containerRef = useRef(null);
 
     // dismiss modal when escape is pressed
-    useEffect(() => {
-      function checkZIndex() {
-        if (isSelected) {
-          zIndex.set(2);
-        } else if (!isSelected) {
-          zIndex.set(0);
-        }
-      }
-      checkZIndex();
-    }, [isSelected, zIndex]);
+    // useEffect(() => {
+    //   function checkZIndex() {
+    //     if (isSelected) {
+    //       setZIndex(0);
+    //     } else if (!isSelected) {
+    //       setZIndex(0);
+    //     }
+    //   }
+    //   checkZIndex();
+    // }, [isSelected, zIndex, setZIndex]);
 
     useEffect(() => {
       const dismissModal = event => {
