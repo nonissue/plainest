@@ -55,25 +55,12 @@ const StyledImage = styled(motion.div)`
     height: 100%;
     object-fit: cover;
     opacity: 0;
+    max-height: 80vh;
   }
 
   .post-image.open {
     width: 100%;
   }
-`;
-
-const ImagePlaceholder = styled(motion.div)`
-  --backgroundOffset: 1000px;
-  background-color: #ccc;
-  box-sizing: border-box;
-  background-image: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0.1) 0%,
-    rgba(0, 0, 0, 0.16) 15%,
-    rgba(0, 0, 0, 0.1) 30%
-  );
-  /* border: 1px solid #ff0000; */
-  background-size: var(--backgroundOffset) 100%;
 `;
 
 export function Image({ isSelected, id, src, caption, height, width }) {
@@ -91,13 +78,6 @@ export function Image({ isSelected, id, src, caption, height, width }) {
   return (
     <StyledImage style={{}} key={`image-wrapper-${id}`}>
       <AnimatePresence>
-        {/* {!loaded && (
-          <ImagePlaceholder
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          />
-        )} */}
         <motion.img
           key={`post-${id}`}
           className={`post-image ${isSelected && 'open'}`}
