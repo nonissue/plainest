@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
 import { FiInstagram } from 'react-icons/fi';
@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { Image } from './Image';
 import { Loading } from './Loading';
+import { gridVariants, itemVariants } from './utils/animations';
 /*
 Currently there's too much complexity here to handle weird cases I didn't
 consider when originally writing things. It's hard to reason about some things
@@ -114,7 +115,7 @@ const StyledGrid = styled.div`
     background: #fff;
     display: none;
     font-weight: 500;
-    opacity: 0;
+    /* opacity: 0; */
     p {
       margin: 0;
       padding: 0;
@@ -135,7 +136,7 @@ const StyledGrid = styled.div`
     /* z-index: 2000 !important; */
     position: relative;
     font-size: 1em;
-    opacity: 0.7;
+    /* opacity: 0.7; */
     /* allows us to click through overlay to actually use link */
     pointer-events: auto;
     display: block;
@@ -236,36 +237,6 @@ const StyledGrid = styled.div`
     }
   }
 `;
-
-// Move these to animations to own file
-
-const closeSpring = { type: 'spring', stiffness: 300, damping: 200 };
-
-const transition = {
-  duration: 0.5,
-  ease: [0.43, 0.13, 0.23, 0.96],
-};
-
-const gridVariants = {
-  open: {
-    y: 0,
-    transition: {
-      ...closeSpring,
-      when: 'beforeChildren',
-      staggerChildren: 0.2,
-    },
-  },
-  closed: { y: 0 },
-};
-
-const itemVariants = {
-  open: {
-    scale: 1,
-    opacity: 1,
-    transition,
-  },
-  closed: { scale: 1, opacity: 0 },
-};
 
 async function getPosts() {
   let res;
@@ -420,12 +391,12 @@ const Post = memo(
 function Caption({ isSelected, caption, link }) {
   const opacity = isSelected ? 1 : 0;
 
+  // could probably ditch the motion div below
   return (
     <motion.div
       className={`caption-container ${isSelected && 'open'}`}
-      animate={{ opacity }}
-      transition={{ duration: 0.5 }}
-      style={{ display: 'block' }}
+      animate={{ opacity, x: 0 }}
+      style={{ x: -10, display: 'block', opacity: 0 }}
     >
       <p>{caption}</p>
       <div className="links">
@@ -442,7 +413,7 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 0.2, delay: isSelected ? 0 : 0 }}
+      transition={{ duration: 0.5, delay: isSelected ? 0 : 0 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
