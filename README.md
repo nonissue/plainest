@@ -18,27 +18,7 @@ Not really for public consumption, set up isn't very easy, and when I have time 
 
 ## Setup
 
-1. Create a fauna db account, create a collection and get the key
-2. Create a .env file with the following keys:
-
-- `INSTAGRAM_ACCESS_TOKEN`
-- `FAUNA_DB_KEY`
-
-3. Start the lambda server (instructions below or `netlify dev`) and curl `http://localhost:3000/
-4. In order to create the required fauna index, you need to install fauna shell. This index fetches the latest `posts` collection written to the DB.
-
-```
-CreateIndex({
-  name: "posts-fetch-date",
-  source: Collection("posts"),
-  values: [
-    { field: ["data", "fetchDate"], reverse: true },
-    { field: ["ref"] }
-  ]
-})
-```
-
-3. Set the keys in Netlify build settings (under environment)
+Not really portable at the moment, relies on janky fauna index created with fauna shell.
 
 ## Start
 
