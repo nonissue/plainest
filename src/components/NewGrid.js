@@ -87,7 +87,6 @@ const StyledGrid = styled.div`
     z-index: 1;
     position: fixed;
     background: rgba(255, 255, 255, 0.94);
-    will-change: opacity;
     top: 0;
     bottom: 0;
     /* using the code below ensures overlay is always centered
@@ -253,7 +252,7 @@ const sidebarPoses = {
     transition: {
       ...closeSpring,
       when: 'beforeChildren',
-      staggerChildren: 0.5,
+      staggerChildren: 0.2,
     },
   },
   closed: { y: 0 },
@@ -279,7 +278,7 @@ async function getPosts() {
   return res.data.data.posts;
 }
 
-function ImDumb({ posts, match, history }) {
+function GridWrapper({ posts, match, history }) {
   return (
     <motion.div
       variants={match.path !== '/' ? {} : sidebarPoses}
@@ -347,7 +346,7 @@ export function NewGrid({ match, history }) {
   return (
     <StyledGrid>
       {isError && <Redirect to="/error/404" />}
-      {posts.length !== 0 && <ImDumb posts={posts} match={match} history={history} />}
+      {posts.length !== 0 && <GridWrapper posts={posts} match={match} history={history} />}
     </StyledGrid>
   );
 }
@@ -368,6 +367,11 @@ const Post = memo(
     }
 
     // dismiss modal when escape is pressed
+
+    useEffect(() => {
+      checkZIndex();
+    }, [isSelected]);
+
     useEffect(() => {
       const dismissModal = event => {
         if (isSelected && event.key === 'Escape') {
@@ -410,7 +414,8 @@ const Post = memo(
           <motion.div
             ref={postRef}
             // without layout transition, zIndex doesn't update
-            layoutTransition={isSelected ? closeSpring : openSpring}
+            // UpdatE: So just run it as useEffect(isSelected?)
+            // layoutTransition={isSelected ? closeSpring : openSpring}
             style={{ zIndex }}
             className="post-content"
             onUpdate={checkZIndex}
@@ -470,7 +475,7 @@ function Overlay({ isSelected }) {
     <motion.div
       initial={false}
       animate={{ opacity: isSelected ? 1 : 0 }}
-      transition={{ duration: 0.4, delay: isSelected ? 0 : 0.4 }}
+      transition={{ duration: 0.4, delay: isSelected ? 0 : 0 }}
       style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
       className="overlay"
     >
@@ -495,7 +500,7 @@ NewGrid.propTypes = {
   history: ReactRouterPropTypes.history.isRequired,
 };
 
-ImDumb.propTypes = {
+GridWrapper.propTypes = {
   match: ReactRouterPropTypes.match.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
   posts: PropTypes.arrayOf(

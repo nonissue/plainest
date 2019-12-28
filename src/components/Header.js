@@ -78,6 +78,7 @@ export function Header() {
       )}
 
       <Logo showImage={false} />
+
       {!(location.pathname === '/about') ? (
         <div className="control">
           <Link to="/about">
