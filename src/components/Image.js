@@ -1,9 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { motion, useInvertedScale, useAnimation, AnimatePresence } from 'framer-motion';
-
-const closeSpring = { type: 'spring', stiffness: 300, damping: 200 };
+import { motion, useAnimation } from 'framer-motion';
 
 const StyledImage = styled(motion.div)`
   position: relative;
@@ -76,8 +74,6 @@ const ImagePlaceholder = styled.div`
 export function Image({ isSelected, id, src, caption, height, width }) {
   const controls = useAnimation();
   const [loaded, setLoaded] = useState(false);
-
-  const inverted = useInvertedScale();
 
   // animates our image in once onLoad fires
   useEffect(() => {

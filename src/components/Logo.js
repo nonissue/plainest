@@ -17,7 +17,7 @@ const LogoWrapper = styled.div`
   a,
   a:link,
   a:visited {
-    color: #054b81;
+    color: #032d4d;
     text-decoration: none;
     transition: all 0.2s ease-out;
   }

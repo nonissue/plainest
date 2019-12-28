@@ -8,6 +8,7 @@ import { FiInstagram } from 'react-icons/fi';
 import { motion, useMotionValue } from 'framer-motion';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { Image } from './Image';
+import { Loading } from './Loading';
 /*
 Currently there's too much complexity here to handle weird cases I didn't
 consider when originally writing things. It's hard to reason about some things
@@ -346,7 +347,11 @@ export function NewGrid({ match, history }) {
   return (
     <StyledGrid>
       {isError && <Redirect to="/error/404" />}
-      {posts.length !== 0 && <GridWrapper posts={posts} match={match} history={history} />}
+      {posts.length !== 0 ? (
+        <GridWrapper posts={posts} match={match} history={history} />
+      ) : (
+        <Loading />
+      )}
     </StyledGrid>
   );
 }

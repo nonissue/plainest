@@ -15,6 +15,7 @@ body text: #032d4d;
 link hover: hsla(205.9, 85.3%, 40%, 1);
 logo color: #054B81;
 text-underline: hsla(205.9, 92.3%, 40%, 0.5);
+darker-blue: color: #021728;
 
 font-families?
 box-shadows?
