@@ -247,7 +247,7 @@ const transition = {
   ease: [0.43, 0.13, 0.23, 0.96],
 };
 
-const sidebarPoses = {
+const gridVariants = {
   open: {
     y: 0,
     transition: {
@@ -259,7 +259,7 @@ const sidebarPoses = {
   closed: { y: 0 },
 };
 
-const itemPoses = {
+const itemVariants = {
   open: {
     scale: 1,
     opacity: 1,
@@ -282,7 +282,7 @@ async function getPosts() {
 function GridWrapper({ posts, match, history }) {
   return (
     <motion.div
-      variants={match.path !== '/' ? {} : sidebarPoses}
+      variants={match.path !== '/' ? {} : gridVariants}
       animate="open"
       initial="closed"
       className="grid"
@@ -327,10 +327,6 @@ export function NewGrid({ match, history }) {
     };
 
     fetchData();
-
-    // setTimeout(() => {
-    // setIsLoading(false);
-    // }, 0);
   }, [match]);
 
   useEffect(() => {
@@ -364,7 +360,6 @@ const Post = memo(
     const containerRef = useRef(null);
 
     // dismiss modal when escape is pressed
-
     useEffect(() => {
       function checkZIndex() {
         if (isSelected) {
@@ -410,22 +405,12 @@ const Post = memo(
         initial="closed"
         // if we are on the router root, animate things
         // if not, don't (as it indiciates a direct visit)
-        variants={match.path === '/' ? itemPoses : {}}
+        variants={match.path === '/' ? itemVariants : {}}
         className="post"
       >
         <Overlay isSelected={isSelected} />
         <div className={`post-content-container ${isSelected && 'open'}`}>
-          <motion.div
-            ref={postRef}
-            // without layout transition, zIndex doesn't update
-            // Update: So just run it as useEffect(isSelected?)
-            // disabling the following two lines seems to improve performance
-            // and fix rerendering flash when exiting modal
-            // layoutTransition={isSelected ? closeSpring : openSpring}
-            // style={{ zIndex }}
-            className="post-content"
-            // onUpdate={checkZIndex}
-          >
+          <div ref={postRef} className="post-content">
             <Image
               id={post.id}
               isSelected={isSelected}
@@ -435,7 +420,7 @@ const Post = memo(
               height={post.height}
             />
             <Caption caption={post.caption} isSelected={isSelected} id={post.id} link={post.link} />
-          </motion.div>
+          </div>
         </div>
 
         {!isSelected && (
@@ -460,11 +445,12 @@ function Caption({ isSelected, caption, link }) {
   return (
     <motion.div
       className={`caption-container ${isSelected && 'open'}`}
-      animate={{ opacity, display }}
-      transition={isSelected ? openSpring : closeSpring}
-      style={{
-        zIndex: `${isSelected ? 1 : -1}`,
-      }}
+      animate={{ opacity }}
+      transition={{ duration: 0.5 }}
+      style={{ display: 'block' }}
+      // style={{
+      //   zIndex: `${isSelected ? 1 : -1}`,
+      // }}
     >
       <p>{caption}</p>
       <div className="links">
@@ -510,13 +496,7 @@ GridWrapper.propTypes = {
   history: ReactRouterPropTypes.history.isRequired,
   posts: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      caption: PropTypes.string.isRequired,
-      link: PropTypes.string.isRequired,
-      images: PropTypes.object.isRequired,
-      width: PropTypes.number.isRequired,
-      height: PropTypes.number.isRequired,
-      src: PropTypes.string.isRequired,
+      PostPropTypes,
     }),
   ).isRequired,
 };

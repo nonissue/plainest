@@ -22,7 +22,7 @@ const StyledImage = styled(motion.div)`
     object-fit: cover;
     /* will-change: opacity; */
     /* scale: 1; */
-    opacity: 0.5;
+    opacity: 0;
   }
 
   .post-image.open {
@@ -93,7 +93,7 @@ export function Image({ isSelected, id, src, caption, height, width }) {
         alt={caption}
         animate={controls}
         onLoad={() => {
-          setTimeout(() => setLoaded(true), 0);
+          setTimeout(() => setLoaded(true), isSelected ? 300 : 0);
         }}
         style={{
           display: `${loaded ? 'block' : 'none'}`,
