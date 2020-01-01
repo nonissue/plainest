@@ -29,5 +29,4 @@ yarn-error.log*
 
 # Built lambda folder
 /lambda
-lambda/
 
