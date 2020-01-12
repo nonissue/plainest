@@ -24,6 +24,8 @@ Not really portable at the moment, relies on janky fauna index created with faun
 
 `netlify dev` is easier, but randomly crashes with a socket closed error message. So instead, I run the app and lambda server individually
 
+NOTE: posix-source is a custom fish shell function I wrote to read env variables from a file and export them in fish. I really need to move to something like dotenv.
+
 ```
 posix-source .env && export FAUNA_DB_KEY=$FAUNA_DB_KEY && export INSTAGRAM_ACCESS_TOKEN=$INSTAGRAM_ACCESS_TOKEN && yarn start:lambda
 posix-source .env && export FAUNA_DB_KEY=$FAUNA_DB_KEY && export INSTAGRAM_ACCESS_TOKEN=$INSTAGRAM_ACCESS_TOKEN && yarn start:app
