@@ -1,2 +1,89 @@
 /* https://www.colorbox.io/#steps=12#hue_start=222#hue_end=205#hue_curve=easeInQuad#sat_start=26#sat_end=90#sat_curve=easeOutQuad#sat_rate=36#lum_start=100#lum_end=29#lum_curve=easeOutQuad#minor_steps_map=10,100 */
 
+.alert {
+  max-width: 700px;
+  position: fixed;
+  width: 100vw;
+  left: 50%;
+  top: 50%;
+  margin-top: -100px;
+
+  overflow: hidden;
+  margin-left: -350px;
+  z-index: 1000;
+  flex: 1 1 100%;
+  /* margin-left: calc(45vw - 940px -25px - 75px); */
+  /* margin-right: 22vw; */
+  /* margin-right: 25px; */
+  width: calc(940px - 25px);
+  background: hsl(0, 0%, 50%, 100%);
+  -webkit-backdrop-filter: blur(5);
+
+  color: #fff;
+  border-radius: 0.5em;
+  text-align: left;
+  padding: 1em 1.6em;
+  /* padding: 25px; */
+  box-shadow: 0 0.7px 3px rgba(0, 0, 0, 0.1), 0 1.8px 2.3px rgba(0, 0, 0, 0.029),
+    0 3.4px 4.4px rgba(0, 0, 0, 0.014), 0 6px 7.8px rgba(0, 0, 0, 0.02),
+    0 11.3px 14.6px rgba(0, 0, 0, 0.016), 0 27px 35px rgba(0, 0, 0, 0.011);
+}
+
+.alert a,
+.alert a:visited {
+  color: #333;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.alert h3 {
+  margin: 0;
+  font-weight: 400;
+  margin-top: 0.5em;
+  color: hsla(0, 0%, 100%, 70%);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 1.4em;
+  font-family: monospace;
+}
+.alert h2 {
+  font-size: 2em;
+  margin: 0.1em 0 0.4em 0;
+}
+
+.alert p {
+  margin: 0;
+  font-size: 1.2em;
+  line-height: 1.5;
+  margin-bottom: 0.25em;
+}
+
+.alert button {
+  border: 0;
+  background: #222;
+  color: #fff;
+  font-size: 1.1em;
+  font-family: monospace;
+  float: right;
+  display: inline;
+  letter-spacing: 0.02em;
+  border-radius: 5px;
+  padding: 0.5em;
+  box-shadow: 0 0.7px 3px rgba(0, 0, 0, 0.1), 0 1.8px 2.3px rgba(0, 0, 0, 0.029),
+    0 3.4px 4.4px rgba(0, 0, 0, 0.014), 0 6px 7.8px rgba(0, 0, 0, 0.02),
+    0 11.3px 14.6px rgba(0, 0, 0, 0.016), 0 27px 35px rgba(0, 0, 0, 0.011);
+}
+
+.overlay {
+  z-index: 1;
+  position: fixed;
+  background: rgba(255, 255, 255, 0.5);
+  /* background: hsla(0, 0%, 0%, 0.5); */
+  top: 0;
+  bottom: 0;
+  /* using the code below ensures overlay is always centered
+    no matter which post we click on */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}

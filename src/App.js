@@ -1,6 +1,7 @@
 import { Route, Switch } from 'react-router-dom';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 import './App.css';
 import { Error as ErrorPage, Grid, Header, LoadingBar } from './components';
@@ -70,12 +71,67 @@ ABOVE the existing post grid.
 Issues: How we do serve 404 whne a visit to /post/:id isn't a valid post?
 
 */
+
+export function Overlay({ isSelected }) {
+  return (
+    <motion.div
+      initial={false}
+      animate={{ opacity: isSelected ? 1 : 0 }}
+      transition={{ duration: 0.3, delay: isSelected ? 0 : 0 }}
+      style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
+      className="overlay"
+    />
+  );
+}
+
 function App() {
   const defaultError = { code: 500, msg: 'An unexpected error occurred!' };
+  const [isSelected, setIsSelected] = useState(true);
+
+  const dismissModal = e => {
+    e.preventDefault();
+
+    setIsSelected(!isSelected);
+  };
+
+  useEffect(() => {
+    const dismissModal = event => {
+      if (isSelected && event.key === 'Escape') {
+        setIsSelected(!isSelected);
+      }
+    };
+
+    window.addEventListener('keydown', dismissModal);
+
+    return () => {
+      window.removeEventListener('keydown', dismissModal);
+    };
+  }, [isSelected]);
 
   return (
     <AppWrapper>
       <Header />
+
+      {isSelected && (
+        <>
+          <Overlay isSelected style={{ opacity: '0.9 !important' }} />
+          <div className="alert">
+            <h3>Update: </h3>
+            <h2>Facebook Does Facebooky Things</h2>
+            <p>
+              Instagram recently implemented a change in policy,{' '}
+              <a href="https://manualdousuario.net/instagram-photos-videos-unlogged-on-computers/">
+                requiring all viewers of IG media to have an account
+              </a>
+              . This has caused the site to break. I will be fixing it ASAP.
+            </p>
+
+            <button onClick={() => setIsSelected(false)} type="button">
+              Dismiss
+            </button>
+          </div>
+        </>
+      )}
       <div>
         <Switch>
           {/* eslint-disable-next-line react/jsx-props-no-spreading */}
