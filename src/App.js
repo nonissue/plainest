@@ -113,11 +113,11 @@ function App() {
       <Header />
 
       {isSelected && (
-        <>
+        <div className="alert-container open">
           <Overlay isSelected style={{ opacity: '0.9 !important' }} />
           <div className="alert">
-            <h3>Update: </h3>
-            <h2>Facebook Does Facebooky Things</h2>
+            {/* <h3>Update: </h3> */}
+            <h2>Facebook Breaks Things</h2>
             <p>
               Instagram recently implemented a change in policy,{' '}
               <a href="https://manualdousuario.net/instagram-photos-videos-unlogged-on-computers/">
@@ -130,7 +130,7 @@ function App() {
               Dismiss
             </button>
           </div>
-        </>
+        </div>
       )}
       <div>
         <Switch>
